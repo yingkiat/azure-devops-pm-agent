@@ -81,3 +81,7 @@ dmypy.json
 # Local config overrides
 local_settings.py
 local_config.json
+
+# Personal
+CLAUDE.md
+.claude/
