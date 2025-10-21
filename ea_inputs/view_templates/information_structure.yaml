@@ -1,0 +1,42 @@
+# ArchiMate 3.1 Information Structure Viewpoint
+# Purpose: Structure and dependencies of data and information used
+
+viewpoint: "information_structure"
+
+archimate_spec:
+  standard: "ArchiMate 3.1"
+  purpose: "Structure and dependencies of data and information used by applications"
+  concerns:
+    - "Information structure"
+    - "Data dependencies"
+    - "Data quality"
+    - "Data ownership"
+
+  typical_elements:
+    - "DataObject"
+    - "ApplicationComponent"
+    - "ApplicationService"
+    - "ApplicationInterface"
+    - "BusinessObject"
+
+  typical_relationships:
+    - "Access"
+    - "Flow"
+    - "Association"
+    - "Composition"
+    - "Realization"
+
+  validation_rules:
+    - "DataObject can be accessed by ApplicationComponent"
+    - "DataObject can flow between ApplicationComponents"
+    - "DataObject can realize BusinessObject"
+    - "ApplicationService provides access to DataObject"
+
+default_layout:
+  algorithm: "hierarchical"
+  spacing_x: 60
+  spacing_y: 80
+
+# Example usage:
+# Creates a view showing data entities, which applications
+# access them, and how data flows between systems

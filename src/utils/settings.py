@@ -38,6 +38,11 @@ class Settings(BaseSettings):
     azure_openai_api_version: str = Field(..., env="AZURE_OPENAI_API_VERSION")
     azure_openai_deployment: str = Field(..., env="AZURE_OPENAI_DEPLOYMENT")
 
+    # Gemini (for diagram generation)
+    gemini_api_key: str = Field(..., env="GEMINI_API_KEY")
+    gemini_model: str = Field("gemini-2.5-flash-image-preview", env="GEMINI_MODEL")
+    gemini_disable_ssl_verify: bool = Field(False, env="GEMINI_DISABLE_SSL_VERIFY")
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

@@ -38,7 +38,7 @@ class IDMappingManager:
     
     def __init__(self):
         self.connection = get_connection()
-        self.mappings_file = Path("data") / "id_mappings.json"
+        self.mappings_file = Path("data") / "pm" / "id_mappings.json"
         self.mappings_file.parent.mkdir(exist_ok=True)
         self._mappings: Dict[str, IDMapping] = {}
         self._reverse_mappings: Dict[Tuple[int, str], str] = {}  # (azdo_id, type) -> local_id
@@ -57,7 +57,7 @@ class IDMappingManager:
                     self._reverse_mappings[(mapping.azdo_id, mapping.azdo_type)] = mapping.local_id
                     
             except Exception as e:
-                rprint(f"⚠️  Could not load ID mappings: {e}")
+                rprint(f"  Could not load ID mappings: {e}")
     
     def save_mappings(self) -> None:
         """Save mappings to disk."""
@@ -82,7 +82,7 @@ class IDMappingManager:
                 json.dump(data, f, indent=2)
                 
         except Exception as e:
-            rprint(f"⚠️  Could not save ID mappings: {e}")
+            rprint(f"  Could not save ID mappings: {e}")
     
     def generate_local_id(self, title: str, azdo_type: str, project: str = None) -> str:
         """Generate a human-readable local ID from title and context."""
@@ -214,14 +214,14 @@ class IDMappingManager:
                                 results['updated'] += 1
                                 
                 except Exception as e:
-                    rprint(f"⚠️  Could not sync work items from {project}: {e}")
+                    rprint(f"  Could not sync work items from {project}: {e}")
                     results['errors'] += 1
             
             # Sync pull requests would go here (similar pattern)
             self.save_mappings()
             
         except Exception as e:
-            rprint(f"❌ Failed to sync with Azure DevOps: {e}")
+            rprint(f" Failed to sync with Azure DevOps: {e}")
             results['errors'] += 1
         
         return results
@@ -243,10 +243,10 @@ class IDMappingManager:
                 new_tags = f"{current_tags}; {external_tag}".strip("; ")
                 update = [JsonPatchOperation(op="replace", path="/fields/System.Tags", value=new_tags)]
                 wit.update_work_item(document=update, id=azdo_id)
-                rprint(f"✅ Added external key tag '{local_id}' to work item #{azdo_id}")
+                rprint(f" Added external key tag '{local_id}' to work item #{azdo_id}")
                 
         except Exception as e:
-            rprint(f"⚠️  Could not add external key tag: {e}")
+            rprint(f"  Could not add external key tag: {e}")
     
     def find_by_external_key(self, local_id: str) -> Optional[Dict]:
         """Find Azure DevOps work item by external key tag."""
@@ -260,7 +260,7 @@ class IDMappingManager:
             return results[0] if results else None
                 
         except Exception as e:
-            rprint(f"⚠️  Could not find by external key: {e}")
+            rprint(f"  Could not find by external key: {e}")
             return None
     
     def get_stats(self) -> Dict:

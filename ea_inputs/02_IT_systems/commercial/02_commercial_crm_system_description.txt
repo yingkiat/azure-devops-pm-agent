@@ -1,0 +1,21 @@
+CRM Purchase Order Automation System
+
+We need a system that integrates our CRM with Microsoft Document Intelligence to automatically process purchase orders and create them in our ERP system.
+
+The workflow is:
+1. Sales team uploads PO documents (PDFs, images) through CRM interface
+2. System calls Microsoft Doc AI service to extract key data (vendor, amounts, line items, dates)
+3. Extracted data gets validated and mapped to ERP fields
+4. System automatically creates corresponding PO record in ERP
+5. Status updates flow back to CRM for sales team visibility
+
+Key integration points:
+- CRM system (Microsoft Dynamics)
+- Microsoft Document Intelligence API
+- ERP system (QAD)
+- File storage for uploaded documents
+- Notification system for status updates
+
+Users include sales reps, procurement team, and finance for approval workflows.
+
+System needs to handle document processing errors, data validation failures, and ERP connectivity issues gracefully.

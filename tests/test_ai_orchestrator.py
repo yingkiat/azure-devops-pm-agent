@@ -7,19 +7,22 @@ import asyncio
 import json
 import sys
 from pathlib import Path
+import pytest
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from ai_orchestrator.orchestrator import AzureDevOpsOrchestrator
+from pm.orchestrator import PMOrchestrator
 
 
+@pytest.mark.high_priority
+@pytest.mark.asyncio
 async def test_orchestrated_requests():
     """Test the complete orchestration pipeline with various request types."""
-    print("🧠 Testing Complete AI Orchestration Pipeline")
+    print(" Testing Complete AI Orchestration Pipeline")
     print("=" * 70)
     
-    orchestrator = AzureDevOpsOrchestrator()
+    orchestrator = PMOrchestrator()
     
     # Test requests covering different intent types
     test_requests = [
@@ -30,14 +33,14 @@ async def test_orchestrated_requests():
     ]
     
     for i, request in enumerate(test_requests, 1):
-        print(f"\n🧪 Test {i}/{len(test_requests)}: '{request}'")
+        print(f"\n Test {i}/{len(test_requests)}: '{request}'")
         print("-" * 50)
         
         try:
             result = await orchestrator.handle_request(request)
             
             if result["success"]:
-                print("✅ Request completed successfully!")
+                print(" Request completed successfully!")
                 
                 # Show key insights from the result
                 if "execution_result" in result:
@@ -48,35 +51,37 @@ async def test_orchestrated_requests():
                             tool = step_result["tool"]
                             
                             if tool == "get_projects" and "projects" in data:
-                                print(f"   📁 Found {data['count']} projects")
+                                print(f"    Found {data['count']} projects")
                             elif tool == "get_work_items" and "work_items" in data:
-                                print(f"   📋 Found {data['count']} work items")
+                                print(f"    Found {data['count']} work items")
                             elif tool == "get_pull_requests" and "pull_requests" in data:
-                                print(f"   🔄 Found {data['count']} pull requests")
+                                print(f"    Found {data['count']} pull requests")
                             elif tool == "get_readme" and data.get("success"):
                                 content_preview = data["content"][:100] if "content" in data else "No content"
-                                print(f"   📖 README found: {content_preview}...")
+                                print(f"    README found: {content_preview}...")
                 
             else:
-                print(f"❌ Request failed: {result.get('error', 'Unknown error')}")
+                print(f" Request failed: {result.get('error', 'Unknown error')}")
                 
         except Exception as e:
-            print(f"❌ Test failed: {e}")
+            print(f" Test failed: {e}")
             import traceback
             traceback.print_exc()
         
         print()  # Spacing between tests
     
-    print("🎉 AI Orchestration testing complete!")
-    print(f"💾 Final context: {json.dumps(orchestrator.context, indent=2)}")
+    print(" AI Orchestration testing complete!")
+    print(f" Final context: {json.dumps(orchestrator.context, indent=2)}")
 
 
+@pytest.mark.high_priority
+@pytest.mark.asyncio
 async def test_individual_components():
     """Test individual orchestrator components."""
-    print("\n🔧 Testing Individual Components")
+    print("\n Testing Individual Components")
     print("=" * 50)
     
-    orchestrator = AzureDevOpsOrchestrator()
+    orchestrator = PMOrchestrator()
     test_request = "What projects do we have?"
     
     try:
@@ -100,10 +105,10 @@ async def test_individual_components():
         print(f"   Summary: {execution_result.summary}")
         print(f"   Context learned: {list(execution_result.context_learned.keys())}")
         
-        print("\n✅ All components working!")
+        print("\n All components working!")
         
     except Exception as e:
-        print(f"❌ Component test failed: {e}")
+        print(f" Component test failed: {e}")
         import traceback
         traceback.print_exc()
 

@@ -6,17 +6,19 @@ Tests data analysis, health scoring, and recommendation generation.
 import asyncio
 import sys
 from pathlib import Path
+import pytest
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from ai_orchestrator.insights_engine import InsightsEngine, ProjectInsight
-from ai_orchestrator.orchestrator import AzureDevOpsOrchestrator
+from pm.tools.insights_engine import InsightsEngine, ProjectInsight
+from pm.orchestrator import PMOrchestrator
 
 
+@pytest.mark.high_priority
 def test_work_items_analysis():
     """Test work items analysis and insights generation."""
-    print("📋 Testing Work Items Analysis")
+    print(" Testing Work Items Analysis")
     print("=" * 50)
     
     engine = InsightsEngine()
@@ -60,7 +62,7 @@ def test_work_items_analysis():
     
     analysis = engine.analyze_work_items(test_work_items)
     
-    print(f"✅ Analysis completed:")
+    print(f" Analysis completed:")
     print(f"   Total items: {analysis['total_items']}")
     print(f"   By type: {dict(analysis['by_type'])}")
     print(f"   By state: {dict(analysis['by_state'])}")
@@ -68,14 +70,15 @@ def test_work_items_analysis():
     print(f"   Unassigned: {analysis['unassigned_count']}")
     print(f"   High priority: {analysis['high_priority_count']}")
     
-    print(f"\n💡 Insights generated:")
+    print(f"\n Insights generated:")
     for insight in analysis['insights']:
         print(f"   • {insight}")
 
 
+@pytest.mark.high_priority
 def test_health_score_calculation():
     """Test project health score calculation."""
-    print("\n\n🏥 Testing Health Score Calculation")
+    print("\n\n Testing Health Score Calculation")
     print("=" * 50)
     
     engine = InsightsEngine()
@@ -123,14 +126,15 @@ def test_health_score_calculation():
     print(f"Unhealthy project score: {unhealthy_score:.2f}")
     
     if health_score > unhealthy_score:
-        print("✅ Health scoring working correctly")
+        print(" Health scoring working correctly")
     else:
-        print("❌ Health scoring needs adjustment")
+        print(" Health scoring needs adjustment")
 
 
+@pytest.mark.high_priority
 def test_project_insight_generation():
     """Test complete project insight generation."""
-    print("\n\n🏢 Testing Project Insight Generation")  
+    print("\n\n Testing Project Insight Generation")  
     print("=" * 50)
     
     engine = InsightsEngine()
@@ -182,27 +186,29 @@ def test_project_insight_generation():
     print(f"Key Metrics: {insight.key_metrics}")
     
     if insight.trends:
-        print("📈 Trends:")
+        print(" Trends:")
         for trend in insight.trends:
             print(f"   • {trend}")
     
     if insight.risks:
-        print("⚠️  Risks:")
+        print("  Risks:")
         for risk in insight.risks:
             print(f"   • {risk}")
     
     if insight.recommendations:
-        print("💡 Recommendations:")
+        print(" Recommendations:")
         for rec in insight.recommendations:
             print(f"   • {rec}")
 
 
+@pytest.mark.high_priority
+@pytest.mark.asyncio
 async def test_full_business_intelligence():
     """Test complete business intelligence generation through orchestrator."""
-    print("\n\n🧠 Testing Full Business Intelligence Pipeline")
+    print("\n\n Testing Full Business Intelligence Pipeline")
     print("=" * 60)
     
-    orchestrator = AzureDevOpsOrchestrator()
+    orchestrator = PMOrchestrator()
     
     # Add mock context
     orchestrator.context = {
@@ -214,33 +220,34 @@ async def test_full_business_intelligence():
         result = await orchestrator.handle_request("Analyze the health of our projects")
         
         if result["success"]:
-            print("✅ Request processed successfully")
+            print(" Request processed successfully")
             
             if "business_intelligence" in result:
                 bi = result["business_intelligence"]
-                print(f"\n📊 Business Intelligence Generated:")
+                print(f"\n Business Intelligence Generated:")
                 print(f"   Summary: {bi.get('summary', 'No summary')}")
                 print(f"   Projects analyzed: {len(bi.get('projects', []))}")
                 print(f"   Executive summary: {bi.get('executive_summary', 'No executive summary')}")
                 
                 if bi.get('overall_recommendations'):
-                    print("🎯 Overall Recommendations:")
+                    print(" Overall Recommendations:")
                     for rec in bi['overall_recommendations'][:3]:
                         print(f"   • {rec}")
             else:
-                print("ℹ️  No business intelligence generated (may not be an analysis request)")
+                print("ℹ  No business intelligence generated (may not be an analysis request)")
         else:
-            print(f"❌ Request failed: {result.get('error')}")
+            print(f" Request failed: {result.get('error')}")
             
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
         import traceback
         traceback.print_exc()
 
 
+@pytest.mark.high_priority
 def test_pull_request_analysis():
     """Test pull request analysis capabilities."""
-    print("\n\n🔄 Testing Pull Request Analysis")
+    print("\n\n Testing Pull Request Analysis")
     print("=" * 50)
     
     engine = InsightsEngine()
@@ -274,13 +281,13 @@ def test_pull_request_analysis():
     
     analysis = engine.analyze_pull_requests(test_prs)
     
-    print(f"✅ PR Analysis completed:")
+    print(f" PR Analysis completed:")
     print(f"   Total PRs: {analysis['total_prs']}")
     print(f"   By status: {dict(analysis['by_status'])}")
     print(f"   By author: {dict(analysis['by_author'])}")
     print(f"   By repository: {dict(analysis['by_repository'])}")
     
-    print(f"\n💡 PR Insights:")
+    print(f"\n PR Insights:")
     for insight in analysis['insights']:
         print(f"   • {insight}")
 

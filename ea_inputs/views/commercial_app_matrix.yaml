@@ -1,0 +1,48 @@
+# Commercial Applications Matrix View
+# Grouped by region with applications organized within each region group
+
+view:
+  name: "Commercial Applications Matrix"
+  documentation: "Matrix view of commercial applications organized by region and sub-domain"
+  viewpoint: "application_cooperation"
+
+elements:
+  include:
+    # Select only Commercial ApplicationComponents
+    - where:
+        type: "ApplicationComponent"
+        Domain: "Commercial"
+
+relationships:
+  include:
+    # Show serving relationships between applications
+    - type: ["Serving", "Flow"]
+      between: "included_elements"
+
+# Group applications by region
+grouping:
+  by_property: "Region"
+  order: ["ANZ", "JPN", "AEM", "_ungrouped"]  # Explicit order for regions
+  groups_per_row: 3  # Display 3 regions per row
+  group_width: 800  # Wide groups to fit multiple apps
+  group_height: 600  # Tall groups for many applications
+  group_spacing_x: 50
+  group_spacing_y: 50
+
+layout:
+  algorithm: "grid"
+  columns: 3  # Apps within each group laid out in grid
+  spacing_x: 20
+  spacing_y: 20
+
+# Matrix structure (manual positioning may be needed):
+#
+#           CRM | Quotation | Order Mgmt | Customer Data
+# ANZ:      [app]   [app]      [app]        [app]
+# JPN:      [app]   [app]      [app]        [app]
+# AEM:      [app]   [app]      [app]        [app]
+#
+# Note: For precise matrix positioning, you may want to:
+# 1. Add "Region" and "Sub-domain" properties to applications in archi_inputs/properties.csv
+# 2. Or explicitly list applications by name with their region/subdomain
+# 3. Or use a custom layout algorithm that reads these properties

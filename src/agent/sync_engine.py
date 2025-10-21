@@ -103,30 +103,30 @@ class SyncEngine:
         diff = self.generate_diff(plan)
         
         if not diff.has_changes():
-            return "✅ No changes needed - plan matches current Azure DevOps state"
+            return " No changes needed - plan matches current Azure DevOps state"
         
-        preview = [f"📋 Plan: {plan.plan_id}", f"🎯 Goal: {plan.business_goal}", ""]
+        preview = [f" Plan: {plan.plan_id}", f" Goal: {plan.business_goal}", ""]
         
         if diff.epics_to_create:
-            preview.append("🆕 **Epics to Create:**")
+            preview.append(" **Epics to Create:**")
             for epic in diff.epics_to_create:
                 preview.append(f"  • {epic.title} ({epic.external_key})")
                 preview.append(f"    {epic.description[:100]}...")
         
         if diff.epics_to_update:
-            preview.append("📝 **Epics to Update:**")
+            preview.append(" **Epics to Update:**")
             for item in diff.epics_to_update:
                 spec, current = item["spec"], item["current"]
                 preview.append(f"  • {current['fields']['System.Title']} → {spec.title}")
         
         if diff.features_to_create:
-            preview.append("🆕 **Features to Create:**")
+            preview.append(" **Features to Create:**")
             for feature in diff.features_to_create:
                 preview.append(f"  • {feature.title} ({feature.external_key})")
                 preview.append(f"    Target projects: {', '.join(feature.target_projects)}")
         
         if diff.features_to_update:
-            preview.append("📝 **Features to Update:**")
+            preview.append(" **Features to Update:**")
             for item in diff.features_to_update:
                 spec, current = item["spec"], item["current"]
                 preview.append(f"  • {current['fields']['System.Title']} → {spec.title}")
@@ -168,13 +168,13 @@ class SyncEngine:
                 "work_item_id": wi["id"],
                 "title": epic_spec.title
             })
-            rprint(f"✅ Created Epic: {epic_spec.title} (#{wi['id']}, {epic_spec.external_key})")
+            rprint(f" Created Epic: {epic_spec.title} (#{wi['id']}, {epic_spec.external_key})")
         
         # Update existing epics
         for item in diff.epics_to_update:
             spec, current = item["spec"], item["current"]
             # TODO: Implement work item updates
-            rprint(f"📝 Would update Epic #{current['id']}: {current['fields']['System.Title']} → {spec.title}")
+            rprint(f" Would update Epic #{current['id']}: {current['fields']['System.Title']} → {spec.title}")
         
         # Create new features
         for feature_spec in diff.features_to_create:
@@ -198,7 +198,7 @@ class SyncEngine:
                     "title": feature_spec.title,
                     "parent_epic_id": parent_epic["id"]
                 })
-                rprint(f"✅ Created Feature: {feature_spec.title} (#{wi['id']}, {feature_spec.external_key})")
+                rprint(f" Created Feature: {feature_spec.title} (#{wi['id']}, {feature_spec.external_key})")
         
         return results
     
@@ -217,7 +217,7 @@ def sync_command(plan_path: str, dry_run: bool = False, approve: bool = False) -
     path = Path(plan_path)
     
     if not path.exists():
-        rprint(f"❌ Plan file not found: {plan_path}")
+        rprint(f" Plan file not found: {plan_path}")
         return
     
     plan = engine.load_plan(path)
@@ -227,21 +227,21 @@ def sync_command(plan_path: str, dry_run: bool = False, approve: bool = False) -
     rprint(preview)
     
     if dry_run:
-        rprint("\n🔍 Dry run mode - no changes applied")
+        rprint("\n Dry run mode - no changes applied")
         return
     
     diff = engine.generate_diff(plan)
     if not diff.has_changes():
-        rprint("\n✅ No sync needed")
+        rprint("\n No sync needed")
         return
     
     # Require approval for actual changes
     if not approve:
-        rprint("\n⚠️  Use --approve to apply these changes")
+        rprint("\n  Use --approve to apply these changes")
         return
     
     # Apply changes
-    rprint("\n🚀 Applying changes...")
+    rprint("\n Applying changes...")
     results = engine.sync_plan(plan, dry_run=False)
     
     # Save results summary
@@ -249,4 +249,4 @@ def sync_command(plan_path: str, dry_run: bool = False, approve: bool = False) -
     with open(summary_path, 'w') as f:
         json.dump(results, f, indent=2)
     
-    rprint(f"\n✅ Sync complete! Results saved to {summary_path}")
+    rprint(f"\n Sync complete! Results saved to {summary_path}")

@@ -1,0 +1,22 @@
+Priorities for Australia:
+
+- Enquiries and PO CRM
+
+- SPT, decide on components, produce quotation, get approval from customer
+	- Transferred to QAD as a new product
+- SPT applications very old (MedQuote (Sales) -> MedOps (For SOS) -> MedPack (See BOM, For Sales) -> MedReports)
+	- Source missing
+	- Design files missing
+- Upgrade in 2 parts
+	- Technical refresh done in June 2025
+	- Functional refresh by December 2025
+
+Priorities for Japan:
+- SPT managed by Excel files and then emails
+	- No version control
+- Consolidated into 1 DB (Kit Management System)
+
+For 2026, migration to Dynamics CRM, introduction to sales module. 
+- Commercial module
+- Sales module
+Japan uses Salesforce.com currently.

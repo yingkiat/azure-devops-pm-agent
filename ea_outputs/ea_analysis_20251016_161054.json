@@ -1,0 +1,330 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "QAD EE",
+        "description": "QAD EE Cloud",
+        "Region": "AEM",
+        "Domain": "ERP",
+        "Sub-Domain": "ERP",
+        "Application Name": "QAD EE",
+        "Application Type": "COTS",
+        "Comments": "QAD EE Cloud",
+        "capabilities_supported": [
+          "Enterprise Resource Planning"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Tableau",
+        "description": "Dashboarding",
+        "Region": "AEM",
+        "Domain": "Data",
+        "Sub-Domain": "Visualization",
+        "Application Name": "Tableau",
+        "Application Type": "COTS",
+        "Comments": "Dashboarding",
+        "capabilities_supported": [
+          "Data Visualization"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "QAD SE",
+        "description": "QAD SE Cloud",
+        "Region": "JPN",
+        "Domain": "ERP",
+        "Sub-Domain": "ERP",
+        "Application Name": "QAD SE",
+        "Application Type": "COTS",
+        "Comments": "QAD SE Cloud",
+        "capabilities_supported": [
+          "Enterprise Resource Planning"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "DSX",
+        "description": "Forecasting",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "DSX",
+        "Application Type": "COTS",
+        "Comments": "Forecasting",
+        "capabilities_supported": [
+          "Supply Chain Planning"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "SAP APO",
+        "description": "Supply Chain Planning, Global Sourcing",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "SAP APO",
+        "Application Type": "COTS",
+        "Comments": "Supply Chain Planning, Global Sourcing",
+        "capabilities_supported": [
+          "Supply Chain Planning"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "VC Vendor Collaboration",
+        "description": "Vendor portal",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "VC Vendor Collaboration",
+        "Application Type": "Vendor-Built",
+        "Comments": "Vendor portal",
+        "capabilities_supported": [
+          "Vendor Collaboration"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Cargo Master",
+        "description": "For 3PL warehouse",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "Cargo Master",
+        "Application Type": "COTS",
+        "Comments": "For 3PL warehouse",
+        "capabilities_supported": [
+          "Warehouse Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "W3 Sirius",
+        "description": "For warehouse management",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "W3 Sirius",
+        "Application Type": "COTS",
+        "Comments": "For warehouse management",
+        "capabilities_supported": [
+          "Warehouse Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Yusen",
+        "description": "For inbound shipping",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "Yusen",
+        "Application Type": "Vendor-Built",
+        "Comments": "For inbound shipping",
+        "capabilities_supported": [
+          "Transport and Logistics"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "GSCM/OCTS",
+        "description": "Excel based",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "GSCM/OCTS",
+        "Application Type": "Custom",
+        "Comments": "Excel based",
+        "capabilities_supported": [
+          "Transport and Logistics"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "PSS 1.0",
+        "description": "Pack Specific System",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "PSS 1.0",
+        "Application Type": "Custom",
+        "Comments": "Pack Specific System",
+        "capabilities_supported": [
+          "Manufacturing"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "Kenpin Barcode",
+        "description": "Assembly inventory data",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Kenpin Barcode",
+        "Application Type": "COTS",
+        "Comments": "Assembly inventory data",
+        "capabilities_supported": [
+          "Inventory Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Iwagaki Access",
+        "description": "Access database for tracking",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Iwagaki Access",
+        "Application Type": "Custom",
+        "Comments": "Access database for tracking",
+        "capabilities_supported": [
+          "Manufacturing Tracking"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "QMS",
+        "description": "For regulatory assurance and quality assurance",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "RAQA",
+        "Application Name": "QMS",
+        "Application Type": "COTS",
+        "Comments": "For regulatory assurance and quality assurance",
+        "capabilities_supported": [
+          "Quality Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Reliance",
+        "description": "Global QMS",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "RAQA",
+        "Application Name": "Reliance",
+        "Application Type": "COTS",
+        "Comments": "Global QMS",
+        "capabilities_supported": [
+          "Quality Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Customer Master (CMP)",
+        "description": "",
+        "Region": "ANZ",
+        "Domain": "Commercial",
+        "Sub-Domain": "Sales",
+        "Application Name": "Customer Master (CMP)",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [
+          "Customer Data Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "SFDC",
+        "description": "Salesforce",
+        "Region": "ANZ",
+        "Domain": "Commercial",
+        "Sub-Domain": "Sales",
+        "Application Name": "SFDC",
+        "Application Type": "COTS",
+        "Comments": "Salesforce",
+        "capabilities_supported": [
+          "Sales Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Microsoft Dynamics",
+        "description": "New CRM from Salesforce",
+        "Region": "ANZ",
+        "Domain": "Commercial",
+        "Sub-Domain": "Customer Service",
+        "Application Name": "Microsoft Dynamics",
+        "Application Type": "COTS",
+        "Comments": "New CRM from Salesforce",
+        "capabilities_supported": [
+          "Customer Relationship Management"
+        ],
+        "lifecycle_signals": [
+          "New"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "QAD EE",
+      "target": "Enterprise Resource Planning",
+      "type": "Serving",
+      "description": "QAD EE supports ERP capabilities"
+    },
+    {
+      "source": "Tableau",
+      "target": "Data Visualization",
+      "type": "Serving",
+      "description": "Tableau supports data visualization capabilities"
+    },
+    {
+      "source": "Microsoft Dynamics",
+      "target": "Customer Relationship Management",
+      "type": "Serving",
+      "description": "Microsoft Dynamics supports CRM capabilities"
+    }
+  ],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified in the provided data.",
+    "sunset_risks": "Legacy systems like PSS 1.0 and Iwagaki Access may pose risks.",
+    "maturity_trends": "Most systems are modern, with a few legacy systems requiring attention.",
+    "overlaps": "Potential overlap in quality management systems (QMS and Reliance)."
+  },
+  "recommendations": [
+    "Evaluate and modernize legacy systems like PSS 1.0 and Iwagaki Access.",
+    "Assess overlap between QMS and Reliance for potential consolidation.",
+    "Invest in enhancing Tableau's integration with other systems for better data insights."
+  ]
+}

@@ -1,0 +1,32 @@
+name,description,region,domain,sub_domain,it_owner,tech_standard,application_type,hosting_type,primary_language,vendor_support
+PSS 1.0,Product information interface,ANZ,Operations,Operations,WN,Legacy,Custom-Built,On-Prem,Visual Basic,Internal
+QAD EE,ERP system for finance and supply chain management,AEM,ERP,ERP,IT Director,Approved,COTS,Cloud,Java,QAD
+Tableau,Data visualization and reporting tool,AEM,Data,ERP,IT Director,Approved,COTS,Cloud,Miscellaneous,Tableau
+QAD SE ,ERP system for finance and supply chain management,JPN,ERP,ERP,IT Director,Approved,COTS,Cloud,Java,QAD
+DSX,Supply chain planning and forecasting tool,JPN,Operations,SCM Planning,IT Director,IT Director,Approved,COTS,Cloud,Miscellaneous,Blue Yonder
+SAP APO,Supply chain planning and global sourcing system,JPN,Operations,SCM Planning,IT Director,IT Director,Approved,COTS,Cloud,ABAP,SAP
+VC Vendor Collaboration,Vendor collaboration portal for supply chain,JPN,Operations,SCM Planning,IT Director,IT Director,Approved,Vendor-Built,Cloud,Miscellaneous,Internal
+Cargo Master,Warehouse management system for 3PL warehouse,JPN,Operations,Warehouse Management,IT Director,IT Director,Approved,COTS,On-Prem,Miscellaneous,3GTMS
+W3 Sirius,Warehouse management system for warehouse operations,JPN,Operations,Warehouse Management,IT Director,IT Director,Approved,COTS,On-Prem,Miscellaneous,W3
+Yusen,Inbound shipping management system,JPN,Operations,Transport and Logistics,IT Director,IT Director,Approved,Vendor-Built,On-Prem,Miscellaneous,Yusen
+GSCM/OCTS,Custom Excel-based system for transport management,JPN,Operations,Transport and Logistics,IT Director,IT Director,Legacy,Custom,On-Prem,Excel,Internal
+Kenpin Barcode,Assembly inventory tracking system,JPN,Operations,Manufacturing,IT Director,Approved,COTS,On-Prem,Miscellaneous,Kenpin
+Iwagaki Access,Assembly tracking system using Access database,JPN,Operations,Manufacturing,IT Director,Legacy,Custom,On-Prem,Microsoft Access,Internal
+QMS,Quality management system for regulatory assurance,JPN,Operations,RAQA,IT Director,Approved,COTS,Cloud,Miscellaneous,MasterControl
+Descartes,Transportation management system for Medline logistics,ANZ,Operations,Transport and Logistics,IT Director,Approved,COTS,Cloud,Miscellaneous,Descartes
+SmartFreight,Transportation management system for 3PL transportation,ANZ,Operations,Transport and Logistics,IT Director,Approved,COTS,Cloud,Miscellaneous,SmartFreight
+Label Printing,Label printing system for manufacturing,ANZ,Operations,Manufacturing,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+Batch Control,Batch control system for manufacturing,ANZ,Operations,Manufacturing,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+eiFU,Electronic instructions system for manufacturing,ANZ,Operations,Manufacturing,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+Reliance,Global quality management system for regulatory assurance,ANZ,Operations,RAQA,IT Director,Approved,COTS,Cloud,Miscellaneous,Intellect
+Customer Master (CMP),Customer master data management system,ANZ,Commercial,Sales,IT Director,Legacy,Unknown,On-Prem,Miscellaneous,Internal
+SFDC,Salesforce CRM system for sales management,ANZ,Commercial,Sales,IT Director,Approved,COTS,Cloud,Miscellaneous,Salesforce
+Microsoft Dynamics,New CRM system replacing legacy systems with advanced automation,ANZ,Commercial,Customer Service,IT Director,Approved,COTS,Cloud,C#,Microsoft
+MedQuote,Custom quoting system for SPT sales,ANZ,Commercial,SPT,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+MedOps,Custom sales operations support system for SPT sales,ANZ,Commercial,SPT,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+MedPack,Custom BOM viewing system for SPT sales,ANZ,Commercial,SPT,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+MedReports,Custom reporting system for SPT sales,ANZ,Commercial,SPT,IT Director,Legacy,Custom,On-Prem,Miscellaneous,Internal
+Microsoft Document Intelligence,AI-based document processing system for ERP integration,ANZ,IT,Document Automation,IT Director,Approved,COTS,Cloud,Python,Microsoft
+PO Automation,New CRM system integrating with Microsoft Document Intelligence for automation,ANZ,Commercial,Purchase Order Automation,IT Director,Approved,COTS,Cloud,C#,Microsoft
+Purchase Order Automation,New CRM system integrating with ERP for strategic advantage,ANZ,Commercial,Purchase Order Automation,IT Director,Approved,COTS,Cloud,C#,Microsoft
+

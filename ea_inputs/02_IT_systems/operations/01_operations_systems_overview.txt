@@ -1,0 +1,13 @@
+SAP APO - Supply Chain Planning, Global Sourcing
+W3 Sirius. Aisai Distribution Center. Tokyo Distribution Center using Cargo Master.
+Yusen - Global logistics, for buying from international
+Descartes for Medline transportation. SmartFreight for 3PL.
+GSCM/OCTS - Excel macros for pulling for Yusen and QAD
+PSS 
+Kenpin Barcode is COTS system for assembly data.
+Iwagaki is an Access database.
+Thinking of expanding W3 Sirius to Japan.
+
+Key priorities are PSS 1.0 upgrade, then replacing Kenpin Barode and Iwagaki Access with a new vendor customization of W3 Sirius to extend to Manufacturing, called DHR.
+
+

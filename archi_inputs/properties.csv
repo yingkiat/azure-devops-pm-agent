@@ -1,0 +1,309 @@
+ID,Key,Value
+id-021726ec4519,Region,ANZ
+id-021726ec4519,Domain,Operations
+id-021726ec4519,Sub-Domain,Operations
+id-021726ec4519,It Owner,WN
+id-021726ec4519,Tech Standard,Legacy
+id-021726ec4519,Application Type,Custom-Built
+id-021726ec4519,Hosting Type,On-Prem
+id-021726ec4519,Primary Language,Visual Basic
+id-021726ec4519,Vendor Support,Internal
+id-e176567a2ef1,Region,AEM
+id-e176567a2ef1,Domain,ERP
+id-e176567a2ef1,Sub-Domain,ERP
+id-e176567a2ef1,It Owner,IT Director
+id-e176567a2ef1,Tech Standard,Approved
+id-e176567a2ef1,Application Type,COTS
+id-e176567a2ef1,Hosting Type,Cloud
+id-e176567a2ef1,Primary Language,Java
+id-e176567a2ef1,Vendor Support,QAD
+id-f91e6b0dc180,Region,AEM
+id-f91e6b0dc180,Domain,Data
+id-f91e6b0dc180,Sub-Domain,ERP
+id-f91e6b0dc180,It Owner,IT Director
+id-f91e6b0dc180,Tech Standard,Approved
+id-f91e6b0dc180,Application Type,COTS
+id-f91e6b0dc180,Hosting Type,Cloud
+id-f91e6b0dc180,Primary Language,Miscellaneous
+id-f91e6b0dc180,Vendor Support,Tableau
+id-328d17d91256,Region,JPN
+id-328d17d91256,Domain,ERP
+id-328d17d91256,Sub-Domain,ERP
+id-328d17d91256,It Owner,IT Director
+id-328d17d91256,Tech Standard,Approved
+id-328d17d91256,Application Type,COTS
+id-328d17d91256,Hosting Type,Cloud
+id-328d17d91256,Primary Language,Java
+id-328d17d91256,Vendor Support,QAD
+id-6385d2992d54,Region,JPN
+id-6385d2992d54,Domain,Operations
+id-6385d2992d54,Sub-Domain,SCM Planning
+id-6385d2992d54,It Owner,IT Director
+id-6385d2992d54,Tech Standard,Approved
+id-6385d2992d54,Application Type,COTS
+id-6385d2992d54,Hosting Type,Cloud
+id-6385d2992d54,Primary Language,Miscellaneous
+id-6385d2992d54,Vendor Support,Blue Yonder
+id-9a5fd32c9b67,Region,JPN
+id-9a5fd32c9b67,Domain,Operations
+id-9a5fd32c9b67,Sub-Domain,SCM Planning
+id-9a5fd32c9b67,It Owner,IT Director
+id-9a5fd32c9b67,Tech Standard,Approved
+id-9a5fd32c9b67,Application Type,COTS
+id-9a5fd32c9b67,Hosting Type,Cloud
+id-9a5fd32c9b67,Primary Language,ABAP
+id-9a5fd32c9b67,Vendor Support,SAP
+id-64bdcb4d3b3a,Region,JPN
+id-64bdcb4d3b3a,Domain,Operations
+id-64bdcb4d3b3a,Sub-Domain,SCM Planning
+id-64bdcb4d3b3a,It Owner,IT Director
+id-64bdcb4d3b3a,Tech Standard,Approved
+id-64bdcb4d3b3a,Application Type,Vendor-Built
+id-64bdcb4d3b3a,Hosting Type,Cloud
+id-64bdcb4d3b3a,Primary Language,Miscellaneous
+id-64bdcb4d3b3a,Vendor Support,Internal
+id-0015d01da270,Region,JPN
+id-0015d01da270,Domain,Operations
+id-0015d01da270,Sub-Domain,Warehouse Management
+id-0015d01da270,It Owner,IT Director
+id-0015d01da270,Tech Standard,Approved
+id-0015d01da270,Application Type,COTS
+id-0015d01da270,Hosting Type,On-Prem
+id-0015d01da270,Primary Language,Miscellaneous
+id-0015d01da270,Vendor Support,3GTMS
+id-6d9eb02243f7,Region,JPN
+id-6d9eb02243f7,Domain,Operations
+id-6d9eb02243f7,Sub-Domain,Warehouse Management
+id-6d9eb02243f7,It Owner,IT Director
+id-6d9eb02243f7,Tech Standard,Approved
+id-6d9eb02243f7,Application Type,COTS
+id-6d9eb02243f7,Hosting Type,On-Prem
+id-6d9eb02243f7,Primary Language,Miscellaneous
+id-6d9eb02243f7,Vendor Support,W3
+id-bb3759f4a808,Region,JPN
+id-bb3759f4a808,Domain,Operations
+id-bb3759f4a808,Sub-Domain,Transport and Logistics
+id-bb3759f4a808,It Owner,IT Director
+id-bb3759f4a808,Tech Standard,Approved
+id-bb3759f4a808,Application Type,Vendor-Built
+id-bb3759f4a808,Hosting Type,On-Prem
+id-bb3759f4a808,Primary Language,Miscellaneous
+id-bb3759f4a808,Vendor Support,Yusen
+id-1d3ac771d8b3,Region,JPN
+id-1d3ac771d8b3,Domain,Operations
+id-1d3ac771d8b3,Sub-Domain,Transport and Logistics
+id-1d3ac771d8b3,It Owner,IT Director
+id-1d3ac771d8b3,Tech Standard,Legacy
+id-1d3ac771d8b3,Application Type,Custom
+id-1d3ac771d8b3,Hosting Type,On-Prem
+id-1d3ac771d8b3,Primary Language,Excel
+id-1d3ac771d8b3,Vendor Support,Internal
+id-d0be297d0966,Region,JPN
+id-d0be297d0966,Domain,Operations
+id-d0be297d0966,Sub-Domain,Manufacturing
+id-d0be297d0966,It Owner,IT Director
+id-d0be297d0966,Tech Standard,Approved
+id-d0be297d0966,Application Type,COTS
+id-d0be297d0966,Hosting Type,On-Prem
+id-d0be297d0966,Primary Language,Miscellaneous
+id-d0be297d0966,Vendor Support,Kenpin
+id-6e68a57a6540,Region,JPN
+id-6e68a57a6540,Domain,Operations
+id-6e68a57a6540,Sub-Domain,Manufacturing
+id-6e68a57a6540,It Owner,IT Director
+id-6e68a57a6540,Tech Standard,Legacy
+id-6e68a57a6540,Application Type,Custom
+id-6e68a57a6540,Hosting Type,On-Prem
+id-6e68a57a6540,Primary Language,Microsoft Access
+id-6e68a57a6540,Vendor Support,Internal
+id-989487361c07,Region,JPN
+id-989487361c07,Domain,Operations
+id-989487361c07,Sub-Domain,RAQA
+id-989487361c07,It Owner,IT Director
+id-989487361c07,Tech Standard,Approved
+id-989487361c07,Application Type,COTS
+id-989487361c07,Hosting Type,Cloud
+id-989487361c07,Primary Language,Miscellaneous
+id-989487361c07,Vendor Support,MasterControl
+id-57662baf44e5,Region,ANZ
+id-57662baf44e5,Domain,Operations
+id-57662baf44e5,Sub-Domain,Transport and Logistics
+id-57662baf44e5,It Owner,IT Director
+id-57662baf44e5,Tech Standard,Approved
+id-57662baf44e5,Application Type,COTS
+id-57662baf44e5,Hosting Type,Cloud
+id-57662baf44e5,Primary Language,Miscellaneous
+id-57662baf44e5,Vendor Support,Descartes
+id-eb8c94bbf229,Region,ANZ
+id-eb8c94bbf229,Domain,Operations
+id-eb8c94bbf229,Sub-Domain,Transport and Logistics
+id-eb8c94bbf229,It Owner,IT Director
+id-eb8c94bbf229,Tech Standard,Approved
+id-eb8c94bbf229,Application Type,COTS
+id-eb8c94bbf229,Hosting Type,Cloud
+id-eb8c94bbf229,Primary Language,Miscellaneous
+id-eb8c94bbf229,Vendor Support,SmartFreight
+id-cb7cb0b84df6,Region,ANZ
+id-cb7cb0b84df6,Domain,Operations
+id-cb7cb0b84df6,Sub-Domain,Manufacturing
+id-cb7cb0b84df6,It Owner,IT Director
+id-cb7cb0b84df6,Tech Standard,Legacy
+id-cb7cb0b84df6,Application Type,Custom
+id-cb7cb0b84df6,Hosting Type,On-Prem
+id-cb7cb0b84df6,Primary Language,Miscellaneous
+id-cb7cb0b84df6,Vendor Support,Internal
+id-40e91ca61f1d,Region,ANZ
+id-40e91ca61f1d,Domain,Operations
+id-40e91ca61f1d,Sub-Domain,Manufacturing
+id-40e91ca61f1d,It Owner,IT Director
+id-40e91ca61f1d,Tech Standard,Legacy
+id-40e91ca61f1d,Application Type,Custom
+id-40e91ca61f1d,Hosting Type,On-Prem
+id-40e91ca61f1d,Primary Language,Miscellaneous
+id-40e91ca61f1d,Vendor Support,Internal
+id-59e3aeffe45f,Region,ANZ
+id-59e3aeffe45f,Domain,Operations
+id-59e3aeffe45f,Sub-Domain,Manufacturing
+id-59e3aeffe45f,It Owner,IT Director
+id-59e3aeffe45f,Tech Standard,Legacy
+id-59e3aeffe45f,Application Type,Custom
+id-59e3aeffe45f,Hosting Type,On-Prem
+id-59e3aeffe45f,Primary Language,Miscellaneous
+id-59e3aeffe45f,Vendor Support,Internal
+id-60b46c5e1d6f,Region,ANZ
+id-60b46c5e1d6f,Domain,Operations
+id-60b46c5e1d6f,Sub-Domain,RAQA
+id-60b46c5e1d6f,It Owner,IT Director
+id-60b46c5e1d6f,Tech Standard,Approved
+id-60b46c5e1d6f,Application Type,COTS
+id-60b46c5e1d6f,Hosting Type,Cloud
+id-60b46c5e1d6f,Primary Language,Miscellaneous
+id-60b46c5e1d6f,Vendor Support,Intellect
+id-849edc6949bf,Region,ANZ
+id-849edc6949bf,Domain,Commercial
+id-849edc6949bf,Sub-Domain,Sales
+id-849edc6949bf,It Owner,IT Director
+id-849edc6949bf,Tech Standard,Legacy
+id-849edc6949bf,Application Type,Unknown
+id-849edc6949bf,Hosting Type,On-Prem
+id-849edc6949bf,Primary Language,Miscellaneous
+id-849edc6949bf,Vendor Support,Internal
+id-463dc8438ddb,Region,ANZ
+id-463dc8438ddb,Domain,Commercial
+id-463dc8438ddb,Sub-Domain,Sales
+id-463dc8438ddb,It Owner,IT Director
+id-463dc8438ddb,Tech Standard,Approved
+id-463dc8438ddb,Application Type,COTS
+id-463dc8438ddb,Hosting Type,Cloud
+id-463dc8438ddb,Primary Language,Miscellaneous
+id-463dc8438ddb,Vendor Support,Salesforce
+id-c508ffe79f87,Region,ANZ
+id-c508ffe79f87,Domain,Commercial
+id-c508ffe79f87,Sub-Domain,Customer Service
+id-c508ffe79f87,It Owner,IT Director
+id-c508ffe79f87,Tech Standard,Approved
+id-c508ffe79f87,Application Type,COTS
+id-c508ffe79f87,Hosting Type,Cloud
+id-c508ffe79f87,Primary Language,C#
+id-c508ffe79f87,Vendor Support,Microsoft
+id-46735043cd40,Region,ANZ
+id-46735043cd40,Domain,Commercial
+id-46735043cd40,Sub-Domain,SPT
+id-46735043cd40,It Owner,IT Director
+id-46735043cd40,Tech Standard,Legacy
+id-46735043cd40,Application Type,Custom
+id-46735043cd40,Hosting Type,On-Prem
+id-46735043cd40,Primary Language,Miscellaneous
+id-46735043cd40,Vendor Support,Internal
+id-d11d37e2f121,Region,ANZ
+id-d11d37e2f121,Domain,Commercial
+id-d11d37e2f121,Sub-Domain,SPT
+id-d11d37e2f121,It Owner,IT Director
+id-d11d37e2f121,Tech Standard,Legacy
+id-d11d37e2f121,Application Type,Custom
+id-d11d37e2f121,Hosting Type,On-Prem
+id-d11d37e2f121,Primary Language,Miscellaneous
+id-d11d37e2f121,Vendor Support,Internal
+id-94c3ea1ca407,Region,ANZ
+id-94c3ea1ca407,Domain,Commercial
+id-94c3ea1ca407,Sub-Domain,SPT
+id-94c3ea1ca407,It Owner,IT Director
+id-94c3ea1ca407,Tech Standard,Legacy
+id-94c3ea1ca407,Application Type,Custom
+id-94c3ea1ca407,Hosting Type,On-Prem
+id-94c3ea1ca407,Primary Language,Miscellaneous
+id-94c3ea1ca407,Vendor Support,Internal
+id-72a9b7ecec65,Region,ANZ
+id-72a9b7ecec65,Domain,Commercial
+id-72a9b7ecec65,Sub-Domain,SPT
+id-72a9b7ecec65,It Owner,IT Director
+id-72a9b7ecec65,Tech Standard,Legacy
+id-72a9b7ecec65,Application Type,Custom
+id-72a9b7ecec65,Hosting Type,On-Prem
+id-72a9b7ecec65,Primary Language,Miscellaneous
+id-72a9b7ecec65,Vendor Support,Internal
+id-b8d09705688b,Region,ANZ
+id-b8d09705688b,Domain,IT
+id-b8d09705688b,Sub-Domain,Document Automation
+id-b8d09705688b,It Owner,IT Director
+id-b8d09705688b,Tech Standard,Approved
+id-b8d09705688b,Application Type,COTS
+id-b8d09705688b,Hosting Type,Cloud
+id-b8d09705688b,Primary Language,Python
+id-b8d09705688b,Vendor Support,Microsoft
+id-6b4a8e4819a0,Region,ANZ
+id-6b4a8e4819a0,Domain,Commercial
+id-6b4a8e4819a0,Sub-Domain,Purchase Order Automation
+id-6b4a8e4819a0,It Owner,IT Director
+id-6b4a8e4819a0,Tech Standard,Approved
+id-6b4a8e4819a0,Application Type,COTS
+id-6b4a8e4819a0,Hosting Type,Cloud
+id-6b4a8e4819a0,Primary Language,C#
+id-6b4a8e4819a0,Vendor Support,Microsoft
+id-82588a1d9380,Region,ANZ
+id-82588a1d9380,Domain,Commercial
+id-82588a1d9380,Sub-Domain,Purchase Order Automation
+id-82588a1d9380,It Owner,IT Director
+id-82588a1d9380,Tech Standard,Approved
+id-82588a1d9380,Application Type,COTS
+id-82588a1d9380,Hosting Type,Cloud
+id-82588a1d9380,Primary Language,C#
+id-82588a1d9380,Vendor Support,Microsoft
+id-08d83563ddf2,Technology Stack,Microsoft Dynamics
+id-a0db50c31b76,Technology Stack,Salesforce
+id-e682e06ee2b6,Technology Stack,Microsoft Access
+id-86bab17ebe7f,Domain,Sales
+id-86bab17ebe7f,Criticality,Important
+id-133b9258af74,Domain,Sales
+id-133b9258af74,Criticality,Important
+id-7a9c22258891,Domain,Operations
+id-7a9c22258891,Criticality,Critical
+id-d6147d197104,Domain,Operations
+id-d6147d197104,Criticality,Important
+id-325b8609b6e3,Domain,Operations
+id-325b8609b6e3,Criticality,Nice-to-Have
+id-75a9eaf4fe89,Domain,Sales
+id-75a9eaf4fe89,Criticality,Critical
+id-3f60170812f9,Domain,Sales
+id-3f60170812f9,Criticality,Critical
+id-832924dde3c6,Domain,Operations
+id-832924dde3c6,Criticality,Important
+id-faad9192a0d7,Domain,Operations
+id-faad9192a0d7,Criticality,Important
+id-14da17022bdc,Domain,Operations
+id-14da17022bdc,Criticality,Critical
+id-454a993499ff,Domain,Operations
+id-454a993499ff,Criticality,Critical
+id-eb79786b3c6c,Domain,Operations
+id-eb79786b3c6c,Criticality,Critical
+id-747df468b064,Domain,Operations
+id-747df468b064,Criticality,Critical
+id-093d71d12f31,Domain,Operations
+id-093d71d12f31,Criticality,Critical
+id-58aacf2e58f9,Domain,Operations
+id-58aacf2e58f9,Criticality,Critical
+id-b5560691d686,Domain,Operations
+id-b5560691d686,Criticality,Important
+id-08d83563ddf2,Domain,Sales
+id-08d83563ddf2,Lifecycle Status,Strategic
+id-46735043cd40,Lifecycle Status,Sunset

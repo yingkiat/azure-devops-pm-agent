@@ -1,0 +1,34 @@
+Region,Domain,Sub-Domain,Application Name,Application Type,Comments
+AEM,ERP,ERP,QAD EE,COTS,QAD EE Cloud
+AEM,Data,Visualization,Tableau,COTS,Dashboarding
+JPN,ERP,ERP,QAD SE ,COTS,QAD SE Cloud
+JPN,Operations,SCM Planning,DSX,COTS,Forecasting
+JPN,Operations,SCM Planning,SAP APO,COTS,"Supply Chain Planning, Global Sourcing"
+JPN,Operations,SCM Planning,VC Vendor Collaboration,Vendor-Built,Vendor portal
+JPN,Operations,Warehouse Management,Cargo Master,COTS,For 3PL warehouse
+JPN,Operations,Warehouse Management,W3 Sirius,COTS,For warehouse management
+JPN,Operations,Transport and Logistics,Yusen,Vendor-Built,For inbound shipping
+JPN,Operations,Transport and Logistics,GSCM/OCTS,Custom,Excel based
+JPN,Operations,Manufacturing,PSS 1.0,Custom,Pack Specific System
+JPN,Operations,Manufacturing,Kenpin Barcode,COTS,Assembly inventory data
+JPN,Operations,Manufacturing,Iwagaki Access,Custom,Access database for tracking
+JPN,Operations,RAQA,QMS,COTS,For regulatory assurance and quality assurance
+ANZ,ERP,ERP,QAD EE,COTS,QAD EE 2019
+ANZ,Operations,SCM Planning,DSX,COTS,Forecasting
+ANZ,Operations,SCM Planning,SAP APO,COTS,"Supply Chain Planning, Global Sourcing"
+ANZ,Operations,SCM Planning,VC Vendor Collaboration,Vendor-Built,Vendor portal
+ANZ,Operations,Transport and Logistics,Descartes,COTS,For Medline transportation.
+ANZ,Operations,Transport and Logistics,SmartFreight,COTS,For 3PL transportation.
+ANZ,Operations,Transport and Logistics,Yusen,Vendor-Built,For inbound shipping
+ANZ,Operations,Manufacturing,PSS 1.0,Custom,Pack Specific System    
+ANZ,Operations,Manufacturing,Label Printing,Custom,
+ANZ,Operations,Manufacturing,Batch Control,Custom,
+ANZ,Operations,Manufacturing,eiFU,Custom,For electronic instructions
+ANZ,Operations,RAQA,Reliance,COTS,Global QMS
+ANZ,Commercial,Sales,Customer Master (CMP),,
+ANZ,Commercial,Sales,SFDC,COTS,Salesforce
+ANZ,Commercial,Customer Service,Microsoft Dynamics,COTS,New CRM from Salesforce
+ANZ,Commercial,SPT,MedQuote,Custom,"For SPT sales, quoting"
+ANZ,Commercial,SPT,MedOps,Custom,For SPT sales operations support
+ANZ,Commercial,SPT,MedPack,Custom,"For SPT sales, to see the BOM"
+ANZ,Commercial,SPT,MedReports,Custom,For SPT reporting

@@ -1,0 +1,76 @@
+# Operations Applications Landscape View
+# Hierarchical grouping: Region (primary, rows) → Sub-Domain (secondary, columns)
+# This view organizes operations applications by geographic region with subdivisions
+
+view:
+  name: "Operations Applications Landscape"
+  documentation: "Hierarchical landscape view of operations applications organized by region (rows) and sub-domain (columns)"
+  viewpoint: "application_cooperation"
+
+elements:
+  include:
+    # Select only Operations ApplicationComponents
+    - where:
+        type: "ApplicationComponent"
+        Domain: "Operations"
+
+relationships:
+  include:
+    # Show serving relationships between applications
+    - type: ["Serving", "Flow"]
+      between: "included_elements"
+
+# Two-level hierarchical grouping: Region → Sub-Domain
+grouping:
+  by_property: "Region"                          # Primary grouping: Region (rows)
+  secondary_by_property: "Sub-Domain"            # Secondary grouping: Sub-Domain (columns)
+  order: ["ANZ", "JPN", "AEM", "_ungrouped"]    # Region order (top to bottom rows)
+  groups_per_row: 1                              # One region per row (stacked vertically)
+  group_width: 1600                              # Wide region containers
+  group_height: 1100                             # Calculated for JPN region with 10 apps: (10×60)+(9×40)+100=1060, rounded to 1100
+  group_spacing_x: 20
+  group_spacing_y: 50                            # Spacing between region rows
+
+layout:
+  algorithm: "grid"                              # Grid layout: sub-domains as columns (left to right)
+  columns: 6                                     # Up to 6 sub-domains per region (Manufacturing, Distribution, Supply Chain, Finance, RAQA, Other)
+  spacing_x: 120                                 # Horizontal spacing between sub-domain columns
+  spacing_y: 40                                  # Vertical spacing between apps within columns
+
+# View Structure (ASCII diagram):
+#
+# ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+# │ ANZ Region                                                                                      │
+# ├─────────────────────┬─────────────────────┬─────────────────────┬─────────────────────┬────────┤
+# │ Manufacturing       │ Distribution        │ Supply Chain        │ Finance             │ Other  │
+# ├─────────────────────┼─────────────────────┼─────────────────────┼─────────────────────┼────────┤
+# │ [app] [app] [app]   │ [app] [app]         │ [app]               │ [app] [app]         │ [app]  │
+# │ [app]               │ [app] [app]         │                     │ [app]               │        │
+# │ [app]               │                     │                     │                     │        │
+# └─────────────────────┴─────────────────────┴─────────────────────┴─────────────────────┴────────┘
+#
+# ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+# │ JPN Region                                                                                      │
+# ├─────────────────────┬─────────────────────┬─────────────────────┬─────────────────────┬────────┤
+# │ Manufacturing       │ Distribution        │ Supply Chain        │ Finance             │ Other  │
+# ├─────────────────────┼─────────────────────┼─────────────────────┼─────────────────────┼────────┤
+# │ [app] [app]         │ [app] [app] [app]   │ [app] [app]         │ [app]               │ [app]  │
+# │ [app]               │ [app]               │ [app]               │ [app] [app]         │        │
+# └─────────────────────┴─────────────────────┴─────────────────────┴─────────────────────┴────────┘
+#
+# ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+# │ AEM Region                                                                                      │
+# ├─────────────────────┬─────────────────────┬─────────────────────┬─────────────────────┬────────┤
+# │ Manufacturing       │ Distribution        │ Supply Chain        │ Finance             │ Other  │
+# ├─────────────────────┼─────────────────────┼─────────────────────┼─────────────────────┼────────┤
+# │ [app]               │ [app] [app]         │ [app]               │ [app]               │        │
+# │ [app] [app]         │ [app]               │ [app] [app]         │ [app] [app]         │        │
+# └─────────────────────┴─────────────────────┴─────────────────────┴─────────────────────┴────────┘
+#
+# MVP7 AI Layout Engine will:
+# 1. Create primary containers for each region (ANZ, JPN, AEM)
+# 2. Within each region, create label nodes for sub-domains
+# 3. Stack applications vertically within each sub-domain section
+# 4. Position containers vertically (rows of regions)
+# 5. Position sub-domains horizontally (columns within region)
+# 6. Add relationship connections between applications

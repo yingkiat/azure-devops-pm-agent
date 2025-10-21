@@ -88,12 +88,12 @@ def push_markdown_to_azure_wiki(markdown: str, page_path: str, wiki_name: str = 
                 )
                 if current_page and hasattr(current_page, 'response') and current_page.response:
                     current_etag = current_page.response.headers.get('ETag')
-                    print(f"🔧 Retrieved ETag for {clean_path}: {current_etag}")
+                    print(f" Retrieved ETag for {clean_path}: {current_etag}")
                 elif hasattr(current_page, 'etag'):
                     current_etag = current_page.etag
-                    print(f"🔧 Retrieved ETag (direct) for {clean_path}: {current_etag}")
+                    print(f" Retrieved ETag (direct) for {clean_path}: {current_etag}")
             except Exception as e:
-                print(f"🔧 No existing page found for {clean_path}, creating new: {e}")
+                print(f" No existing page found for {clean_path}, creating new: {e}")
             
             params = WikiPageCreateOrUpdateParameters(content=markdown)
             
@@ -106,20 +106,20 @@ def push_markdown_to_azure_wiki(markdown: str, page_path: str, wiki_name: str = 
                 version=current_etag
             )
             
-            print(f"🔧 Wiki update result for {clean_path}: {result is not None}")
-            print(f"🔧 Content length: {len(markdown)} characters")
-            print(f"🔧 Wiki: {wiki_name}, Project: {settings.azdo_project}")
+            print(f" Wiki update result for {clean_path}: {result is not None}")
+            print(f" Content length: {len(markdown)} characters")
+            print(f" Wiki: {wiki_name}, Project: {settings.azdo_project}")
             
             # Verify the update actually worked by checking new ETag
             if result and hasattr(result, 'response') and result.response:
                 new_etag = result.response.headers.get('ETag')
-                print(f"🔧 New ETag after update: {new_etag}")
+                print(f" New ETag after update: {new_etag}")
                 if new_etag and new_etag != current_etag:
-                    print(f"✅ ETag changed - update successful!")
+                    print(f" ETag changed - update successful!")
                 elif new_etag == current_etag:
-                    print(f"⚠️  ETag unchanged - content may be identical")
+                    print(f"  ETag unchanged - content may be identical")
                 else:
-                    print(f"⚠️  Could not verify ETag change")
+                    print(f"  Could not verify ETag change")
             
             # Small delay to let Azure DevOps process the update
             import time
@@ -147,7 +147,7 @@ def push_markdown_to_azure_wiki(markdown: str, page_path: str, wiki_name: str = 
                         project=settings.azdo_project
                     )
                     if verification:
-                        print(f"✅ Wiki page exists despite 500 error: {clean_path}")
+                        print(f" Wiki page exists despite 500 error: {clean_path}")
                         return True
                 except:
                     pass  # Verification failed, continue with retry logic
@@ -176,7 +176,7 @@ def push_markdown_to_azure_wiki(markdown: str, page_path: str, wiki_name: str = 
                         project=settings.azdo_project
                     )
                     if verification:
-                        print(f"✅ Wiki page exists despite errors: {clean_path}")
+                        print(f" Wiki page exists despite errors: {clean_path}")
                         return True
                 except:
                     pass

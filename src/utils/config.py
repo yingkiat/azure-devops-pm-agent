@@ -22,8 +22,8 @@ class PMAgentConfig:
         self.outputs_dir.mkdir(exist_ok=True)
         
         # Context and storage paths
-        self.context_dir = self.data_dir / "context"
-        self.id_mappings_file = self.data_dir / "id_mappings.json"
+        self.context_dir = self.data_dir / "ai"
+        self.id_mappings_file = self.data_dir / "pm" / "id_mappings.json"
         
         # Wiki configuration
         self.wiki_base_path = "/PM-Agent"

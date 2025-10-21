@@ -1,0 +1,364 @@
+# EA DSL Schema Definition
+# Defines node types (entities) and edge types (relationships) for the enterprise architecture model.
+
+node_types:
+
+  Capability:
+    description: "A high-level business capability – a fundamental ability or function that the business needs to perform."
+    attributes:
+      id: 
+        type: string 
+        required: true 
+        pattern: "^CAP-[0-9]{3}$"    # e.g., CAP-001
+      name: 
+        type: string 
+        required: true
+      description: 
+        type: string 
+        required: false
+      parent_capability:
+        type: string 
+        ref: Capability 
+        required: false            # allows capability hierarchy (contains relationship)
+      criticality:
+        type: enum [Low, Medium, High]
+        required: false
+      # Additional custom fields can include business owner, value stream, etc.
+    relationships:
+      # Defines which edges this type can be source or target of (for validation)
+      can_source: [realizes, contains, serves, governed_by]
+      can_target: [contains]   # Capability can contain sub-capabilities
+
+  Process:
+    description: "A business process – a sequence of activities or steps undertaken to achieve a business outcome."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^PROC-[0-9]{3}$"   # e.g., PROC-010
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      capability:
+        type: string 
+        ref: Capability 
+        required: true           # every process is aligned to a capability
+      # Optionally, a process could have a parent process if we model sub-processes
+    relationships:
+      can_source: [contains, depends_on, serves, governed_by]
+      can_target: [realizes, contains]  
+      # e.g., Process can 'contain' Steps, can 'serve' a higher-level capability maybe, or depend on Applications
+
+  Step:
+    description: "A finer-grained step or task within a business process."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^STEP-[0-9]{3}$"   # e.g., STEP-001
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      process:
+        type: string
+        ref: Process
+        required: true            # each step is part of a process
+    relationships:
+      can_source: [depends_on]
+      can_target: []  
+      # Steps can depend_on Applications or perhaps DataObjects (e.g., a task uses a data object)
+
+  Application:
+    description: "An application system or software component used in the enterprise."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^APP-[0-9]{3}$"   # e.g., APP-100
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      capability_support:
+        type: list[string]
+        ref: Capability
+        required: false           # which capabilities this application supports (realizes)
+      # Additional attributes: owner, lifecycle status, cost, etc.
+    relationships:
+      can_source: [realizes, depends_on, integrates, serves, hosted_on]
+      can_target: [depends_on, integrates, hosted_on]
+      # Application 'realizes' Capabilities, 'depends_on' other Applications or Services, 'integrates' with others via interfaces, etc.
+
+  Service:
+    description: "A service or API that provides a discrete piece of functionality, often provided by an application."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^SER-[0-9]{3}$"   # e.g., SER-050
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      application:
+        type: string
+        ref: Application
+        required: true           # service is provided by an application
+      # Possibly an attribute to indicate if it's internal or external, etc.
+    relationships:
+      can_source: [depends_on, serves, integrates]
+      can_target: [depends_on, integrates, realizes]
+      # e.g., a Service could 'serve' a Process (if it's a business service), and likely 'realizes' a capability as well or a specific functionality.
+
+  Interface:
+    description: "An interface or integration point through which applications or services connect and interact."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^INT-[0-9]{3}$"   # e.g., INT-005
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      # Could include type (API, UI, file transfer, etc.)
+    relationships:
+      can_source: [integrates]
+      can_target: [integrates]
+      # Interfaces typically are used as connectors in integrates relationships between Applications/Services.
+
+  DataObject:
+    description: "A data entity or object (logical or physical) that is used or produced by applications and processes."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^DATA-[0-9]{3}$"  # e.g., DATA-200
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      classification:
+        type: enum [Public, Internal, Confidential, Restricted]
+        required: false          # data sensitivity (e.g., PII classification)
+      # Could have an attribute for format or source system, etc.
+    relationships:
+      can_source: [lineage_of, depends_on]
+      can_target: [lineage_of, depends_on]
+      # lineage_of will typically link DataObject to DataObject
+      # depends_on might link a process on a data or an application on a data (if an app requires a data set, though often via interface)
+
+  KPI:
+    description: "A Key Performance Indicator – a measurable value that indicates how well an aspect of the enterprise is performing."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^KPI-[0-9]{3}$"   # e.g., KPI-010
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      unit:
+        type: string
+        required: false          # e.g., 'days', '%', 'score'
+      target_value:
+        type: number
+        required: false
+      current_value:
+        type: number
+        required: false
+    relationships:
+      can_source: [measures]
+      can_target: [measures]
+      # e.g., KPI 'measures' a Process or Capability or possibly an Application's performance.
+
+  Risk:
+    description: "A risk – an uncertain event or condition that could impact objectives (negative impact)."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^RISK-[0-9]{3}$"  # e.g., RISK-005
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      likelihood:
+        type: enum [Low, Medium, High]
+        required: false
+      impact:
+        type: enum [Low, Medium, High]
+        required: false
+      # Could add risk owner, etc.
+    relationships:
+      can_source: [depends_on, affects]
+      can_target: [mitigates]
+      # 'affects' relationship might link Risk to something it affects (Capability, Process, Application).
+      # Risk is mitigated_by controls (so Risk can be target of mitigates from Control).
+
+  Control:
+    description: "A control – a measure or action put in place to mitigate a risk or ensure compliance."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^CTRL-[0-9]{3}$"  # e.g., CTRL-010
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      type:
+        type: string
+        required: false          # e.g., policy, technical control, process control
+      status:
+        type: enum [Proposed, Implemented, Verified]
+        required: false
+    relationships:
+      can_source: [mitigates, governs]
+      can_target: [mitigates]
+      # Control 'mitigates' Risk, and possibly 'governs' something (like a Policy can govern, see below, or a control could govern a process)
+
+  Technology:
+    description: "A technology component or infrastructure node – e.g., servers, cloud services, devices, or platforms."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^TECH-[0-9]{3}$"  # e.g., TECH-100
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      type:
+        type: string
+        required: false          # e.g., "Server", "Database", "Network", "CloudService"
+      environment:
+        type: enum [Dev, Test, Prod]
+        required: false
+    relationships:
+      can_source: [hosts, depends_on]
+      can_target: [hosts]
+      # Technology 'hosts' Applications (or other tech, e.g., a VM hosts an app, a cluster hosts a containerized app).
+      # depends_on could capture tech depends on other tech (e.g., app server depends on database)
+
+  Policy:
+    description: "A high-level policy, principle, or guideline that governs architecture decisions (often related to compliance or best practices)."
+    attributes:
+      id:
+        type: string
+        required: true
+        pattern: "^POL-[0-9]{3}$"   # e.g., POL-001
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      # Potential attributes: category (security, quality, etc.), enforcement level
+    relationships:
+      can_source: [governs]
+      can_target: []
+      # A Policy 'governs' other elements (capabilities, processes, applications, etc. that should comply with it)
+
+# Relationship definitions (edge types)
+# These define allowed source -> target type pairs for each relationship.
+
+relationship_types:
+
+  realizes:
+    description: "Indicates that an element implements or realizes an abstract entity or higher-layer element."
+    valid_sources: [Application, Service, Technology, Process]
+    valid_targets: [Capability, Process] 
+    # e.g., Application realizes Capability; Technology (infrastructure) realizes (supports) an Application or capability in some cases; Process could realize a Capability (a way to achieve that capability)
+
+  depends_on:
+    description: "A generic dependency indicating that one element requires or relies on another (not necessarily a direct integration)."
+    valid_sources: [Process, Step, Application, Service, Technology, DataObject, Risk]
+    valid_targets: [Application, Service, Technology, DataObject]
+    # e.g., Process depends on Application; Application depends on a Technology (like a DB); could also use for risk depends on something? (or risk affects something, defined separately)
+
+  integrates:
+    description: "Indicates a direct integration or interaction between two elements, typically through an interface."
+    valid_sources: [Application, Service]
+    valid_targets: [Application, Service]
+    via: 
+      type: Interface 
+      required: false 
+      description: "If an interface mediates the integration, reference it."
+    # e.g., Application A integrates with Application B (via Interface X). This captures system interactions.
+
+  serves:
+    description: "Indicates that an element provides a service or value to another (often cross-layer, e.g., application serves a process or capability)."
+    valid_sources: [Application, Service]
+    valid_targets: [Process, Capability]
+    # e.g., A Service serves a Process (the process uses that service), or an Application serves a Business Capability by delivering required functionality.
+
+  mitigates:
+    description: "Indicates that a Control (or policy) mitigates a Risk."
+    valid_sources: [Control]
+    valid_targets: [Risk]
+    # Typically from Control to Risk (a control addresses a risk).
+
+  measures:
+    description: "Indicates that a KPI measures the performance or outcome of another element."
+    valid_sources: [KPI]
+    valid_targets: [Capability, Process, Service] 
+    # e.g., KPI measures a Process performance or a Capability outcome.
+
+  contains:
+    description: "Indicates hierarchical containment (composition). For example, Capabilities containing sub-capabilities, Processes containing Steps."
+    valid_sources: [Capability, Process]
+    valid_targets: [Capability, Step]
+    # We allow capabilities to contain sub-capabilities; processes contain steps.
+
+  governed_by:
+    description: "Indicates that an element is governed or constrained by a Policy or Control."
+    valid_sources: [Policy, Control]
+    valid_targets: [Capability, Process, Application, DataObject, Technology]
+    # e.g., a Process is governed_by a Policy (like a compliance policy); an Application is governed_by a Security Policy.
+
+  hosted_on:
+    description: "Indicates that an application or service is hosted on a technology component (infrastructure)."
+    valid_sources: [Application, Service]
+    valid_targets: [Technology]
+    # e.g., Application runs on (hosted_on) a server or cloud service.
+
+  lineage_of:
+    description: "Indicates a data lineage relationship (source-to-target) between DataObjects."
+    valid_sources: [DataObject]
+    valid_targets: [DataObject]
+    # e.g., DataObject A is lineage_of DataObject B means A is an upstream source/precursor for B.
+
+# Validation rules summary (in addition to type-based rules above):
+# - All 'id' must be unique across the entire model (and follow the prefix conventions).
+# - References (ref fields) must point to an existing entity id of the correct type.
+# - Required fields must be present and non-empty.
+# - Relationship validity: each instance of a relationship must conform to the allowed source and target types as above.
+# - No circular relationships in certain hierarchies (e.g., Capability contains should not form cycles).
+# - Naming conventions: (could enforce no duplicate names under same parent, etc. if needed).
+# - Orphan check: Every Process should link to a Capability; every Step to a Process; etc. If these are missing, flag as error.
+#
+# End of schema.

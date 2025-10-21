@@ -12,7 +12,7 @@ from .plan_schema import StructuredPlan, EpicSpec, FeatureSpec, StorySpec, TaskS
 
 SYSTEM_PROMPT = """
 You are a senior Azure DevOps PM (Agile process). Convert the BUSINESS GOAL into a structured plan.
-Return ONLY JSON with this exact structure:
+Return ONLY JSON with this .exact structure:
 {
   "business_goal": "the goal text",
   "hub_project": "Portfolio-Hub", 

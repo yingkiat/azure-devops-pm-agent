@@ -1,0 +1,1516 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/ http://www.opengroup.org/xsd/archimate/3.1/archimate3_Model.xsd" identifier="id-20f35e630daf">
+  <name>AI-Generated EA Model</name>
+  <elements>
+    <element identifier="id-021726ec4519" xsi:type="ApplicationComponent">
+      <name>PSS 1.0</name>
+      <documentation>Product information interface; Pack Specific System</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>WN</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom-Built</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Visual Basic</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-e176567a2ef1" xsi:type="ApplicationComponent">
+      <name>QAD EE</name>
+      <documentation>ERP system for finance and supply chain management; QAD EE Cloud</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>AEM</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>ERP</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>ERP</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Java</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>QAD</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-f91e6b0dc180" xsi:type="ApplicationComponent">
+      <name>Tableau</name>
+      <documentation>Data visualization and reporting tool; Dashboarding</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>AEM</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Data</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>ERP</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Tableau</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-328d17d91256" xsi:type="ApplicationComponent">
+      <name>QAD SE</name>
+      <documentation>ERP system for finance and supply chain management; QAD SE Cloud</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>ERP</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>ERP</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Java</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>QAD</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-6385d2992d54" xsi:type="ApplicationComponent">
+      <name>DSX</name>
+      <documentation>Supply chain planning and forecasting tool; Forecasting</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SCM Planning</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Blue Yonder</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-9a5fd32c9b67" xsi:type="ApplicationComponent">
+      <name>SAP APO</name>
+      <documentation>Supply chain planning and global sourcing system; Supply Chain Planning, Global Sourcing; Supply chain planning system for global sourcing</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SCM Planning</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>ABAP</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>SAP</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-64bdcb4d3b3a" xsi:type="ApplicationComponent">
+      <name>VC Vendor Collaboration</name>
+      <documentation>Vendor collaboration portal for supply chain; Vendor portal</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SCM Planning</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Vendor-Built</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-0015d01da270" xsi:type="ApplicationComponent">
+      <name>Cargo Master</name>
+      <documentation>Warehouse management system for 3PL warehouse; For 3PL warehouse; System used in Tokyo Distribution Center</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Warehouse Management</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>3GTMS</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-6d9eb02243f7" xsi:type="ApplicationComponent">
+      <name>W3 Sirius</name>
+      <documentation>Warehouse management system for warehouse operations; For warehouse management; Distribution center management system</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Warehouse Management</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>W3</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-bb3759f4a808" xsi:type="ApplicationComponent">
+      <name>Yusen</name>
+      <documentation>Inbound shipping management system; For inbound shipping; Global logistics system for international buying</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Transport and Logistics</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Vendor-Built</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Yusen</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-1d3ac771d8b3" xsi:type="ApplicationComponent">
+      <name>GSCM/OCTS</name>
+      <documentation>Custom Excel-based system for transport management; Excel based</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Transport and Logistics</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Excel</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-d0be297d0966" xsi:type="ApplicationComponent">
+      <name>Kenpin Barcode</name>
+      <documentation>Assembly inventory tracking system; Assembly inventory data; COTS system for assembly data</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Manufacturing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Kenpin</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-6e68a57a6540" xsi:type="ApplicationComponent">
+      <name>Iwagaki Access</name>
+      <documentation>Assembly tracking system using Access database; Access database for tracking</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Manufacturing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Microsoft Access</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-989487361c07" xsi:type="ApplicationComponent">
+      <name>QMS</name>
+      <documentation>Quality management system for regulatory assurance; For regulatory assurance and quality assurance</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>RAQA</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>MasterControl</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-57662baf44e5" xsi:type="ApplicationComponent">
+      <name>Descartes</name>
+      <documentation>Transportation management system for Medline logistics; Transportation system for Medline</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Transport and Logistics</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Descartes</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-eb8c94bbf229" xsi:type="ApplicationComponent">
+      <name>SmartFreight</name>
+      <documentation>Transportation management system for 3PL transportation; 3PL transportation system</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Transport and Logistics</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>SmartFreight</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-cb7cb0b84df6" xsi:type="ApplicationComponent">
+      <name>Label Printing</name>
+      <documentation>Label printing system for manufacturing</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Manufacturing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-40e91ca61f1d" xsi:type="ApplicationComponent">
+      <name>Batch Control</name>
+      <documentation>Batch control system for manufacturing</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Manufacturing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-59e3aeffe45f" xsi:type="ApplicationComponent">
+      <name>eiFU</name>
+      <documentation>Electronic instructions system for manufacturing</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Manufacturing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-60b46c5e1d6f" xsi:type="ApplicationComponent">
+      <name>Reliance</name>
+      <documentation>Global quality management system for regulatory assurance; Global QMS</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>RAQA</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Intellect</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-849edc6949bf" xsi:type="ApplicationComponent">
+      <name>Customer Master (CMP)</name>
+      <documentation>Customer master data management system</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Unknown</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-463dc8438ddb" xsi:type="ApplicationComponent">
+      <name>SFDC</name>
+      <documentation>Salesforce CRM system for sales management; Salesforce</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Salesforce</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-c508ffe79f87" xsi:type="ApplicationComponent">
+      <name>Microsoft Dynamics</name>
+      <documentation>New CRM system replacing legacy systems with advanced automation; New CRM from Salesforce</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Customer Service</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>C#</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Microsoft</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-46735043cd40" xsi:type="ApplicationComponent">
+      <name>MedQuote</name>
+      <documentation>Custom quoting system for SPT sales; Sales application for SPT component decisions and quotations</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SPT</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+        <property propertyDefinitionRef="id-551332ee868b">
+          <value>Sunset</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-d11d37e2f121" xsi:type="ApplicationComponent">
+      <name>MedOps</name>
+      <documentation>Custom sales operations support system for SPT sales; Application for SOS (Source of Supply) management</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SPT</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-94c3ea1ca407" xsi:type="ApplicationComponent">
+      <name>MedPack</name>
+      <documentation>Custom BOM viewing system for SPT sales; Application for Bill of Materials (BOM) and sales support</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SPT</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-72a9b7ecec65" xsi:type="ApplicationComponent">
+      <name>MedReports</name>
+      <documentation>Custom reporting system for SPT sales; Application for reporting related to SPT</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>SPT</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Legacy</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>Custom</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>On-Prem</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Miscellaneous</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Internal</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-b8d09705688b" xsi:type="ApplicationComponent">
+      <name>Microsoft Document Intelligence</name>
+      <documentation>AI-based document processing system for ERP integration; Document AI service for extracting data from purchase orders</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>IT</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Document Automation</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>Python</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Microsoft</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-6b4a8e4819a0" xsi:type="ApplicationComponent">
+      <name>PO Automation</name>
+      <documentation>New CRM system integrating with Microsoft Document Intelligence for automation</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Purchase Order Automation</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>C#</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Microsoft</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-82588a1d9380" xsi:type="ApplicationComponent">
+      <name>Purchase Order Automation</name>
+      <documentation>New CRM system integrating with ERP for strategic advantage</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>ANZ</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Purchase Order Automation</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>IT Director</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Approved</value>
+        </property>
+        <property propertyDefinitionRef="id-b1a1ea9dba57">
+          <value>COTS</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>Cloud</value>
+        </property>
+        <property propertyDefinitionRef="id-0add45834a4a">
+          <value>C#</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Microsoft</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-08d83563ddf2" xsi:type="ApplicationComponent">
+      <name>Dynamics CRM</name>
+      <documentation>CRM system for managing customer relationships and sales</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-0b8c51488338">
+          <value>Microsoft Dynamics</value>
+        </property>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-551332ee868b">
+          <value>Strategic</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-a0db50c31b76" xsi:type="ApplicationComponent">
+      <name>Salesforce.com</name>
+      <documentation>CRM system used in Japan for customer management</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-0b8c51488338">
+          <value>Salesforce</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-942d37637536" xsi:type="ApplicationComponent">
+      <name>Kit Management System</name>
+      <documentation>Database for managing SPT kits in Japan</documentation>
+    </element>
+    <element identifier="id-9aa09d95655d" xsi:type="ApplicationComponent">
+      <name>QAD</name>
+      <documentation>ERP system for managing purchase orders and other operations</documentation>
+    </element>
+    <element identifier="id-e682e06ee2b6" xsi:type="ApplicationComponent">
+      <name>Iwagaki</name>
+      <documentation>Access database for assembly data</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-0b8c51488338">
+          <value>Microsoft Access</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-86bab17ebe7f" xsi:type="Capability">
+      <name>Quotation Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-133b9258af74" xsi:type="Capability">
+      <name>Sales Support</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-7a9c22258891" xsi:type="Capability">
+      <name>Supply Chain Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-d6147d197104" xsi:type="Capability">
+      <name>BOM Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-325b8609b6e3" xsi:type="Capability">
+      <name>Reporting</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Nice-to-Have</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-75a9eaf4fe89" xsi:type="Capability">
+      <name>Customer Relationship Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-3f60170812f9" xsi:type="Capability">
+      <name>Sales Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Sales</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-832924dde3c6" xsi:type="Capability">
+      <name>Kit Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-faad9192a0d7" xsi:type="Capability">
+      <name>Document Processing</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-14da17022bdc" xsi:type="Capability">
+      <name>Order Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-454a993499ff" xsi:type="Capability">
+      <name>ERP</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-eb79786b3c6c" xsi:type="Capability">
+      <name>Supply Chain Planning</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-747df468b064" xsi:type="Capability">
+      <name>Distribution Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-093d71d12f31" xsi:type="Capability">
+      <name>Logistics Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-58aacf2e58f9" xsi:type="Capability">
+      <name>Transportation Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Critical</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-b5560691d686" xsi:type="Capability">
+      <name>Assembly Data Management</name>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Operations</value>
+        </property>
+        <property propertyDefinitionRef="id-e30492366547">
+          <value>Important</value>
+        </property>
+      </properties>
+    </element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-28919fd745bf" xsi:type="Serving" source="id-c508ffe79f87" target="id-75a9eaf4fe89">
+      <documentation>Microsoft Dynamics supports CRM capabilities</documentation>
+    </relationship>
+    <relationship identifier="id-3a5fb7d5b761" xsi:type="Flow" source="id-08d83563ddf2" target="id-b8d09705688b">
+      <documentation>CRM integrates with Microsoft Document Intelligence for purchase order processing</documentation>
+    </relationship>
+    <relationship identifier="id-2619e51d7a3b" xsi:type="Flow" source="id-b8d09705688b" target="id-9aa09d95655d">
+      <documentation>Document Intelligence sends extracted data to QAD ERP</documentation>
+    </relationship>
+    <relationship identifier="id-6056a3692d95" xsi:type="Flow" source="id-08d83563ddf2" target="id-9aa09d95655d">
+      <documentation>CRM updates purchase order status in QAD</documentation>
+    </relationship>
+    <relationship identifier="id-9ca57d50697d" xsi:type="Flow" source="id-46735043cd40" target="id-d11d37e2f121">
+      <documentation>MedQuote sends SPT component decisions to MedOps</documentation>
+    </relationship>
+    <relationship identifier="id-ab9e2a875d02" xsi:type="Flow" source="id-d11d37e2f121" target="id-94c3ea1ca407">
+      <documentation>MedOps integrates with MedPack for BOM management</documentation>
+    </relationship>
+    <relationship identifier="id-e4c4979e185b" xsi:type="Flow" source="id-94c3ea1ca407" target="id-72a9b7ecec65">
+      <documentation>MedPack provides data to MedReports for reporting</documentation>
+    </relationship>
+    <relationship identifier="id-596cfde716ee" xsi:type="Serving" source="id-e176567a2ef1" target="id-7a9c22258891">
+      <name>supports</name>
+      <documentation>QAD EE supports Supply Chain Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-b36da078aeaa" xsi:type="Serving" source="id-f91e6b0dc180" target="id-325b8609b6e3">
+      <name>supports</name>
+      <documentation>Tableau supports Reporting capability</documentation>
+    </relationship>
+    <relationship identifier="id-7d533fa58c2a" xsi:type="Serving" source="id-328d17d91256" target="id-7a9c22258891">
+      <name>supports</name>
+      <documentation>QAD SE supports Supply Chain Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-52042e731e71" xsi:type="Serving" source="id-6385d2992d54" target="id-eb79786b3c6c">
+      <name>supports</name>
+      <documentation>DSX supports Supply Chain Planning capability</documentation>
+    </relationship>
+    <relationship identifier="id-3a3faf0ec6a9" xsi:type="Serving" source="id-9a5fd32c9b67" target="id-eb79786b3c6c">
+      <name>supports</name>
+      <documentation>SAP APO supports Supply Chain Planning capability</documentation>
+    </relationship>
+    <relationship identifier="id-3ab71ee13e47" xsi:type="Serving" source="id-57662baf44e5" target="id-58aacf2e58f9">
+      <name>supports</name>
+      <documentation>Descartes supports Transportation Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-582276aa826e" xsi:type="Serving" source="id-eb8c94bbf229" target="id-58aacf2e58f9">
+      <name>supports</name>
+      <documentation>SmartFreight supports Transportation Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-b128133463bf" xsi:type="Serving" source="id-463dc8438ddb" target="id-3f60170812f9">
+      <name>supports</name>
+      <documentation>SFDC supports Sales Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-f1232e15d546" xsi:type="Serving" source="id-c508ffe79f87" target="id-75a9eaf4fe89">
+      <name>supports</name>
+      <documentation>Microsoft Dynamics supports Customer Relationship Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-8caf27499af7" xsi:type="Serving" source="id-72a9b7ecec65" target="id-325b8609b6e3">
+      <name>supports</name>
+      <documentation>MedReports supports Reporting capability</documentation>
+    </relationship>
+    <relationship identifier="id-828ba56de9fe" xsi:type="Serving" source="id-b8d09705688b" target="id-faad9192a0d7">
+      <name>supports</name>
+      <documentation>Microsoft Document Intelligence supports Document Processing capability</documentation>
+    </relationship>
+    <relationship identifier="id-adfa9902f08d" xsi:type="Serving" source="id-08d83563ddf2" target="id-75a9eaf4fe89">
+      <name>supports</name>
+      <documentation>Dynamics CRM supports Customer Relationship Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-c3c74eca56b0" xsi:type="Serving" source="id-08d83563ddf2" target="id-3f60170812f9">
+      <name>supports</name>
+      <documentation>Dynamics CRM supports Sales Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-e2809db0ac08" xsi:type="Serving" source="id-a0db50c31b76" target="id-75a9eaf4fe89">
+      <name>supports</name>
+      <documentation>Salesforce.com supports Customer Relationship Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-a67af21b7e8f" xsi:type="Serving" source="id-942d37637536" target="id-832924dde3c6">
+      <name>supports</name>
+      <documentation>Kit Management System supports Kit Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-5e5eed0fe60c" xsi:type="Serving" source="id-9aa09d95655d" target="id-14da17022bdc">
+      <name>supports</name>
+      <documentation>QAD supports Order Management capability</documentation>
+    </relationship>
+    <relationship identifier="id-e6b3e632b8a2" xsi:type="Serving" source="id-9aa09d95655d" target="id-454a993499ff">
+      <name>supports</name>
+      <documentation>QAD supports ERP capability</documentation>
+    </relationship>
+    <relationship identifier="id-f83106164068" xsi:type="Serving" source="id-e682e06ee2b6" target="id-b5560691d686">
+      <name>supports</name>
+      <documentation>Iwagaki supports Assembly Data Management capability</documentation>
+    </relationship>
+  </relationships>
+  <propertyDefinitions>
+    <propertyDefinition identifier="id-5fb9f252392e" type="string">
+      <name>Region</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-224338fd7930" type="string">
+      <name>Domain</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-7e92a39e4667" type="string">
+      <name>Sub-Domain</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-fd77680479f8" type="string">
+      <name>It Owner</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-3f7a60e17f42" type="string">
+      <name>Tech Standard</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-b1a1ea9dba57" type="string">
+      <name>Application Type</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-85963f769af5" type="string">
+      <name>Hosting Type</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-0add45834a4a" type="string">
+      <name>Primary Language</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-126194a04aeb" type="string">
+      <name>Vendor Support</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-0b8c51488338" type="string">
+      <name>Technology Stack</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-e30492366547" type="string">
+      <name>Criticality</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="id-551332ee868b" type="string">
+      <name>Lifecycle Status</name>
+    </propertyDefinition>
+  </propertyDefinitions>
+  <views>
+    <diagrams>
+      <view identifier="id-4d13e5fd6ea6" xsi:type="Diagram">
+        <name>Commercial Applications Matrix</name>
+        <documentation>Matrix view of commercial applications organized by region and sub-domain</documentation>
+        <node identifier="id-c553856570b8" xsi:type="Container" x="20" y="20" w="800" h="600">
+          <label>ANZ</label>
+          <node identifier="id-55d4663b55b9" elementRef="id-46735043cd40" xsi:type="Element" x="60" y="60" w="120" h="60" />
+          <node identifier="id-9c5a56017e82" elementRef="id-c508ffe79f87" xsi:type="Element" x="200" y="60" w="120" h="60" />
+          <node identifier="id-19173a68d126" elementRef="id-849edc6949bf" xsi:type="Element" x="340" y="60" w="120" h="60" />
+          <node identifier="id-d1a1dfe79976" elementRef="id-d11d37e2f121" xsi:type="Element" x="60" y="140" w="120" h="60" />
+          <node identifier="id-0c6beb0136dc" elementRef="id-94c3ea1ca407" xsi:type="Element" x="200" y="140" w="120" h="60" />
+          <node identifier="id-7a2e8913c508" elementRef="id-6b4a8e4819a0" xsi:type="Element" x="340" y="140" w="120" h="60" />
+          <node identifier="id-1d7fd5278531" elementRef="id-72a9b7ecec65" xsi:type="Element" x="60" y="220" w="120" h="60" />
+          <node identifier="id-d95b3b933edd" elementRef="id-463dc8438ddb" xsi:type="Element" x="200" y="220" w="120" h="60" />
+          <node identifier="id-de237e33816d" elementRef="id-82588a1d9380" xsi:type="Element" x="340" y="220" w="120" h="60" />
+        </node>
+        <connection identifier="id-e45e60950734" relationshipRef="id-9ca57d50697d" xsi:type="Relationship" source="id-55d4663b55b9" target="id-d1a1dfe79976" />
+        <connection identifier="id-42bb9b81159d" relationshipRef="id-ab9e2a875d02" xsi:type="Relationship" source="id-d1a1dfe79976" target="id-0c6beb0136dc" />
+        <connection identifier="id-ac489be35d67" relationshipRef="id-e4c4979e185b" xsi:type="Relationship" source="id-0c6beb0136dc" target="id-1d7fd5278531" />
+      </view>
+      <view identifier="id-730c91b130d8" xsi:type="Diagram">
+        <name>Operations Applications Landscape</name>
+        <documentation>Hierarchical landscape view of operations applications organized by region (rows) and sub-domain (columns)</documentation>
+        <node identifier="id-1113fc0d9b7f" xsi:type="Container" x="20" y="20" w="1600" h="1100">
+          <label>ANZ</label>
+          <node identifier="id-0c3eab2f03a4" xsi:type="Label" x="40" y="40" w="300" h="50">
+            <label>Manufacturing</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-c5f48cdde34b" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="60" y="130" w="120" h="60" />
+          <node identifier="id-ab8cfeb505d2" elementRef="id-40e91ca61f1d" xsi:type="Element" x="300" y="130" w="120" h="60" />
+          <node identifier="id-11ca96e001b6" elementRef="id-59e3aeffe45f" xsi:type="Element" x="540" y="130" w="120" h="60" />
+          <node identifier="id-d86d0c56c1e4" xsi:type="Label" x="40" y="220" w="300" h="50">
+            <label>Operations</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-27f386943d75" elementRef="id-021726ec4519" xsi:type="Element" x="60" y="310" w="120" h="60" />
+          <node identifier="id-54f087bc6fc9" xsi:type="Label" x="40" y="400" w="300" h="50">
+            <label>RAQA</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-cac280f52b35" elementRef="id-60b46c5e1d6f" xsi:type="Element" x="60" y="490" w="120" h="60" />
+          <node identifier="id-ee11c79a8d7f" xsi:type="Label" x="40" y="580" w="300" h="50">
+            <label>Transport and Logistics</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-4ec068d1584b" elementRef="id-57662baf44e5" xsi:type="Element" x="60" y="670" w="120" h="60" />
+          <node identifier="id-cbe01527f8fa" elementRef="id-eb8c94bbf229" xsi:type="Element" x="300" y="670" w="120" h="60" />
+        </node>
+        <node identifier="id-84713985513a" xsi:type="Container" x="20" y="1170" w="1600" h="1100">
+          <label>JPN</label>
+          <node identifier="id-660c8f955851" xsi:type="Label" x="40" y="1190" w="300" h="50">
+            <label>Manufacturing</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-147203a565bc" elementRef="id-d0be297d0966" xsi:type="Element" x="60" y="1280" w="120" h="60" />
+          <node identifier="id-58f5882dcb2c" elementRef="id-6e68a57a6540" xsi:type="Element" x="300" y="1280" w="120" h="60" />
+          <node identifier="id-a96f386ecd5a" xsi:type="Label" x="40" y="1370" w="300" h="50">
+            <label>RAQA</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-d596a839f14b" elementRef="id-989487361c07" xsi:type="Element" x="60" y="1460" w="120" h="60" />
+          <node identifier="id-b1f3c1deebae" xsi:type="Label" x="40" y="1550" w="300" h="50">
+            <label>SCM Planning</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-5defa9917fde" elementRef="id-64bdcb4d3b3a" xsi:type="Element" x="60" y="1640" w="120" h="60" />
+          <node identifier="id-72c1f54616ce" elementRef="id-9a5fd32c9b67" xsi:type="Element" x="300" y="1640" w="120" h="60" />
+          <node identifier="id-185503805d98" elementRef="id-6385d2992d54" xsi:type="Element" x="540" y="1640" w="120" h="60" />
+          <node identifier="id-b910b73921c1" xsi:type="Label" x="40" y="1730" w="300" h="50">
+            <label>Transport and Logistics</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-d35ac151ef21" elementRef="id-1d3ac771d8b3" xsi:type="Element" x="60" y="1820" w="120" h="60" />
+          <node identifier="id-bc73dc487fa4" elementRef="id-bb3759f4a808" xsi:type="Element" x="300" y="1820" w="120" h="60" />
+          <node identifier="id-f3c6e9135567" xsi:type="Label" x="40" y="1910" w="300" h="50">
+            <label>Warehouse Management</label>
+            <style>
+              <fillColor r="240" g="240" b="240" a="100" />
+              <lineColor r="100" g="100" b="100" a="100" />
+              <font name="Arial" size="11">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+          <node identifier="id-c770441679a6" elementRef="id-6d9eb02243f7" xsi:type="Element" x="60" y="2000" w="120" h="60" />
+          <node identifier="id-ed3bb00608f2" elementRef="id-0015d01da270" xsi:type="Element" x="300" y="2000" w="120" h="60" />
+        </node>
+      </view>
+      <view identifier="id-398422cb3629" xsi:type="Diagram">
+        <name>Operations Applications Matrix</name>
+        <documentation>Matrix view of operations applications organized by region and sub-domain</documentation>
+        <node identifier="id-1a87f38331c1" xsi:type="Container" x="20" y="20" w="800" h="600">
+          <label>ANZ</label>
+          <node identifier="id-a41e362641c6" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="60" y="60" w="120" h="60" />
+          <node identifier="id-e0746dc82366" elementRef="id-57662baf44e5" xsi:type="Element" x="200" y="60" w="120" h="60" />
+          <node identifier="id-2355d2513b37" elementRef="id-40e91ca61f1d" xsi:type="Element" x="340" y="60" w="120" h="60" />
+          <node identifier="id-a95d63673433" elementRef="id-59e3aeffe45f" xsi:type="Element" x="60" y="140" w="120" h="60" />
+          <node identifier="id-5196b6bb0c7b" elementRef="id-60b46c5e1d6f" xsi:type="Element" x="200" y="140" w="120" h="60" />
+          <node identifier="id-41a19628f323" elementRef="id-eb8c94bbf229" xsi:type="Element" x="340" y="140" w="120" h="60" />
+          <node identifier="id-96811542fd38" elementRef="id-021726ec4519" xsi:type="Element" x="60" y="220" w="120" h="60" />
+        </node>
+        <node identifier="id-b4553cd2b787" xsi:type="Container" x="870" y="20" w="800" h="600">
+          <label>JPN</label>
+          <node identifier="id-f49921f024b3" elementRef="id-64bdcb4d3b3a" xsi:type="Element" x="910" y="60" w="120" h="60" />
+          <node identifier="id-af91074d6b50" elementRef="id-6d9eb02243f7" xsi:type="Element" x="1050" y="60" w="120" h="60" />
+          <node identifier="id-4e1355200667" elementRef="id-0015d01da270" xsi:type="Element" x="1190" y="60" w="120" h="60" />
+          <node identifier="id-49007ab43b80" elementRef="id-9a5fd32c9b67" xsi:type="Element" x="910" y="140" w="120" h="60" />
+          <node identifier="id-7c93e2a96866" elementRef="id-d0be297d0966" xsi:type="Element" x="1050" y="140" w="120" h="60" />
+          <node identifier="id-4d990b6683ef" elementRef="id-989487361c07" xsi:type="Element" x="1190" y="140" w="120" h="60" />
+          <node identifier="id-8310cd35ad3f" elementRef="id-6e68a57a6540" xsi:type="Element" x="910" y="220" w="120" h="60" />
+          <node identifier="id-a67a28cc3002" elementRef="id-6385d2992d54" xsi:type="Element" x="1050" y="220" w="120" h="60" />
+          <node identifier="id-201743793f3f" elementRef="id-1d3ac771d8b3" xsi:type="Element" x="1190" y="220" w="120" h="60" />
+          <node identifier="id-b92ea36eca4c" elementRef="id-bb3759f4a808" xsi:type="Element" x="910" y="300" w="120" h="60" />
+        </node>
+      </view>
+    </diagrams>
+  </views>
+</model>

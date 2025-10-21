@@ -8,17 +8,19 @@ import sys
 import tempfile
 import shutil
 from pathlib import Path
+import pytest
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from ai_orchestrator.context_manager import ContextManager, ProjectContext, ConversationEntry
-from ai_orchestrator.orchestrator import AzureDevOpsOrchestrator
+from pm.context.context_manager import ContextManager, ProjectContext, ConversationEntry
+from pm.orchestrator import PMOrchestrator
 
 
+@pytest.mark.high_priority
 def test_context_manager_basic():
     """Test basic context manager functionality."""
-    print("💾 Testing Context Manager Basics")
+    print(" Testing Context Manager Basics")
     print("=" * 50)
     
     # Use temporary directory for testing
@@ -30,7 +32,7 @@ def test_context_manager_basic():
         retrieved_value = context_manager.get_session_context("test_key")
         
         assert retrieved_value == "test_value", f"Expected 'test_value', got {retrieved_value}"
-        print("✅ Session context storage and retrieval working")
+        print(" Session context storage and retrieval working")
         
         # Test project context
         project_data = {
@@ -58,7 +60,7 @@ def test_context_manager_basic():
         assert project_context is not None, "Project context should exist"
         assert project_context.health_score == 0.85, f"Expected health score 0.85, got {project_context.health_score}"
         assert len(project_context.key_repositories) == 2, f"Expected 2 repositories, got {len(project_context.key_repositories)}"
-        print("✅ Project context storage and updating working")
+        print(" Project context storage and updating working")
         
         # Test learning from interaction
         context_manager.learn_from_interaction(
@@ -71,20 +73,21 @@ def test_context_manager_basic():
         # Check that intent was learned
         assert context_manager.user_preferences.common_intents['QUERY'] == 1, "Intent should be learned"
         assert len(context_manager.conversation_history) == 1, "Conversation should be stored"
-        print("✅ Interaction learning working")
+        print(" Interaction learning working")
         
         # Test context stats
         stats = context_manager.get_context_stats()
         assert stats['session_keys'] >= 1, "Should have session keys"
         assert stats['known_projects'] == 1, "Should have 1 known project"
         assert stats['conversation_entries'] == 1, "Should have 1 conversation"
-        print("✅ Context statistics working")
+        print(" Context statistics working")
         print(f"   Stats: {stats}")
 
 
+@pytest.mark.high_priority
 def test_context_persistence():
     """Test context persistence across instances."""
-    print("\n🔄 Testing Context Persistence")
+    print("\n Testing Context Persistence")
     print("=" * 50)
     
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -103,12 +106,13 @@ def test_context_persistence():
         
         assert "Persistent Project" in context_manager2.user_preferences.preferred_projects, "Preferences should persist"
         
-        print("✅ Context persistence across sessions working")
+        print(" Context persistence across sessions working")
 
 
+@pytest.mark.high_priority
 def test_relevant_context_extraction():
     """Test relevant context extraction for user requests."""
-    print("\n🎯 Testing Relevant Context Extraction")
+    print("\n Testing Relevant Context Extraction")
     print("=" * 50)
     
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -149,18 +153,20 @@ def test_relevant_context_extraction():
                 if project_mentioned:
                     assert 'known_projects' in relevant_context, f"Should include known projects for: {request}"
         
-        print("✅ Relevant context extraction working")
+        print(" Relevant context extraction working")
 
 
+@pytest.mark.high_priority
+@pytest.mark.asyncio
 async def test_orchestrator_with_context():
     """Test orchestrator integration with context management."""
-    print("\n🤖 Testing Orchestrator Context Integration")
+    print("\n Testing Orchestrator Context Integration")
     print("=" * 50)
     
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             # Create orchestrator with custom context directory
-            orchestrator = AzureDevOpsOrchestrator()
+            orchestrator = PMOrchestrator()
             orchestrator.context_manager = ContextManager(context_dir=temp_dir)
             
             # Simulate first interaction
@@ -168,7 +174,7 @@ async def test_orchestrator_with_context():
             result1 = await orchestrator.handle_request("What projects do we have?")
             
             if result1.get("success"):
-                print("✅ First interaction successful")
+                print(" First interaction successful")
                 
                 # Check that context was learned
                 stats1 = orchestrator.context_manager.get_context_stats()
@@ -184,18 +190,19 @@ async def test_orchestrator_with_context():
                     
                     # Verify context accumulation
                     assert stats2['conversation_entries'] > stats1['conversation_entries'], "Context should accumulate"
-                    print("✅ Context accumulation working")
+                    print(" Context accumulation working")
             else:
-                print("⚠️  First interaction failed - this is expected if Azure DevOps is not accessible")
+                print("  First interaction failed - this is expected if Azure DevOps is not accessible")
                 
     except Exception as e:
-        print(f"⚠️  Orchestrator test failed: {e} - this is expected without Azure DevOps access")
-        print("✅ Context manager integration appears functional")
+        print(f"  Orchestrator test failed: {e} - this is expected without Azure DevOps access")
+        print(" Context manager integration appears functional")
 
 
+@pytest.mark.high_priority
 def test_context_cleanup():
     """Test context cleanup and management."""
-    print("\n🧹 Testing Context Cleanup")
+    print("\n Testing Context Cleanup")
     print("=" * 50)
     
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -219,7 +226,7 @@ def test_context_cleanup():
         context_manager._load_context()
         
         assert len(context_manager.conversation_history) == 100, f"Should limit to 100 conversations, got {len(context_manager.conversation_history)}"
-        print("✅ Conversation history limiting working")
+        print(" Conversation history limiting working")
         
         # Test context clearing
         initial_stats = context_manager.get_context_stats()
@@ -228,7 +235,7 @@ def test_context_cleanup():
         
         assert final_stats['conversation_entries'] == 0, "Conversations should be cleared"
         assert final_stats['known_projects'] == 0, "Projects should be cleared"
-        print("✅ Context clearing working")
+        print(" Context clearing working")
 
 
 if __name__ == "__main__":
@@ -238,5 +245,5 @@ if __name__ == "__main__":
     asyncio.run(test_orchestrator_with_context())
     test_context_cleanup()
     
-    print("\n🎉 All context persistence tests completed!")
+    print("\n All context persistence tests completed!")
     print("Context manager is ready for production use.")

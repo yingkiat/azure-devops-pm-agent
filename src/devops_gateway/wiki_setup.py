@@ -29,7 +29,7 @@ python -m src.cli.main plan-new "Your business goal here"
     
     success = push_markdown_to_azure_wiki(main_page_content, "PM-Agent")
     if not success:
-        print("⚠️  Could not create main PM-Agent page")
+        print("  Could not create main PM-Agent page")
         return False
     
     # Create Interactions folder page
@@ -47,10 +47,10 @@ Each interaction is logged with:
     
     success = push_markdown_to_azure_wiki(interactions_content, "PM-Agent/Interactions")
     if not success:
-        print("⚠️  Could not create PM-Agent/Interactions page")
+        print("  Could not create PM-Agent/Interactions page")
         return False
     
-    print("✅ PM-Agent wiki structure created successfully")
+    print(" PM-Agent wiki structure created successfully")
     return True
 
 def test_wiki_access():
@@ -61,8 +61,8 @@ def test_wiki_access():
     success = push_markdown_to_azure_wiki(test_content, "PM-Agent-Test")
     
     if success:
-        print("✅ Wiki access test successful")
+        print(" Wiki access test successful")
         return True
     else:
-        print("❌ Wiki access test failed - check permissions and settings")
+        print(" Wiki access test failed - check permissions and settings")
         return False

@@ -1,0 +1,261 @@
+# Scenario: This example models a subset of a Retail Banking domain, specifically a Customer Onboarding capability for a bank (which is a very different industry from the first example). 
+# It demonstrates the DSL’s flexibility to represent an entirely different business context – e.g., accounts, KYC (Know Your Customer) processes, core banking system, etc. 
+# We include a capability with a process (Customer Onboarding), some steps, applications (Core Banking System, CRM, KYC system), data objects for customer info, a KPI for onboarding duration, a risk (fraud/money laundering risk) and a control/policy (KYC compliance policy).
+
+# Sample EA model instance: Customer Onboarding in a Retail Banking context
+
+capabilities:
+- id: CAP-010
+  name: Retail Banking Services
+  description: "Capability to provide banking services to retail customers (accounts, payments, etc)."
+- id: CAP-011
+  name: Customer Onboarding
+  description: "Capability to onboard new retail customers, including account opening and compliance checks."
+  parent_capability: CAP-010
+  criticality: High
+
+processes:
+- id: PROC-010
+  name: Customer Onboarding Process
+  capability: CAP-011
+  description: "Process to onboard a new customer – capturing info, KYC verification, account creation."
+- id: PROC-011
+  name: Account Maintenance Process
+  capability: CAP-010
+  description: "Process for ongoing account maintenance (updates, closure)."
+  # (Included to show another process under Retail Banking, though focus is onboarding)
+
+steps:
+- id: STEP-010
+  name: Submit Application
+  process: PROC-010
+- id: STEP-011
+  name: Perform KYC Checks
+  process: PROC-010
+- id: STEP-012
+  name: Open Account in Core System
+  process: PROC-010
+
+applications:
+- id: APP-010
+  name: Core Banking System
+  description: "Mainframe-based core banking application for account management and transactions."
+  capability_support: [CAP-010, CAP-011]   # supports overall banking and onboarding specifically
+- id: APP-011
+  name: CRM System
+  description: "Customer Relationship Management system storing customer profiles and interactions."
+  capability_support: [CAP-011]
+- id: APP-012
+  name: KYC Verification Tool
+  description: "Third-party service or module for AML/KYC checks (e.g., ID verification, sanction screening)."
+  capability_support: [CAP-011]
+
+services:
+- id: SER-010
+  name: Account Creation API
+  description: "Service to create new accounts in the Core Banking System."
+  application: APP-010
+- id: SER-011
+  name: Customer Info API
+  description: "Service to push customer data from CRM to Core Banking System."
+  application: APP-011
+
+interfaces:
+- id: INT-010
+  name: CRM-CoreBanking Interface
+  description: "Integration between CRM and Core Banking (for sending new customer info to core)."
+- id: INT-011
+  name: KYC Service Interface
+  description: "Integration between CRM and KYC Verification Tool (to submit customer data for checks)."
+
+data_objects:
+- id: DATA-010
+  name: Customer Profile
+  description: "Customer personal information and documents collected during onboarding."
+  classification: Confidential
+- id: DATA-011
+  name: Account Record
+  description: "Bank account record (account number, type, etc) created in core system."
+  classification: Internal
+
+kpis:
+- id: KPI-010
+  name: Onboarding Duration
+  description: "Average time to onboard a new customer (from application to account active)."
+  unit: days
+  target_value: 1.0
+- id: KPI-011
+  name: KYC Approval Rate
+  description: "% of applicants passing KYC checks without manual review."
+  unit: "%"
+  target_value: 90
+
+risks:
+- id: RISK-010
+  name: Money Laundering Risk
+  description: "Risk of onboarding a customer involved in money laundering or other financial crimes."
+  likelihood: Low
+  impact: High
+- id: RISK-011
+  name: Poor Customer Experience
+  description: "Risk of losing customers due to a slow or cumbersome onboarding process."
+  likelihood: Medium
+  impact: Medium
+
+controls:
+- id: CTRL-010
+  name: Enhanced Due Diligence Procedure
+  description: "Additional KYC steps for high-risk customers (as a mitigation for money laundering risk)."
+  type: Detective
+  status: Proposed
+- id: CTRL-011
+  name: Onboarding SLA Monitoring
+  description: "Monitor onboarding process times and alert if exceeding SLA (to address customer experience)."
+  type: Detective
+  status: Implemented
+
+technologies:
+- id: TECH-010
+  name: Mainframe System (IBM zSeries)
+  description: "On-premise mainframe hosting the Core Banking System."
+  type: Host
+  environment: Prod
+- id: TECH-011
+  name: Azure AKS Cluster
+  description: "Azure Kubernetes Service cluster hosting the CRM and KYC services (cloud deployment)."
+  type: ContainerPlatform
+  environment: Prod
+
+policies:
+- id: POL-010
+  name: KYC Compliance Policy
+  description: "Policy requiring Know-Your-Customer verification for all new accounts, aligning with AML laws."
+- id: POL-011
+  name: Customer Data Privacy Policy
+  description: "Policy governing handling of personal data (GDPR compliance, etc.) during onboarding."
+
+relationships:
+# Capability hierarchy
+- type: contains
+  from: CAP-010
+  to: CAP-011   # Retail Banking contains Customer Onboarding
+
+# Capability to Process
+- type: contains
+  from: CAP-011
+  to: PROC-010
+- type: contains
+  from: CAP-010
+  to: PROC-011
+
+# Process to Steps
+- type: contains
+  from: PROC-010
+  to: STEP-010
+- type: contains
+  from: PROC-010
+  to: STEP-011
+- type: contains
+  from: PROC-010
+  to: STEP-012
+
+# Applications realize/support Capabilities
+- type: realizes
+  from: APP-010
+  to: CAP-011    # Core Banking System realizes parts of Customer Onboarding (account opening)
+- type: realizes
+  from: APP-011
+  to: CAP-011    # CRM supports onboarding (collecting info)
+- type: realizes
+  from: APP-012
+  to: CAP-011    # KYC tool supports onboarding as well
+- type: realizes
+  from: APP-010
+  to: CAP-010    # Core system also underpins broader Retail Banking
+# (APP-011/012 are mostly focused on onboarding in this context)
+
+# Process depends_on Applications
+- type: depends_on
+  from: PROC-010
+  to: APP-011   # onboarding process uses CRM system
+- type: depends_on
+  from: PROC-010
+  to: APP-012   # uses KYC tool
+- type: depends_on
+  from: PROC-010
+  to: APP-010   # final step uses Core Banking System
+- type: depends_on
+  from: PROC-011
+  to: APP-011   # account maintenance uses CRM (for contact updates, etc.)
+- type: depends_on
+  from: PROC-011
+  to: APP-010   # and core system for actual account changes
+
+# Application integrations via interfaces
+- type: integrates
+  from: APP-011
+  to: APP-010
+  via: INT-010   # CRM integrates with Core Banking (to send new customer info)
+- type: integrates
+  from: APP-011
+  to: APP-012
+  via: INT-011   # CRM integrates with KYC tool for verification
+
+# Data usage (if desired, linking steps or apps to data)
+- type: depends_on
+  from: STEP-011
+  to: DATA-010   # Perform KYC Checks uses Customer Profile data
+- type: depends_on
+  from: STEP-012
+  to: DATA-011   # Open Account step creates an Account Record data
+# Data lineage: Customer Profile -> Account Record perhaps (profile info goes into account record)
+- type: lineage_of
+  from: DATA-010
+  to: DATA-011
+
+# KPI measures
+- type: measures
+  from: KPI-010
+  to: PROC-010   # Onboarding Duration measures the onboarding process
+- type: measures
+  from: KPI-011
+  to: PROC-010   # KYC Approval Rate also measures onboarding success (subset of process performance)
+
+# Risks and Controls
+- type: depends_on   # using depends_on to denote 'affects'
+  from: RISK-010
+  to: PROC-010      # money laundering risk is a concern in onboarding process
+- type: depends_on
+  from: RISK-011
+  to: PROC-010      # poor experience risk affects onboarding process
+- type: mitigates
+  from: CTRL-010
+  to: RISK-010      # enhanced due diligence mitigates money laundering risk
+- type: mitigates
+  from: CTRL-011
+  to: RISK-011      # SLA monitoring mitigates poor experience risk (by catching slow cases)
+
+# Policies governing
+- type: governs
+  from: POL-010
+  to: PROC-010      # KYC compliance policy governs the onboarding process
+- type: governs
+  from: POL-010
+  to: APP-012       # governs the KYC tool usage/config as well
+- type: governs
+  from: POL-011
+  to: DATA-010      # Privacy policy governs customer personal data handling
+- type: governs
+  from: POL-011
+  to: APP-011       # and governs CRM (which stores personal data)
+
+# Hosting relationships
+- type: hosted_on
+  from: APP-010
+  to: TECH-010      # Core Banking on mainframe
+- type: hosted_on
+  from: APP-011
+  to: TECH-011      # CRM on Azure AKS
+- type: hosted_on
+  from: APP-012
+  to: TECH-011      # KYC tool (if it's a container or service in same AKS, for example)

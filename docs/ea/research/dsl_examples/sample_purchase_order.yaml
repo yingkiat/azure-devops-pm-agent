@@ -1,0 +1,243 @@
+# Scenario: This example models a simplified Procure-to-Pay capability focusing on the Purchase Order process in a manufacturing company. 
+# It shows capabilities, the process and steps of Purchase Order handling, the applications involved (e.g., an ERP system), data objects like the Purchase Order document, a KPI for cycle time, a risk of supplier delay and a control to mitigate it, relevant policy, etc. 
+# This illustrates how the DSL captures cross-domain links (business process to applications to data, and risk-control overlay).
+
+# Sample EA model instance: Purchase Order Processing domain
+
+capabilities:
+- id: CAP-001
+  name: Procure-to-Pay
+  description: "End-to-end capability to procure materials and services and pay suppliers."
+  criticality: High
+
+processes:
+- id: PROC-001
+  name: Purchase Order Processing
+  capability: CAP-001
+  description: "Process to create, approve, and issue purchase orders to suppliers."
+- id: PROC-002
+  name: Supplier Payment Processing
+  capability: CAP-001
+  description: "Process to validate invoices and execute payments to suppliers."
+
+steps:
+- id: STEP-001
+  name: Create Purchase Requisition
+  process: PROC-001
+- id: STEP-002
+  name: Approve Purchase Order
+  process: PROC-001
+- id: STEP-003
+  name: Dispatch PO to Supplier
+  process: PROC-001
+- id: STEP-004
+  name: Receive Invoice
+  process: PROC-002
+- id: STEP-005
+  name: Approve Payment
+  process: PROC-002
+
+applications:
+- id: APP-001
+  name: ERP System
+  description: "Enterprise Resource Planning system (e.g., SAP) used for purchasing and finance."
+  capability_support: [CAP-001]            # realizes Procure-to-Pay
+- id: APP-002
+  name: Supplier Portal
+  description: "External web portal for suppliers to receive POs and submit invoices."
+  capability_support: [CAP-001]
+
+services:
+- id: SER-001
+  name: PurchaseOrder API
+  description: "API to create or update purchase orders in the ERP system."
+  application: APP-001
+- id: SER-002
+  name: Invoice Submission API
+  description: "Service for suppliers to submit invoices (part of Supplier Portal)."
+  application: APP-002
+
+interfaces:
+- id: INT-001
+  name: ERP-SupplierPortal Interface
+  description: "Integration interface between ERP and Supplier Portal (could be EDI or API calls)."
+
+data_objects:
+- id: DATA-001
+  name: Purchase Order Document
+  description: "Digital document representing a purchase order, containing line items, amounts, etc."
+  classification: Internal
+- id: DATA-002
+  name: Supplier Invoice
+  description: "Invoice from supplier, matched against POs."
+  classification: Internal
+
+kpis:
+- id: KPI-001
+  name: Purchase Order Cycle Time
+  description: "Average time (in days) from PO creation to PO approval."
+  unit: days
+  target_value: 2.0
+- id: KPI-002
+  name: On-time Payment Rate
+  description: "% of supplier payments made by due date."
+  unit: "%"
+  target_value: 95
+
+risks:
+- id: RISK-001
+  name: Late Supplier Delivery
+  description: "Risk of suppliers delivering goods later than promised, affecting production."
+  likelihood: Medium
+  impact: High
+- id: RISK-002
+  name: Compliance Audit Finding
+  description: "Risk of failing an audit due to missing documentation or approval evidence in procurement."
+  likelihood: Low
+  impact: Medium
+
+controls:
+- id: CTRL-001
+  name: Supplier SLA Clause
+  description: "Contract clause imposing penalty for late delivery beyond agreed schedule."
+  type: Preventative
+  status: Implemented
+- id: CTRL-002
+  name: 3-way Match Policy
+  description: "Procedure requiring match of PO, Goods Receipt, and Invoice before payment."
+  type: Detective
+  status: Implemented
+
+technologies:
+- id: TECH-001
+  name: Azure Cloud (East US)
+  description: "Cloud environment hosting the Supplier Portal web application."
+  type: CloudService
+  environment: Prod
+- id: TECH-002
+  name: On-Prem Data Center
+  description: "On-premises data center hosting the ERP system."
+  type: DataCenter
+  environment: Prod
+
+policies:
+- id: POL-001
+  name: Procurement Approval Policy
+  description: "Corporate policy requiring approvals for purchase orders exceeding certain thresholds."
+- id: POL-002
+  name: Data Retention Policy
+  description: "Policy on retaining procurement records for minimum 7 years for compliance."
+
+# Relationships (using the defined edges)
+relationships:
+# Capability to Process (Capability contains Processes implicitly via the capability attribute, or we could list contains explicitly if needed)
+- type: contains
+  from: CAP-001
+  to: PROC-001
+- type: contains
+  from: CAP-001
+  to: PROC-002
+
+# Process to Steps
+- type: contains
+  from: PROC-001
+  to: STEP-001
+- type: contains
+  from: PROC-001
+  to: STEP-002
+- type: contains
+  from: PROC-001
+  to: STEP-003
+- type: contains
+  from: PROC-002
+  to: STEP-004
+- type: contains
+  from: PROC-002
+  to: STEP-005
+
+# Application realizes Capability
+- type: realizes
+  from: APP-001
+  to: CAP-001
+- type: realizes
+  from: APP-002
+  to: CAP-001
+
+# Process depends_on Applications/Services (indicating automation):
+- type: depends_on
+  from: PROC-001
+  to: APP-001   # PO Processing relies on ERP System
+- type: depends_on
+  from: PROC-001
+  to: APP-002   # also interacts with Supplier Portal for dispatch
+- type: depends_on
+  from: PROC-002
+  to: APP-001   # Payment processing relies on ERP (finance module)
+- type: depends_on
+  from: PROC-002
+  to: APP-002   # gets invoice info from Supplier Portal
+
+# Application integrates with Application via Interface
+- type: integrates
+  from: APP-001
+  to: APP-002
+  via: INT-001
+
+# Services dependencies (Service to Data or to other service):
+- type: depends_on
+  from: SER-002
+  to: SER-001   # e.g., invoice submission service calls purchase order API to validate PO references (illustrative)
+
+# Application hosts / hosted_on relationships
+- type: hosted_on
+  from: APP-001
+  to: TECH-002   # ERP is hosted on on-prem data center
+- type: hosted_on
+  from: APP-002
+  to: TECH-001   # Supplier portal hosted in Azure cloud
+
+# Data lineage (if any):
+# (Not a lot of lineage in this simple example, but suppose invoice data flows to finance)
+- type: lineage_of
+  from: DATA-001
+  to: DATA-002   # Purchase Order data feeds into Invoice (as reference)
+
+# KPI measures relationships
+- type: measures
+  from: KPI-001
+  to: PROC-001   # PO Cycle Time measures the performance of PO Processing
+- type: measures
+  from: KPI-002
+  to: PROC-002   # On-time Payment Rate measures Payment Processing effectiveness
+
+# Risk affects relationships (Risk to something it impacts)
+- type: depends_on    # (Using 'depends_on' or we could define 'affects', but depends_on as generic here)
+  from: RISK-001
+  to: PROC-001       # Late supplier delivery affects the PO process (could cause re-planning)
+- type: depends_on
+  from: RISK-002
+  to: PROC-001       # Audit finding risk affects the process (compliance in approvals)
+
+# Control mitigates Risk
+- type: mitigates
+  from: CTRL-001
+  to: RISK-001      # SLA clause mitigates late delivery risk (by incentive/penalty)
+- type: mitigates
+  from: CTRL-002
+  to: RISK-002      # 3-way match mitigates compliance/audit risk
+
+# Policy governs relationships
+- type: governs
+  from: POL-001
+  to: PROC-001      # Approval policy governs the PO process (must follow thresholds)
+- type: governs
+  from: POL-001
+  to: APP-001       # Also governs ERP usage (ERP enforces approval workflows)
+- type: governs
+  from: POL-002
+  to: DATA-001      # Data retention policy applies to PO documents
+- type: governs
+  from: POL-002
+  to: DATA-002      # applies to invoices as well
+
+# End of relationships

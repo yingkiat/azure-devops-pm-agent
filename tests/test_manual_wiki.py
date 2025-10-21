@@ -96,7 +96,7 @@ def test_manual_wiki_push_flow():
             formatted = reporter._format_manual_push(mock_result, "2024-01-15 14:30:00 UTC")
             print(f"   Generated {len(formatted)} characters of wiki content")
     
-    print("\n✅ Manual wiki push flow working correctly!")
+    print("\n Manual wiki push flow working correctly!")
     
     # Show example of what would be pushed
     print("\n3. Example wiki content preview:")
@@ -116,7 +116,7 @@ def test_manual_wiki_push_flow():
         preview = formatted[:500] + "..." if len(formatted) > 500 else formatted
         print(preview)
     
-    print("\n🎉 Manual wiki push system ready!")
+    print("\n Manual wiki push system ready!")
 
 
 if __name__ == "__main__":

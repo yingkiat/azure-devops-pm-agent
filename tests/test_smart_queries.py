@@ -16,7 +16,7 @@ from ai_orchestrator.orchestrator import AzureDevOpsOrchestrator
 
 def test_query_context_parsing():
     """Test parsing natural language into QueryContext."""
-    print("🔍 Testing Natural Language → QueryContext Parsing")
+    print(" Testing Natural Language → QueryContext Parsing")
     print("=" * 60)
     
     builder = SmartWIQLBuilder()
@@ -42,7 +42,7 @@ def test_query_context_parsing():
     ]
     
     for i, (request, expected) in enumerate(test_cases, 1):
-        print(f"\n🧪 Test {i}: '{request}'")
+        print(f"\n Test {i}: '{request}'")
         
         context = builder.parse_natural_language_to_context(request, ["Data Platform", "Web Frontend"])
         
@@ -56,20 +56,20 @@ def test_query_context_parsing():
         for key, expected_value in expected.items():
             actual_value = getattr(context, key)
             if actual_value == expected_value:
-                print(f"   ✅ {key}: {actual_value}")
+                print(f"    {key}: {actual_value}")
             else:
-                print(f"   ❌ {key}: expected {expected_value}, got {actual_value}")
+                print(f"    {key}: expected {expected_value}, got {actual_value}")
 
 
 def test_wiql_generation():
     """Test WIQL query generation from context."""
-    print("\n\n🛠️  Testing WIQL Query Generation")
+    print("\n\n  Testing WIQL Query Generation")
     print("=" * 60)
     
     builder = SmartWIQLBuilder()
     
     # Test case 1: Critical bugs
-    print("\n📋 Test 1: Critical bugs assigned to John")
+    print("\n Test 1: Critical bugs assigned to John")
     context1 = QueryContext(
         projects=["TestProject"],
         work_item_types=["Bug"],
@@ -83,7 +83,7 @@ def test_wiql_generation():
     print(query1)
     
     # Test case 2: Summary query
-    print("\n📊 Test 2: Summary query for features")
+    print("\n Test 2: Summary query for features")
     context2 = QueryContext(
         projects=["TestProject"],
         work_item_types=["Feature"]
@@ -94,7 +94,7 @@ def test_wiql_generation():
     print(summary_query)
     
     # Test case 3: Team workload
-    print("\n👥 Test 3: Team workload analysis")
+    print("\n Test 3: Team workload analysis")
     workload_query = builder.build_team_workload_query(context2)
     print("Generated WIQL:")
     print(workload_query)
@@ -102,7 +102,7 @@ def test_wiql_generation():
 
 async def test_enhanced_orchestration():
     """Test the enhanced orchestration with smart queries."""
-    print("\n\n🧠 Testing Enhanced Orchestration with Smart Queries")
+    print("\n\n Testing Enhanced Orchestration with Smart Queries")
     print("=" * 60)
     
     orchestrator = AzureDevOpsOrchestrator()
@@ -119,7 +119,7 @@ async def test_enhanced_orchestration():
     ]
     
     for i, request in enumerate(test_requests, 1):
-        print(f"\n🧪 Test {i}: '{request}'")
+        print(f"\n Test {i}: '{request}'")
         
         try:
             # Test classification
@@ -131,20 +131,20 @@ async def test_enhanced_orchestration():
             print(f"   Enhanced confidence: {enhanced.confidence:.2f}")
             
             if enhanced.suggested_actions != classified.suggested_actions:
-                print("   ✅ Queries enhanced with domain knowledge")
+                print("    Queries enhanced with domain knowledge")
                 for action in enhanced.suggested_actions:
                     if "wiql_query" in action.get("parameters", {}):
                         print(f"   WIQL: {action['parameters']['wiql_query'][:100]}...")
             else:
-                print("   ⚪ No query enhancement applied")
+                print("    No query enhancement applied")
                 
         except Exception as e:
-            print(f"   ❌ Test failed: {e}")
+            print(f"    Test failed: {e}")
 
 
 def test_query_suggestions():
     """Test suggested queries feature."""
-    print("\n\n💡 Testing Query Suggestions")
+    print("\n\n Testing Query Suggestions")
     print("=" * 50)
     
     builder = SmartWIQLBuilder()
@@ -157,7 +157,7 @@ def test_query_suggestions():
     suggestions = builder.get_suggested_queries(context)
     
     for name, query in suggestions.items():
-        print(f"\n🔍 {name.upper()}:")
+        print(f"\n {name.upper()}:")
         print(query)
 
 

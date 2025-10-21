@@ -15,8 +15,58 @@ dependencies = [
   "typer>=0.12.3",
   "rich>=13.7.1",
   "pydantic-settings>=2.2.1",
-  "mcp>=1.0.0"
+  "mcp>=1.14.0",
+  "fastmcp>=0.2.0",
+  "PyYAML>=6.0",
+  "pandas>=2.0.0",
+  "openpyxl>=3.0.0",
+  "python-docx>=0.8.11",
+  "google-genai>=1.39.1",
+  "certifi>=2023.0.0",
+  "requests>=2.31.0",
+  "urllib3>=2.0.0",
+  "httpx>=0.25.0"
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0.0",
+  "pytest-asyncio>=0.21.0",
+  "pytest-html>=4.0.0",
+  "pytest-cov>=4.0.0"
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "-ra",                    # Show short test summary info for all outcomes
+    "--strict-markers",       # Ensure markers are defined
+    "--strict-config",        # Ensure config is valid
+    "--tb=short",            # Short traceback format
+    "-v",                    # Verbose output
+    "--html=reports/test_results.html",  # Always generate HTML report
+    "--self-contained-html", # Embed CSS/JS in HTML file
+]
+testpaths = [
+    "tests/test_ai_orchestrator.py",
+    "tests/test_context_persistence.py",
+    "tests/test_insights_engine.py",
+    "tests/test_mcp_integration.py"
+]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+markers = [
+    "high_priority: High priority core system tests",
+    "medium_priority: Medium priority feature tests",
+    "integration: Integration tests",
+    "slow: Tests that take longer to run"
+]
+
+# Configure logging
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(name)s: %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"

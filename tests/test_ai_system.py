@@ -40,7 +40,7 @@ class TestAISystem:
         reports_path = config.get_wiki_path("reports")
         assert "AI-Reports" in reports_path
         
-        print("✅ Configuration system working")
+        print(" Configuration system working")
     
     def test_mcp_server_tools(self):
         """Test MCP server tool availability."""
@@ -62,7 +62,7 @@ class TestAISystem:
         for expected_tool in expected_tools:
             assert expected_tool in tool_names, f"Missing tool: {expected_tool}"
         
-        print(f"✅ All {len(expected_tools)} expected tools available")
+        print(f" All {len(expected_tools)} expected tools available")
     
     async def test_orchestrator_basic(self):
         """Test basic orchestrator functionality."""
@@ -76,9 +76,9 @@ class TestAISystem:
             intent = await orchestrator.classify_intent("Show me all projects")
             assert intent.intent in ['DISCOVERY', 'QUERY'], f"Unexpected intent: {intent.intent}"
             assert intent.confidence > 0.5, f"Low confidence: {intent.confidence}"
-            print(f"✅ Intent classification working (Intent: {intent.intent}, Confidence: {intent.confidence:.2f})")
+            print(f" Intent classification working (Intent: {intent.intent}, Confidence: {intent.confidence:.2f})")
         except Exception as e:
-            print(f"⚠️  Intent classification test skipped (requires OpenAI): {e}")
+            print(f"  Intent classification test skipped (requires OpenAI): {e}")
     
     def test_context_management(self):
         """Test context persistence and learning."""
@@ -105,7 +105,7 @@ class TestAISystem:
             assert stats['session_keys'] >= 1
             assert stats['conversation_entries'] >= 1
             
-            print("✅ Context management working")
+            print(" Context management working")
     
     def test_wiki_reporter(self):
         """Test wiki reporting and formatting."""
@@ -142,7 +142,7 @@ class TestAISystem:
         assert "Business Intelligence" in formatted_content
         assert "Test Project" in formatted_content
         
-        print("✅ Wiki formatting working")
+        print(" Wiki formatting working")
     
     async def test_full_pipeline_simulation(self):
         """Test the complete AI pipeline with mock data."""
@@ -194,10 +194,10 @@ class TestAISystem:
             assert "Web Portal" in wiki_content
             assert "Found 2 projects" in wiki_content
             
-            print("✅ Full pipeline simulation successful")
+            print(" Full pipeline simulation successful")
             
         except Exception as e:
-            print(f"⚠️  Pipeline test limited (requires Azure DevOps access): {e}")
+            print(f"  Pipeline test limited (requires Azure DevOps access): {e}")
     
     def test_manual_wiki_system(self):
         """Test the manual wiki push functionality."""
@@ -232,7 +232,7 @@ class TestAISystem:
         for request, expected_scope in test_cases:
             content = context_manager.get_wiki_push_content(request)
             assert len(content) > 0, f"No content found for: {request}"
-            print(f"   ✅ '{request}' -> {len(content)} exchange(s) ({expected_scope})")
+            print(f"    '{request}' -> {len(content)} exchange(s) ({expected_scope})")
         
         # Test wiki formatting
         content = context_manager.get_wiki_push_content("push this to wiki")
@@ -252,8 +252,8 @@ class TestAISystem:
         assert "Manual wiki push test" in formatted
         assert "Exchange 1" in formatted
         
-        print("   ✅ Wiki content formatting working")
-        print("   ✅ Manual wiki push system operational")
+        print("    Wiki content formatting working")
+        print("    Manual wiki push system operational")
     
     def test_cleanup_effectiveness(self):
         """Test that cleanup removed obsolete components."""
@@ -288,12 +288,12 @@ class TestAISystem:
             full_path = project_root / file_path
             assert full_path.exists(), f"Essential file missing: {file_path}"
         
-        print("✅ Cleanup was effective - obsolete files removed, essential files preserved")
+        print(" Cleanup was effective - obsolete files removed, essential files preserved")
 
 
 async def run_all_tests():
     """Run all tests in the suite."""
-    print("🤖 AI-Powered Azure DevOps PM Agent - Test Suite")
+    print(" AI-Powered Azure DevOps PM Agent - Test Suite")
     print("=" * 60)
     
     tester = TestAISystem()
@@ -310,17 +310,17 @@ async def run_all_tests():
     await tester.test_full_pipeline_simulation()
     
     print("\n" + "=" * 60)
-    print("🎉 All Tests Completed Successfully!")
-    print("\n📋 Test Summary:")
-    print("  ✅ Configuration system working")
-    print("  ✅ MCP server tools available")
-    print("  ✅ AI orchestrator functional")
-    print("  ✅ Context management working")
-    print("  ✅ Wiki reporting ready")
-    print("  ✅ Full pipeline validated")
-    print("  ✅ Cleanup was effective")
+    print(" All Tests Completed Successfully!")
+    print("\n Test Summary:")
+    print("   Configuration system working")
+    print("   MCP server tools available")
+    print("   AI orchestrator functional")
+    print("   Context management working")
+    print("   Wiki reporting ready")
+    print("   Full pipeline validated")
+    print("   Cleanup was effective")
     
-    print("\n🚀 System Ready for Production!")
+    print("\n System Ready for Production!")
     print("   Run: python -m src.cli.ai_cli ask \"your question\"")
 
 

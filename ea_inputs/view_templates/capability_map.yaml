@@ -1,0 +1,40 @@
+# ArchiMate 3.1 Capability Map Viewpoint
+# Purpose: High-level overview of business capabilities
+
+viewpoint: "capability_map"
+
+archimate_spec:
+  standard: "ArchiMate 3.1"
+  purpose: "High-level overview of business capabilities and their realization"
+  concerns:
+    - "Capability coverage"
+    - "Strategic alignment"
+    - "Capability gaps"
+    - "Investment prioritization"
+
+  typical_elements:
+    - "Capability"
+    - "ApplicationComponent"
+    - "BusinessProcess"
+    - "BusinessFunction"
+
+  typical_relationships:
+    - "Serving"
+    - "Realization"
+    - "Composition"
+    - "Aggregation"
+
+  validation_rules:
+    - "ApplicationComponent serves Capability"
+    - "BusinessProcess realizes Capability"
+    - "Capability can be composed of sub-capabilities"
+
+default_layout:
+  algorithm: "grid"
+  columns: 4
+  spacing_x: 40
+  spacing_y: 60
+
+# Example usage:
+# Creates a capability heatmap showing which capabilities
+# are supported by which applications

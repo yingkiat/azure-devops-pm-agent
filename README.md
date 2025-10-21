@@ -1,109 +1,258 @@
-# Azure DevOps PM Agent
+# Azure DevOps PM/EA Agent
 
-AI-powered business intelligence agent with two-layer architecture for Azure DevOps project management.
+**Natural language interface for Azure DevOps project management and enterprise architecture**
 
-## Features
+Transform Azure DevOps workflows with AI-powered natural language interaction via Claude Code. Discover architecture, manage work items, and analyze project health—all through conversation.
 
-### 🧠 Business Intelligence (Primary Use Case)
-- PM configures requests via Azure DevOps wiki page (`/PM-Agent`)
-- LLM-based request classification and intelligent execution
-- Automated PR analysis, work item tracking, and sprint progress reporting
-- Comprehensive BI reports with actionable insights
+---
 
-### 📋 Strategic Planning
-- Generate structured Epic/Feature plans from business goals
-- Two-layer architecture: LLM reasoning layer + deterministic sync layer
-- Diff-first approval workflow with preview capabilities
-- External key system for idempotent Azure DevOps operations
+## ✨ Key Features
+
+### 🏗️ Enterprise Architecture Discovery
+- **Context-Aware Discovery** - Incremental model building with entity resolution (no duplicates)
+- **Batch Processing** - Process entire directories with smart batching (70-90% token savings)
+- **Archi Tool Integration** - Direct import via Open Group ArchiMate Model Exchange XML
+- **Visual Diagrams** - Mermaid code and Gemini-powered PNG images
+- **Zero Maintenance** - No hardcoded mappings, pure prompt-driven analysis
+- **Enterprise Scale** - Validated for 10,000+ files with granular caching
+
+### 📊 Project Management Intelligence
+- **Natural Language Queries** - "Show critical bugs" → Automatic WIQL generation
+- **Batch Analytics** - Multi-project health analysis with 55% performance improvement
+- **Work Item Management** - Create epics, features, stories from conversation
+- **Repository Intelligence** - AI-powered work item routing to correct repos
+
+### 🤖 Claude Code MCP Integration
+- **15 Available Tools** - PM operations + EA discovery seamlessly integrated
+- **No Command Syntax** - Pure natural language interaction
+- **Context Awareness** - Claude Code selects appropriate tools automatically
+- **Interactive Approvals** - Safety gates for work item creation
+
+---
 
 ## Quick Start
 
-### Installation
+### 1. Install
 ```bash
-python -m venv .venv && source .venv/bin/activate  # (or .venv\Scripts\activate on Windows)
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
-### Environment Setup
-Configure `.env` with Azure DevOps and OpenAI credentials:
+### 2. Configure `.env`
 ```bash
-AZDO_ORG_URL=https://dev.azure.com/yourorg
-AZDO_PROJECT=YourProject
-AZDO_PAT=your_personal_access_token
-AZDO_WIKI_NAME=YourWiki
-AZURE_OPENAI_ENDPOINT=https://your-openai.openai.azure.com/
-AZURE_OPENAI_KEY=your_openai_key
-AZURE_OPENAI_API_VERSION=2024-02-15-preview
-AZURE_OPENAI_DEPLOYMENT=gpt-4
+# Azure DevOps
+AZDO_ORG_URL=https://dev.azure.com/your-org
+AZDO_PROJECT=your-project
+AZDO_PAT=your-token
+AZDO_WIKI_NAME=your-wiki
+
+# Azure OpenAI
+AZURE_OPENAI_ENDPOINT=https://your-endpoint.openai.azure.com
+AZURE_OPENAI_KEY=your-key
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
+AZURE_OPENAI_DEPLOYMENT=gpt-4o
+
+# Gemini (optional - for visual diagrams)
+GEMINI_API_KEY=your-key
 ```
 
-### Primary Workflow - Business Intelligence
-```bash
-# 1. Setup PM-Agent page template
-python -m src.cli.main setup-pm-page
+### 3. Register MCP Server
 
-# 2. PM manually edits /PM-Agent page with projects and requests
-# 3. Execute intelligent business analysis
-python -m src.cli.main execute-requests
+**Option A: Global Registration (Recommended)**
+```bash
+# From project root directory
+claude mcp add --transport stdio pm-ea-agent --env PYTHONPATH=. -- .venv/Scripts/python.exe -m src.mcp_server
 ```
 
-### Strategic Planning Workflow
-```bash
-# Generate structured plan
-python -m src.cli.main plan-new "Build unified data platform"
-
-# Preview changes before applying
-python -m src.cli.main preview outputs/PLAN-*.json
-
-# Apply with approval
-python -m src.cli.main sync outputs/PLAN-*.json --approve
+**Option B: Local Project Configuration**
+Create `.claude_mcp.json` in project root:
+```json
+{
+  "mcpServers": {
+    "pm-ea-agent": {
+      "command": ".venv/Scripts/python.exe",
+      "args": ["-m", "src.mcp_server"],
+      "env": {"PYTHONPATH": "."}
+    }
+  }
+}
 ```
+
+**How MCP Works:**
+- MCP servers communicate via **stdio** (stdin/stdout)
+- Claude Code spawns your command (e.g., `.venv/Scripts/python.exe -m src.mcp_server`)
+- That Python process runs continuously and communicates with Claude Code
+- Claude Code manages starting/stopping automatically
+
+**Global vs Local:**
+- **Global** (`~/.claude.json`) - Available in all projects, easier to manage
+- **Local** (`.claude_mcp.json`) - Project-specific, committed to repo
+
+**Verify Registration:**
+```bash
+claude mcp list  # Should show "pm-ea-agent"
+```
+
+### 4. Start Using
+Open Claude Code in this directory. All 15 tools are now available via natural language!
+
+---
+
+## Usage Examples
+
+### Enterprise Architecture - Single Discovery
+```
+You: "Microsoft Dynamics CRM integrates with QAD EE for purchase order automation"
+
+Claude Code: [Uses ea_discover tool]
+✓ Discovered: 2 applications, 1 capability, 1 relationship
+✓ Generated ArchiMate model: archi_inputs/model.xml
+✓ Ready for Archi tool import
+```
+
+### Enterprise Architecture - Batch Discovery
+```
+You: "Process all system descriptions in ea_inputs/"
+
+Claude Code: [Uses ea_discover_directory tool]
+✅ Created 1 batches from 8 files
+   OpenAI calls: 1 (vs 8 without batching)
+   Savings: 7 calls (88%)
+
+✓ Discovered: 8 applications, 10 capabilities, 10 relationships
+✓ Smart batching: 70-90% token savings
+✓ Incremental context: No duplicates across files
+```
+
+### Project Management
+```
+You: "What's blocking our data platform release?"
+
+Claude Code: [Uses get_work_items + batch_project_overview]
+Found 3 critical blockers:
+1. Auth timeout bug (unassigned) - 8 days old
+2. API sync failure - assigned to Bob Smith
+3. Memory leak in data processor - needs investigation
+```
+
+### Diagram Generation
+```
+You: "Generate capability matrix diagram from our EA data"
+
+Claude Code: [Uses ea_generate_mermaid]
+✓ Generated: ea_diagrams/capability_matrix.mermaid
+```
+
+---
+
+## Available MCP Tools
+
+### EA Tools (5)
+- `ea_discover` - Extract apps, capabilities, relationships from text
+- `ea_discover_directory` - Batch process entire directories with smart batching
+- `ea_generate_archi` - Generate ArchiMate CSV/XML for Archi tool
+- `ea_generate_mermaid` - Create technical documentation diagrams
+- `ea_get_data_summary` - Get EA knowledge base overview
+
+### PM Tools (10)
+- `get_work_items` - Execute WIQL queries
+- `create_work_item` - Create epics, features, stories, tasks
+- `update_work_item` - Update work item fields
+- `get_pull_requests` - Query PRs across repositories
+- `get_projects` - List accessible projects
+- `get_repositories` - List repos in a project
+- `get_readme` - Fetch repository README
+- `batch_project_overview` - Multi-project analysis
+- `batch_work_item_queries` - Parallel query execution
+- `batch_pull_requests` - Bulk PR queries
+
+**Total: 15 MCP Tools**
+
+---
 
 ## Architecture
 
-### Core Design Principles
-1. **Two-Layer Separation**: LLM reasoning layer + deterministic sync layer
-2. **Prompt-Driven Intelligence**: Externalized to `prompts/` directory for easy iteration
-3. **Business Intelligence Focus**: PM-configurable wiki-based requests with LLM classification
-4. **External Key System**: Idempotent operations using tagged work items
+### Single Source of Truth: `archi_inputs/`
+All EA data stored in ArchiMate format:
+- `elements.csv` - Applications, capabilities, processes
+- `relations.csv` - Serving, Flow, Composition relationships
+- `properties.csv` - Criticality, maturity, strategic importance
+- `model.xml` - Open Group ArchiMate 3.0 Model Exchange
 
-### Key Components
-- **`src/cli/main.py`**: CLI commands and entry points
-- **`src/agent/business_intel.py`**: Executes BI requests with direct Azure DevOps API calls
-- **`src/agent/request_classifier.py`**: LLM-based request classification using prompt templates
-- **`src/agent/sync_engine.py`**: Deterministic sync engine for planning operations
-- **`prompts/classify_business_request.md`**: Classification prompt template
-- **`src/devops_gateway/`**: Azure DevOps SDK wrappers with REST API fallbacks
+**Import to Archi:** File → Open → Model from File → `archi_inputs/model.xml`
+
+### Prompt-Driven Intelligence
+Business logic externalized to `prompts/` directory:
+- `prompts/ea/ea_discovery.md` - EA extraction logic
+- `prompts/pm/classify_business_request.md` - PM classification
+
+Easy iteration without code changes.
 
 ### Data Flow
 ```
-PM Wiki Page → LLM Classification → Azure DevOps Queries → BI Report → Wiki Transcript
+Natural Language → Claude Code MCP → Unified Server → PM/EA Modules → Azure DevOps/ArchiMate
 ```
 
-## Recent Major Fixes
-1. **Wiki Reading**: Fixed empty content issue by adding `includeContent=true` parameter
-2. **Pull Request Retrieval**: Replaced SDK with direct REST API calls using `searchCriteria.status=all`
-3. **DateTime Handling**: Fixed timezone-aware comparisons 
-4. **Request Classification**: Implemented LLM-based classification replacing brittle text matching
-5. **Auto-linking Issues**: Changed display format from `#4` to `PR-4` and `WI-5` to prevent unwanted linking
+---
 
-## Commands Reference
+## Development
 
-| Command | Description |
-|---------|-------------|
-| `setup-pm-page` | Create PM-Agent wiki page template |
-| `execute-requests` | Process business intelligence requests |
-| `plan-new "goal"` | Generate structured Epic/Feature plan |
-| `preview plan.json` | Show planned changes without applying |
-| `sync plan.json --approve` | Apply planned changes to Azure DevOps |
+### Testing
+```bash
+python test_mcp_server.py         # Verify MCP integration
+python test_archimate_provider.py  # Test ArchiMate data loading
+```
 
-## ID Reconciliation System
+### File Structure
+```
+src/
+├── mcp_server.py           # Unified MCP server
+├── pm/                     # Project management modules
+├── ea/                     # Enterprise architecture modules
+└── shared/                 # Shared utilities
 
-The system handles Azure DevOps auto-generated IDs (`#1`, `#2`, `#3`) and planning system IDs through:
+prompts/
+├── ea/                     # EA discovery prompts
+└── pm/                     # PM classification prompts
 
-- **External Key System**: Uses tagged work items with `external_key:PLAN-ID-001` format
-- **Display Formatting**: Shows `PR-4` for pull requests and `WI-5` for work items to avoid auto-linking
-- **Lookup Mechanism**: Queries work items by external key tags for idempotent operations
-- **Planning Integration**: Maps business plans to actual Azure DevOps items via stable external references
+archi_inputs/               # ArchiMate model (single source of truth)
+├── elements.csv
+├── relations.csv
+├── properties.csv
+└── model.xml
+```
 
-This enables the planning system to maintain its own logical structure while syncing with Azure DevOps' auto-generated numeric IDs.
+---
+
+## Key Design Principles
+
+1. **Natural Language First** - No command syntax or WIQL knowledge required
+2. **Prompt-Driven** - Intelligence in prompts, not hardcoded rules
+3. **Context-Aware** - Entity resolution and incremental model building across sessions
+4. **ArchiMate Native** - Industry standard EA modeling with full relationship support
+5. **Two-Layer Architecture** - LLM reasoning + deterministic execution
+6. **Enterprise Scale** - Smart batching and granular caching for 10,000+ files
+7. **Cost Optimized** - 70-90% token reduction through intelligent batching
+8. **Zero Maintenance** - Pure AI analysis, no manual mapping maintenance
+
+---
+
+## Documentation
+
+- **[CLAUDE.md](CLAUDE.md)** - Complete Claude Code integration guide
+- **[.claude_mcp.json](.claude_mcp.json)** - MCP configuration example
+- **[MVP5 Implementation](docs/ea/MVP5_Implementation_Complete.md)** - Context-aware discovery + smart batching
+- **[EA Documentation](docs/ea/)** - Full EA implementation details
+
+---
+
+## Legacy CLI
+
+Original CLI commands preserved in `src/cli/main.py` for backward compatibility, but Claude Code MCP interface is now the recommended approach.
+
+---
+
+## License
+
+MIT

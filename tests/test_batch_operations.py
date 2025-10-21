@@ -19,7 +19,7 @@ from utils.settings import settings
 
 async def test_batch_project_overview():
     """Test batch project overview functionality."""
-    print("🏢 Testing Batch Project Overview")
+    print(" Testing Batch Project Overview")
     print("=" * 50)
     
     batch_ops = BatchOperations()
@@ -34,12 +34,12 @@ async def test_batch_project_overview():
         result = await batch_ops.batch_project_overview(test_projects)
         end_time = time.time()
         
-        print(f"✅ Batch operation completed in {result.execution_time:.2f}s")
-        print(f"📊 Success: {result.success}")
+        print(f" Batch operation completed in {result.execution_time:.2f}s")
+        print(f" Success: {result.success}")
         
         if result.success:
             for project, overview in result.results.items():
-                print(f"\n📋 Project: {project}")
+                print(f"\n Project: {project}")
                 if "work_items_summary" in overview:
                     print(f"   Work Items: {len(overview['work_items_summary'])} state groups")
                 if "repositories" in overview:
@@ -48,15 +48,15 @@ async def test_batch_project_overview():
                     print(f"   Recent Items: {len(overview['recent_work_items'])} items")
         
         if result.errors:
-            print(f"⚠️  Errors: {result.errors}")
+            print(f"  Errors: {result.errors}")
             
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
 
 
 async def test_batch_wiql_queries():
     """Test batch WIQL query execution."""
-    print("\n📋 Testing Batch WIQL Queries")
+    print("\n Testing Batch WIQL Queries")
     print("=" * 50)
     
     batch_ops = BatchOperations()
@@ -89,8 +89,8 @@ async def test_batch_wiql_queries():
         
         result = await batch_ops.batch_work_item_queries(test_queries)
         
-        print(f"✅ Batch queries completed in {result.execution_time:.2f}s")
-        print(f"📊 Success: {result.success}")
+        print(f" Batch queries completed in {result.execution_time:.2f}s")
+        print(f" Success: {result.success}")
         
         if result.success:
             for query_name, query_result in result.results.items():
@@ -98,15 +98,15 @@ async def test_batch_wiql_queries():
                     print(f"   {query_name}: {query_result['count']} items")
         
         if result.errors:
-            print(f"⚠️  Errors: {result.errors}")
+            print(f"  Errors: {result.errors}")
             
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
 
 
 async def test_mcp_batch_tools():
     """Test batch operations through MCP server interface."""
-    print("\n🔧 Testing MCP Batch Tools")
+    print("\n Testing MCP Batch Tools")
     print("=" * 50)
     
     server = AzureDevOpsMCPServer()
@@ -117,10 +117,10 @@ async def test_mcp_batch_tools():
         result = await server._batch_project_overview([settings.azdo_project])
         
         if result.get("success"):
-            print(f"   ✅ Projects analyzed: {result['projects_analyzed']}")
-            print(f"   ⏱️  Execution time: {result['execution_time']:.2f}s")
+            print(f"    Projects analyzed: {result['projects_analyzed']}")
+            print(f"   ⏱  Execution time: {result['execution_time']:.2f}s")
         else:
-            print(f"   ❌ Failed: {result.get('error')}")
+            print(f"    Failed: {result.get('error')}")
         
         # Test 2: Batch WIQL queries
         print("\n2. Testing batch_work_item_queries...")
@@ -132,22 +132,22 @@ async def test_mcp_batch_tools():
         result = await server._batch_work_item_queries(test_queries)
         
         if result.get("success"):
-            print(f"   ✅ Queries executed: {result['queries_executed']}")
-            print(f"   ⏱️  Execution time: {result['execution_time']:.2f}s")
+            print(f"    Queries executed: {result['queries_executed']}")
+            print(f"   ⏱  Execution time: {result['execution_time']:.2f}s")
         else:
-            print(f"   ❌ Failed: {result.get('error')}")
+            print(f"    Failed: {result.get('error')}")
         
-        print("\n🎉 MCP batch tools testing complete!")
+        print("\n MCP batch tools testing complete!")
         
     except Exception as e:
-        print(f"❌ MCP test failed: {e}")
+        print(f" MCP test failed: {e}")
         import traceback
         traceback.print_exc()
 
 
 async def compare_performance():
     """Compare performance of batch vs individual operations."""
-    print("\n⚡ Performance Comparison: Batch vs Individual")
+    print("\n Performance Comparison: Batch vs Individual")
     print("=" * 60)
     
     server = AzureDevOpsMCPServer()
@@ -161,7 +161,7 @@ async def compare_performance():
         }
         
         # Individual operations
-        print("🔄 Running individual queries...")
+        print(" Running individual queries...")
         start_time = time.time()
         individual_results = []
         
@@ -173,7 +173,7 @@ async def compare_performance():
         print(f"   Individual queries: {individual_time:.2f}s")
         
         # Batch operation
-        print("🚀 Running batch queries...")
+        print(" Running batch queries...")
         start_time = time.time()
         
         batch_result = await server._batch_work_item_queries(queries)
@@ -184,12 +184,12 @@ async def compare_performance():
         # Calculate improvement
         if individual_time > 0 and batch_time > 0:
             improvement = ((individual_time - batch_time) / individual_time) * 100
-            print(f"📈 Performance improvement: {improvement:.1f}%")
+            print(f" Performance improvement: {improvement:.1f}%")
         
-        print(f"✅ Both approaches completed successfully")
+        print(f" Both approaches completed successfully")
         
     except Exception as e:
-        print(f"❌ Performance comparison failed: {e}")
+        print(f" Performance comparison failed: {e}")
 
 
 if __name__ == "__main__":

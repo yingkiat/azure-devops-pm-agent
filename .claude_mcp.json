@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "pm-ea-agent": {
+      "command": ".venv/Scripts/python.exe",
+      "args": ["-m", "src.mcp_server"],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  }
+}

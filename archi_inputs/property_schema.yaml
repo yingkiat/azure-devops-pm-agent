@@ -1,0 +1,50 @@
+# Property Schema - Allowlist of attributes that become ArchiMate properties
+#
+# Format: ArchiMate type -> list of allowed property keys
+# Attributes not in this list are filtered out during export
+
+ApplicationComponent:
+  - Region
+  - Domain
+  - Sub-Domain
+  - Application Name
+  - Application Type
+  - Hosting Type
+  - Primary Language
+  - Vendor Support
+  - Technology Stack
+  - Comments
+  - Business Owner
+  - It Owner
+  - Tech Standard
+  - Lifecycle Status
+
+Capability:
+  - Domain
+  - Sub-Domain
+  - Criticality
+  - Lifecycle Status
+  - Rationale
+
+BusinessProcess:
+  - Domain
+  - Owner
+  - Lifecycle Status
+  - Rationale
+
+DataObject:
+  - Domain
+  - Data Type
+  - Lifecycle Status
+  - Rationale
+
+Node:
+  - Domain
+  - Infrastructure Type
+  - Lifecycle Status
+  - Rationale
+
+BusinessActor:
+  - Domain
+  - Actor Type
+  - Rationale

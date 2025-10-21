@@ -1,0 +1,52 @@
+ID,Type,Name,Documentation
+id-021726ec4519,ApplicationComponent,PSS 1.0,Product information interface; Pack Specific System
+id-e176567a2ef1,ApplicationComponent,QAD EE,ERP system for finance and supply chain management; QAD EE Cloud
+id-f91e6b0dc180,ApplicationComponent,Tableau,Data visualization and reporting tool; Dashboarding
+id-328d17d91256,ApplicationComponent,QAD SE,ERP system for finance and supply chain management; QAD SE Cloud
+id-6385d2992d54,ApplicationComponent,DSX,Supply chain planning and forecasting tool; Forecasting
+id-9a5fd32c9b67,ApplicationComponent,SAP APO,"Supply chain planning and global sourcing system; Supply Chain Planning, Global Sourcing; Supply chain planning system for global sourcing"
+id-64bdcb4d3b3a,ApplicationComponent,VC Vendor Collaboration,Vendor collaboration portal for supply chain; Vendor portal
+id-0015d01da270,ApplicationComponent,Cargo Master,Warehouse management system for 3PL warehouse; For 3PL warehouse; System used in Tokyo Distribution Center
+id-6d9eb02243f7,ApplicationComponent,W3 Sirius,Warehouse management system for warehouse operations; For warehouse management; Distribution center management system
+id-bb3759f4a808,ApplicationComponent,Yusen,Inbound shipping management system; For inbound shipping; Global logistics system for international buying
+id-1d3ac771d8b3,ApplicationComponent,GSCM/OCTS,Custom Excel-based system for transport management; Excel based
+id-d0be297d0966,ApplicationComponent,Kenpin Barcode,Assembly inventory tracking system; Assembly inventory data; COTS system for assembly data
+id-6e68a57a6540,ApplicationComponent,Iwagaki Access,Assembly tracking system using Access database; Access database for tracking
+id-989487361c07,ApplicationComponent,QMS,Quality management system for regulatory assurance; For regulatory assurance and quality assurance
+id-57662baf44e5,ApplicationComponent,Descartes,Transportation management system for Medline logistics; Transportation system for Medline
+id-eb8c94bbf229,ApplicationComponent,SmartFreight,Transportation management system for 3PL transportation; 3PL transportation system
+id-cb7cb0b84df6,ApplicationComponent,Label Printing,Label printing system for manufacturing
+id-40e91ca61f1d,ApplicationComponent,Batch Control,Batch control system for manufacturing
+id-59e3aeffe45f,ApplicationComponent,eiFU,Electronic instructions system for manufacturing
+id-60b46c5e1d6f,ApplicationComponent,Reliance,Global quality management system for regulatory assurance; Global QMS
+id-849edc6949bf,ApplicationComponent,Customer Master (CMP),Customer master data management system
+id-463dc8438ddb,ApplicationComponent,SFDC,Salesforce CRM system for sales management; Salesforce
+id-c508ffe79f87,ApplicationComponent,Microsoft Dynamics,New CRM system replacing legacy systems with advanced automation; New CRM from Salesforce
+id-46735043cd40,ApplicationComponent,MedQuote,Custom quoting system for SPT sales; Sales application for SPT component decisions and quotations
+id-d11d37e2f121,ApplicationComponent,MedOps,Custom sales operations support system for SPT sales; Application for SOS (Source of Supply) management
+id-94c3ea1ca407,ApplicationComponent,MedPack,Custom BOM viewing system for SPT sales; Application for Bill of Materials (BOM) and sales support
+id-72a9b7ecec65,ApplicationComponent,MedReports,Custom reporting system for SPT sales; Application for reporting related to SPT
+id-b8d09705688b,ApplicationComponent,Microsoft Document Intelligence,AI-based document processing system for ERP integration; Document AI service for extracting data from purchase orders
+id-6b4a8e4819a0,ApplicationComponent,PO Automation,New CRM system integrating with Microsoft Document Intelligence for automation
+id-82588a1d9380,ApplicationComponent,Purchase Order Automation,New CRM system integrating with ERP for strategic advantage
+id-08d83563ddf2,ApplicationComponent,Dynamics CRM,CRM system for managing customer relationships and sales
+id-a0db50c31b76,ApplicationComponent,Salesforce.com,CRM system used in Japan for customer management
+id-942d37637536,ApplicationComponent,Kit Management System,Database for managing SPT kits in Japan
+id-9aa09d95655d,ApplicationComponent,QAD,ERP system for managing purchase orders and other operations
+id-e682e06ee2b6,ApplicationComponent,Iwagaki,Access database for assembly data
+id-86bab17ebe7f,Capability,Quotation Management,
+id-133b9258af74,Capability,Sales Support,
+id-7a9c22258891,Capability,Supply Chain Management,
+id-d6147d197104,Capability,BOM Management,
+id-325b8609b6e3,Capability,Reporting,
+id-75a9eaf4fe89,Capability,Customer Relationship Management,
+id-3f60170812f9,Capability,Sales Management,
+id-832924dde3c6,Capability,Kit Management,
+id-faad9192a0d7,Capability,Document Processing,
+id-14da17022bdc,Capability,Order Management,
+id-454a993499ff,Capability,ERP,
+id-eb79786b3c6c,Capability,Supply Chain Planning,
+id-747df468b064,Capability,Distribution Management,
+id-093d71d12f31,Capability,Logistics Management,
+id-58aacf2e58f9,Capability,Transportation Management,
+id-b5560691d686,Capability,Assembly Data Management,

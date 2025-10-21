@@ -1,0 +1,26 @@
+ID,Type,Name,Documentation,Source,Target
+id-28919fd745bf,Serving,,Microsoft Dynamics supports CRM capabilities,id-c508ffe79f87,id-75a9eaf4fe89
+id-3a5fb7d5b761,Flow,,CRM integrates with Microsoft Document Intelligence for purchase order processing,id-08d83563ddf2,id-b8d09705688b
+id-2619e51d7a3b,Flow,,Document Intelligence sends extracted data to QAD ERP,id-b8d09705688b,id-9aa09d95655d
+id-6056a3692d95,Flow,,CRM updates purchase order status in QAD,id-08d83563ddf2,id-9aa09d95655d
+id-9ca57d50697d,Flow,,MedQuote sends SPT component decisions to MedOps,id-46735043cd40,id-d11d37e2f121
+id-ab9e2a875d02,Flow,,MedOps integrates with MedPack for BOM management,id-d11d37e2f121,id-94c3ea1ca407
+id-e4c4979e185b,Flow,,MedPack provides data to MedReports for reporting,id-94c3ea1ca407,id-72a9b7ecec65
+id-596cfde716ee,Serving,supports,QAD EE supports Supply Chain Management capability,id-e176567a2ef1,id-7a9c22258891
+id-b36da078aeaa,Serving,supports,Tableau supports Reporting capability,id-f91e6b0dc180,id-325b8609b6e3
+id-7d533fa58c2a,Serving,supports,QAD SE supports Supply Chain Management capability,id-328d17d91256,id-7a9c22258891
+id-52042e731e71,Serving,supports,DSX supports Supply Chain Planning capability,id-6385d2992d54,id-eb79786b3c6c
+id-3a3faf0ec6a9,Serving,supports,SAP APO supports Supply Chain Planning capability,id-9a5fd32c9b67,id-eb79786b3c6c
+id-3ab71ee13e47,Serving,supports,Descartes supports Transportation Management capability,id-57662baf44e5,id-58aacf2e58f9
+id-582276aa826e,Serving,supports,SmartFreight supports Transportation Management capability,id-eb8c94bbf229,id-58aacf2e58f9
+id-b128133463bf,Serving,supports,SFDC supports Sales Management capability,id-463dc8438ddb,id-3f60170812f9
+id-f1232e15d546,Serving,supports,Microsoft Dynamics supports Customer Relationship Management capability,id-c508ffe79f87,id-75a9eaf4fe89
+id-8caf27499af7,Serving,supports,MedReports supports Reporting capability,id-72a9b7ecec65,id-325b8609b6e3
+id-828ba56de9fe,Serving,supports,Microsoft Document Intelligence supports Document Processing capability,id-b8d09705688b,id-faad9192a0d7
+id-adfa9902f08d,Serving,supports,Dynamics CRM supports Customer Relationship Management capability,id-08d83563ddf2,id-75a9eaf4fe89
+id-c3c74eca56b0,Serving,supports,Dynamics CRM supports Sales Management capability,id-08d83563ddf2,id-3f60170812f9
+id-e2809db0ac08,Serving,supports,Salesforce.com supports Customer Relationship Management capability,id-a0db50c31b76,id-75a9eaf4fe89
+id-a67af21b7e8f,Serving,supports,Kit Management System supports Kit Management capability,id-942d37637536,id-832924dde3c6
+id-5e5eed0fe60c,Serving,supports,QAD supports Order Management capability,id-9aa09d95655d,id-14da17022bdc
+id-e6b3e632b8a2,Serving,supports,QAD supports ERP capability,id-9aa09d95655d,id-454a993499ff
+id-f83106164068,Serving,supports,Iwagaki supports Assembly Data Management capability,id-e682e06ee2b6,id-b5560691d686
