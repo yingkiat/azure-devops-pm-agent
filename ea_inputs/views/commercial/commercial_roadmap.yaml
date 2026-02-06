@@ -1,0 +1,123 @@
+# === INTENT (MVP9) ===
+intent:
+  question: "What is our CRM consolidation journey from fragmented systems to unified platform?"
+  audience: "CIO, Commercial Leadership - planning strategic transformation"
+  decision: "Approve phased migration to Microsoft Dynamics CRM by 2026"
+  key_message: "Consolidate 3 regional CRM systems + Excel processes into single Dynamics platform with modern digital capabilities"
+
+# === STORY (MVP9) ===
+story:
+  setup: "AS-IS (H1): Fragmented - SPT apps (ANZ), Salesforce (JPN), Enquiries CRM, Excel processes"
+  tension: "Multiple systems = high maintenance cost, data silos, inconsistent customer experience"
+  insight: "TO-BE (H3): Unified Dynamics CRM + integrated marketing/analytics portals + AI-powered automation"
+
+# === VISUAL STRATEGY (MVP9) ===
+visual:
+  emphasis:
+    - element: "Microsoft Dynamics CRM"
+      role: "Strategic target platform - consolidates all CRM functions"
+      treatment: "prominent"
+    - element: "Salesforce.com"
+      role: "Current JPN CRM - to be retired post-migration"
+      treatment: "faded"
+    - element: "SPT Applications"
+      role: "Legacy ANZ apps - to be replaced by Dynamics"
+      treatment: "faded"
+    - element: "CRM Marketing Module"
+      role: "New digital capability"
+      treatment: "highlighted"
+    - element: "Customer Analytics Portal"
+      role: "New digital capability"
+      treatment: "highlighted"
+  grouping_rationale: "Rows = Horizon (H1 current → H3 future), Columns = Process area (Sales/Operations/Marketing/Service)"
+  reading_order: "Top-to-bottom: AS-IS → Transitional → TO-BE shows migration journey"
+  color_strategy: "Green = Strategic target, Red = Sunset/legacy, Blue = New capabilities, Standard = Transitional"
+
+# === VIEW DEFINITION ===
+view:
+  name: "CRM Consolidation Case"
+  documentation: "MVP9 test - shows CRM landscape with emphasis treatments"
+
+# === ELEMENT SELECTION ===
+elements:
+  include:
+    # AS-IS (H1 - Current fragmented state)
+    - name: "Salesforce.com"
+      override:
+        Process: "Sales"
+        Horizon: "H1"
+    - name: "SPT Applications"
+      override:
+        Process: "Operations"
+        Horizon: "H1"
+    - name: "Enquiries and PO CRM"
+      override:
+        Process: "Sales"
+        Horizon: "H1"
+
+    # TRANSITIONAL (H2 - Migration in progress)
+    - name: "Kit Management System"
+      override:
+        Process: "Operations"
+        Horizon: "H2"
+    - name: "CRM Purchase Order Automation System"
+      override:
+        Process: "Operations"
+        Horizon: "H2"
+
+    # TO-BE (H3 - Future unified platform)
+    - name: "Microsoft Dynamics CRM"
+      override:
+        Process: "Sales"
+        Horizon: "H3"
+    - name: "CRM Marketing Module"
+      override:
+        Process: "Marketing"
+        Horizon: "H3"
+    - name: "Online Portal"
+      override:
+        Process: "Service"
+        Horizon: "H3"
+    - name: "Customer Analytics Portal"
+      override:
+        Process: "Marketing"
+        Horizon: "H3"
+    - name: "Microsoft Document Intelligence API"
+      override:
+        Process: "Operations"
+        Horizon: "H3"
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: ["Serving", "Flow"]
+      between: "included_elements"
+
+# === GROUPING ===
+grouping:
+  by_property: "Horizon"
+  secondary_by_property: "Process"
+  order: ["H1", "H2", "H3"]
+  secondary_order: ["Sales", "Operations", "Marketing", "Service"]
+
+# === LAYOUT ===
+layout:
+  algorithm: "matrix"
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Target Platform (2026)"
+    near: "Microsoft Dynamics CRM"
+  - text: "Retire post-migration"
+    near: "Salesforce.com"
+  - text: "Legacy - Functional refresh Dec 2025"
+    near: "SPT Applications"
+  - text: "New Digital Capabilities"
+    near: "CRM Marketing Module"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS (MVP9) ===
+iterations: []

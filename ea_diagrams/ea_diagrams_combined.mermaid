@@ -1,0 +1,531 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  ENTERPRISE ARCHITECTURE DIAGRAMS
+%%
+%%  Generated: Unknown source
+%%  Applications: 44 | Capabilities: 34 | Domains: 8
+%%  Diagram Types: 5
+%%
+%%  Domains: IT Operations, ERP, Commercial, IT Security, Data, Business Intelligence & Analytics, Artificial Intelligence, Operations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+====================================================================================================
+SECTION 1/5: APPLICATION DOMAINS
+Description: Shows applications grouped by business domain
+====================================================================================================
+
+
+graph TD
+    subgraph Commercial["Commercial"]
+        Microsoft_Dynamics["Microsoft Dynamics"]
+        class Microsoft_Dynamics strategic
+        PO_Automation["Po Automation"]
+        class PO_Automation strategic
+        Customer_Master_CMP["Customer Master (Cmp)"]
+        class Customer_Master_CMP strategic
+        SFDC["Sfdc"]
+        class SFDC strategic
+        MedQuote["Medquote"]
+        class MedQuote strategic
+        MedOps["Medops"]
+        class MedOps strategic
+        MedPack["Medpack"]
+        class MedPack strategic
+        MedReports["Medreports"]
+        class MedReports strategic
+        Magento["Magento"]
+        class Magento strategic
+        Microsoft_Dynamics_CRM["Microsoft Dynamics Crm"]
+        class Microsoft_Dynamics_CRM strategic
+        Salesforcecom["Salesforce.Com"]
+        class Salesforcecom strategic
+        Kit_Management_System["Kit Management System"]
+        class Kit_Management_System strategic
+    end
+    subgraph Data["Data"]
+        Azure_Data_Factory["Azure Data Factory"]
+        class Azure_Data_Factory strategic
+        Microsoft_Fabric["Microsoft Fabric"]
+        class Microsoft_Fabric strategic
+        Azure_Data_Lake_Storage["Azure Data Lake Storage"]
+        class Azure_Data_Lake_Storage strategic
+        Tableau["Tableau"]
+        class Tableau strategic
+        Microsoft_PowerBI["Microsoft Powerbi"]
+        class Microsoft_PowerBI strategic
+    end
+    subgraph ERP["ERP"]
+        QAD_EE["Qad Ee"]
+        class QAD_EE strategic
+        QAD_SE["Qad Se"]
+        class QAD_SE strategic
+    end
+    subgraph Operations["Operations"]
+        DSX["Dsx"]
+        class DSX strategic
+        SAP_APO["Sap Apo"]
+        class SAP_APO strategic
+        VC_Vendor_Collaboration["Vc Vendor Collaboration"]
+        class VC_Vendor_Collaboration strategic
+        Cargo_Master["Cargo Master"]
+        class Cargo_Master strategic
+        W3_Sirius["W3 Sirius"]
+        class W3_Sirius strategic
+        Yusen["Yusen"]
+        class Yusen strategic
+        GSCMOCTS["Gscm/Octs"]
+        class GSCMOCTS strategic
+        PSS_10["Pss 1.0"]
+        class PSS_10 strategic
+        Kenpin_Barcode["Kenpin Barcode"]
+        class Kenpin_Barcode strategic
+        Iwagaki_Access["Iwagaki Access"]
+        class Iwagaki_Access strategic
+        QMS["Qms"]
+        class QMS strategic
+        Reliance["Reliance"]
+        class Reliance strategic
+        PowerApps_UI["Powerapps Ui"]
+        class PowerApps_UI strategic
+        Power_Automate_Flow_1["Power Automate Flow #1"]
+        class Power_Automate_Flow_1 strategic
+        Power_Automate_Flow_2["Power Automate Flow #2"]
+        class Power_Automate_Flow_2 strategic
+        Fabric_Data_Warehouse["Fabric Data Warehouse"]
+        class Fabric_Data_Warehouse strategic
+        Azure_Function_Logging_Sink["Azure Function (Logging Sink)"]
+        class Azure_Function_Logging_Sink strategic
+        WMS_Portal["Wms Portal"]
+        class WMS_Portal strategic
+        EMRs["Emrs"]
+        class EMRs strategic
+        Financial_Systems["Financial Systems"]
+        class Financial_Systems strategic
+        Iwagaki["Iwagaki"]
+        class Iwagaki strategic
+    end
+    subgraph Business_Intelligence__Analytics["Business Intelligence & Analytics"]
+        UDW_Agent["Udw Agent"]
+        class UDW_Agent strategic
+    end
+    subgraph Artificial_Intelligence["Artificial Intelligence"]
+        Azure_Container_API["Azure Container Api"]
+        class Azure_Container_API strategic
+    end
+    subgraph IT_Security["IT Security"]
+        Medline_Systems["Medline Systems"]
+        class Medline_Systems strategic
+    end
+    subgraph IT_Operations["IT Operations"]
+        Medline_Data_Center["Medline Data Center"]
+        class Medline_Data_Center strategic
+    end
+    classDef critical fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    classDef strategic fill:#ccffcc,stroke:#00aa00,stroke-width:2px
+    classDef sunset fill:#ffeecc,stroke:#ff8800,stroke-width:2px
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+====================================================================================================
+SECTION 2/5: CAPABILITY MATRIX
+Description: Matrix showing applications and their capabilities
+====================================================================================================
+
+
+graph LR
+    Microsoft_Dynamics["Microsoft Dynamics"]
+    class Microsoft_Dynamics strategic
+    PO_Automation["Po Automation"]
+    class PO_Automation strategic
+    Customer_Master_CMP["Customer Master (Cmp)"]
+    class Customer_Master_CMP strategic
+    SFDC["Sfdc"]
+    class SFDC strategic
+    MedQuote["Medquote"]
+    class MedQuote strategic
+    MedOps["Medops"]
+    class MedOps strategic
+    MedPack["Medpack"]
+    class MedPack strategic
+    MedReports["Medreports"]
+    class MedReports strategic
+    Magento["Magento"]
+    class Magento strategic
+    Azure_Data_Factory["Azure Data Factory"]
+    class Azure_Data_Factory strategic
+    Microsoft_Fabric["Microsoft Fabric"]
+    class Microsoft_Fabric strategic
+    Azure_Data_Lake_Storage["Azure Data Lake Storage"]
+    class Azure_Data_Lake_Storage strategic
+    Tableau["Tableau"]
+    class Tableau strategic
+    Microsoft_PowerBI["Microsoft Powerbi"]
+    class Microsoft_PowerBI strategic
+    QAD_EE["Qad Ee"]
+    class QAD_EE strategic
+    QAD_SE["Qad Se"]
+    class QAD_SE strategic
+    DSX["Dsx"]
+    class DSX strategic
+    SAP_APO["Sap Apo"]
+    class SAP_APO strategic
+    VC_Vendor_Collaboration["Vc Vendor Collaboration"]
+    class VC_Vendor_Collaboration strategic
+    Cargo_Master["Cargo Master"]
+    class Cargo_Master strategic
+    W3_Sirius["W3 Sirius"]
+    class W3_Sirius strategic
+    Yusen["Yusen"]
+    class Yusen strategic
+    GSCMOCTS["Gscm/Octs"]
+    class GSCMOCTS strategic
+    PSS_10["Pss 1.0"]
+    class PSS_10 strategic
+    Kenpin_Barcode["Kenpin Barcode"]
+    class Kenpin_Barcode strategic
+    Iwagaki_Access["Iwagaki Access"]
+    class Iwagaki_Access strategic
+    QMS["Qms"]
+    class QMS strategic
+    Reliance["Reliance"]
+    class Reliance strategic
+    UDW_Agent["Udw Agent"]
+    class UDW_Agent strategic
+    PowerApps_UI["Powerapps Ui"]
+    class PowerApps_UI strategic
+    Power_Automate_Flow_1["Power Automate Flow #1"]
+    class Power_Automate_Flow_1 strategic
+    Power_Automate_Flow_2["Power Automate Flow #2"]
+    class Power_Automate_Flow_2 strategic
+    Azure_Container_API["Azure Container Api"]
+    class Azure_Container_API strategic
+    Fabric_Data_Warehouse["Fabric Data Warehouse"]
+    class Fabric_Data_Warehouse strategic
+    Azure_Function_Logging_Sink["Azure Function (Logging Sink)"]
+    class Azure_Function_Logging_Sink strategic
+    Medline_Systems["Medline Systems"]
+    class Medline_Systems strategic
+    Medline_Data_Center["Medline Data Center"]
+    class Medline_Data_Center strategic
+    WMS_Portal["Wms Portal"]
+    class WMS_Portal strategic
+    EMRs["Emrs"]
+    class EMRs strategic
+    Financial_Systems["Financial Systems"]
+    class Financial_Systems strategic
+    Microsoft_Dynamics_CRM["Microsoft Dynamics Crm"]
+    class Microsoft_Dynamics_CRM strategic
+    Salesforcecom["Salesforce.Com"]
+    class Salesforcecom strategic
+    Kit_Management_System["Kit Management System"]
+    class Kit_Management_System strategic
+    Iwagaki["Iwagaki"]
+    class Iwagaki strategic
+    UDW_Agent_Natural_Language_Query_Processing("Natural Language Query Processing")
+    UDW_Agent --> UDW_Agent_Natural_Language_Query_Processing
+    UDW_Agent_AI_Powered_Analysis("Ai-Powered Analysis")
+    UDW_Agent --> UDW_Agent_AI_Powered_Analysis
+    UDW_Agent_Structured_Data_Visualization("Structured Data Visualization")
+    UDW_Agent --> UDW_Agent_Structured_Data_Visualization
+    UDW_Agent_Comprehensive_Logging("Comprehensive Logging")
+    UDW_Agent --> UDW_Agent_Comprehensive_Logging
+    Fabric_Data_Warehouse_Data_Storage("Data Storage")
+    Fabric_Data_Warehouse --> Fabric_Data_Warehouse_Data_Storage
+    Fabric_Data_Warehouse_Data_Query("Data Query")
+    Fabric_Data_Warehouse --> Fabric_Data_Warehouse_Data_Query
+    Azure_Function_Logging_Sink_Audit_Trail("Audit Trail")
+    Azure_Function_Logging_Sink --> Azure_Function_Logging_Sink_Audit_Trail
+    PowerApps_UI_User_Interaction("User Interaction")
+    PowerApps_UI --> PowerApps_UI_User_Interaction
+    Power_Automate_Flow_1_API_Integration("Api Integration")
+    Power_Automate_Flow_1 --> Power_Automate_Flow_1_API_Integration
+    Azure_Container_API_Multi_Stage_Agentic_Reasoning("Multi-Stage Agentic Reasoning")
+    Azure_Container_API --> Azure_Container_API_Multi_Stage_Agentic_Reasoning
+    Azure_Container_API_Adaptive_Execution_Strategy("Adaptive Execution Strategy")
+    Azure_Container_API --> Azure_Container_API_Adaptive_Execution_Strategy
+    Medline_Systems_Cybersecurity_Risk_Reduction("Cybersecurity Risk Reduction")
+    Medline_Systems --> Medline_Systems_Cybersecurity_Risk_Reduction
+    Medline_Systems_Regulatory_Compliance("Regulatory Compliance")
+    Medline_Systems --> Medline_Systems_Regulatory_Compliance
+    Medline_Systems_Data_Protection("Data Protection")
+    Medline_Systems --> Medline_Systems_Data_Protection
+    Medline_Data_Center_Critical_Infrastructure_Management("Critical Infrastructure Management")
+    Medline_Data_Center --> Medline_Data_Center_Critical_Infrastructure_Management
+    Medline_Data_Center_Data_Hosting("Data Hosting")
+    Medline_Data_Center --> Medline_Data_Center_Data_Hosting
+    WMS_Portal_Internal_Business_Application_Access("Internal Business Application Access")
+    WMS_Portal --> WMS_Portal_Internal_Business_Application_Access
+    Financial_Systems_Regulated_Data_Management("Regulated Data Management")
+    Financial_Systems --> Financial_Systems_Regulated_Data_Management
+    EMRs_Healthcare_Operations("Healthcare Operations")
+    EMRs --> EMRs_Healthcare_Operations
+    Financial_Systems_Financial_Operations("Financial Operations")
+    Financial_Systems --> Financial_Systems_Financial_Operations
+    Salesforcecom_Customer_Relationship_Management("Customer Relationship Management")
+    Salesforcecom --> Salesforcecom_Customer_Relationship_Management
+    Microsoft_Dynamics_CRM_Purchase_Order_Automation("Purchase Order Automation")
+    Microsoft_Dynamics_CRM --> Microsoft_Dynamics_CRM_Purchase_Order_Automation
+    app__Order_Management("Order Management")
+    unknown --> app__Order_Management
+    app__Inventory_Management("Inventory Management")
+    unknown --> app__Inventory_Management
+    app__Sales_Quotation_Management("Sales Quotation Management")
+    unknown --> app__Sales_Quotation_Management
+    app__SOS_Management("Sos Management")
+    unknown --> app__SOS_Management
+    app__Bill_of_Materials_Management("Bill Of Materials Management")
+    unknown --> app__Bill_of_Materials_Management
+    Microsoft_PowerBI_Reporting("Reporting")
+    Microsoft_PowerBI --> Microsoft_PowerBI_Reporting
+    Kit_Management_System_Kit_Management("Kit Management")
+    Kit_Management_System --> Kit_Management_System_Kit_Management
+    app__Supply_Chain_Planning("Supply Chain Planning")
+    unknown --> app__Supply_Chain_Planning
+    app__Global_Sourcing("Global Sourcing")
+    unknown --> app__Global_Sourcing
+    app__Distribution_Management("Distribution Management")
+    unknown --> app__Distribution_Management
+    app__Assembly_Data_Management("Assembly Data Management")
+    unknown --> app__Assembly_Data_Management
+    Iwagaki_Operations_Data_Management("Operations Data Management")
+    Iwagaki --> Iwagaki_Operations_Data_Management
+    classDef critical fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    classDef strategic fill:#ccffcc,stroke:#00aa00,stroke-width:2px
+    classDef sunset fill:#ffeecc,stroke:#ff8800,stroke-width:2px
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+====================================================================================================
+SECTION 3/5: STRATEGIC IMPORTANCE
+Description: Applications grouped by strategic importance
+====================================================================================================
+
+
+graph TD
+    subgraph Standard["Standard"]
+        Standard_Microsoft_Dynamics["Microsoft Dynamics<br/>(Commercial)"]
+        class Standard_Microsoft_Dynamics standard
+        Standard_PO_Automation["Po Automation<br/>(Commercial)"]
+        class Standard_PO_Automation standard
+        Standard_Customer_Master_CMP["Customer Master (Cmp)<br/>(Commercial)"]
+        class Standard_Customer_Master_CMP standard
+        Standard_SFDC["Sfdc<br/>(Commercial)"]
+        class Standard_SFDC standard
+        Standard_MedQuote["Medquote<br/>(Commercial)"]
+        class Standard_MedQuote standard
+        Standard_MedOps["Medops<br/>(Commercial)"]
+        class Standard_MedOps standard
+        Standard_MedPack["Medpack<br/>(Commercial)"]
+        class Standard_MedPack standard
+        Standard_MedReports["Medreports<br/>(Commercial)"]
+        class Standard_MedReports standard
+        Standard_Magento["Magento<br/>(Commercial)"]
+        class Standard_Magento standard
+        Standard_Azure_Data_Factory["Azure Data Factory<br/>(Data)"]
+        class Standard_Azure_Data_Factory standard
+        Standard_Microsoft_Fabric["Microsoft Fabric<br/>(Data)"]
+        class Standard_Microsoft_Fabric standard
+        Standard_Azure_Data_Lake_Storage["Azure Data Lake Storage<br/>(Data)"]
+        class Standard_Azure_Data_Lake_Storage standard
+        Standard_Tableau["Tableau<br/>(Data)"]
+        class Standard_Tableau standard
+        Standard_Microsoft_PowerBI["Microsoft Powerbi<br/>(Data)"]
+        class Standard_Microsoft_PowerBI standard
+        Standard_QAD_EE["Qad Ee<br/>(ERP)"]
+        class Standard_QAD_EE standard
+        Standard_QAD_SE["Qad Se<br/>(ERP)"]
+        class Standard_QAD_SE standard
+        Standard_DSX["Dsx<br/>(Operations)"]
+        class Standard_DSX standard
+        Standard_SAP_APO["Sap Apo<br/>(Operations)"]
+        class Standard_SAP_APO standard
+        Standard_VC_Vendor_Collaboration["Vc Vendor Collaboration<br/>(Operations)"]
+        class Standard_VC_Vendor_Collaboration standard
+        Standard_Cargo_Master["Cargo Master<br/>(Operations)"]
+        class Standard_Cargo_Master standard
+        Standard_W3_Sirius["W3 Sirius<br/>(Operations)"]
+        class Standard_W3_Sirius standard
+        Standard_Yusen["Yusen<br/>(Operations)"]
+        class Standard_Yusen standard
+        Standard_GSCMOCTS["Gscm/Octs<br/>(Operations)"]
+        class Standard_GSCMOCTS standard
+        Standard_PSS_10["Pss 1.0<br/>(Operations)"]
+        class Standard_PSS_10 standard
+        Standard_Kenpin_Barcode["Kenpin Barcode<br/>(Operations)"]
+        class Standard_Kenpin_Barcode standard
+        Standard_Iwagaki_Access["Iwagaki Access<br/>(Operations)"]
+        class Standard_Iwagaki_Access standard
+        Standard_QMS["Qms<br/>(Operations)"]
+        class Standard_QMS standard
+        Standard_Reliance["Reliance<br/>(Operations)"]
+        class Standard_Reliance standard
+        Standard_UDW_Agent["Udw Agent<br/>(Business Intelligence & Analytics)"]
+        class Standard_UDW_Agent standard
+        Standard_PowerApps_UI["Powerapps Ui<br/>(Operations)"]
+        class Standard_PowerApps_UI standard
+        Standard_Power_Automate_Flow_1["Power Automate Flow #1<br/>(Operations)"]
+        class Standard_Power_Automate_Flow_1 standard
+        Standard_Power_Automate_Flow_2["Power Automate Flow #2<br/>(Operations)"]
+        class Standard_Power_Automate_Flow_2 standard
+        Standard_Azure_Container_API["Azure Container Api<br/>(Artificial Intelligence)"]
+        class Standard_Azure_Container_API standard
+        Standard_Fabric_Data_Warehouse["Fabric Data Warehouse<br/>(Operations)"]
+        class Standard_Fabric_Data_Warehouse standard
+        Standard_Azure_Function_Logging_Sink["Azure Function (Logging Sink)<br/>(Operations)"]
+        class Standard_Azure_Function_Logging_Sink standard
+        Standard_Medline_Systems["Medline Systems<br/>(IT Security)"]
+        class Standard_Medline_Systems standard
+        Standard_Medline_Data_Center["Medline Data Center<br/>(IT Operations)"]
+        class Standard_Medline_Data_Center standard
+        Standard_WMS_Portal["Wms Portal<br/>(Operations)"]
+        class Standard_WMS_Portal standard
+        Standard_EMRs["Emrs<br/>(Operations)"]
+        class Standard_EMRs standard
+        Standard_Financial_Systems["Financial Systems<br/>(Operations)"]
+        class Standard_Financial_Systems standard
+        Standard_Microsoft_Dynamics_CRM["Microsoft Dynamics Crm<br/>(Commercial)"]
+        class Standard_Microsoft_Dynamics_CRM standard
+        Standard_Salesforcecom["Salesforce.Com<br/>(Commercial)"]
+        class Standard_Salesforcecom standard
+        Standard_Kit_Management_System["Kit Management System<br/>(Commercial)"]
+        class Standard_Kit_Management_System standard
+        Standard_Iwagaki["Iwagaki<br/>(Operations)"]
+        class Standard_Iwagaki standard
+    end
+    classDef critical fill:#ff4444,stroke:#cc0000,stroke-width:3px,color:#ffffff
+    classDef important fill:#ffaa44,stroke:#cc6600,stroke-width:2px
+    classDef standard fill:#44aaff,stroke:#0066cc,stroke-width:1px
+    classDef low fill:#aaaaaa,stroke:#666666,stroke-width:1px
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+====================================================================================================
+SECTION 4/5: LIFECYCLE STATUS
+Description: Applications grouped by lifecycle status
+====================================================================================================
+
+
+graph TD
+    subgraph Strategic["Strategic"]
+        Strategic_Microsoft_Dynamics["Microsoft Dynamics"]
+        Strategic_PO_Automation["Po Automation"]
+        Strategic_Customer_Master_CMP["Customer Master (Cmp)"]
+        Strategic_SFDC["Sfdc"]
+        Strategic_MedQuote["Medquote"]
+        Strategic_MedOps["Medops"]
+        Strategic_MedPack["Medpack"]
+        Strategic_MedReports["Medreports"]
+        Strategic_Magento["Magento"]
+        Strategic_Azure_Data_Factory["Azure Data Factory"]
+        Strategic_Microsoft_Fabric["Microsoft Fabric"]
+        Strategic_Azure_Data_Lake_Storage["Azure Data Lake Storage"]
+        Strategic_Tableau["Tableau"]
+        Strategic_Microsoft_PowerBI["Microsoft Powerbi"]
+        Strategic_QAD_EE["Qad Ee"]
+        Strategic_QAD_SE["Qad Se"]
+        Strategic_DSX["Dsx"]
+        Strategic_SAP_APO["Sap Apo"]
+        Strategic_VC_Vendor_Collaboration["Vc Vendor Collaboration"]
+        Strategic_Cargo_Master["Cargo Master"]
+        Strategic_W3_Sirius["W3 Sirius"]
+        Strategic_Yusen["Yusen"]
+        Strategic_GSCMOCTS["Gscm/Octs"]
+        Strategic_PSS_10["Pss 1.0"]
+        Strategic_Kenpin_Barcode["Kenpin Barcode"]
+        Strategic_Iwagaki_Access["Iwagaki Access"]
+        Strategic_QMS["Qms"]
+        Strategic_Reliance["Reliance"]
+        Strategic_UDW_Agent["Udw Agent"]
+        Strategic_PowerApps_UI["Powerapps Ui"]
+        Strategic_Power_Automate_Flow_1["Power Automate Flow #1"]
+        Strategic_Power_Automate_Flow_2["Power Automate Flow #2"]
+        Strategic_Azure_Container_API["Azure Container Api"]
+        Strategic_Fabric_Data_Warehouse["Fabric Data Warehouse"]
+        Strategic_Azure_Function_Logging_Sink["Azure Function (Logging Sink)"]
+        Strategic_Medline_Systems["Medline Systems"]
+        Strategic_Medline_Data_Center["Medline Data Center"]
+        Strategic_WMS_Portal["Wms Portal"]
+        Strategic_EMRs["Emrs"]
+        Strategic_Financial_Systems["Financial Systems"]
+        Strategic_Microsoft_Dynamics_CRM["Microsoft Dynamics Crm"]
+        Strategic_Salesforcecom["Salesforce.Com"]
+        Strategic_Kit_Management_System["Kit Management System"]
+        Strategic_Iwagaki["Iwagaki"]
+    end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+====================================================================================================
+SECTION 5/5: DOMAIN CAPABILITIES
+Description: Business capabilities organized by domain
+====================================================================================================
+
+
+graph TD
+    subgraph Business_Intelligence__Analytics["Business Intelligence & Analytics"]
+        Business_Intelligence__Analytics_Natural_Language_Query_Processing("Natural Language Query Processing")
+        Business_Intelligence__Analytics_AI_Powered_Analysis("Ai-Powered Analysis")
+        Business_Intelligence__Analytics_Structured_Data_Visualization("Structured Data Visualization")
+        Business_Intelligence__Analytics_Comprehensive_Logging("Comprehensive Logging")
+    end
+    subgraph Operations["Operations"]
+        Operations_Data_Storage("Data Storage")
+        Operations_Data_Query("Data Query")
+        Operations_Audit_Trail("Audit Trail")
+        Operations_User_Interaction("User Interaction")
+        Operations_API_Integration("Api Integration")
+        Operations_Internal_Business_Application_Access("Internal Business Application Access")
+        Operations_Regulated_Data_Management("Regulated Data Management")
+        Operations_Healthcare_Operations("Healthcare Operations")
+        Operations_Financial_Operations("Financial Operations")
+        Operations_Operations_Data_Management("Operations Data Management")
+    end
+    subgraph Artificial_Intelligence["Artificial Intelligence"]
+        Artificial_Intelligence_Multi_Stage_Agentic_Reasoning("Multi-Stage Agentic Reasoning")
+        Artificial_Intelligence_Adaptive_Execution_Strategy("Adaptive Execution Strategy")
+    end
+    subgraph IT_Security["IT Security"]
+        IT_Security_Cybersecurity_Risk_Reduction("Cybersecurity Risk Reduction")
+        IT_Security_Regulatory_Compliance("Regulatory Compliance")
+        IT_Security_Data_Protection("Data Protection")
+    end
+    subgraph IT_Operations["IT Operations"]
+        IT_Operations_Critical_Infrastructure_Management("Critical Infrastructure Management")
+        IT_Operations_Data_Hosting("Data Hosting")
+    end
+    subgraph Commercial["Commercial"]
+        Commercial_Customer_Relationship_Management("Customer Relationship Management")
+        Commercial_Purchase_Order_Automation("Purchase Order Automation")
+        Commercial_Kit_Management("Kit Management")
+    end
+    subgraph unknown[""]
+        app__Order_Management("Order Management")
+        app__Inventory_Management("Inventory Management")
+        app__Sales_Quotation_Management("Sales Quotation Management")
+        app__SOS_Management("Sos Management")
+        app__Bill_of_Materials_Management("Bill Of Materials Management")
+        app__Supply_Chain_Planning("Supply Chain Planning")
+        app__Global_Sourcing("Global Sourcing")
+        app__Distribution_Management("Distribution Management")
+        app__Assembly_Data_Management("Assembly Data Management")
+    end
+    subgraph Data["Data"]
+        Data_Reporting("Reporting")
+    end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

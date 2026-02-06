@@ -158,7 +158,7 @@ class EADiscovery:
                 model="gpt-4o",
                 messages=messages,
                 temperature=0.2,
-                max_tokens=8000  # Increased to handle large discoveries with many elements
+                max_tokens=16000  # Azure OpenAI GPT-4o max output tokens
             )
             content = response.choices[0].message.content.strip()
 
@@ -293,7 +293,7 @@ class EADiscovery:
                 model="gpt-4o",
                 messages=messages,
                 temperature=0.2,
-                max_tokens=8000  # Increased to handle large discoveries with many elements
+                max_tokens=16000  # Azure OpenAI GPT-4o max output tokens
             )
             content = response.choices[0].message.content.strip()
 

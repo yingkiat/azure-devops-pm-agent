@@ -1,0 +1,36 @@
+# Corporate Template Configuration
+# Generated from inspection on 2026-01-06
+# Reuse this instead of re-running template inspection
+
+template: "templates/corporate.pptx"
+
+# Layout names discovered in template (use these in layout_mapping)
+available_layouts:
+  - name: "20_Title and Content"
+    placeholders:
+      - idx: 0
+        type: "TITLE"
+        name: "Title Placeholder 1"
+      - idx: 1
+        type: "OBJECT"
+        name: "Content Placeholder 2"
+      - idx: 24
+        type: "BODY"
+        name: "Text Placeholder 17"
+      - idx: 25
+        type: "SLIDE_NUMBER"
+        name: "Slide Number Placeholder 1"
+    use_for: ["title", "section", "bullets", "image", "table"]
+
+# Recommended layout_mapping for this template
+# Single layout template - use index 0 for everything
+layout_mapping:
+  title: 0
+  section: 0
+  bullets: 0
+  image: 0
+  table: 0
+  two_column: 0
+
+# Placeholder notes
+# - 20_Title and Content: title=idx 0, content=idx 1

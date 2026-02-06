@@ -57,6 +57,23 @@ AZURE_OPENAI_DEPLOYMENT=gpt-4o
 GEMINI_API_KEY=your-key
 ```
 
+### ⚠️ CRITICAL: MCP Server Restart Required for Code Changes
+
+The MCP server runs as a **persistent stdio process** that caches Python modules on startup. Any code changes will **NOT take effect** until you restart the process.
+
+**To Apply Code Changes:**
+1. Close Claude Code completely (exit the CLI)
+2. Reopen Claude Code to restart the MCP server
+3. Re-run your discovery/processing commands
+
+This applies to changes in:
+- `src/core/file_monitor.py` (file detection patterns)
+- `src/ea/ea_discovery.py` (discovery logic)
+- `src/mcp_server.py` (processing pipelines)
+- Any shared modules
+
+Skipping this step will execute old cached code.
+
 ### 3. Register MCP Server
 
 **Option A: Global Registration (Recommended)**
@@ -146,12 +163,41 @@ Claude Code: [Uses ea_generate_mermaid]
 
 ---
 
+## View Specification Workflow
+
+YAML view specs are **iterative storyboards** - expect to refine through generate-review-refine cycles.
+
+### Three Core Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **1. Iterative Storyboard** | v1 → v1.1 → v2 is normal. Document iterations. Don't aim for perfection on first draft. |
+| **2. Explicit > Query** | Prefer `name:` with explicit elements over `where:` property filters. Queries are fragile. |
+| **3. View = Interpretation** | Data is truth; view spec interprets it. Use `override:` to align grouping with narrative. |
+
+### Example - Property Override
+
+When data says H2 but story needs H1:
+
+```yaml
+elements:
+  include:
+    - name: "SPT Applications"
+      override:
+        Horizon: "H1"    # Override: legacy chain belongs in AS-IS
+```
+
+See [docs/ea/VIEW_SPEC_WORKFLOW.md](docs/ea/VIEW_SPEC_WORKFLOW.md) for full documentation.
+
+---
+
 ## Available MCP Tools
 
-### EA Tools (5)
+### EA Tools (6)
 - `ea_discover` - Extract apps, capabilities, relationships from text
 - `ea_discover_directory` - Batch process entire directories with smart batching
 - `ea_generate_archi` - Generate ArchiMate CSV/XML for Archi tool
+- `ea_generate_presentation_diagram` - Generate slide-ready diagrams from YAML view specs
 - `ea_generate_mermaid` - Create technical documentation diagrams
 - `ea_get_data_summary` - Get EA knowledge base overview
 
@@ -167,20 +213,46 @@ Claude Code: [Uses ea_generate_mermaid]
 - `batch_work_item_queries` - Parallel query execution
 - `batch_pull_requests` - Bulk PR queries
 
-**Total: 15 MCP Tools**
+**Total: 16 MCP Tools**
 
 ---
 
 ## Architecture
 
-### Single Source of Truth: `archi_inputs/`
-All EA data stored in ArchiMate format:
-- `elements.csv` - Applications, capabilities, processes
-- `relations.csv` - Serving, Flow, Composition relationships
-- `properties.csv` - Criticality, maturity, strategic importance
-- `model.xml` - Open Group ArchiMate 3.0 Model Exchange
+### EA CMDB (Configuration Management Database)
 
-**Import to Archi:** File → Open → Model from File → `archi_inputs/model.xml`
+The system maintains a clean **input → process → output** flow:
+
+**INPUTS:**
+- `ea_inputs/` - System descriptions (Markdown, CSV, Excel) maintained by users
+  - `01_company_context/` - Organizational information
+  - `02_IT_systems/` - System descriptions by domain
+  - `03_global_standards/` - Enterprise policies and standards
+  - `views/` - YAML view specifications for diagrams
+
+**CMDB (Single Source of Truth):**
+- `archi_inputs/` - Canonical ArchiMate model (auto-generated, read-only)
+  - `elements.csv` - Applications, capabilities, processes
+  - `relations.csv` - Serving, Flow, Composition relationships
+  - `properties.csv` - Criticality, maturity, strategic importance, domain, lifecycle
+  - `model.xml` - Open Group ArchiMate 3.0 Model Exchange
+  - `views.csv` - View definitions
+  - `property_schema.yaml` - Property definitions
+
+**OUTPUTS:**
+- `ea_diagrams/` - Presentation-ready diagrams (auto-generated)
+  - `.drawio` files - Open in draw.io, export to PNG/PDF for slides
+
+**Workflow:**
+```
+ea_inputs/*              (User describes systems)
+  ↓ ea_discover_directory()
+archi_inputs/*           (Canonical model)
+  ↓ ea_generate_presentation_diagram()
+ea_diagrams/*.drawio     (Presentation diagrams)
+  ↓ (refinement in draw.io)
+*.png/*.pdf              (Final deliverables)
+```
 
 ### Prompt-Driven Intelligence
 Business logic externalized to `prompts/` directory:
@@ -188,6 +260,27 @@ Business logic externalized to `prompts/` directory:
 - `prompts/pm/classify_business_request.md` - PM classification
 
 Easy iteration without code changes.
+
+### Property Normalization (Frequently Modified)
+
+Source data uses inconsistent property names. The `PROPERTY_NORMALIZATION` mapping in `src/ea/archi_export.py:25` standardizes them:
+
+```python
+PROPERTY_NORMALIZATION = {
+    'Business Unit(s)': 'Domain',
+    'Business Unit': 'Domain',
+    'Dept': 'Domain',
+    'Location': 'Region',
+    'Geography': 'Region',
+    'Status': 'Lifecycle Status',
+    'Activity Status': 'Lifecycle Status',
+    # ... add your mappings here
+}
+```
+
+**When to modify:** Add entries when source data uses different terminology than your YAML view specs expect. For example, if your Excel says "Dept" but your views filter by `Domain`, add the mapping.
+
+**After modifying:** Restart Claude Code (MCP server caches modules on startup).
 
 ### Data Flow
 ```
@@ -199,28 +292,61 @@ Natural Language → Claude Code MCP → Unified Server → PM/EA Modules → Az
 ## Development
 
 ### Testing
+
+**Enterprise Architecture Tests** (5 test modules in `tests/ea/`)
+- `test_ea_discovery.py` - EA Discovery engine validation
+- `test_storage.py` - CMDB storage layer (CSV/XML)
+- `test_matrix_scenarios.py` - EA matrix filtering and scenarios
+- `test_integration.py` - End-to-end discovery → CMDB workflow
+- `test_runner.py` - Test orchestration
+
+**Run Tests:**
 ```bash
-python test_mcp_server.py         # Verify MCP integration
-python test_archimate_provider.py  # Test ArchiMate data loading
+pytest tests/ea/                         # Run all EA tests
+pytest tests/ea/test_ea_discovery.py     # Run specific test
 ```
+
+**PM/Integration Testing:**
+- Test MCP tools directly via Claude Code
+- No separate test suites (Claude Code is the test interface)
 
 ### File Structure
 ```
-src/
-├── mcp_server.py           # Unified MCP server
-├── pm/                     # Project management modules
-├── ea/                     # Enterprise architecture modules
-└── shared/                 # Shared utilities
+ea_inputs/                      # INPUT: System descriptions (user-maintained)
+├── 01_company_context/
+├── 02_IT_systems/
+├── 03_global_standards/
+└── views/                       # YAML view specifications
 
-prompts/
-├── ea/                     # EA discovery prompts
-└── pm/                     # PM classification prompts
-
-archi_inputs/               # ArchiMate model (single source of truth)
+archi_inputs/                   # CMDB: Canonical ArchiMate model (auto-generated)
 ├── elements.csv
 ├── relations.csv
 ├── properties.csv
-└── model.xml
+├── model.xml
+├── views.csv
+└── property_schema.yaml
+
+ea_diagrams/                    # OUTPUT: Presentation diagrams (auto-generated)
+└── *.drawio                     # Open in draw.io, export to PNG/PDF
+
+src/
+├── mcp_server.py               # Unified MCP server
+├── pm/                         # Project management modules
+├── ea/                         # Enterprise architecture modules
+│   ├── ea_discovery.py         # Discovery engine
+│   ├── archi_export.py         # ArchiMate generation
+│   ├── presentation_diagram_generator.py  # Slide-ready diagrams
+│   ├── drawio_export.py        # Draw.io XML generation
+│   └── view_builder.py         # YAML view processing
+└── shared/                     # Shared utilities
+
+prompts/
+├── ea/                         # EA discovery prompts
+└── pm/                         # PM classification prompts
+
+tests/
+├── ea/                         # Enterprise architecture tests
+└── ...                         # Other test modules
 ```
 
 ---
@@ -241,6 +367,7 @@ archi_inputs/               # ArchiMate model (single source of truth)
 ## Documentation
 
 - **[CLAUDE.md](CLAUDE.md)** - Complete Claude Code integration guide
+- **[View Spec Workflow](docs/ea/VIEW_SPEC_WORKFLOW.md)** - Iterative diagram creation principles
 - **[.claude_mcp.json](.claude_mcp.json)** - MCP configuration example
 - **[MVP5 Implementation](docs/ea/MVP5_Implementation_Complete.md)** - Context-aware discovery + smart batching
 - **[EA Documentation](docs/ea/)** - Full EA implementation details

@@ -1,0 +1,225 @@
+# Infrastructure Cost Optimization Roadmap
+
+# === INTENT ===
+intent:
+  question: "How do we reduce infrastructure overspend while improving service delivery?"
+  audience: "IT Management and Finance - concerned with cloud costs and operational efficiency"
+  decision: "Prioritize infrastructure modernization initiatives that deliver cost savings"
+  key_message: "Shift from always-on VMs to serverless/containers, consolidate regions and helpdesks to reduce operational costs by ~40%"
+
+# === STORY ===
+story:
+  setup: "Current state shows fragmented infrastructure with high Azure VM costs, dual-region overhead, separate helpdesks, and basic EUC capabilities"
+  tension: "Overspend on Azure (DEV/TEST always running) and local DCs; ad-hoc monitoring; fragmented support across regions"
+  insight: "Serverless architecture + regional consolidation + unified support platform can deliver significant cost reduction while improving user experience"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Azure Container Apps"
+      role: "Key modernization platform replacing VMs"
+      treatment: "prominent"
+    - element: "Serverless Databases"
+      role: "Cost-efficient data layer"
+      treatment: "prominent"
+    - element: "Consolidated Global Helpdesk"
+      role: "Unified support reducing overhead"
+      treatment: "prominent"
+    - element: "Heavy VM Expenditure"
+      role: "Problem area - costly legacy approach"
+      treatment: "faded"
+    - element: "Separate Global/APAC Helpdesks"
+      role: "Inefficient current state"
+      treatment: "faded"
+  grouping_rationale: "Group by infrastructure domain (Cloud, EUC, Support) to show parallel modernization tracks; time horizons show evolution from costly current state to optimized future"
+  reading_order: "Left to right across domains, top to bottom through time horizons - see current pain points (H1) transform into strategic solutions (H3)"
+  color_strategy: "Green = strategic initiatives delivering cost savings; Red = expensive legacy patterns being sunset; Blue = standard platforms; faded = current inefficiencies"
+
+# === VIEW DEFINITION ===
+view:
+  name: "Infrastructure Cost Optimization Roadmap"
+  documentation: "Infrastructure transformation roadmap focused on reducing Azure and DC overspend through serverless adoption, regional consolidation, and unified support services"
+
+# === ELEMENT SELECTION ===
+# Explicit element names (WHERE clauses don't work reliably)
+elements:
+  include:
+    # Azure Cloud domain (9 elements)
+    - name: "Heavy VM Expenditure"
+      override:
+        Horizon: "H1"
+        Domain: "Azure Cloud"
+    - name: "Dual Region Architecture"
+      override:
+        Horizon: "H1"
+        Domain: "Azure Cloud"
+    - name: "On-Prem File Servers (JPN)"
+      override:
+        Horizon: "H1"
+        Domain: "Azure Cloud"
+    - name: "Ad-hoc Cost Monitoring"
+      override:
+        Horizon: "H1"
+        Domain: "Azure Cloud"
+    - name: "Azure Container Apps"
+      override:
+        Horizon: "H2"
+        Domain: "Azure Cloud"
+    - name: "Serverless Databases"
+      override:
+        Horizon: "H2"
+        Domain: "Azure Cloud"
+    - name: "Proactive Cost Monitoring"
+      override:
+        Horizon: "H2"
+        Domain: "Azure Cloud"
+    - name: "Single SEA Region"
+      override:
+        Horizon: "H3"
+        Domain: "Azure Cloud"
+    - name: "Azure File Sync to JPN"
+      override:
+        Horizon: "H3"
+        Domain: "Azure Cloud"
+    # EUC domain (5 elements)
+    - name: "Limited Regional Office Support"
+      override:
+        Horizon: "H1"
+        Domain: "EUC"
+    - name: "Password-Only Authentication"
+      override:
+        Horizon: "H1"
+        Domain: "EUC"
+    - name: "Windows Hello"
+      override:
+        Horizon: "H2"
+        Domain: "EUC"
+    - name: "Fingerprint Logon"
+      override:
+        Horizon: "H3"
+        Domain: "EUC"
+    - name: "Tech Days / Regional Outreach"
+      override:
+        Horizon: "H3"
+        Domain: "EUC"
+    # Support Services domain (11 elements)
+    - name: "Separate Global/APAC Helpdesks"
+      override:
+        Horizon: "H1"
+        Domain: "Support Services"
+    - name: "Multiple Ticket Channels"
+      override:
+        Horizon: "H1"
+        Domain: "Support Services"
+    - name: "HEAT ITSM (Current)"
+      override:
+        Horizon: "H1"
+        Domain: "Support Services"
+    - name: "Limited Self-Help"
+      override:
+        Horizon: "H1"
+        Domain: "Support Services"
+    - name: "Business Hours Support"
+      override:
+        Horizon: "H1"
+        Domain: "Support Services"
+    - name: "Enhanced HEAT ITSM"
+      override:
+        Horizon: "H2"
+        Domain: "Support Services"
+    - name: "Advanced Ticket Monitoring"
+      override:
+        Horizon: "H2"
+        Domain: "Support Services"
+    - name: "Consolidated Global Helpdesk"
+      override:
+        Horizon: "H3"
+        Domain: "Support Services"
+    - name: "AI Support Chatbot"
+      override:
+        Horizon: "H3"
+        Domain: "Support Services"
+    - name: "Self-Service Portal"
+      override:
+        Horizon: "H3"
+        Domain: "Support Services"
+    - name: "24x7 Support Operations"
+      override:
+        Horizon: "H3"
+        Domain: "Support Services"
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: ["Flow", "Serving"]
+      between: "included_elements"
+
+# === GROUPING ===
+grouping:
+  by_property: "Horizon"
+  secondary_by_property: "Domain"
+  order:
+    Horizon: ["H1", "H2", "H3"]
+    Domain: ["Azure Cloud", "EUC", "Support Services"]
+
+# === LAYOUT ===
+layout:
+  algorithm: "matrix"
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "~60% cost reduction target"
+    near: "Azure Container Apps"
+  - text: "DEV/TEST shutdown automation"
+    near: "Heavy VM Expenditure"
+  - text: "Regional consolidation savings"
+    near: "Single SEA Region"
+  - text: "Low-latency for Excel editing"
+    near: "Azure File Sync to JPN"
+  - text: "Modern auth rollout Q1 2026"
+    near: "Windows Hello"
+  - text: "Headcount consolidation"
+    near: "Consolidated Global Helpdesk"
+  - text: "Deflect 40% of tickets"
+    near: "AI Support Chatbot"
+  - text: "Follow-the-sun support model"
+    near: "24x7 Support Operations"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations:
+  - version: 1.0
+    date: "2026-01-09"
+    feedback: "Initial draft based on IT management cost reduction objectives"
+    change: "Created matrix with explicit element definitions for infrastructure epic"
+  - version: 1.1
+    date: "2026-01-09"
+    feedback: "Remove SSO (not infrastructure-focused); clarify regional office support as tech outreach initiatives rather than full support"
+    change: "Removed Enhanced SSO element; changed Regional Office Enablement to Tech Days / Regional Outreach"
+  - version: 1.2
+    date: "2026-01-09"
+    feedback: "Push some near-term initiatives to H2 to show phased roadmap progression"
+    change: "Moved to H2: Proactive Cost Monitoring, Azure Container Apps/Serverless Databases (pilots), Windows Hello, Enhanced HEAT ITSM, and Advanced Ticket Monitoring. H3 now focuses on full transformation (regional consolidation, AI chatbot, 24x7 support)."
+  - version: 1.3
+    date: "2026-01-10"
+    feedback: "WHERE clauses failing - only 8 of 25 elements rendered"
+    change: "Switched from where-clause filtering to explicit element names. All 25 elements now listed individually."
+  - version: 1.4
+    date: "2026-01-10"
+    feedback: "Wrong layout algorithm - only 2 of 3 domains rendering (EUC missing)"
+    change: "Changed algorithm from 'grid' to 'matrix' for proper Horizon × Domain two-dimensional layout."
+  - version: 1.5
+    date: "2026-02-05"
+    feedback: "Diagram only showing H1 and H3, missing H2 row entirely because source data has no H2 elements"
+    change: "Added property overrides to force pilot/near-term elements into H2: Azure Container Apps, Serverless Databases, Proactive Cost Monitoring, Windows Hello, Enhanced HEAT ITSM, Advanced Ticket Monitoring. Shows phased roadmap: H1 (current) → H2 (pilots) → H3 (full transformation)."
+  - version: 1.6
+    date: "2026-02-05"
+    feedback: "Elements appearing in wrong columns - most elements in 'Other' instead of proper domains. Source data missing Domain properties for most elements (only Azure Container Apps had it)."
+    change: "Added Domain overrides for ALL 25 elements. Azure Cloud: 9 elements (VM, regions, monitoring, serverless). EUC: 5 elements (auth, support). Support Services: 11 elements (helpdesk, ITSM, chatbot). Now all elements appear in correct domain columns."
+  - version: 1.7
+    date: "2026-02-05"
+    feedback: "'Other' horizon row appearing with many elements - only 6 elements had Horizon overrides, rest had no Horizon value."
+    change: "Added Horizon overrides for ALL 25 elements. H1: 9 current-state elements. H2: 6 pilot elements. H3: 10 future-state elements. Eliminates 'Other' horizon row - now clean 3x3 matrix (H1/H2/H3 × Azure Cloud/EUC/Support Services)."

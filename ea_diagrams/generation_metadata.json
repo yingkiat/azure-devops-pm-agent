@@ -1,0 +1,33 @@
+{
+  "ea_data_metadata": {
+    "source_directory": "archi_inputs",
+    "element_count": 93,
+    "relationship_count": 55,
+    "application_count": 44,
+    "capability_count": 34,
+    "domain_count": 8,
+    "format": "ArchiMate 3.0 CSV"
+  },
+  "generated_diagrams": [
+    "ea_diagrams_combined"
+  ],
+  "saved_files": {
+    "ea_diagrams_combined": "ea_diagrams\\ea_diagrams_combined.mermaid"
+  },
+  "schema_info": {
+    "columns": [
+      "app_name",
+      "capability",
+      "domain",
+      "strategic_importance",
+      "lifecycle_status",
+      "maturity"
+    ],
+    "version": "archimate_3.0",
+    "required_fields": [
+      "app_name",
+      "capability",
+      "domain"
+    ]
+  }
+}

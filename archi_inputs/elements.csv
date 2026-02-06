@@ -1,52 +1,204 @@
 ID,Type,Name,Documentation
-id-021726ec4519,ApplicationComponent,PSS 1.0,Product information interface; Pack Specific System
-id-e176567a2ef1,ApplicationComponent,QAD EE,ERP system for finance and supply chain management; QAD EE Cloud
-id-f91e6b0dc180,ApplicationComponent,Tableau,Data visualization and reporting tool; Dashboarding
-id-328d17d91256,ApplicationComponent,QAD SE,ERP system for finance and supply chain management; QAD SE Cloud
-id-6385d2992d54,ApplicationComponent,DSX,Supply chain planning and forecasting tool; Forecasting
-id-9a5fd32c9b67,ApplicationComponent,SAP APO,"Supply chain planning and global sourcing system; Supply Chain Planning, Global Sourcing; Supply chain planning system for global sourcing"
-id-64bdcb4d3b3a,ApplicationComponent,VC Vendor Collaboration,Vendor collaboration portal for supply chain; Vendor portal
-id-0015d01da270,ApplicationComponent,Cargo Master,Warehouse management system for 3PL warehouse; For 3PL warehouse; System used in Tokyo Distribution Center
-id-6d9eb02243f7,ApplicationComponent,W3 Sirius,Warehouse management system for warehouse operations; For warehouse management; Distribution center management system
-id-bb3759f4a808,ApplicationComponent,Yusen,Inbound shipping management system; For inbound shipping; Global logistics system for international buying
-id-1d3ac771d8b3,ApplicationComponent,GSCM/OCTS,Custom Excel-based system for transport management; Excel based
-id-d0be297d0966,ApplicationComponent,Kenpin Barcode,Assembly inventory tracking system; Assembly inventory data; COTS system for assembly data
-id-6e68a57a6540,ApplicationComponent,Iwagaki Access,Assembly tracking system using Access database; Access database for tracking
-id-989487361c07,ApplicationComponent,QMS,Quality management system for regulatory assurance; For regulatory assurance and quality assurance
-id-57662baf44e5,ApplicationComponent,Descartes,Transportation management system for Medline logistics; Transportation system for Medline
-id-eb8c94bbf229,ApplicationComponent,SmartFreight,Transportation management system for 3PL transportation; 3PL transportation system
-id-cb7cb0b84df6,ApplicationComponent,Label Printing,Label printing system for manufacturing
-id-40e91ca61f1d,ApplicationComponent,Batch Control,Batch control system for manufacturing
-id-59e3aeffe45f,ApplicationComponent,eiFU,Electronic instructions system for manufacturing
-id-60b46c5e1d6f,ApplicationComponent,Reliance,Global quality management system for regulatory assurance; Global QMS
-id-849edc6949bf,ApplicationComponent,Customer Master (CMP),Customer master data management system
-id-463dc8438ddb,ApplicationComponent,SFDC,Salesforce CRM system for sales management; Salesforce
-id-c508ffe79f87,ApplicationComponent,Microsoft Dynamics,New CRM system replacing legacy systems with advanced automation; New CRM from Salesforce
-id-46735043cd40,ApplicationComponent,MedQuote,Custom quoting system for SPT sales; Sales application for SPT component decisions and quotations
-id-d11d37e2f121,ApplicationComponent,MedOps,Custom sales operations support system for SPT sales; Application for SOS (Source of Supply) management
-id-94c3ea1ca407,ApplicationComponent,MedPack,Custom BOM viewing system for SPT sales; Application for Bill of Materials (BOM) and sales support
-id-72a9b7ecec65,ApplicationComponent,MedReports,Custom reporting system for SPT sales; Application for reporting related to SPT
-id-b8d09705688b,ApplicationComponent,Microsoft Document Intelligence,AI-based document processing system for ERP integration; Document AI service for extracting data from purchase orders
+id-c508ffe79f87,ApplicationComponent,Microsoft Dynamics,New CRM system replacing legacy systems with advanced automation
 id-6b4a8e4819a0,ApplicationComponent,PO Automation,New CRM system integrating with Microsoft Document Intelligence for automation
-id-82588a1d9380,ApplicationComponent,Purchase Order Automation,New CRM system integrating with ERP for strategic advantage
-id-08d83563ddf2,ApplicationComponent,Dynamics CRM,CRM system for managing customer relationships and sales
-id-a0db50c31b76,ApplicationComponent,Salesforce.com,CRM system used in Japan for customer management
-id-942d37637536,ApplicationComponent,Kit Management System,Database for managing SPT kits in Japan
-id-9aa09d95655d,ApplicationComponent,QAD,ERP system for managing purchase orders and other operations
-id-e682e06ee2b6,ApplicationComponent,Iwagaki,Access database for assembly data
-id-86bab17ebe7f,Capability,Quotation Management,
-id-133b9258af74,Capability,Sales Support,
-id-7a9c22258891,Capability,Supply Chain Management,
-id-d6147d197104,Capability,BOM Management,
-id-325b8609b6e3,Capability,Reporting,
-id-75a9eaf4fe89,Capability,Customer Relationship Management,
-id-3f60170812f9,Capability,Sales Management,
-id-832924dde3c6,Capability,Kit Management,
-id-faad9192a0d7,Capability,Document Processing,
+id-849edc6949bf,ApplicationComponent,Customer Master (CMP),Customer master data management system
+id-463dc8438ddb,ApplicationComponent,SFDC,Salesforce CRM system for sales management
+id-46735043cd40,ApplicationComponent,MedQuote,Custom quoting system for SPT sales; Quote creation system/Source for QAD
+id-d11d37e2f121,ApplicationComponent,MedOps,Custom sales operations support system for SPT sales; MedQuote to QAD integration
+id-94c3ea1ca407,ApplicationComponent,MedPack,Custom BOM viewing system for SPT sales
+id-72a9b7ecec65,ApplicationComponent,MedReports,Custom reporting system for SPT sales
+id-8c49a03343b9,ApplicationComponent,Magento,E-commerce CMS
+id-c0f1d1806099,ApplicationComponent,Azure Data Factory,Data integration service
+id-23a946aeb6ba,ApplicationComponent,HEAT CMDB CI,
+id-104fe49e0f16,ApplicationComponent,LEANIX,
+id-004063554d97,ApplicationComponent,QARA,
+id-57662baf44e5,ApplicationComponent,Descartes,Transportation management system for Medline logistics
+id-eb8c94bbf229,ApplicationComponent,SmartFreight,Transportation management system for 3PL transportation
+id-1665ef05cde9,ApplicationComponent,QAD EE WMS,WMS from QAD EE
+id-6385d2992d54,ApplicationComponent,DSX,Supply chain planning and forecasting tool; Forecast support for procurement - Japan
+id-9a5fd32c9b67,ApplicationComponent,SAP APO,Supply chain planning and global sourcing system
+id-64bdcb4d3b3a,ApplicationComponent,VC Vendor Collaboration,Vendor collaboration portal for supply chain
+id-d0be297d0966,ApplicationComponent,Kenpin Barcode,Assembly inventory tracking system
+id-6e68a57a6540,ApplicationComponent,Iwagaki Access,Assembly tracking system using Access database
+id-989487361c07,ApplicationComponent,QMS,Quality management system for regulatory assurance
+id-bb3759f4a808,ApplicationComponent,Yusen,"Inbound shipping management system; SaaS application for 3rd party logistics service provider, integrates with QAD; 3rd party logistics service provider, integrate with QAD"
+id-1d3ac771d8b3,ApplicationComponent,GSCM/OCTS,Custom Excel-based system for transport management
+id-0015d01da270,ApplicationComponent,Cargo Master,Warehouse management system for 3PL warehouse
+id-6d9eb02243f7,ApplicationComponent,W3 Sirius,Warehouse management system for warehouse operations; Legacy WMS system extended to include QR code delivery note querying.
+id-748bf7687aa4,ApplicationComponent,Contractor Labelling System SINO,"Generate and print essential labels used for OEM Contractor packs, including component, inner leaflet, carton labels etc."
+id-a5b9ae2e6df9,ApplicationComponent,Boomi,"Cloud-hosted private integration platform service; Integration platform used for system integrations, prone to occasional failures"
+id-f076a819c6c4,ApplicationComponent,Analysis Database,Shanghai Analysis Database (MySQL) - Terence Zhang
+id-4ee33cee58e4,ApplicationComponent,BO,Standard business report by BOE - Japan
+id-a6acffe61478,ApplicationComponent,QAD Enterprise Edition,"QAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes"
+id-df931125de62,ApplicationComponent,QAD Australia Enterprise Edition,"QAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes"
+id-3f09331c060c,ApplicationComponent,QAD Australia Enterprise Edition - DEV,"QAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes"
+id-873415779368,ApplicationComponent,QAD Australia Enterprise Edition - TST,"QAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes"
+id-c34cbcd5f18f,ApplicationComponent,QAD Australia Standard Edition - Legacy,QAD Standard Edition is an enterprise resource planning software suite that includes a variety of applications for manufacturing companies
+id-f01423d8a34e,ApplicationComponent,QAD Standard Edition,An enterprise resource planning software suite that includes a variety of applications for manufacturing companies.
+id-fc449ff2b2fa,ApplicationComponent,QAD Japan Standard Edition,ERP System Japan - QAD SE on cloud. QAD Standard Edition is an enterprise resource planning software suite that includes a variety of applications for manufacturing companies.
+id-bb783cd11e56,ApplicationComponent,Batch Control System AUS,"Manages and tracks pack assembly process, ensuring accurate component usage, assembly procedure, quality assurance, and regulatory compliance for each production batch."
+id-be4c0c8b35a2,ApplicationComponent,DSx Forecasting Application,Japan demand planning system to process product forecast.
+id-7441d80fc52b,ApplicationComponent,Electronic Pack and Components Instruction,A website where Customers can access the instruction for use for their packs.
+id-3454a9e9a056,ApplicationComponent,Griffin Yusen,"Website of Yusen, as our logistics service provider, provides inbound shipment details. Owned by vendor."
+id-d1d081f7ea63,ApplicationComponent,New WMS Warehouse System,New WMS warehouse system will be used in Aisai Distribution Center
+id-d05cb7112389,ApplicationComponent,Yusen Australia,"Website of Yusen, as our logistics service provider, provides inbound shipment details. Owned by vendor."
+id-76cc07a4ffec,ApplicationComponent,CRM Customer Service,Customer Service application; Customer service CRM system
+id-c4dc6344f48f,ApplicationComponent,DSx Forecasting,Forecasting application
+id-a32613ed092e,ApplicationComponent,eCatalogue,Product Marketing application
+id-9d666e815b70,ApplicationComponent,Electronic Data Interchange,Integration application
+id-1a8e0609fa82,ApplicationComponent,PIM - Magento Interface (Boomi),Interface between PIM and Magento for Medline Website
+id-5b749dbc85d5,ApplicationComponent,PricePoint,Price quote application; Price quote
+id-7aac5a789bf1,ApplicationComponent,Sample Continence Aged Care,Samples Ordering application; Samples Ordering
+id-f45632ef9adc,ApplicationComponent,Smartfrieght,Logistics application; Logistics
+id-128cb0c4eb3c,ApplicationComponent,SPT Shortage Automation,SPT shortage and substitution management application; SPT shortage and substitution management
+id-51fa1562ef05,ApplicationComponent,Product Information Management (PIM),Product Master Data application; Product Master Data
+id-135f046c524e,ApplicationComponent,Contractor Labelling System (SINO),Label System for SINO; Label system for SINO
+id-c149eb6f5bf2,ApplicationComponent,Customer Management Portal,"Business Pipeline, Forecast, Customer Profile and contacts; Business pipeline, forecast, customer profile and contacts"
+id-0b898c53fea8,ApplicationComponent,Electronic Pack and Components Instruction (eiFU),
+id-11e891b15fcb,ApplicationComponent,MedPack Aus,View the Packs and its components and pricing.
+id-828ab93094dd,ApplicationComponent,MedPack NZ,Pack Details for NZ packs
+id-ace5b6c7e7f8,ApplicationComponent,MedQuote Sales,Sales website for Sales Rep
+id-50addbca8ad1,ApplicationComponent,QMS Change Request DB,Excel-based application for managing QMS change requests; QMS Change Request DB
+id-ee6d992988fa,ApplicationComponent,QMS Training Matrix DB,Excel-based application for managing QMS training matrices; QMS Training DB
+id-60b46c5e1d6f,ApplicationComponent,Reliance,SaaS application for QMS document management; QMS Documents Management System
+id-a0d79cb1f7e2,ApplicationComponent,ADP Payforce,Payroll system
+id-81c71f217460,ApplicationComponent,Axway,Integration platform
+id-2757f9b2452f,ApplicationComponent,Batch Control System,Audit system for manufacturing
+id-c5c3d441a621,ApplicationComponent,BCCR Review - Powerautomate,Compliance tracking/audit system
+id-12a85d541a4e,ApplicationComponent,Compliance DB,Compliance database system
+id-b971e0544d19,ApplicationComponent,Concur,Expense management system
+id-ced261bbb6b2,ApplicationComponent,Consumer Management (CNS),Part of Aged Care website
+id-9b54b92dbc43,ApplicationComponent,OnDemand,Logistics
+id-047f7674ed06,ApplicationComponent,Pack Labeling System,"Leaflets, Picklist printing"
+id-f5c9616a90ed,ApplicationComponent,Pack Specification System (PSS),Pack Design and instruction to build the pack
+id-8ed3ac384372,ApplicationComponent,PIM - Magento Interface (TSS),Interface between PIM and Magento for TSS
+id-72ce9b846fa4,ApplicationComponent,Product Complaints,Product Complaints DB
+id-5aefb9227717,ApplicationComponent,QAD - EE,ERP
+id-1b4fa1ed4a1d,ApplicationComponent,QAD - SE (Legacy),ERP Legacy
+id-0f7ee6b78b9f,ApplicationComponent,Tableau Server & Reporting,Reporting & Visualisation
+id-a953fb74e3ca,ApplicationComponent,AI Builder,AI extraction tool used in Version 1 of the CRM PO automation project
+id-c623bc8d5efd,ApplicationComponent,Docupipe,Proposed AI extraction tool for CRM PO automation; AI tool replacing Microsoft AI Builder for flexible and faster document processing.
+id-048b03adc5b4,ApplicationComponent,Canvas App,"User interface for CRM PO automation, currently handling extraction, validation, and error handling"
+id-352687944df8,ApplicationComponent,Backend Validation Service,"Proposed backend service for validation, customer matching, and error handling"
+id-83902728e105,ApplicationComponent,Queueing System,Proposed system for asynchronous PO creation and retry logic
+id-9aa09d95655d,ApplicationComponent,QAD,"ERP system used for PO creation, known for slowness and integration challenges"
+id-aea3fe18dd4a,ApplicationComponent,UDW Agent,AI-powered query and analysis platform enabling natural language queries to Fabric Data Warehouse with multi-stage reasoning and structured results.
+id-c895bed04fc0,ApplicationComponent,PowerApps UI,"Frontend interface for UDW Agent, providing text input, API triggers, and result visualization."
+id-1aa2bb0e9f2c,ApplicationComponent,Azure Container API,Container-based microservice for multi-stage agentic reasoning and adaptive execution strategies.
+id-af6770090ad9,ApplicationComponent,Fabric Data Warehouse,"Query backend for UDW Agent, providing data storage and retrieval."
+id-d06fcf53a742,ApplicationComponent,Azure Function (Logging Sink),Logging service for persisting event data and performance metrics.
+id-7552db249856,ApplicationComponent,Power Automate Flow #1,Integration flow for API calls from PowerApps to Azure Container API.
+id-239a85f0c8e3,ApplicationComponent,Power Automate Flow #2,Integration flow for logging events to Azure Function.
+id-fffcfb9f4f02,ApplicationComponent,HEAT ITSM,Existing ITSM platform handling ticket management but lacks modern features
+id-a40f6332543f,ApplicationComponent,AI Support Chatbot,"Intelligent chatbot for first-line support, integrated with HEAT ITSM"
+id-0b87b0eb6e93,ApplicationComponent,Enhanced HEAT ITSM,Upgraded HEAT platform with modern features like chatbot integration and advanced ticket routing
+id-98f9272950bb,ApplicationComponent,Self-Service Portal,Comprehensive self-service portal with searchable knowledge base and guided troubleshooting
+id-d2841a3eb2be,ApplicationComponent,Medline Systems,"IT systems supporting Medline operations, including networked devices and data management."
+id-c0ba9091e0d3,ApplicationComponent,Medline Data Center,Critical infrastructure for hosting regulated data and production environments.
+id-46a73e8b181c,ApplicationComponent,WMS Portal,Web-based portal for accessing internal business applications and Medline systems.
+id-d4efef1ce86a,ApplicationComponent,EMRs,Electronic Medical Records system for managing patient health information.
+id-c209692d6d44,ApplicationComponent,Financial Systems,Systems essential for financial transactions and operations.
+id-f5619ffd7b65,ApplicationComponent,Microsoft Dynamics CRM,CRM system integrating with Microsoft Document Intelligence for purchase order automation.
+id-d4bae9a2200c,ApplicationComponent,QAD ERP,ERP system used for purchase order creation and integration with CRM.
+id-59051872c987,ApplicationComponent,Medline Online Portal,"Portal providing individualized information such as pack visibility, inventory, and production."
+id-0ebacb70a06c,ApplicationComponent,AI Cross Reference Tool,"Tool for competitor analysis and referencing codes, descriptions, and images."
+id-074df4ada8b3,ApplicationComponent,Real-Time Inventory Dashboard,Dashboard providing real-time inventory data.
+id-03c546eca9af,ApplicationComponent,Medline Sterile Procedure Trays (SPTs),"System for managing sterile procedure trays, reducing setup time and contamination risk."
+id-c4b4280f12bb,ApplicationComponent,Kenpin Barcode System,"COTS system for assembly data, planned to be replaced by W3 Sirius customization."
+id-7579b234fcf2,Capability,Warehouse Management,
+id-ac2c3f829d9e,Capability,Inbound Shipment Management,
+id-583ac905d753,Capability,QMS Change Request DB,
+id-62b98f65c489,Capability,QMS Training DB,
+id-d03dae6db689,Capability,QMS Documents Management System,
+id-795aefdd307f,Capability,3rd party logistics service provider,
+id-655eab643706,Capability,Integrate with QAD,
+id-68c77ead8205,Capability,Data Extraction,
+id-2a913e9c1616,Capability,Validation,
+id-c7192907e77e,Capability,Error Handling,
 id-14da17022bdc,Capability,Order Management,
-id-454a993499ff,Capability,ERP,
-id-eb79786b3c6c,Capability,Supply Chain Planning,
-id-747df468b064,Capability,Distribution Management,
-id-093d71d12f31,Capability,Logistics Management,
-id-58aacf2e58f9,Capability,Transportation Management,
-id-b5560691d686,Capability,Assembly Data Management,
+id-c4025e3144b6,Capability,System Integration,
+id-abe4088a2118,Capability,Asynchronous Processing,
+id-2fcb675abe76,Capability,Natural Language Query,
+id-ebe49d96ba2f,Capability,AI-Powered Analysis,
+id-40ed5ef75eeb,Capability,Structured Results,
+id-37681a33f27b,Capability,Comprehensive Logging,
+id-f36e91659a70,Capability,User Interaction,
+id-77f8f635b6c4,Capability,Data Visualization,
+id-c1e4a0c85627,Capability,Execution Strategy Selection,
+id-b474df81d84f,Capability,Data Storage,
+id-a989f7992dad,Capability,Query Execution,
+id-ee147117a43a,Capability,Event Logging,
+id-f03b2ff95acf,Capability,Audit Trail,
+id-ac6bcf59a57a,Capability,API Integration,
+id-10547ee87864,Capability,Ticket Management,
+id-64f56b7fedd1,Capability,Ticket Deflection,
+id-1102967cb030,Capability,Proactive Support,
+id-d735d2ea14be,Capability,Self-Service,
+id-addb0744b4dd,Capability,Cybersecurity,
+id-e6c82757f899,Capability,Regulatory Compliance,
+id-780637973f84,Capability,Data Protection,
+id-3a90d544f50a,Capability,Critical Infrastructure Management,
+id-d1cbea532b8e,Capability,Data Hosting,
+id-27524675ae56,Capability,Internal Business Applications Access,
+id-8e2f95e2f55e,Capability,Patient Health Information Management,
+id-71b0a5052f6a,Capability,Financial Management,
+id-75a9eaf4fe89,Capability,Customer Relationship Management,
+id-ef8339ce9f2e,Capability,Purchase Order Automation,
+id-6760c2e3042f,Capability,Customer Engagement,
+id-6bc03bbdd357,Capability,Inventory Management,
+id-54545fb2d9d5,Capability,Competitor Analysis,
+id-df8a2ce54ed5,Capability,Delivery Note Management,
+id-efe05f9cd8b7,Capability,Healthcare Efficiency,
+id-7a9c22258891,Capability,Supply Chain Management,
+id-e6329f354112,Capability,Manufacturing Data Management,
+id-c7fa30607f04,BusinessProcess,PO Creation Process,Process for creating purchase orders in QAD
+id-12266335102a,BusinessProcess,Error Recovery Process,Process for handling errors in PO creation and validation
+id-c901d3c6901e,BusinessProcess,Query Execution Flow,"End-to-end process for handling user queries, from input to result rendering and logging."
+id-13338ba9a87e,BusinessProcess,Purchase Order Processing,Automated process for creating purchase orders from CRM to ERP.
+id-4a6d4078b392,BusinessProcess,Delivery Note Querying,Process for replacing printed delivery notes with QR codes for customer scanning.
+id-da31d62aab4b,BusinessProcess,Sterile Procedure Tray Management,Process for managing sterile procedure trays to improve efficiency and reduce contamination.
+id-035956274b35,DataObject,Purchase Order Data,"Data related to purchase orders, including addresses, SKUs, and units; Data related to purchase orders, including vendor, amounts, line items, and dates."
+id-c12388ddcc2c,DataObject,Customer Data,Master data for customer matching and validation
+id-d83cd08bb7e4,DataObject,Query Input,Natural language query entered by the user.
+id-54ac347909b1,DataObject,API Response,JSON response from Azure Container API containing business answer and raw data.
+id-7e62b79ec29b,DataObject,Event Log,"Structured log data capturing session metadata, performance metrics, and API responses."
+id-25fd966a0797,DataObject,Medline Data,"Data managed and protected by Medline Systems, including regulated and sensitive data."
+id-7f38662720ca,DataObject,Customer Databases,"Databases containing customer information, including regulated data."
+id-009d7bb419f8,DataObject,Financial Transactions,Data related to financial operations and transactions.
+id-6f49eec8ebff,DataObject,Patient Health Information (PHI),Regulated data related to patient health records.
+id-403938352d81,DataObject,Inventory Data,Real-time data on inventory levels and usage.
+id-9f31ad3ae3fe,DataObject,Competitor Data,"Data on competitor codes, descriptions, images, and instructions for use."
+id-21a7dd750655,DataObject,Delivery Note Data,"Data related to delivery notes, including QR codes and shipment details."
+id-2eb1505929b6,Node,Azure Service Bus,Infrastructure component for queueing and asynchronous processing
+id-33fc6963ece9,Node,Azure Container Instance,Hosting environment for the Azure Container API.
+id-feb061bb4110,Node,Fabric DW MCP Server,Server providing abstraction over Fabric Data Warehouse operations.
+id-4ac0523405c5,Node,Azure Function Instance,Hosting environment for the logging sink.
+id-08ea78ef5f0e,Node,On-Prem File Servers (JPN),Japan office maintains on-premises file servers for Excel file editing
+id-273bc847e423,Node,Networked IT Devices,"Devices connected to Medline networks, including servers, endpoints, IoT devices, and appliances."
+id-14b9ff0e577b,Node,Internet-facing Systems,"Critical systems exposed to the internet, including DMZ and other mission-critical systems."
+id-5b47d0964cd7,Node,Server-class Systems,"Infrastructure systems providing services, data, or applications to other systems or users."
+id-a6683fee2bf8,Node,End-user Class Systems,"Devices used by individuals for daily tasks, such as laptops, desktops, and mobile devices."
+id-f2c01616428a,Node,AWS Hosting,Cloud hosting for W3 Sirius delivery note system.
+id-9ad255674384,Node,Dedicated Clean Rooms,Facilities for assembling sterile procedure trays.
+id-b40f9f9da66e,TechnologyService,AI Extraction Service,Service for extracting data from purchase orders using AI tools
+id-cd76245536ab,TechnologyService,Validation Service,Backend service for validation and error handling
+id-063ebc33aa6a,TechnologyService,Integration Service,Service for integrating systems using Boomi
+id-36f2b18e06cb,TechnologyService,Azure OpenAI,AI reasoning service used by the Azure Container API.
+id-3af70eff77c5,TechnologyService,PowerApps Environment,Platform for hosting the PowerApps UI.
+id-7fb4c40b6b8a,TechnologyService,Power Automate Environment,Platform for managing integration flows.
+id-2e07d3fd1017,TechnologyService,Heavy VM Expenditure,High expenditure on virtual machines running continuously in Azure Cloud
+id-a13ced76fc15,TechnologyService,Dual Region Architecture,Two full Azure regions creating overhead in management and replication
+id-5dc64d476bac,TechnologyService,Ad-hoc Cost Monitoring,Reactive and manual cost monitoring in Azure Cloud
+id-d418bd3e7f43,TechnologyService,Azure Container Apps,Serverless container platform that auto-scales based on demand
+id-e1f2c021c9e1,TechnologyService,Serverless Databases,Auto-scaling serverless database tier that pauses when inactive
+id-e8e08f6d295a,TechnologyService,Single SEA Region,Consolidation from two Azure regions to one primary Southeast Asia region
+id-f20af2181f88,TechnologyService,Azure File Sync to JPN,Hybrid solution for low-latency Excel editing in Japan while retiring on-prem infrastructure
+id-1c9f3d0f93e9,TechnologyService,Proactive Cost Monitoring,Real-time cost monitoring with Azure Cost Management and custom alerting
+id-d1c7ae5a85d5,TechnologyService,24x7 Support Operations,Round-the-clock support availability using a consolidated global team
+id-30262b365715,TechnologyService,Network Segmentation,Segmentation of networks to enhance security and reduce risks.
+id-23df0dd7f78e,TechnologyService,SIEM Logging,Centralized logging and monitoring with real-time alerting and behavioral analytics.
+id-e82303ed790d,TechnologyService,Zero Trust Network Access (ZTNA),Secure gateway for remote access based on Zero Trust principles.
+id-9a7cc875738c,TechnologyService,Endpoint Detection and Response (EDR),Endpoint protection with continuous monitoring and alerting.
+id-9d2d8e6333db,TechnologyService,Immutable Backups,Off-network or WORM backups for mission-critical data.
+id-2e50916cb555,TechnologyService,Microsoft Document Intelligence,AI service for extracting key data from documents.
+id-33cc9e95ad54,TechnologyService,QR Code Delivery Note System,Service for querying delivery notes via QR codes.

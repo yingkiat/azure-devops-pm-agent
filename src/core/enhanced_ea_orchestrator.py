@@ -22,7 +22,6 @@ from core.interfaces.orchestrator_interface import OrchestratorInterface, Classi
 
 # EA-specific imports
 from ea.ea_discovery import EADiscovery
-from ea.ea_diagrams import EADiagramGenerator
 
 
 class EnhancedEAOrchestrator(BaseOrchestrator, OrchestratorInterface):
@@ -48,7 +47,6 @@ class EnhancedEAOrchestrator(BaseOrchestrator, OrchestratorInterface):
 
         # Initialize EA tools
         self.ea_discovery = EADiscovery()
-        self.diagram_generator = EADiagramGenerator()
 
         # Session state
         self.session_info = None

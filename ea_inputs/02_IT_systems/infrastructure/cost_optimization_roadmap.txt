@@ -1,0 +1,129 @@
+# Infrastructure Cost Optimization Roadmap
+
+## Executive Summary
+
+IT Management has identified significant overspend on Azure cloud services and local data centers. This roadmap outlines the transformation from costly, always-on VM infrastructure to modern serverless architecture, along with consolidation of regional operations and support services. Target cost reduction: 40-60%.
+
+---
+
+## Domain 1: Azure Cloud Infrastructure
+
+### Current State (AS-IS - H1)
+
+**Heavy VM Expenditure** is a TechnologyService in the Azure Cloud domain (H1, Sunset). Current Azure environment has high expenditure on virtual machines that run continuously, including DEV and TEST environments that remain active 24/7 unnecessarily. This always-on approach drives significant monthly costs without business justification.
+
+**Dual Region Architecture** is a TechnologyService in the Azure Cloud domain (H1, Maintain). The company currently operates two full Azure regions, creating overhead in management, replication, and resource duplication. This dual-region setup was originally for redundancy but now represents unnecessary cost.
+
+**On-Prem File Servers (JPN)** is a Node in the Azure Cloud domain (H1, Sunset). Japan office maintains on-premises file servers specifically for Excel file editing due to latency concerns. Large Excel files require low-latency access, which has prevented full cloud migration. These servers require hardware maintenance, power, and cooling costs.
+
+**Ad-hoc Cost Monitoring** is a TechnologyService in the Azure Cloud domain (H1, Sunset). Current cost monitoring is reactive and manual. Finance teams discover overspend only during monthly reviews, with no proactive alerts or optimization recommendations.
+
+### Future State (TO-BE - H3)
+
+**Azure Container Apps** is a TechnologyService in the Azure Cloud domain (H3, Strategic). Replace VMs with serverless container platform that auto-scales based on demand. Containers start only when needed, eliminating idle compute costs. Primary compute platform for new workloads, targeting 60% cost reduction compared to always-on VMs.
+
+**Serverless Databases** is a TechnologyService in the Azure Cloud domain (H3, Strategic). Implement auto-scaling serverless database tier (Azure SQL Serverless, Cosmos DB serverless) that pauses when inactive. Development and test databases automatically scale to zero during non-business hours.
+
+**Single SEA Region** is a TechnologyService in the Azure Cloud domain (H3, Strategic). Consolidate from two regions down to one primary Southeast Asia region. Reduces management overhead, eliminates cross-region data transfer costs, and simplifies disaster recovery.
+
+**Azure File Sync to JPN** is a TechnologyService in the Azure Cloud domain (H3, Strategic). Deploy single Azure File Sync server in Japan office to cache files locally while storing master copies in SEA region. Provides low-latency Excel editing for Japan users while retiring on-prem infrastructure. Hybrid solution balancing cost and user experience.
+
+**Proactive Cost Monitoring** is a TechnologyService in the Azure Cloud domain (H3, Strategic). Implement real-time cost monitoring with Azure Cost Management and custom alerting. Automated shutdown policies for non-production environments. Weekly optimization recommendations with anomaly detection.
+
+---
+
+## Domain 2: End User Computing (EUC)
+
+### Current State (AS-IS - H1)
+
+**Limited Regional Office Support** is a TechnologyService in the EUC domain (H1, Maintain). Regional offices in Singapore and South Korea currently receive limited IT support. Support is fragmented between Global and APAC teams with unclear ownership, creating service gaps for remote users.
+
+**Password-Only Authentication** is a TechnologyService in the EUC domain (H1, Sunset). Current authentication relies solely on passwords. No modern authentication methods deployed. Users experience friction with password resets and security risks from weak passwords.
+
+### Future State (TO-BE - H3)
+
+**Windows Hello** is a TechnologyService in the EUC domain (H3, Strategic). Deploy modern passwordless authentication using Windows Hello for Business. Biometric and PIN-based authentication reduces password-related support tickets and improves security posture. Rollout planned for Q1 2026.
+
+**Fingerprint Logon** is a TechnologyService in the EUC domain (H3, Strategic). Implement biometric authentication using fingerprint readers on corporate devices. Provides seamless authentication experience for end users while strengthening security. Particularly valuable for frequent device lock/unlock scenarios.
+
+**Tech Days / Regional Outreach** is a TechnologyService in the EUC domain (H3, Strategic). While full permanent support for regional offices isn't feasible, implement quarterly Tech Days where helpdesk staff visit Singapore and South Korea offices. On-site support for device setup, training, and issue resolution. Builds relationships with remote users and addresses accumulated support needs.
+
+---
+
+## Domain 3: Support Services
+
+### Current State (AS-IS - H1)
+
+**Separate Global/APAC Helpdesks** is a TechnologyService in the Support Services domain (H1, Sunset). Company currently operates separate helpdesk teams for Global and APAC regions. Duplicate roles, inconsistent processes, and fragmented ticket tracking. Significant headcount overhead with poor follow-the-sun coverage.
+
+**Multiple Ticket Channels** is a TechnologyService in the Support Services domain (H1, Maintain). Users submit tickets through email, phone, web form, and walk-up support with inconsistent tracking. No unified ticket queue, making workload balancing difficult.
+
+**HEAT ITSM (Current)** is an ApplicationComponent in the Support Services domain (H1, Maintain). Existing ITSM platform (HEAT) handles ticket management but lacks modern features. Limited automation, basic reporting, and no chatbot integration. Platform requires modernization to support consolidated support model.
+
+**Limited Self-Help** is a TechnologyService in the Support Services domain (H1, Sunset). Minimal knowledge base with outdated articles. Users default to creating tickets rather than self-service, driving up support costs and response times.
+
+**Business Hours Support** is a TechnologyService in the Support Services domain (H1, Sunset). Current support operates primarily during business hours with limited on-call coverage. Global operations require 24x7 availability that current model doesn't provide.
+
+### Future State (TO-BE - H3)
+
+**Consolidated Global Helpdesk** is a TechnologyService in the Support Services domain (H3, Strategic). Merge Global and APAC helpdesk teams into single unified team. Implement follow-the-sun model with workload routing based on time zones. Target 30% headcount reduction through consolidation while improving coverage. Single ticket queue with consistent SLAs.
+
+**AI Support Chatbot** is an ApplicationComponent in the Support Services domain (H3, Strategic). Deploy intelligent chatbot for first-line support. Handles password resets, common how-to questions, and status inquiries. Target 40% ticket deflection rate, allowing human agents to focus on complex issues. Integrated with HEAT ITSM for seamless escalation.
+
+**Enhanced HEAT ITSM** is an ApplicationComponent in the Support Services domain (H3, Strategic). Upgrade HEAT platform with modern features: chatbot integration, advanced ticket routing, predictive SLA monitoring, and comprehensive analytics. Enable proactive support through ticket trend analysis and automated escalations.
+
+**Self-Service Portal** is an ApplicationComponent in the Support Services domain (H3, Strategic). Build comprehensive self-service portal with searchable knowledge base, video tutorials, and guided troubleshooting. Employees can reset passwords, request software, and resolve common issues without creating tickets. Integrates with AI chatbot for conversational support.
+
+**24x7 Support Operations** is a TechnologyService in the Support Services domain (H3, Strategic). Implement round-the-clock support availability using consolidated global team. Follow-the-sun model ensures business hours coverage in each region while providing overnight support through rotation. Critical for supporting global manufacturing and operations.
+
+**Advanced Ticket Monitoring** is a TechnologyService in the Support Services domain (H3, Strategic). Proactive SLA tracking with automated escalations. Real-time dashboards showing ticket aging, workload distribution, and satisfaction trends. Predictive analytics identify recurring issues and support optimization opportunities.
+
+---
+
+## Key Relationships
+
+The Azure Container Apps serves Enhanced HEAT ITSM, as the ITSM platform will migrate to serverless compute.
+
+The AI Support Chatbot accesses Enhanced HEAT ITSM for ticket creation and status queries.
+
+The Self-Service Portal serves Consolidated Global Helpdesk by reducing ticket volume.
+
+The Proactive Cost Monitoring serves Azure Container Apps by tracking container resource usage and costs.
+
+---
+
+## Timeline and Priorities
+
+**Priority 1 (Q1 2026):**
+- Azure Container Apps pilot for non-production workloads
+- Windows Hello rollout
+- AI Support Chatbot MVP
+
+**Priority 2 (Q2-Q3 2026):**
+- Serverless Databases migration
+- Consolidated Global Helpdesk implementation
+- Self-Service Portal launch
+
+**Priority 3 (Q4 2026):**
+- Single SEA Region consolidation
+- Azure File Sync to Japan deployment
+- 24x7 Support Operations full launch
+
+---
+
+## Expected Outcomes
+
+**Cost Savings:**
+- Azure: 60% reduction through serverless adoption and DEV/TEST automation
+- Regional consolidation: 25% reduction in cross-region data transfer
+- Helpdesk: 30% headcount reduction through consolidation
+
+**Service Improvements:**
+- Modern authentication improves user experience and security
+- 24x7 support coverage for global operations
+- 40% ticket deflection through chatbot and self-service
+
+**Risk Reduction:**
+- Proactive cost monitoring prevents budget overruns
+- Consolidated support model provides consistent service quality
+- Modern authentication reduces security incidents

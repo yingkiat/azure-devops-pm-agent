@@ -1,0 +1,180 @@
+presentation:
+  title: "APAC IT Architecture"
+  template: "templates/corporate.pptx"
+  output: "ea_outputs/ea_value_proposition.pptx"
+  layout_mapping:
+    title: 0
+    section: 0
+    bullets: 0
+    image: 0
+    table: 0
+    two_column: 0
+
+intent:
+  objective: "Stakeholders understand EA value and their role in it"
+  audience: "Various - Director, Domain Owners, All IT"
+  duration: "30 minutes / 15 slides"
+  key_message: "EA gives visibility to make better decisions"
+
+iterations: []
+
+slides:
+  # --- OPENING ---
+  - layout: "title"
+    title: "APAC IT Architecture"
+    subtitle: "Visibility. Decisions. Value."
+    # intent: Hook with the value proposition upfront
+
+  # --- PROBLEM ---
+  - layout: "bullets"
+    title: "The Problem We All Feel"
+    bullets:
+      - "Multiple systems doing the same thing"
+      - "Nobody knows what connects to what"
+      - "Investment decisions made in silos"
+      - "Every project discovers dependencies the hard way"
+    notes: "Ask: How many of you have experienced one of these? This is what we're solving."
+    # intent: Create urgency through shared pain
+
+  # --- FRAMEWORK ---
+  - layout: "table"
+    title: "One Simple Framework"
+    table:
+      headers: ["Question", "Answer", "Example"]
+      rows:
+        - ["What does it do?", "Business Function", "CRM, ERP, Warehouse"]
+        - ["When?", "Horizon", "Today, 2025, 2026+"]
+    notes: "Two questions. That's the entire mental model. Everything else builds on this."
+    # intent: Introduce core concept in one digestible visual
+
+  - layout: "bullets"
+    title: "Three Horizons"
+    bullets:
+      - "H1 - Today: Current state, what we have now"
+      - "H2 - Short-term (2025): Transition, active changes"
+      - "H3 - Long-term (2026+): Target state, where we're heading"
+    notes: "Time-based view of transformation. Where is each system on this journey?"
+    # intent: Make horizons concrete and memorable
+
+  # --- REAL EXAMPLES ---
+  - layout: "table"
+    title: "Example: Commercial Domain"
+    table:
+      headers: ["System", "Function", "Horizon", "Direction"]
+      rows:
+        - ["Salesforce.com", "CRM", "H2", "Regional → consolidate"]
+        - ["SPT Applications", "CRM", "H2", "Functional refresh"]
+        - ["Microsoft Dynamics", "CRM", "H2", "Future target platform"]
+        - ["QAD EE", "Order Mgmt", "H1", "Stable foundation"]
+    notes: "Real data from our landscape. Notice the CRM consolidation story emerging."
+    # intent: Show don't tell - make the framework tangible
+
+  - layout: "table"
+    title: "Example: Operations Domain"
+    table:
+      headers: ["System", "Function", "Horizon", "Direction"]
+      rows:
+        - ["QAD EE", "ERP Core", "H1", "Stable, targeted upgrades"]
+        - ["Infor M3", "ERP (JPN)", "H1", "Regional standard"]
+        - ["PSS 1.0", "MES", "H2", "Upgrade to PSS 3.0"]
+        - ["OCTS", "Warehouse", "H2", "JPN expansion"]
+    notes: "Different domain, different pattern. Stability with targeted investments."
+    # intent: Show variety - not all domains look the same
+
+  # --- VALUE ---
+  - layout: "bullets"
+    title: "What This Gives Us"
+    bullets:
+      - "Visibility: See all systems in one view"
+      - "Consistency: Same format enables comparison"
+      - "Decisions: Investment priorities become clear"
+      - "Language: Everyone uses the same terms"
+    notes: "This is the ROI. Faster decisions, less rework, aligned investments."
+    # intent: Concrete value proposition
+
+  - layout: "two_column"
+    title: "EA Is..."
+    left:
+      - "City planning for technology"
+      - "A framework for decisions"
+      - "Visibility into what we have"
+      - "Everyone's responsibility"
+    right:
+      - "NOT just diagrams"
+      - "NOT a one-time exercise"
+      - "NOT only for architects"
+      - "NOT bureaucracy"
+    notes: "Address misconceptions head-on. EA is practical, not academic."
+    # intent: Clear misconceptions that block adoption
+
+  # --- DEEPER CONTEXT ---
+  - layout: "table"
+    title: "Four Layers"
+    table:
+      headers: ["Layer", "What It Is", "Example"]
+      rows:
+        - ["Business", "What we do", "Processes, capabilities"]
+        - ["Application", "Software", "CRM, ERP, MES"]
+        - ["Data", "Information", "Customer, Order, Product"]
+        - ["Technology", "Infrastructure", "Servers, networks, cloud"]
+    notes: "Changes in one layer affect others. That's why we need the full picture."
+    # intent: Quick reference for the complete picture
+
+  - layout: "bullets"
+    title: "Cost of Not Knowing"
+    bullets:
+      - "5 systems doing the same thing = wasted licenses"
+      - "Building on a sunsetting platform = rework"
+      - "Unknown dependencies = project delays"
+      - "Knowledge in one head = business risk"
+    notes: "This is what architecture visibility prevents. Real cost, real risk."
+    # intent: Reinforce why this matters - consequences
+
+  # --- CALL TO ACTION ---
+  - layout: "bullets"
+    title: "Think Architecturally"
+    bullets:
+      - "Before starting: Is this system H1, H2, or H3?"
+      - "When integrating: What else connects to this?"
+      - "When investing time: Is this aligned with roadmap?"
+      - "When something breaks: What depends on this?"
+    notes: "Start asking these questions. It changes how you work."
+    # intent: Practical takeaway they can use tomorrow
+
+  - layout: "bullets"
+    title: "Your Role"
+    bullets:
+      - "Know your systems - what do you touch daily?"
+      - "Flag issues - see duplication? Raise it"
+      - "Ask questions - 'Is this strategic?' is valid"
+      - "Share knowledge - document what you know"
+    notes: "Architecture isn't done by architects alone. You know things nobody else does."
+    # intent: Everyone has agency - clear call to action
+
+  - layout: "table"
+    title: "Quick Glossary"
+    table:
+      headers: ["Term", "Meaning"]
+      rows:
+        - ["Application", "Software supporting business functions"]
+        - ["Landscape", "All applications in a domain"]
+        - ["Horizon", "Where a system is going (H1/H2/H3)"]
+        - ["Roadmap", "Plan for how systems evolve"]
+        - ["Integration", "How systems connect and share data"]
+    notes: "Reference slide - these are the words you'll hear in architecture conversations."
+    # intent: Vocabulary reference for future conversations
+
+  # --- CLOSE ---
+  - layout: "bullets"
+    title: "Next Steps"
+    bullets:
+      - "Domain owners: Build your roadmap (working sessions)"
+      - "All IT: Start asking the four questions"
+      - "Leadership: Use this for investment decisions"
+    notes: "Clear asks for each audience segment."
+    # intent: Specific next actions by role
+
+  - layout: "title"
+    title: "Questions?"
+    subtitle: "APAC IT Architecture"
+    # intent: Clean close, invite discussion

@@ -89,7 +89,7 @@ class FileChangeMonitor:
             ChangeSet with new, modified, deleted, and unchanged files
         """
         if file_patterns is None:
-            file_patterns = [".txt", ".md", ".json", ".csv", ".xml", ".yaml", ".yml"]
+            file_patterns = [".txt", ".md", ".json", ".csv", ".xml", ".yaml", ".yml", ".xlsx", ".xls"]
 
         directory_path = Path(directory)
         if not directory_path.exists():

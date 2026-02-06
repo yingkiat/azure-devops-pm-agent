@@ -1,243 +1,279 @@
-# Enterprise Architecture (EA) Tools
+# Enterprise Architecture (EA) Agent
 
-The EA module provides intelligent enterprise architecture analysis capabilities using AI-powered prompt-driven discovery.
+AI-powered enterprise architecture discovery and diagram generation, integrated with Claude Code via MCP (Model Context Protocol).
 
-## Overview
+## What It Does
 
-The EA discovery system extracts and analyzes enterprise architecture objects from natural language system descriptions across five standard EA layers:
-
-- **Business Layer**: Processes, capabilities, stakeholders
-- **Application Layer**: Applications, interfaces, services
-- **Data Layer**: Entities, datastores, flows
-- **Infrastructure Layer**: Components, environments, networks
-- **Security Layer**: Controls, threats, compliance
+1. **Discovers EA objects** from natural language system descriptions
+2. **Generates ArchiMate models** (CSV/XML) for import into Archi tool
+3. **Creates draw.io diagrams** with intelligent layout
+4. **Supports relationship-based views** (capabilities with their applications)
 
 ## Quick Start
 
-### Basic Usage
+### Prerequisites
 
 ```bash
-# Analyze a system description with formatted output
-python -m src.cli.main ea-discover examples/system_description.txt --summary
+# Install dependencies
+pip install -e .
 
-# Save analysis to JSON file
-python -m src.cli.main ea-discover system_description.txt --output results/ea_analysis.json
-
-# Quick analysis with default output file
-python -m src.cli.main ea-discover system_description.txt
+# Configure environment (.env file)
+AZURE_OPENAI_ENDPOINT=https://your-endpoint.openai.azure.com
+AZURE_OPENAI_KEY=your-key
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
+AZURE_OPENAI_DEPLOYMENT=gpt-4o
 ```
 
-### Example System Description
+### Basic Workflow
 
-Create a text file describing your system:
-
-```text
-Customer Order Management System
-
-The system handles order processing from initial placement through fulfillment.
-Key components include:
-- Web-based customer portal (React)
-- Order processing API (Node.js)
-- Inventory database (PostgreSQL)
-- Payment gateway integration (Stripe)
-- Shipping provider APIs (FedEx, UPS)
-
-Users: Customer service reps, warehouse staff, customers
-Critical requirements: 99.9% uptime, PCI compliance, real-time inventory
+```
+1. Put system descriptions in ea_inputs/*.txt
+2. Run: ea_discover_directory()
+3. Output: archi_inputs/model.xml (import into Archi)
+4. Create YAML view spec in ea_inputs/views/
+5. Run: ea_generate_diagram("ea_inputs/views/myview.yaml")
+6. Output: ea_diagrams/myview.drawio (open in draw.io)
 ```
 
 ## Architecture
 
-### System Flow
-
 ```
-Text Description → EA Discovery Prompt → LLM Analysis → Structured JSON → EA Objects
-```
+ea_inputs/                  # Your input files
+├── 01_company_context/     # Company background
+├── 02_IT_systems/          # System descriptions (*.txt)
+└── views/                  # View specifications (*.yaml)
 
-### Key Components
+archi_inputs/               # Generated ArchiMate model
+├── elements.csv            # Applications, Capabilities, etc.
+├── relations.csv           # Serving, Flow, Composition
+├── properties.csv          # Region, Domain, Lifecycle Status
+└── model.xml               # Complete model for Archi import
 
-- **`src/ea/ea_discovery.py`**: Main discovery engine
-- **`prompts/ea/ea_discovery.md`**: Comprehensive analysis template
-- **CLI Integration**: `ea-discover` command in `src/cli/main.py`
-
-## Output Structure
-
-### JSON Schema
-
-```json
-{
-  "business": {
-    "processes": [...],
-    "capabilities": [...],
-    "stakeholders": [...]
-  },
-  "application": {
-    "applications": [...],
-    "interfaces": [...],
-    "services": [...]
-  },
-  "data": {
-    "entities": [...],
-    "datastores": [...],
-    "flows": [...]
-  },
-  "infrastructure": {
-    "components": [...],
-    "environments": [...],
-    "networks": [...]
-  },
-  "security": {
-    "controls": [...],
-    "threats": [...],
-    "compliance": [...]
-  }
-}
+ea_diagrams/                # Generated diagrams
+└── *.drawio                # Open in draw.io
 ```
 
-### Sample Output
+## MCP Tools
 
-```text
-EA DISCOVERY RESULTS
-==================================================
+All interaction is via Claude Code MCP interface. Available tools:
 
-[BUS] BUSINESS LAYER
-------------------------------
+| Tool | Purpose |
+|------|---------|
+| `ea_discover_directory` | Process all files in ea_inputs/, generate model |
+| `ea_discover` | Process single text, add to model |
+| `ea_get_data_summary` | Show current model statistics |
+| `ea_generate_diagram` | Generate draw.io from YAML view spec |
+| `ea_generate_views_from_specs` | Generate views.csv from all YAML specs |
 
-* Processes:
-  1. Order Processing
-     Handles complete order lifecycle from placement to fulfillment
+## View Specifications (YAML)
 
-* Capabilities:
-  1. Customer Self-Service
-     Enables customers to place and track orders independently
+Views define what to show and how to organize it.
 
-[APP] APPLICATION LAYER
-------------------------------
+### Basic View (Group by Property)
 
-* Applications:
-  1. Customer Portal
-     React-based web application for customer interactions
-  2. Order API
-     Node.js service managing order processing logic
+```yaml
+view:
+  name: "Operations Applications"
 
-[DATA] DATA LAYER
-------------------------------
+elements:
+  include:
+    - where:
+        type: "ApplicationComponent"
+        Domain: "Operations"
 
-* Entities:
-  1. Order
-     Represents customer purchase orders
-  2. Customer
-     Customer information and preferences
+grouping:
+  by_property: "Region"
+  order: ["ANZ", "JPN", "AEM"]
 
-[INFRA] INFRASTRUCTURE LAYER
-------------------------------
+layout:
+  algorithm: grid
+  columns: 4
 
-* Components:
-  1. Web Server
-     Hosts customer portal application
-  2. API Server
-     Runs order processing services
-
-[SEC] SECURITY LAYER
-------------------------------
-
-* Controls:
-  1. PCI Compliance
-     Ensures secure payment processing
-  2. Authentication
-     Verifies user identity and authorization
+output:
+  format: drawio
 ```
 
-## Advanced Usage
+### Advanced View (Relationship-Based Structure)
 
-### Custom Prompts
+Show capabilities with their supporting applications:
 
-The EA discovery uses a comprehensive prompt template at `prompts/ea/ea_discovery.md`. You can customize this template to:
+```yaml
+view:
+  name: "Capability Realization Map"
 
-- Focus on specific EA frameworks (TOGAF, Zachman, etc.)
-- Add organization-specific analysis criteria
-- Include compliance standards relevant to your industry
-- Adjust the level of detail for different audiences
+elements:
+  include:
+    - where:
+        type: "Capability"
+        Domain: ["Operations", "IT Security"]
 
-### Integration Patterns
+# NEW: Parent-child via relationships
+structure:
+  parent:
+    type: "Capability"
+  children:
+    type: "ApplicationComponent"
+    via: "Serving"
+    direction: "inbound"    # Apps point TO capabilities
+  layout: column
 
-```bash
-# Pipeline example: Description → Analysis → Further Processing
-python -m src.cli.main ea-discover input.txt --output analysis.json
-# Then use analysis.json for diagrams, roadmaps, etc.
+# Group the parent containers
+grouping:
+  by_property: "Domain"
+
+# Add text labels
+annotations:
+  - text: "Strategic"
+    near: "UDW Agent"
+  - text: "Sunset 2025"
+    near: "Legacy System"
+
+output:
+  format: drawio
+```
+
+### YAML Schema Reference
+
+| Section | Purpose |
+|---------|---------|
+| `view` | Name and documentation |
+| `elements` | What to include (WHERE clauses) |
+| `structure` | Parent-child hierarchy via relationships |
+| `grouping` | How to group elements (by property) |
+| `annotations` | Text labels near elements |
+| `layout` | Layout algorithm and spacing |
+| `output` | Output format (drawio, archi, both) |
+
+## ArchiMate Types
+
+The system uses standard ArchiMate 3.0 types:
+
+| Layer | Types |
+|-------|-------|
+| Strategy | Capability, Resource, CourseOfAction |
+| Business | BusinessProcess, BusinessFunction, BusinessService |
+| Application | ApplicationComponent, ApplicationService, DataObject |
+| Technology | Node, Device, SystemSoftware, TechnologyService |
+
+### Relationships
+
+| Type | Meaning |
+|------|---------|
+| Serving | Source provides functionality to Target |
+| Flow | Data/material flows from Source to Target |
+| Composition | Source is composed of Target |
+| Realization | Source realizes/implements Target |
+
+## Diagram Generation
+
+### How It Works
+
+```
+YAML Spec → Element Selection → Relationship Filtering → Layout → draw.io XML
+```
+
+1. **Element Selection**: WHERE clauses filter elements.csv
+2. **Structure Building**: Find children via relationships (if specified)
+3. **Grouping**: Organize into containers by property
+4. **Layout**: AI or fallback deterministic layout
+5. **Rendering**: Generate draw.io XML with colors, edges, annotations
+
+### Color Coding
+
+Elements are colored by:
+- **Lifecycle Status** (if color_by specified):
+  - Green (#81C784) = Strategic
+  - Orange (#FFB74D) = Maintain
+  - Red (#E57373) = Sunset
+  - Blue (#64B5F6) = New
+
+- **ArchiMate Layer** (default):
+  - Yellow (#F5DEAA) = Strategy (Capabilities)
+  - Light Blue (#B5D4E8) = Application
+  - Green (#C9E7CB) = Technology
+
+### Diagram Features
+
+- **Swimlane containers** for groups
+- **Relationship edges** with ArchiMate-style arrows
+- **Annotations** as small text labels
+- **Narrative textbox** with summary statistics
+
+## Example Outputs
+
+### Narrative Textbox
+
+```
+📊 Capability Realization Map
+
+Elements: 28 | Relationships: 27
+
+Groups:
+  • Operations: 17 elements
+  • IT Security: 3 elements
+  • Business Intelligence: 5 elements
+
+Lifecycle Status:
+  • Strategic: 2 systems
+  • Maintain: 2 systems
+
+Relationships:
+  • Serving: 25 connections
+  • Composition: 2 connections
 ```
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **"File not found" errors**: Ensure input file path is correct and accessible
-2. **JSON parsing failures**: Check Azure OpenAI configuration and prompt response format
-3. **Empty results**: Verify system description has sufficient detail for analysis
+| Issue | Solution |
+|-------|----------|
+| "No elements selected" | Check WHERE clause matches properties.csv values |
+| AI layout truncates | >15 elements uses fallback (by design) |
+| Duplicate edge IDs | Fixed in latest version |
+| Missing annotations | Element name must match (partial match supported) |
 
-### Debug Mode
-
-Enable verbose output by checking the raw LLM response:
+### Debug Tips
 
 ```python
-# In ea_discovery.py, uncomment debug lines to see raw AI output
-print(f"Raw response: {content}")
+# Check what elements exist
+from src.ea.diagram_generator import DiagramGenerator
+gen = DiagramGenerator()
+print([e['name'] for e in gen.elements if e['type'] == 'Capability'])
+
+# Check properties
+print([p for p in gen.properties if p['key'] == 'Domain'])
 ```
 
-### Configuration Requirements
+## File Reference
 
-Ensure Azure OpenAI is properly configured:
+| File | Purpose |
+|------|---------|
+| `src/ea/diagram_generator.py` | Main diagram generation |
+| `src/ea/view_builder.py` | YAML spec parsing |
+| `src/ea/drawio_export.py` | Draw.io XML generation |
+| `src/ea/ea_discovery.py` | Text → ArchiMate extraction |
+| `prompts/ea/drawio_diagram_layout.md` | AI layout prompt |
+| `prompts/ea/ea_discovery.md` | EA extraction prompt |
 
-```bash
-# Required environment variables
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
-AZURE_OPENAI_KEY=your-api-key
-AZURE_OPENAI_API_VERSION=2024-02-15-preview
-AZURE_OPENAI_DEPLOYMENT=your-deployment-name
-```
+## Version History
 
-## Future Enhancements
+| Version | Features |
+|---------|----------|
+| MVP1-5 | EA discovery, Mermaid diagrams, context awareness |
+| MVP6 | YAML view specs, deterministic views |
+| MVP7 | AI-driven layout, draw.io export |
+| MVP8 | ArchiMate colors, relationship styles, dynamic sizing |
+| MVP8.1 | Structure hierarchy, annotations, fallback improvements |
 
-### Planned Features
+## Integration with Archi
 
-- **EA Diagrams**: Generate PlantUML/Mermaid diagrams from EA objects
-- **Impact Analysis**: Assess change implications across architecture layers
-- **Roadmap Generation**: Create strategic modernization plans
-- **Compliance Mapping**: Gap analysis against enterprise standards
-
-### Extensibility
-
-The prompt-driven architecture makes it easy to add new capabilities:
-
-1. Create new prompt templates in `prompts/ea/`
-2. Add corresponding analysis methods in `src/ea/`
-3. Integrate with CLI in `src/cli/main.py`
-
-## Best Practices
-
-### Writing System Descriptions
-
-For best results, include:
-
-- **Business context**: Who uses the system and why
-- **Technical components**: Applications, databases, integrations
-- **Non-functional requirements**: Performance, security, compliance
-- **Key processes**: How work flows through the system
-- **Stakeholder information**: Roles and responsibilities
-
-### Iterative Analysis
-
-1. Start with high-level description
-2. Analyze and review results
-3. Add detail to areas needing more depth
-4. Re-analyze for comprehensive coverage
-
-### Output Management
-
-- Use descriptive output filenames: `customer-portal-ea-analysis.json`
-- Version control EA analysis files for change tracking
-- Consider organizing by system/project: `systems/crm/ea-analysis.json`
+1. Generate model: `ea_discover_directory()`
+2. Open Archi tool
+3. File → Import → Open Exchange File
+4. Select `archi_inputs/model.xml`
+5. View imported elements and relationships
 
 ---
 
-For more information, see the main project documentation in `CLAUDE.md`.
+For project-level documentation, see `CLAUDE.md` in the project root.

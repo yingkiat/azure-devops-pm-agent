@@ -1,0 +1,262 @@
+# === INTENT ===
+intent:
+  question: "How do we expose MedPack pack data to external customers (Hospital Buyers, Resellers) with secure, multi-tenant access?"
+  audience: "Solution architects and product stakeholders deciding on external customer portal design"
+  decision: "Approve the 3-tier architecture: Entra External ID → Portal Frontend → Portal Backend → MedPack + QAD Analytics"
+  key_message: "External customers get secure, isolated access to their pack data via authenticated portal, backed by existing internal systems"
+
+# === STORY ===
+story:
+  setup: "Today, MedPack is internal-only. Hospital buyers and resellers have no visibility into packs, inventory, or order history."
+  tension: "Business needs external customers to self-serve: view their packs, check inventory, see order history, understand forecasts."
+  insight: "A thin external layer (Portal + Backend) sitting atop existing MedPack API and QAD Analytics DB enables secure B2B access without rebuilding core systems."
+
+# === DIAGRAM TYPE ===
+type: "freeform"
+viewpoint: "Application Cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    # External Users
+    - name: "Hospitals"
+      type: "Actor"
+      override:
+        layer: "External Users"
+      description: "External customer persona - procurement teams, hospital administrators"
+
+    - name: "Resellers / Distributors"
+      type: "Actor"
+      override:
+        layer: "External Users"
+      description: "External customer persona - channel partners, wholesalers"
+
+    # Authentication (NEW)
+    - name: "Entra External ID"
+      type: "TechnologyService"
+      override:
+        layer: "Authentication"
+        status: "NEW"
+      description: "Microsoft B2B identity provider for external customer login. Provides multi-tenant context via JWT tokens."
+      emphasis: "prominent"
+
+    # Presentation (NEW)
+    - name: "External Customer Portal"
+      type: "ApplicationComponent"
+      override:
+        layer: "Presentation"
+        status: "NEW"
+      description: "Web UI for external customers. Displays packs, inventory, order history, forecasts. Read-only viewing."
+      emphasis: "highlighted"
+
+    # Application (NEW)
+    - name: "Portal Backend"
+      type: "ApplicationComponent"
+      override:
+        layer: "Application"
+        status: "NEW"
+      description: "Integration layer with multi-tenant authorization. Validates Entra token, extracts customer context, filters all downstream queries by customer ID."
+      emphasis: "prominent"
+
+    # Data Integration (EXISTING)
+    - name: "MedPack API"
+      type: "ApplicationInterface"
+      override:
+        layer: "Application"
+        status: "EXISTING"
+      description: "Internal API exposing pack data: BOM, components, pricing, availability. Called by Portal Backend with customer filter."
+
+    - name: "QAD DB"
+      type: "DataObject"
+      override:
+        layer: "Application"
+        status: "EXISTING"
+      description: "Analytics database containing order history, inventory levels, forecasts. Queried by Portal Backend with customer account filter."
+
+    # Supporting Internal Systems (EXISTING)
+    - name: "MedPack"
+      type: "ApplicationComponent"
+      override:
+        layer: "Internal Systems"
+        status: "EXISTING"
+      description: "Internal MedPack application for ANZ region. Source data for MedPack API."
+      emphasis: "faded"
+
+    - name: "QAD - EE"
+      type: "ApplicationComponent"
+      override:
+        layer: "Internal Systems"
+        status: "EXISTING"
+      description: "QAD Enterprise Edition ERP. Source of orders, inventory, financials feeding Analytics DB."
+      emphasis: "faded"
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    # Authentication flows
+    - type: "Flow"
+      source_name: "Hospitals"
+      target_name: "Entra External ID"
+      label: "1. Login"
+      description: "Hospital buyer authenticates via Entra External ID (B2B)"
+
+    - type: "Flow"
+      source_name: "Resellers / Distributors"
+      target_name: "Entra External ID"
+      label: "1. Login"
+      description: "Reseller authenticates via Entra External ID (B2B)"
+
+    - type: "Flow"
+      source_name: "Entra External ID"
+      target_name: "External Customer Portal"
+      label: "2. JWT Token"
+      description: "Entra returns JWT with customer_id claim identifying the authenticated customer"
+
+    # Data request flows
+    - type: "Flow"
+      source_name: "External Customer Portal"
+      target_name: "Portal Backend"
+      label: "3. Request Data"
+      description: "Portal calls Portal Backend with auth token: GET /my-packs, GET /my-orders"
+
+    - type: "Flow"
+      source_name: "Portal Backend"
+      target_name: "MedPack API"
+      label: "4a. Get Packs"
+      description: "Backend calls MedPack API: GET /packs?customer_id={authenticated_customer}"
+
+    - type: "Flow"
+      source_name: "Portal Backend"
+      target_name: "QAD DB"
+      label: "4b. Get Orders"
+      description: "Backend queries Analytics DB: SELECT * FROM orders WHERE customer_account = {authenticated_customer}"
+
+    # Response flows
+    - type: "Flow"
+      source_name: "MedPack API"
+      target_name: "Portal Backend"
+      label: "5a. Pack Data"
+      description: "MedPack API returns pack BOM, components, pricing for customer's packs"
+
+    - type: "Flow"
+      source_name: "QAD DB"
+      target_name: "Portal Backend"
+      label: "5b. Order Data"
+      description: "Analytics DB returns order history, inventory, forecasts for customer"
+
+    - type: "Flow"
+      source_name: "Portal Backend"
+      target_name: "External Customer Portal"
+      label: "6. Return Data"
+      description: "Backend returns combined, filtered data to Portal for display"
+
+    # Internal data feeds (context)
+    - type: "Serving"
+      source_name: "MedPack"
+      target_name: "MedPack API"
+      label: "Pack Data"
+      description: "MedPack provides pack data to API"
+
+    - type: "Serving"
+      source_name: "QAD - EE"
+      target_name: "QAD DB"
+      label: "ERP Data"
+      description: "QAD EE feeds orders, inventory, financials to Analytics DB"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Entra External ID"
+      role: "Security boundary - authenticates all external access"
+      treatment: "prominent"
+    - element: "Portal Backend"
+      role: "Authorization layer - enforces multi-tenant filtering"
+      treatment: "prominent"
+    - element: "External Customer Portal"
+      role: "User-facing frontend"
+      treatment: "highlighted"
+    - element: "MedPack"
+      role: "Internal context - not directly exposed"
+      treatment: "faded"
+    - element: "QAD - EE"
+      role: "Internal context - not directly exposed"
+      treatment: "faded"
+  grouping_rationale: "Layered architecture from external users → authentication → presentation → application → data"
+  reading_order: "Left-to-right flow showing request/response cycle through secure layers"
+  color_strategy: "Green for NEW components, gray for EXISTING infrastructure, faded for internal context"
+
+# === LAYOUT ===
+layout:
+  algorithm: "freeform"  # Custom positioning for architecture diagrams
+  direction: "horizontal"  # Arrange layers left-to-right
+  layer_width: 280  # Width of each layer swimlane (px)
+  layer_spacing: 50  # Horizontal spacing between layers (px)
+
+  # Layer order and colors (left to right)
+  layers:
+    - name: "External Users"
+      color: "#fff2cc"  # Yellow - Business layer
+      stroke: "#d6b656"
+    - name: "Authentication"
+      color: "#dae8fc"  # Blue - Technology layer
+      stroke: "#6c8ebf"
+    - name: "Presentation"
+      color: "#dae8fc"  # Blue - Technology layer
+      stroke: "#6c8ebf"
+    - name: "Application"
+      color: "#dae8fc"  # Blue - Technology layer
+      stroke: "#6c8ebf"
+    - name: "Internal Systems"
+      color: "#f5f5f5"  # Grey - Context/irrelevant
+      stroke: "#666666"
+      fontColor: "#333333"
+      width: 450  # Wider to accommodate multiple internal systems
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Security Boundary - All external access authenticated here"
+    near: "Entra External ID"
+
+  - text: "Multi-tenant filtering: customer sees only their data"
+    near: "Portal Backend"
+
+  - text: "Pack BOM, components, pricing, availability"
+    near: "MedPack API"
+
+  - text: "Order history, inventory levels, forecasts"
+    near: "QAD DB"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations:
+  - version: 1
+    date: "2025-01-20"
+    feedback: "Initial draft based on gap analysis discussion"
+    change: "Created freeform spec with explicit elements and flows"
+  - version: 1.1
+    date: "2025-01-20"
+    feedback: "Updated to use consistent elements: schema instead of components:"
+    change: "Aligned with structured view format for diagram generator compatibility"
+  - version: 1.2
+    date: "2025-01-20"
+    feedback: "Generated 2 vertical columns instead of 5 horizontal layers. Swimlanes 800px wide (3x too wide)."
+    change: "Fixed layout: algorithm 'column' = vertical stacking (not horizontal). Changed to 'freeform' with direction='horizontal', layer_width=280px, explicit layer ordering."
+  - version: 1.3
+    date: "2025-01-20"
+    feedback: "MedPack API and QAD DB missing from output - elements had layers 'Data Integration' and 'Data Sources' which weren't in layout.layers list."
+    change: "Moved MedPack API and QAD DB to 'Application' layer to match layout.layers definition."
+  - version: 1.4
+    date: "2025-01-20"
+    feedback: "Layer swimlanes should use semantic colors for visual clarity - yellow for business, blue for tech, grey for context."
+    change: "Added color/stroke properties to each layer in layout.layers. Established default color palette: Yellow (Business), Orange (Strategy/Capability), Blue (Application), Light Green (Infrastructure), Grey (Internal/Context)."
+  - version: 1.5
+    date: "2025-01-20"
+    feedback: "Manual refinements in draw.io: simplified element labels for clarity, adjusted Internal Systems container width."
+    change: "Updated element names: 'Hospital Buyers'→'Hospitals', 'Backend API'→'Portal Backend', 'MedPack Aus'→'MedPack', 'QAD Analytics Database'→'QAD DB'. Set Internal Systems layer width to 450px. Added fontColor to grey layer."
+  - version: 1.6
+    date: "2025-01-21"
+    feedback: "MedPack NZ removed from manually refined diagram - architecture simplified to single MedPack source."
+    change: "Removed MedPack NZ element and its relationship to MedPack API. Updated YAML spec to match refined diagram."

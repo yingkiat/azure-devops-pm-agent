@@ -18,7 +18,51 @@ from datetime import datetime
 import xml.etree.ElementTree as ET
 
 from .archi_layouts import choose_layout, ElementPosition
-from .archi_views import ViewGenerator, ViewDefinition
+from dataclasses import dataclass, field
+from typing import Optional
+
+
+@dataclass
+class ViewDefinition:
+    """Represents an ArchiMate view definition"""
+    id: str
+    type: str
+    name: str
+    documentation: str
+    elements: List[str]
+    relations: List[str]
+    grouping: Optional[Dict[str, Any]] = None
+    layout: Optional[Dict[str, Any]] = None
+
+
+class ViewGenerator:
+    """Auto-generates views from EA analysis (backward compatibility stub)"""
+
+    def generate_all_views(self, ea_analysis: Dict[str, Any],
+                          elements: List[Dict[str, Any]],
+                          relations: List[Dict[str, Any]]) -> List[ViewDefinition]:
+        """Generate default views from elements and relations"""
+        import hashlib
+
+        views = []
+
+        # Create single overview view with all elements
+        all_element_ids = [e['id'] for e in elements]
+        all_relation_ids = [r['id'] for r in relations]
+
+        if all_element_ids:
+            view_id = f"id-{hashlib.md5('overview-view'.encode()).hexdigest()[:12]}"
+            views.append(ViewDefinition(
+                id=view_id,
+                type='archimate-diagram-model',
+                name='EA Overview',
+                documentation='Auto-generated overview of all discovered elements',
+                elements=all_element_ids,
+                relations=all_relation_ids
+            ))
+
+        return views
+
 
 # ArchiMate XML namespace (Open Group standard)
 ARCHIMATE_NS = "http://www.opengroup.org/xsd/archimate/3.0/"
@@ -35,7 +79,8 @@ class ArchiExporter:
         self.property_schema = self._load_property_schema()
 
     def export(self, ea_analysis_file: str, generate_views: bool = True,
-               generate_archimate_xml: bool = False, use_ai_layout: bool = True) -> Dict[str, str]:
+               generate_archimate_xml: bool = False, use_ai_layout: bool = True,
+               incremental: bool = False) -> Dict[str, str]:
         """
         Export EA analysis to Archi CSV files and optionally .archimate XML
 
@@ -44,6 +89,7 @@ class ArchiExporter:
             generate_views: Whether to generate view layouts
             generate_archimate_xml: Whether to generate .archimate XML package file
             use_ai_layout: Whether to use AI-driven layout for grouped views (MVP7)
+            incremental: Whether to merge with existing data (True) or replace (False)
 
         Returns:
             Dict of output file paths
@@ -55,20 +101,43 @@ class ArchiExporter:
         with open(ea_analysis_file, 'r', encoding='utf-8') as f:
             ea_analysis = json.load(f)
 
-        print(f"Exporting EA analysis to Archi format...")
+        mode_str = "INCREMENTAL" if incremental else "REPLACE"
+        print(f"Exporting EA analysis to Archi format ({mode_str} mode)...")
         print(f"Output directory: {self.output_dir}")
 
-        # Generate elements
-        elements = self._generate_elements(ea_analysis)
-        print(f" Generated {len(elements)} elements")
+        # Generate elements from this discovery
+        new_elements = self._generate_elements(ea_analysis)
+        print(f"  New elements from discovery: {len(new_elements)}")
 
-        # Generate relationships
-        relations = self._generate_relations(ea_analysis, elements)
-        print(f" Generated {len(relations)} relationships")
+        # Generate relationships from this discovery
+        new_relations = self._generate_relations(ea_analysis, new_elements)
+        print(f"  New relationships from discovery: {len(new_relations)}")
 
-        # Generate properties
-        properties = self._generate_properties(ea_analysis, elements)
-        print(f" Generated {len(properties)} properties")
+        # Generate properties from this discovery
+        new_properties = self._generate_properties(ea_analysis, new_elements)
+        print(f"  New properties from discovery: {len(new_properties)}")
+
+        # Merge with existing data if incremental mode
+        if incremental:
+            existing_elements = self._load_existing_elements()
+            existing_relations = self._load_existing_relations()
+            existing_properties = self._load_existing_properties()
+
+            print(f"  Existing elements: {len(existing_elements)}")
+            print(f"  Existing relationships: {len(existing_relations)}")
+            print(f"  Existing properties: {len(existing_properties)}")
+
+            elements = self._merge_elements(existing_elements, new_elements)
+            relations = self._merge_relations(existing_relations, new_relations)
+            properties = self._merge_properties(existing_properties, new_properties)
+
+            print(f"  Merged elements: {len(elements)}")
+            print(f"  Merged relationships: {len(relations)}")
+            print(f"  Merged properties: {len(properties)}")
+        else:
+            elements = new_elements
+            relations = new_relations
+            properties = new_properties
 
         # Write CSV files
         output_files = {}
@@ -517,6 +586,136 @@ class ArchiExporter:
 
         print(f"   {output_file}")
         return str(output_file)
+
+    # ===== Incremental Mode Helper Methods =====
+
+    def _load_existing_elements(self) -> List[Dict[str, Any]]:
+        """Load existing elements from elements.csv"""
+        elements_file = self.output_dir / "elements.csv"
+        if not elements_file.exists():
+            return []
+
+        elements = []
+        with open(elements_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                elements.append({
+                    'id': row['ID'],
+                    'type': row['Type'],
+                    'name': row['Name'],
+                    'documentation': row.get('Documentation', ''),
+                    'layer': 'application',  # Default, will be overridden if needed
+                    'category': row['Type'],
+                    'raw_data': {}
+                })
+        return elements
+
+    def _load_existing_relations(self) -> List[Dict[str, Any]]:
+        """Load existing relations from relations.csv"""
+        relations_file = self.output_dir / "relations.csv"
+        if not relations_file.exists():
+            return []
+
+        relations = []
+        with open(relations_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                relations.append({
+                    'id': row['ID'],
+                    'type': row['Type'],
+                    'name': row.get('Name', ''),
+                    'documentation': row.get('Documentation', ''),
+                    'source_id': row['Source'],
+                    'target_id': row['Target'],
+                    'relationship_type': row['Type']
+                })
+        return relations
+
+    def _load_existing_properties(self) -> List[Dict[str, Any]]:
+        """Load existing properties from properties.csv"""
+        properties_file = self.output_dir / "properties.csv"
+        if not properties_file.exists():
+            return []
+
+        properties = []
+        with open(properties_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                properties.append({
+                    'element_id': row['ID'],
+                    'key': row['Key'],
+                    'value': row['Value']
+                })
+        return properties
+
+    def _merge_elements(self, existing: List[Dict[str, Any]], new: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Merge existing and new elements, deduplicating by name.
+        New elements with same name will update existing ones.
+        """
+        # Build lookup by name (case-insensitive)
+        merged = {}
+        for elem in existing:
+            key = elem['name'].lower()
+            merged[key] = elem
+
+        for elem in new:
+            key = elem['name'].lower()
+            if key in merged:
+                # Update existing element with new data (keep ID for consistency)
+                existing_elem = merged[key]
+                # Merge descriptions
+                if elem.get('documentation') and elem['documentation'] != existing_elem.get('documentation', ''):
+                    if existing_elem.get('documentation'):
+                        existing_elem['documentation'] = f"{existing_elem['documentation']}; {elem['documentation']}"
+                    else:
+                        existing_elem['documentation'] = elem['documentation']
+                # Update other fields from new element
+                existing_elem['type'] = elem['type']
+                existing_elem['layer'] = elem.get('layer', existing_elem.get('layer', 'application'))
+                existing_elem['category'] = elem.get('category', existing_elem.get('category', elem['type']))
+                existing_elem['raw_data'] = elem.get('raw_data', {})
+            else:
+                # Add new element
+                merged[key] = elem
+
+        return list(merged.values())
+
+    def _merge_relations(self, existing: List[Dict[str, Any]], new: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Merge existing and new relations, deduplicating by (type, source, target).
+        """
+        # Build lookup by (type, source_id, target_id)
+        merged = {}
+        for rel in existing:
+            key = (rel['type'], rel['source_id'], rel['target_id'])
+            merged[key] = rel
+
+        for rel in new:
+            key = (rel['type'], rel['source_id'], rel['target_id'])
+            if key not in merged:
+                merged[key] = rel
+            # If exists, keep existing (don't overwrite)
+
+        return list(merged.values())
+
+    def _merge_properties(self, existing: List[Dict[str, Any]], new: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Merge existing and new properties, deduplicating by (element_id, key).
+        New properties override existing ones for the same key.
+        """
+        # Build lookup by (element_id, key)
+        merged = {}
+        for prop in existing:
+            key = (prop['element_id'], prop['key'])
+            merged[key] = prop
+
+        for prop in new:
+            key = (prop['element_id'], prop['key'])
+            # New properties override existing
+            merged[key] = prop
+
+        return list(merged.values())
 
     def _write_views_csv(self, views: List[ViewDefinition],
                         elements: List[Dict[str, Any]],

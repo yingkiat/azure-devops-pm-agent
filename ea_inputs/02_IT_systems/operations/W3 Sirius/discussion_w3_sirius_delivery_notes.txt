@@ -1,0 +1,59 @@
+Project manager explained about this project. The business wants to replace the manually printed delivery note, that is stuck on the shipping box, to be replaced with a QR code where the customer can scan and query.
+This will save manpower and costs.
+
+They have canvassed for vendors, and the best proposal was the existing WMS vendor for W3 Sirius. To extend their system to include this delivery note querying.
+
+Meeting notes:
+- Hosting and Security Requirements for Delivery Note System: 
+  Discussed the hosting options for the new delivery note system, confirming that the system will be hosted by the vendor on AWS, and outlined the security requirements and involvement of security team members.
+- Business and IT Concerns for QR Code Delivery Note Solution: 
+  Discussed the business rationale for replacing printed delivery notes with a QR code system, the implications of outsourcing to a vendor, and the need for business-side decisions on access controls and data exposure.
+- Cost Considerations and Comparison with Other Regions: 
+  Reviewed the cost analysis for the QR code solution, compared practices with Australia, and confirmed that the business has already evaluated and accepted the cost-benefit of the new system.
+
+Next Steps and Follow-Up Actions:
+Agreed to schedule a follow-up meeting to finalize the security review, and requested the project PDF for further analysis.
+
+---
+
+Solution Architecture Inputs and Recommendations:
+
+1. Security Considerations
+
+   Data Exposure Analysis (Priority):
+   - The primary security concern is whether delivery data is acceptable for public exposure
+   - Business and Legal must determine if the data can be scraped for price and volume analysis by competitors or third parties
+   - This business/legal analysis must be completed BEFORE proceeding to technical security implementation
+
+   InfoSec Standards (Post-Approval):
+   - Data encryption in transit (TLS 1.2+)
+   - Data encryption at rest (AES-256)
+   - UI endpoint encryption (HTTPS only)
+   - DDoS protection (AWS Shield or equivalent)
+   - Injection protection (SQL injection, XSS prevention)
+   - Compliance with company InfoSec standards and policies
+   - Disaster recovery plan and RTO/RPO requirements
+   - High availability architecture (multi-AZ deployment)
+
+2. Business Concerns
+
+   Strategic Implications:
+   - Outsourcing core transportation functionality to a 3rd party creates vendor dependency
+   - Consider future expansion of capabilities - will the vendor support additional features?
+   - Evaluate synergies with other applications that may require external customer access
+   - Risk of losing strategic value from direct external customer end-to-end engagement
+
+   Standardization Requirements:
+   - This solution is strictly for Japan operations
+   - What happens if APAC standardization is required in future?
+   - What if Global mandates linking all customer-facing portals to a single company website?
+   - Document these as known limitations and future risks
+
+3. Cost Considerations
+
+   Beyond ROI:
+   - Initial and running costs have been measured against ROI (already completed by business)
+   - IMPORTANT: W3 Sirius is a legacy system with limited remaining lifespan
+   - This solution should be positioned as a QUICK WIN with an impermanent nature
+   - Avoid over-investment given the legacy platform it extends
+   - Consider exit strategy when W3 Sirius is eventually replaced

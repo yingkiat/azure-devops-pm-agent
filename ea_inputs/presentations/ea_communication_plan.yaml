@@ -1,0 +1,286 @@
+presentation:
+  title: "APAC IT Architecture: Roadmap & Visibility"
+  template: "templates/corporate.pptx"
+  output: "ea_outputs/ea_communication_plan.pptx"
+  layout_mapping:
+    title: 0
+    section: 0
+    bullets: 0
+    image: 0
+    table: 0
+
+slides:
+  # CONTENTS PAGE
+  - layout: "title"
+    title: "APAC IT Architecture: Roadmap & Visibility"
+    subtitle: "Communication Plan"
+
+  - layout: "bullets"
+    title: "Contents"
+    bullets:
+      - "SECTION A: Foundation (All Audiences) - Slides 3-12"
+      - "SECTION B: Strategic Decisions (Director) - Slides 13-16"
+      - "SECTION C: Your Domain Roadmap (Domain Owners) - Slides 17-20"
+      - "SECTION D: Architecture Literacy (All IT) - Slides 21-28"
+
+  # SECTION A: Common Foundation
+  - layout: "bullets"
+    title: "Why We Need Clarity"
+    bullets:
+      - "Multiple systems doing similar things"
+      - "Unclear ownership and roadmaps"
+      - "Investment decisions made in silos"
+      - "Hard to assess impact of changes"
+    notes: "This is the problem we're solving"
+
+  - layout: "bullets"
+    title: "A Simple Framework"
+    bullets:
+      - "Every system answers two questions:"
+      - "  1. What business function does it support?"
+      - "  2. Where is it going?"
+    notes: "Two questions. That's the entire mental model."
+
+  - layout: "bullets"
+    title: "Three Buckets for Every System"
+    bullets:
+      - "H1 - Run & Maintain: Stable, no major change planned"
+      - "H2 - Invest & Transform: Active investment, upgrades, migrations"
+      - "H3 - Retire & Replace: Planned sunset, being replaced"
+    notes: "Every system falls into one of these three buckets"
+
+  - layout: "bullets"
+    title: "Business Function x Horizon"
+    bullets:
+      - "Rows = what it does (business function)"
+      - "Columns = where it's going (H1/H2/H3)"
+      - "Color/annotation = additional status or risk"
+    notes: "This is what a roadmap looks like in our framework"
+
+  - layout: "bullets"
+    title: "Our IT Domains"
+    bullets:
+      - "Each domain has an owner and strategic theme"
+      - "Commercial: CRM consolidation and customer data"
+      - "Operations: ERP modernization and automation"
+      - "Corporate: Shared services standardization"
+    notes: "Each domain is building their roadmap using this framework"
+
+  - layout: "bullets"
+    title: "Domain Example: Commercial"
+    bullets:
+      - "CRM rationalization across regions"
+      - "H2: Salesforce as strategic platform"
+      - "H3: Legacy CRMs being sunset"
+      - "Key dependency: Master data management"
+    notes: "Here's a concrete example of what this looks like"
+
+  - layout: "bullets"
+    title: "Domain Example: Operations"
+    bullets:
+      - "ERP stability with targeted upgrades"
+      - "H1: QAD EE as stable foundation"
+      - "H2: Manufacturing execution improvements"
+      - "H3: Legacy scheduling tools retiring"
+    notes: "Notice how different domains have different patterns"
+
+  - layout: "bullets"
+    title: "AI-Assisted Architecture"
+    bullets:
+      - "Ingest: Documents, spreadsheets, diagrams, interviews"
+      - "Process: AI extracts systems, relationships, status"
+      - "Output: Consistent roadmaps and diagrams"
+      - "Maintainable and repeatable - not a one-time exercise"
+    notes: "The heavy lifting is automated. We focus on decisions."
+
+  - layout: "bullets"
+    title: "From Data to Decisions"
+    bullets:
+      - "Visibility across all domains"
+      - "Consistent format enables comparison"
+      - "Foundation for investment planning"
+      - "Shared language for architecture discussions"
+    notes: "This is why we're doing this work"
+
+  - layout: "bullets"
+    title: "What This Means for You"
+    bullets:
+      - "The following slides are tailored to your role"
+      - "Director: Strategic decisions and rollout"
+      - "Domain Owners: Building your roadmap"
+      - "All IT: Architecture literacy"
+    notes: "Now let's talk about what this means specifically for you"
+
+  # SECTION B: Director Focus
+  - layout: "bullets"
+    title: "SECTION B: Director Focus"
+    bullets:
+      - "Cross-domain patterns"
+      - "Decisions for your review"
+      - "Enabling domain owners"
+      - "Building organizational capability"
+
+  - layout: "bullets"
+    title: "What the Roadmaps Reveal"
+    bullets:
+      - "Consolidation themes (e.g., CRM rationalization)"
+      - "Shared dependencies between domains"
+      - "Investment clusters (where money is going)"
+      - "Alignment gaps or sequencing risks"
+    notes: "Stepping back, here's what I see across all domains"
+
+  - layout: "bullets"
+    title: "Decision Points"
+    bullets:
+      - "Investment priorities between competing initiatives"
+      - "Sequencing dependencies (what must happen first)"
+      - "Resource allocation across domains"
+      - "Risk acceptance for aggressive timelines"
+    notes: "These are the calls I need from you"
+
+  - layout: "bullets"
+    title: "Enabling the Domain Owners"
+    bullets:
+      - "Each owner builds their roadmap using this framework"
+      - "Your push gets them engaged and accountable"
+      - "Working sessions scheduled to co-create their views"
+      - "Consistent output format across all domains"
+    notes: "With your support, here's how we bring the domain owners along"
+
+  - layout: "bullets"
+    title: "Building Organizational Capability"
+    bullets:
+      - "Simplified version for all IT staff"
+      - "Builds shared vocabulary across the organization"
+      - "Real domain examples as case studies"
+      - "Your approval on messaging before rollout"
+    notes: "This supports the architecture literacy objective"
+
+  # SECTION C: Domain Owner Focus
+  - layout: "bullets"
+    title: "SECTION C: Domain Owner Focus"
+    bullets:
+      - "Your roadmap, your story"
+      - "Your next step"
+      - "Presenting to leadership"
+      - "Support and timeline"
+
+  - layout: "bullets"
+    title: "Your Roadmap, Your Story"
+    bullets:
+      - "This framework helps you articulate what you already know"
+      - "Makes your strategic thinking visible to leadership"
+      - "Justifies your investments with clear rationale"
+      - "Protects your budget by showing planned evolution"
+    notes: "This is your chance to make your domain's value clear"
+
+  - layout: "bullets"
+    title: "Building Your Domain Roadmap"
+    bullets:
+      - "1. Review your system inventory (I'll provide what we have)"
+      - "2. Classify each system: H1, H2, or H3"
+      - "3. Note key dependencies (simple bullet points)"
+      - "4. Identify gaps (systems we're missing)"
+      - "We'll do this together in a working session"
+    notes: "Here's exactly what we need to do"
+
+  - layout: "bullets"
+    title: "The 5-Minute Structure"
+    bullets:
+      - "1. Here's what I own (landscape)"
+      - "2. Here's where each is going (horizon placement)"
+      - "3. Here's why (rationale for key decisions)"
+      - "4. Here's what I need (resources, decisions)"
+      - "5. Here's what depends on others (cross-domain)"
+    notes: "This is your presentation script"
+
+  - layout: "bullets"
+    title: "How We Get This Done"
+    bullets:
+      - "Working session: Co-create your roadmap"
+      - "Draft review: Refine together"
+      - "Final presentation: Present to Director"
+      - "I'll support you through each step"
+    notes: "You're not on your own. Here's the plan."
+
+  # SECTION D: All IT Focus
+  - layout: "bullets"
+    title: "SECTION D: Architecture Literacy"
+    bullets:
+      - "Why architecture matters to you"
+      - "The core mental model"
+      - "Questions to start asking"
+      - "Key terms and how to contribute"
+
+  - layout: "bullets"
+    title: "Architecture Affects Everyone"
+    bullets:
+      - "Developers: Know what's strategic vs. sunsetting before you build on it"
+      - "Project Managers: Understand dependencies for planning"
+      - "Support: Know what's changing and when"
+      - "Everyone: Speak the same language about systems"
+    notes: "This isn't just for architects - it helps everyone"
+
+  - layout: "bullets"
+    title: "One Thing to Remember"
+    bullets:
+      - "Business Function (what it does)"
+      - "+ Horizon (where it's going)"
+      - "= The Landscape"
+      - "That's the core concept. Everything else builds on this."
+    notes: "If you remember one thing, remember this"
+
+  - layout: "bullets"
+    title: "Think Architecturally"
+    bullets:
+      - "Before starting a project: Is this system H1, H2, or H3?"
+      - "When integrating: What else connects to this system?"
+      - "When investing time: Is this aligned with our roadmap?"
+      - "When something breaks: What depends on this?"
+    notes: "Start asking these questions - it changes how you work"
+
+  - layout: "bullets"
+    title: "Quick Glossary"
+    bullets:
+      - "Application: A software system that supports business functions"
+      - "Landscape: All applications in a domain or organization"
+      - "Horizon: Where a system is going (H1/H2/H3)"
+      - "Roadmap: The plan for how systems evolve over time"
+      - "Integration: How systems connect and share data"
+    notes: "These are the words you'll hear in architecture conversations"
+
+  - layout: "bullets"
+    title: "The Bigger Picture"
+    bullets:
+      - "Enterprise Architecture is how we organize, connect, and evolve technology"
+      - "It's not about diagrams - it's about decisions"
+      - "Think of it like city planning: roads, buildings, utilities all need to work together"
+    notes: "Architecture is the blueprint for how our technology fits together"
+
+  - layout: "bullets"
+    title: "Four Layers That Work Together"
+    bullets:
+      - "Business: What the organization does (processes, capabilities)"
+      - "Application: Software that supports business functions"
+      - "Data: Information that flows between systems"
+      - "Technology: Infrastructure that runs everything"
+    notes: "Changes in one layer affect the others"
+
+  - layout: "bullets"
+    title: "The Cost of Chaos"
+    bullets:
+      - "Duplication: 5 systems doing the same thing"
+      - "Integration nightmares: Nobody knows what connects to what"
+      - "Wasted investment: Building on systems about to be retired"
+      - "Slow delivery: Every project discovers dependencies the hard way"
+    notes: "This is what we're preventing"
+
+  - layout: "bullets"
+    title: "Your Role in Architecture"
+    bullets:
+      - "Know your systems: What do you work with daily?"
+      - "Flag issues: See duplication or confusion? Raise it"
+      - "Ask questions: 'Is this system strategic?' is always valid"
+      - "Think connections: What depends on what you're changing?"
+      - "Share knowledge: Document what you know"
+    notes: "Architecture isn't done by architects alone - everyone contributes"

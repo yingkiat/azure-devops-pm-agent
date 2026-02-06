@@ -1,0 +1,13 @@
+ID,Type,Source,Target,Documentation
+rel-65ad2dfd0f23,Flow,diagram-dc55323bc40c,diagram-entra-extid,Hospital buyer authenticates via Entra External ID (B2B)
+rel-c8f68b5f90a9,Flow,diagram-1594ca313796,diagram-entra-extid,Reseller authenticates via Entra External ID (B2B)
+rel-2157216c892a,Flow,diagram-entra-extid,diagram-customer-portal,Entra returns JWT with customer_id claim identifying the authenticated customer
+rel-657ec7d54dd0,Flow,diagram-customer-portal,diagram-backend-api,"Portal calls Backend API with auth token: GET /my-packs, GET /my-orders"
+rel-36f296ca8ffa,Flow,diagram-backend-api,diagram-698af682e520,Backend calls MedPack API: GET /packs?customer_id={authenticated_customer}
+rel-030bc4596314,Flow,diagram-backend-api,diagram-50b925e5cc77,Backend queries Analytics DB: SELECT * FROM orders WHERE customer_account = {authenticated_customer}
+rel-9e930238edd7,Flow,diagram-698af682e520,diagram-backend-api,"MedPack API returns pack BOM, components, pricing for customer's packs"
+rel-9e7a9f549f31,Flow,diagram-50b925e5cc77,diagram-backend-api,"Analytics DB returns order history, inventory, forecasts for customer"
+rel-6fd099f3cd02,Flow,diagram-backend-api,diagram-customer-portal,"Backend returns combined, filtered data to Portal for display"
+rel-60913cdbd8ad,Serving,id-11e891b15fcb,diagram-698af682e520,MedPack Aus provides pack data to API
+rel-21d3a02897f7,Serving,id-828ab93094dd,diagram-698af682e520,MedPack NZ provides pack data to API
+rel-7c50b91516e2,Serving,id-5aefb9227717,diagram-50b925e5cc77,"QAD EE feeds orders, inventory, financials to Analytics DB"

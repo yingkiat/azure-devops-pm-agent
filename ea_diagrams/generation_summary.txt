@@ -1,0 +1,10 @@
+EA ARTIFACT GENERATION SUMMARY
+==================================================
+
+Data Source: Unknown
+Applications: 44
+Capabilities: 34
+Domains: 8
+
+Generated Diagrams:
+   ea_diagrams_combined: 532 lines

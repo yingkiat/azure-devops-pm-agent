@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-01-01T00:00:00.000Z" version="24.0.0" type="device">
+  <diagram name="Infrastructure Cost Optimization Roadmap">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cell-h1-azure-cloud" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="100" width="248" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h1-euc" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="468" y="100" width="288" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h1-support-services" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="766" y="100" width="280" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h2-azure-cloud" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="500" width="248" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h2-euc" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="468" y="500" width="288" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h2-support-services" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="766" y="500" width="280" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h3-azure-cloud" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="760" width="248" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h3-euc" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="468" y="760" width="288" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-h3-support-services" value="" style="rounded=0;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="766" y="760" width="280" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="col-azure-cloud" value="Azure Cloud" style="swimlane;startSize=30;fillColor=#E3F2FD;strokeColor=#1976D2;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="50" width="248" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="col-euc" value="EUC" style="swimlane;startSize=30;fillColor=#E3F2FD;strokeColor=#1976D2;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="468" y="50" width="288" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="col-support-services" value="Support Services" style="swimlane;startSize=30;fillColor=#E3F2FD;strokeColor=#1976D2;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="766" y="50" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="row-h1" value="H1" style="swimlane;horizontal=0;startSize=30;fillColor=#E8F5E9;strokeColor=#388E3C;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="150" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="row-h2" value="H2" style="swimlane;horizontal=0;startSize=30;fillColor=#E8F5E9;strokeColor=#388E3C;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="500" width="150" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="row-h3" value="H3" style="swimlane;horizontal=0;startSize=30;fillColor=#E8F5E9;strokeColor=#388E3C;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="760" width="150" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-001" value="Heavy VM Expenditure" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=1;strokeColor=#999999;opacity=50;fontColor=#666666;">
+          <mxGeometry x="230" y="190" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-002" value="Dual Region Architecture" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="260" width="192" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-003" value="On-Prem File Servers (JPN)" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="120" width="208" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-004" value="Ad-hoc Cost Monitoring" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="330" width="176" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-005" value="Azure Container Apps" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;">
+          <mxGeometry x="230" y="660" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-006" value="Serverless Databases" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;">
+          <mxGeometry x="230" y="590" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-007" value="Proactive Cost Monitoring" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="520" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-008" value="Single SEA Region" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="780" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-009" value="Azure File Sync to JPN" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="230" y="850" width="176" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-010" value="Limited Regional Office Support" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="488" y="190" width="248" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-011" value="Password-Only Authentication" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="488" y="120" width="224" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-012" value="Windows Hello" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="488" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-013" value="Fingerprint Logon" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="488" y="780" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-014" value="Tech Days / Regional Outreach" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="488" y="850" width="232" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-015" value="Separate Global/APAC Helpdesks" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=1;strokeColor=#999999;opacity=50;fontColor=#666666;">
+          <mxGeometry x="786" y="260" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-016" value="Multiple Ticket Channels" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="190" width="192" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-017" value="HEAT ITSM (Current)" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="330" width="152" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-018" value="Limited Self-Help" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="120" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-019" value="Business Hours Support" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="400" width="176" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-020" value="Enhanced HEAT ITSM" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="520" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-021" value="Advanced Ticket Monitoring" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="590" width="208" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-022" value="Consolidated Global Helpdesk" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;">
+          <mxGeometry x="786" y="850" width="224" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-023" value="AI Support Chatbot" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="990" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-024" value="Self-Service Portal" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="920" width="152" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-diagram-025" value="24x7 Support Operations" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="786" y="780" width="184" height="60" as="geometry" />
+        </mxCell>
+      <mxCell id="ann-0" value="~60% cost reduction target" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="230" y="635" width="182" height="20" as="geometry" /></mxCell><mxCell id="ann-1" value="DEV/TEST shutdown automation" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="230" y="165" width="196" height="20" as="geometry" /></mxCell><mxCell id="ann-2" value="Regional consolidation savings" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="230" y="755" width="210" height="20" as="geometry" /></mxCell><mxCell id="ann-3" value="Low-latency for Excel editing" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="230" y="825" width="203" height="20" as="geometry" /></mxCell><mxCell id="ann-4" value="Modern auth rollout Q1 2026" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="488" y="495" width="189" height="20" as="geometry" /></mxCell><mxCell id="ann-5" value="Headcount consolidation" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="786" y="825" width="161" height="20" as="geometry" /></mxCell><mxCell id="ann-6" value="Deflect 40% of tickets" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="786" y="965" width="154" height="20" as="geometry" /></mxCell><mxCell id="ann-7" value="Follow-the-sun support model" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="786" y="755" width="196" height="20" as="geometry" /></mxCell><mxCell id="narrative-179769" value="📊 Infrastructure Cost Optimization Roadmap&#10;&#10;💡 Shift from always-on VMs to serverless/containers, consolidate regions and helpdesks to reduce operational costs by ~40%&#10;&#10;Elements: 25 | Relationships: 0&#10;&#10;Lifecycle Status:&#10;  • Maintain: 4 systems&#10;  • Strategic: 14 systems&#10;  • Sunset: 7 systems&#10;&#10;Color coding:&#10;  • Green = Strategic | Orange = Maintain | Red = Sunset | Blue = Standard" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontSize=10;fontFamily=Courier;fillColor=#F5F5F5;strokeColor=#999999;rounded=1;spacing=5;"><mxGeometry x="50" y="1230" width="1350" height="228" as="geometry" /></mxCell></root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

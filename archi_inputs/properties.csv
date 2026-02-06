@@ -1,309 +1,1118 @@
 ID,Key,Value
-id-021726ec4519,Region,ANZ
-id-021726ec4519,Domain,Operations
-id-021726ec4519,Sub-Domain,Operations
-id-021726ec4519,It Owner,WN
-id-021726ec4519,Tech Standard,Legacy
-id-021726ec4519,Application Type,Custom-Built
-id-021726ec4519,Hosting Type,On-Prem
-id-021726ec4519,Primary Language,Visual Basic
-id-021726ec4519,Vendor Support,Internal
-id-e176567a2ef1,Region,AEM
-id-e176567a2ef1,Domain,ERP
-id-e176567a2ef1,Sub-Domain,ERP
-id-e176567a2ef1,It Owner,IT Director
-id-e176567a2ef1,Tech Standard,Approved
-id-e176567a2ef1,Application Type,COTS
-id-e176567a2ef1,Hosting Type,Cloud
-id-e176567a2ef1,Primary Language,Java
-id-e176567a2ef1,Vendor Support,QAD
-id-f91e6b0dc180,Region,AEM
-id-f91e6b0dc180,Domain,Data
-id-f91e6b0dc180,Sub-Domain,ERP
-id-f91e6b0dc180,It Owner,IT Director
-id-f91e6b0dc180,Tech Standard,Approved
-id-f91e6b0dc180,Application Type,COTS
-id-f91e6b0dc180,Hosting Type,Cloud
-id-f91e6b0dc180,Primary Language,Miscellaneous
-id-f91e6b0dc180,Vendor Support,Tableau
-id-328d17d91256,Region,JPN
-id-328d17d91256,Domain,ERP
-id-328d17d91256,Sub-Domain,ERP
-id-328d17d91256,It Owner,IT Director
-id-328d17d91256,Tech Standard,Approved
-id-328d17d91256,Application Type,COTS
-id-328d17d91256,Hosting Type,Cloud
-id-328d17d91256,Primary Language,Java
-id-328d17d91256,Vendor Support,QAD
-id-6385d2992d54,Region,JPN
-id-6385d2992d54,Domain,Operations
-id-6385d2992d54,Sub-Domain,SCM Planning
-id-6385d2992d54,It Owner,IT Director
-id-6385d2992d54,Tech Standard,Approved
-id-6385d2992d54,Application Type,COTS
-id-6385d2992d54,Hosting Type,Cloud
-id-6385d2992d54,Primary Language,Miscellaneous
-id-6385d2992d54,Vendor Support,Blue Yonder
-id-9a5fd32c9b67,Region,JPN
-id-9a5fd32c9b67,Domain,Operations
-id-9a5fd32c9b67,Sub-Domain,SCM Planning
-id-9a5fd32c9b67,It Owner,IT Director
-id-9a5fd32c9b67,Tech Standard,Approved
-id-9a5fd32c9b67,Application Type,COTS
-id-9a5fd32c9b67,Hosting Type,Cloud
-id-9a5fd32c9b67,Primary Language,ABAP
-id-9a5fd32c9b67,Vendor Support,SAP
-id-64bdcb4d3b3a,Region,JPN
-id-64bdcb4d3b3a,Domain,Operations
-id-64bdcb4d3b3a,Sub-Domain,SCM Planning
-id-64bdcb4d3b3a,It Owner,IT Director
-id-64bdcb4d3b3a,Tech Standard,Approved
-id-64bdcb4d3b3a,Application Type,Vendor-Built
-id-64bdcb4d3b3a,Hosting Type,Cloud
-id-64bdcb4d3b3a,Primary Language,Miscellaneous
-id-64bdcb4d3b3a,Vendor Support,Internal
-id-0015d01da270,Region,JPN
-id-0015d01da270,Domain,Operations
-id-0015d01da270,Sub-Domain,Warehouse Management
-id-0015d01da270,It Owner,IT Director
-id-0015d01da270,Tech Standard,Approved
-id-0015d01da270,Application Type,COTS
-id-0015d01da270,Hosting Type,On-Prem
-id-0015d01da270,Primary Language,Miscellaneous
-id-0015d01da270,Vendor Support,3GTMS
-id-6d9eb02243f7,Region,JPN
-id-6d9eb02243f7,Domain,Operations
-id-6d9eb02243f7,Sub-Domain,Warehouse Management
-id-6d9eb02243f7,It Owner,IT Director
-id-6d9eb02243f7,Tech Standard,Approved
-id-6d9eb02243f7,Application Type,COTS
-id-6d9eb02243f7,Hosting Type,On-Prem
-id-6d9eb02243f7,Primary Language,Miscellaneous
-id-6d9eb02243f7,Vendor Support,W3
-id-bb3759f4a808,Region,JPN
-id-bb3759f4a808,Domain,Operations
-id-bb3759f4a808,Sub-Domain,Transport and Logistics
-id-bb3759f4a808,It Owner,IT Director
-id-bb3759f4a808,Tech Standard,Approved
-id-bb3759f4a808,Application Type,Vendor-Built
-id-bb3759f4a808,Hosting Type,On-Prem
-id-bb3759f4a808,Primary Language,Miscellaneous
-id-bb3759f4a808,Vendor Support,Yusen
-id-1d3ac771d8b3,Region,JPN
-id-1d3ac771d8b3,Domain,Operations
-id-1d3ac771d8b3,Sub-Domain,Transport and Logistics
-id-1d3ac771d8b3,It Owner,IT Director
-id-1d3ac771d8b3,Tech Standard,Legacy
-id-1d3ac771d8b3,Application Type,Custom
-id-1d3ac771d8b3,Hosting Type,On-Prem
-id-1d3ac771d8b3,Primary Language,Excel
-id-1d3ac771d8b3,Vendor Support,Internal
-id-d0be297d0966,Region,JPN
-id-d0be297d0966,Domain,Operations
-id-d0be297d0966,Sub-Domain,Manufacturing
-id-d0be297d0966,It Owner,IT Director
-id-d0be297d0966,Tech Standard,Approved
-id-d0be297d0966,Application Type,COTS
-id-d0be297d0966,Hosting Type,On-Prem
-id-d0be297d0966,Primary Language,Miscellaneous
-id-d0be297d0966,Vendor Support,Kenpin
-id-6e68a57a6540,Region,JPN
-id-6e68a57a6540,Domain,Operations
-id-6e68a57a6540,Sub-Domain,Manufacturing
-id-6e68a57a6540,It Owner,IT Director
-id-6e68a57a6540,Tech Standard,Legacy
-id-6e68a57a6540,Application Type,Custom
-id-6e68a57a6540,Hosting Type,On-Prem
-id-6e68a57a6540,Primary Language,Microsoft Access
-id-6e68a57a6540,Vendor Support,Internal
-id-989487361c07,Region,JPN
-id-989487361c07,Domain,Operations
-id-989487361c07,Sub-Domain,RAQA
-id-989487361c07,It Owner,IT Director
-id-989487361c07,Tech Standard,Approved
-id-989487361c07,Application Type,COTS
-id-989487361c07,Hosting Type,Cloud
-id-989487361c07,Primary Language,Miscellaneous
-id-989487361c07,Vendor Support,MasterControl
-id-57662baf44e5,Region,ANZ
-id-57662baf44e5,Domain,Operations
-id-57662baf44e5,Sub-Domain,Transport and Logistics
-id-57662baf44e5,It Owner,IT Director
-id-57662baf44e5,Tech Standard,Approved
-id-57662baf44e5,Application Type,COTS
-id-57662baf44e5,Hosting Type,Cloud
-id-57662baf44e5,Primary Language,Miscellaneous
-id-57662baf44e5,Vendor Support,Descartes
-id-eb8c94bbf229,Region,ANZ
-id-eb8c94bbf229,Domain,Operations
-id-eb8c94bbf229,Sub-Domain,Transport and Logistics
-id-eb8c94bbf229,It Owner,IT Director
-id-eb8c94bbf229,Tech Standard,Approved
-id-eb8c94bbf229,Application Type,COTS
-id-eb8c94bbf229,Hosting Type,Cloud
-id-eb8c94bbf229,Primary Language,Miscellaneous
-id-eb8c94bbf229,Vendor Support,SmartFreight
-id-cb7cb0b84df6,Region,ANZ
-id-cb7cb0b84df6,Domain,Operations
-id-cb7cb0b84df6,Sub-Domain,Manufacturing
-id-cb7cb0b84df6,It Owner,IT Director
-id-cb7cb0b84df6,Tech Standard,Legacy
-id-cb7cb0b84df6,Application Type,Custom
-id-cb7cb0b84df6,Hosting Type,On-Prem
-id-cb7cb0b84df6,Primary Language,Miscellaneous
-id-cb7cb0b84df6,Vendor Support,Internal
-id-40e91ca61f1d,Region,ANZ
-id-40e91ca61f1d,Domain,Operations
-id-40e91ca61f1d,Sub-Domain,Manufacturing
-id-40e91ca61f1d,It Owner,IT Director
-id-40e91ca61f1d,Tech Standard,Legacy
-id-40e91ca61f1d,Application Type,Custom
-id-40e91ca61f1d,Hosting Type,On-Prem
-id-40e91ca61f1d,Primary Language,Miscellaneous
-id-40e91ca61f1d,Vendor Support,Internal
-id-59e3aeffe45f,Region,ANZ
-id-59e3aeffe45f,Domain,Operations
-id-59e3aeffe45f,Sub-Domain,Manufacturing
-id-59e3aeffe45f,It Owner,IT Director
-id-59e3aeffe45f,Tech Standard,Legacy
-id-59e3aeffe45f,Application Type,Custom
-id-59e3aeffe45f,Hosting Type,On-Prem
-id-59e3aeffe45f,Primary Language,Miscellaneous
-id-59e3aeffe45f,Vendor Support,Internal
-id-60b46c5e1d6f,Region,ANZ
-id-60b46c5e1d6f,Domain,Operations
-id-60b46c5e1d6f,Sub-Domain,RAQA
-id-60b46c5e1d6f,It Owner,IT Director
-id-60b46c5e1d6f,Tech Standard,Approved
-id-60b46c5e1d6f,Application Type,COTS
-id-60b46c5e1d6f,Hosting Type,Cloud
-id-60b46c5e1d6f,Primary Language,Miscellaneous
-id-60b46c5e1d6f,Vendor Support,Intellect
-id-849edc6949bf,Region,ANZ
-id-849edc6949bf,Domain,Commercial
-id-849edc6949bf,Sub-Domain,Sales
-id-849edc6949bf,It Owner,IT Director
-id-849edc6949bf,Tech Standard,Legacy
-id-849edc6949bf,Application Type,Unknown
-id-849edc6949bf,Hosting Type,On-Prem
-id-849edc6949bf,Primary Language,Miscellaneous
-id-849edc6949bf,Vendor Support,Internal
-id-463dc8438ddb,Region,ANZ
-id-463dc8438ddb,Domain,Commercial
-id-463dc8438ddb,Sub-Domain,Sales
-id-463dc8438ddb,It Owner,IT Director
-id-463dc8438ddb,Tech Standard,Approved
-id-463dc8438ddb,Application Type,COTS
-id-463dc8438ddb,Hosting Type,Cloud
-id-463dc8438ddb,Primary Language,Miscellaneous
-id-463dc8438ddb,Vendor Support,Salesforce
 id-c508ffe79f87,Region,ANZ
 id-c508ffe79f87,Domain,Commercial
 id-c508ffe79f87,Sub-Domain,Customer Service
-id-c508ffe79f87,It Owner,IT Director
+id-c508ffe79f87,It Owner,jose.harima
 id-c508ffe79f87,Tech Standard,Approved
-id-c508ffe79f87,Application Type,COTS
-id-c508ffe79f87,Hosting Type,Cloud
-id-c508ffe79f87,Primary Language,C#
+id-c508ffe79f87,Hosting Type,SaaS
 id-c508ffe79f87,Vendor Support,Microsoft
+id-c508ffe79f87,Risk Level,Moderate
+id-c508ffe79f87,Business Criticality,Tier 2 - Business Critical
+id-c508ffe79f87,Administrator Team,IT-APAC-Commercial
+id-c508ffe79f87,Horizon,H2
+id-6b4a8e4819a0,Region,ANZ
+id-6b4a8e4819a0,Domain,Commercial
+id-6b4a8e4819a0,Sub-Domain,Purchase Order
+id-6b4a8e4819a0,It Owner,jose.harima
+id-6b4a8e4819a0,Tech Standard,Approved
+id-6b4a8e4819a0,Hosting Type,SaaS
+id-6b4a8e4819a0,Vendor Support,Microsoft
+id-6b4a8e4819a0,Risk Level,Low
+id-6b4a8e4819a0,Business Criticality,Tier 2 - Business Critical
+id-6b4a8e4819a0,Administrator Team,IT-APAC-Commercial
+id-6b4a8e4819a0,Horizon,H2
+id-849edc6949bf,Region,ANZ
+id-849edc6949bf,Domain,Commercial
+id-849edc6949bf,Sub-Domain,Sales
+id-849edc6949bf,It Owner,jose.harima
+id-849edc6949bf,Tech Standard,Legacy
+id-849edc6949bf,Hosting Type,OnPrem
+id-849edc6949bf,Vendor Support,Internal
+id-849edc6949bf,Risk Level,Moderate
+id-849edc6949bf,Business Criticality,Tier 2 - Business Critical
+id-849edc6949bf,Administrator Team,IT-APAC-Commercial
+id-849edc6949bf,Horizon,H1
+id-463dc8438ddb,Region,ANZ
+id-463dc8438ddb,Domain,Commercial
+id-463dc8438ddb,Sub-Domain,Sales
+id-463dc8438ddb,It Owner,jose.harima
+id-463dc8438ddb,Tech Standard,Approved
+id-463dc8438ddb,Hosting Type,SaaS
+id-463dc8438ddb,Vendor Support,Salesforce
+id-463dc8438ddb,Risk Level,Low
+id-463dc8438ddb,Business Criticality,Tier 3 - Business Operational
+id-463dc8438ddb,Administrator Team,IT-APAC-Commercial
+id-463dc8438ddb,Horizon,H1
 id-46735043cd40,Region,ANZ
 id-46735043cd40,Domain,Commercial
 id-46735043cd40,Sub-Domain,SPT
-id-46735043cd40,It Owner,IT Director
+id-46735043cd40,It Owner,jose.harima
 id-46735043cd40,Tech Standard,Legacy
-id-46735043cd40,Application Type,Custom
-id-46735043cd40,Hosting Type,On-Prem
-id-46735043cd40,Primary Language,Miscellaneous
+id-46735043cd40,Hosting Type,OnPrem
 id-46735043cd40,Vendor Support,Internal
+id-46735043cd40,Risk Level,Moderate
+id-46735043cd40,Business Criticality,Tier 3 - Business Operational
+id-46735043cd40,Administrator Team,IT-APAC-Commercial
+id-46735043cd40,Horizon,H1
 id-d11d37e2f121,Region,ANZ
 id-d11d37e2f121,Domain,Commercial
 id-d11d37e2f121,Sub-Domain,SPT
-id-d11d37e2f121,It Owner,IT Director
+id-d11d37e2f121,It Owner,jose.harima
 id-d11d37e2f121,Tech Standard,Legacy
-id-d11d37e2f121,Application Type,Custom
-id-d11d37e2f121,Hosting Type,On-Prem
-id-d11d37e2f121,Primary Language,Miscellaneous
+id-d11d37e2f121,Hosting Type,OnPrem
 id-d11d37e2f121,Vendor Support,Internal
+id-d11d37e2f121,Risk Level,Moderate
+id-d11d37e2f121,Business Criticality,Tier 3 - Business Operational
+id-d11d37e2f121,Administrator Team,IT-APAC-Commercial
+id-d11d37e2f121,Horizon,H1
 id-94c3ea1ca407,Region,ANZ
 id-94c3ea1ca407,Domain,Commercial
 id-94c3ea1ca407,Sub-Domain,SPT
-id-94c3ea1ca407,It Owner,IT Director
+id-94c3ea1ca407,It Owner,jose.harima
 id-94c3ea1ca407,Tech Standard,Legacy
-id-94c3ea1ca407,Application Type,Custom
-id-94c3ea1ca407,Hosting Type,On-Prem
-id-94c3ea1ca407,Primary Language,Miscellaneous
+id-94c3ea1ca407,Hosting Type,OnPrem
 id-94c3ea1ca407,Vendor Support,Internal
+id-94c3ea1ca407,Risk Level,Low
+id-94c3ea1ca407,Business Criticality,Tier 3 - Business Operational
+id-94c3ea1ca407,Administrator Team,IT-APAC-Commercial
+id-94c3ea1ca407,Horizon,H1
 id-72a9b7ecec65,Region,ANZ
 id-72a9b7ecec65,Domain,Commercial
 id-72a9b7ecec65,Sub-Domain,SPT
-id-72a9b7ecec65,It Owner,IT Director
+id-72a9b7ecec65,It Owner,jose.harima
 id-72a9b7ecec65,Tech Standard,Legacy
-id-72a9b7ecec65,Application Type,Custom
-id-72a9b7ecec65,Hosting Type,On-Prem
-id-72a9b7ecec65,Primary Language,Miscellaneous
+id-72a9b7ecec65,Hosting Type,OnPrem
 id-72a9b7ecec65,Vendor Support,Internal
-id-b8d09705688b,Region,ANZ
-id-b8d09705688b,Domain,IT
-id-b8d09705688b,Sub-Domain,Document Automation
-id-b8d09705688b,It Owner,IT Director
-id-b8d09705688b,Tech Standard,Approved
-id-b8d09705688b,Application Type,COTS
-id-b8d09705688b,Hosting Type,Cloud
-id-b8d09705688b,Primary Language,Python
-id-b8d09705688b,Vendor Support,Microsoft
-id-6b4a8e4819a0,Region,ANZ
-id-6b4a8e4819a0,Domain,Commercial
-id-6b4a8e4819a0,Sub-Domain,Purchase Order Automation
-id-6b4a8e4819a0,It Owner,IT Director
-id-6b4a8e4819a0,Tech Standard,Approved
-id-6b4a8e4819a0,Application Type,COTS
-id-6b4a8e4819a0,Hosting Type,Cloud
-id-6b4a8e4819a0,Primary Language,C#
-id-6b4a8e4819a0,Vendor Support,Microsoft
-id-82588a1d9380,Region,ANZ
-id-82588a1d9380,Domain,Commercial
-id-82588a1d9380,Sub-Domain,Purchase Order Automation
-id-82588a1d9380,It Owner,IT Director
-id-82588a1d9380,Tech Standard,Approved
-id-82588a1d9380,Application Type,COTS
-id-82588a1d9380,Hosting Type,Cloud
-id-82588a1d9380,Primary Language,C#
-id-82588a1d9380,Vendor Support,Microsoft
-id-08d83563ddf2,Technology Stack,Microsoft Dynamics
-id-a0db50c31b76,Technology Stack,Salesforce
-id-e682e06ee2b6,Technology Stack,Microsoft Access
-id-86bab17ebe7f,Domain,Sales
-id-86bab17ebe7f,Criticality,Important
-id-133b9258af74,Domain,Sales
-id-133b9258af74,Criticality,Important
-id-7a9c22258891,Domain,Operations
-id-7a9c22258891,Criticality,Critical
-id-d6147d197104,Domain,Operations
-id-d6147d197104,Criticality,Important
-id-325b8609b6e3,Domain,Operations
-id-325b8609b6e3,Criticality,Nice-to-Have
+id-72a9b7ecec65,Risk Level,Low
+id-72a9b7ecec65,Business Criticality,Tier 3 - Business Operational
+id-72a9b7ecec65,Administrator Team,IT-APAC-Commercial
+id-72a9b7ecec65,Horizon,H1
+id-8c49a03343b9,Region,JPN
+id-8c49a03343b9,Domain,Commercial
+id-8c49a03343b9,Sub-Domain,Marketing
+id-8c49a03343b9,It Owner,jose.harima
+id-8c49a03343b9,Tech Standard,Legacy
+id-8c49a03343b9,Hosting Type,SaaS
+id-8c49a03343b9,Vendor Support,Adobe
+id-8c49a03343b9,Risk Level,Low
+id-8c49a03343b9,Business Criticality,Tier 3 - Business Operational
+id-8c49a03343b9,Administrator Team,IT-APAC-Commercial
+id-8c49a03343b9,Horizon,H1
+id-c0f1d1806099,Region,APAC
+id-c0f1d1806099,Domain,Data
+id-c0f1d1806099,Sub-Domain,Data Ingestion
+id-c0f1d1806099,It Owner,arvee.manaog
+id-c0f1d1806099,Tech Standard,Restricted
+id-c0f1d1806099,Hosting Type,SaaS
+id-c0f1d1806099,Vendor Support,Microsoft
+id-c0f1d1806099,Risk Level,Moderate
+id-c0f1d1806099,Business Criticality,Tier 3 - Business Operational
+id-c0f1d1806099,Administrator Team,IT-APAC-Data
+id-c0f1d1806099,Horizon,H1
+id-23a946aeb6ba,Owner,Global Standards
+id-23a946aeb6ba,Application Name,HEAT CMDB CI
+id-23a946aeb6ba,Horizon,H1
+id-104fe49e0f16,Owner,Global Standards
+id-104fe49e0f16,Application Name,LEANIX
+id-104fe49e0f16,Horizon,H1
+id-004063554d97,Owner,Global Standards
+id-004063554d97,Application Name,QARA
+id-004063554d97,Horizon,H1
+id-57662baf44e5,Technology Stack,SaaS
+id-57662baf44e5,Owner,neomi.wang
+id-57662baf44e5,Region,ANZ
+id-57662baf44e5,Domain,Operations
+id-57662baf44e5,Sub-Domain,Transport and Logistics
+id-57662baf44e5,Application Name,Descartes
+id-57662baf44e5,Criticality,Tier 2 - Business Critical
+id-57662baf44e5,Horizon,H1
+id-eb8c94bbf229,Technology Stack,SaaS
+id-eb8c94bbf229,Owner,neomi.wang
+id-eb8c94bbf229,Region,ANZ
+id-eb8c94bbf229,Domain,Operations
+id-eb8c94bbf229,Sub-Domain,Transport and Logistics
+id-eb8c94bbf229,Application Name,SmartFreight
+id-eb8c94bbf229,Criticality,Tier 2 - Business Critical
+id-eb8c94bbf229,Horizon,H1
+id-1665ef05cde9,Technology Stack,OnPrem
+id-1665ef05cde9,Owner,neomi.wang
+id-1665ef05cde9,Region,ANZ
+id-1665ef05cde9,Domain,Operations
+id-1665ef05cde9,Sub-Domain,Warehouse Management
+id-1665ef05cde9,Application Name,QAD EE WMS
+id-1665ef05cde9,Criticality,Tier 1 - Mission Critical
+id-1665ef05cde9,Horizon,H1
+id-6385d2992d54,Technology Stack,SaaS
+id-6385d2992d54,Owner,neomi.wang
+id-6385d2992d54,Region,APAC
+id-6385d2992d54,Domain,Operations
+id-6385d2992d54,Sub-Domain,SCM Planning
+id-6385d2992d54,Application Name,DSX
+id-6385d2992d54,Criticality,Tier 2 - Business Critical
+id-6385d2992d54,Horizon,H1
+id-9a5fd32c9b67,Technology Stack,SaaS
+id-9a5fd32c9b67,Owner,neomi.wang
+id-9a5fd32c9b67,Region,APAC
+id-9a5fd32c9b67,Domain,Operations
+id-9a5fd32c9b67,Sub-Domain,SCM Planning
+id-9a5fd32c9b67,Application Name,SAP APO
+id-9a5fd32c9b67,Criticality,Tier 2 - Business Critical
+id-9a5fd32c9b67,Horizon,H1
+id-64bdcb4d3b3a,Technology Stack,PaaS
+id-64bdcb4d3b3a,Owner,neomi.wang
+id-64bdcb4d3b3a,Region,APAC
+id-64bdcb4d3b3a,Domain,Operations
+id-64bdcb4d3b3a,Sub-Domain,SCM Planning
+id-64bdcb4d3b3a,Application Name,VC Vendor Collaboration
+id-64bdcb4d3b3a,Criticality,Tier 2 - Business Critical
+id-64bdcb4d3b3a,Horizon,H1
+id-d0be297d0966,Technology Stack,OnPrem
+id-d0be297d0966,Owner,neomi.wang
+id-d0be297d0966,Region,JPN
+id-d0be297d0966,Domain,Operations
+id-d0be297d0966,Sub-Domain,Manufacturing
+id-d0be297d0966,Application Name,Kenpin Barcode
+id-d0be297d0966,Criticality,Tier 2 - Business Critical
+id-d0be297d0966,Horizon,H1
+id-6e68a57a6540,Technology Stack,OnPrem
+id-6e68a57a6540,Owner,neomi.wang
+id-6e68a57a6540,Region,JPN
+id-6e68a57a6540,Domain,Operations
+id-6e68a57a6540,Sub-Domain,Manufacturing
+id-6e68a57a6540,Application Name,Iwagaki Access
+id-6e68a57a6540,Criticality,Tier 2 - Business Critical
+id-6e68a57a6540,Horizon,H1
+id-989487361c07,Technology Stack,OnPrem
+id-989487361c07,Owner,neomi.wang
+id-989487361c07,Region,JPN
+id-989487361c07,Domain,Operations
+id-989487361c07,Sub-Domain,RAQA
+id-989487361c07,Application Name,QMS
+id-989487361c07,Criticality,Tier 3 - Business Operational
+id-989487361c07,Horizon,H1
+id-bb3759f4a808,Technology Stack,OnPrem
+id-bb3759f4a808,Owner,neomi.wang
+id-bb3759f4a808,Region,JPN
+id-bb3759f4a808,Domain,Operations
+id-bb3759f4a808,Sub-Domain,Transport and Logistics
+id-bb3759f4a808,Application Name,Yusen
+id-bb3759f4a808,Criticality,Tier 2 - Business Critical
+id-bb3759f4a808,Horizon,H1
+id-1d3ac771d8b3,Technology Stack,OnPrem
+id-1d3ac771d8b3,Owner,neomi.wang
+id-1d3ac771d8b3,Region,JPN
+id-1d3ac771d8b3,Domain,Operations
+id-1d3ac771d8b3,Sub-Domain,Transport and Logistics
+id-1d3ac771d8b3,Application Name,GSCM/OCTS
+id-1d3ac771d8b3,Criticality,Tier 3 - Business Operational
+id-1d3ac771d8b3,Horizon,H1
+id-0015d01da270,Technology Stack,OnPrem
+id-0015d01da270,Owner,neomi.wang
+id-0015d01da270,Region,JPN
+id-0015d01da270,Domain,Operations
+id-0015d01da270,Sub-Domain,Warehouse Management
+id-0015d01da270,Application Name,Cargo Master
+id-0015d01da270,Criticality,Tier 2 - Business Critical
+id-0015d01da270,Horizon,H1
+id-6d9eb02243f7,Technology Stack,OnPrem
+id-6d9eb02243f7,Owner,neomi.wang
+id-6d9eb02243f7,Region,JPN
+id-6d9eb02243f7,Domain,Operations
+id-6d9eb02243f7,Sub-Domain,Warehouse Management
+id-6d9eb02243f7,Application Name,W3 Sirius
+id-6d9eb02243f7,Criticality,Tier 2 - Business Critical
+id-6d9eb02243f7,Horizon,H1
+id-748bf7687aa4,Technology Stack,OnPrem
+id-748bf7687aa4,Owner,neomi.wang
+id-748bf7687aa4,Region,APAC
+id-748bf7687aa4,Domain,Operations
+id-748bf7687aa4,Sub-Domain,Warehouse Management
+id-748bf7687aa4,Application Name,Contractor Labelling System SINO
+id-748bf7687aa4,Criticality,Tier 2 - Business Critical
+id-748bf7687aa4,Horizon,H1
+id-a5b9ae2e6df9,Technology Stack,OnPrem
+id-a5b9ae2e6df9,Owner,joe.ha
+id-a5b9ae2e6df9,Region,APAC
+id-a5b9ae2e6df9,Domain,Integration
+id-a5b9ae2e6df9,Sub-Domain,Integration
+id-a5b9ae2e6df9,Application Name,Boomi
+id-a5b9ae2e6df9,Criticality,Tier 1 - Mission Critical
+id-a5b9ae2e6df9,Horizon,H1
+id-f076a819c6c4,Administratorteam,IT-APAC-Cloud Ops
+id-f076a819c6c4,Administrator,ryan.clarke
+id-f076a819c6c4,Ownerteam,IT-APAC-Cloud Ops
+id-f076a819c6c4,Environment,Production
+id-f076a819c6c4,In Storage,FALSE
+id-f076a819c6c4,Ci Status,Live
+id-f076a819c6c4,Contains Phi,FALSE
+id-f076a819c6c4,Contains Pii,FALSE
+id-f076a819c6c4,Disaster Recovery Tier,Tier 3
+id-f076a819c6c4,Modified By,InternalServices
+id-f076a819c6c4,Modified On,28/06/2025 5:05
+id-f076a819c6c4,Createdby,InternalServices
+id-f076a819c6c4,Createddatetime,26/08/2020 9:25
+id-f076a819c6c4,Recid,0F0D0BFBAD8F4D27867B22BE00AC7940
+id-f076a819c6c4,Patching Exception,FALSE
+id-f076a819c6c4,Hitrust,No
+id-f076a819c6c4,Sox,No
+id-f076a819c6c4,Application Short Code,ANYS
+id-4ee33cee58e4,Administratorteam,IT-APAC-Cloud Ops
+id-4ee33cee58e4,Administrator,ryan.clarke
+id-4ee33cee58e4,Ownerteam,IT-APAC-Cloud Ops
+id-4ee33cee58e4,Environment,Production
+id-4ee33cee58e4,In Storage,FALSE
+id-4ee33cee58e4,Ci Status,Live
+id-4ee33cee58e4,Contains Phi,FALSE
+id-4ee33cee58e4,Contains Pii,FALSE
+id-4ee33cee58e4,Disaster Recovery Tier,Tier 3
+id-4ee33cee58e4,Modified By,InternalServices
+id-4ee33cee58e4,Modified On,28/06/2025 5:04
+id-4ee33cee58e4,Createdby,InternalServices
+id-4ee33cee58e4,Createddatetime,26/08/2020 9:25
+id-4ee33cee58e4,Recid,F70955B8EF454F4FA2DD6A2E40505E16
+id-4ee33cee58e4,Patching Exception,FALSE
+id-4ee33cee58e4,Hitrust,No
+id-4ee33cee58e4,Sox,No
+id-4ee33cee58e4,Application Short Code,BO
+id-a6acffe61478,Administratorteam,IT-APAC-ERP
+id-a6acffe61478,Administrator,sarita.shetty
+id-a6acffe61478,Ownerteam,IT-APAC-ERP
+id-a6acffe61478,Owner,SARITA SHETTY
+id-a6acffe61478,Owner Login Id,sarita.shetty
+id-a6acffe61478,Environment,Test
+id-a6acffe61478,In Storage,FALSE
+id-a6acffe61478,Ci Status,Live
+id-a6acffe61478,Contains Phi,FALSE
+id-a6acffe61478,Contains Pii,FALSE
+id-a6acffe61478,Disaster Recovery Tier,Tier 5
+id-a6acffe61478,Next Audit Date,24/04/2025 0:00
+id-a6acffe61478,Modified By,eheller
+id-a6acffe61478,Modified On,17/07/2025 22:49
+id-a6acffe61478,Createdby,eheller
+id-a6acffe61478,Createddatetime,24/10/2024 23:02
+id-a6acffe61478,Recid,008B797B1AF543208D63EE4EECFF2EF7
+id-a6acffe61478,Patching Exception,FALSE
+id-a6acffe61478,Hitrust,No
+id-a6acffe61478,Sox,No
+id-a6acffe61478,Internet Exposure,Internally Accessible
+id-a6acffe61478,Application Short Code,QAE
+id-a6acffe61478,Horizon,H1
+id-df931125de62,Administratorteam,IT-APAC-ERP
+id-df931125de62,Administrator,sarita.shetty
+id-df931125de62,Ownerteam,IT-APAC-ERP
+id-df931125de62,Owner,SARITA SHETTY
+id-df931125de62,Owner Login Id,sarita.shetty
+id-df931125de62,Environment,Production
+id-df931125de62,In Storage,FALSE
+id-df931125de62,Ci Status,Live
+id-df931125de62,Contains Phi,FALSE
+id-df931125de62,Contains Pii,FALSE
+id-df931125de62,Disaster Recovery Tier,Tier 1
+id-df931125de62,Next Audit Date,24/04/2025 0:00
+id-df931125de62,Modified By,eheller
+id-df931125de62,Modified On,17/07/2025 22:51
+id-df931125de62,Createdby,eheller
+id-df931125de62,Createddatetime,24/10/2024 20:45
+id-df931125de62,Recid,302C8C5965C240359062BEDAD5F7D587
+id-df931125de62,Patching Exception,FALSE
+id-df931125de62,Hitrust,No
+id-df931125de62,Sox,No
+id-df931125de62,Internet Exposure,Internally Accessible
+id-df931125de62,Application Short Code,QAAU
+id-df931125de62,Horizon,H1
+id-3f09331c060c,Administratorteam,IT-APAC-ERP
+id-3f09331c060c,Administrator,sarita.shetty
+id-3f09331c060c,Ownerteam,IT-APAC-ERP
+id-3f09331c060c,Owner,SARITA SHETTY
+id-3f09331c060c,Owner Login Id,sarita.shetty
+id-3f09331c060c,Environment,Development
+id-3f09331c060c,In Storage,FALSE
+id-3f09331c060c,Ci Status,Live
+id-3f09331c060c,Contains Phi,FALSE
+id-3f09331c060c,Contains Pii,FALSE
+id-3f09331c060c,Disaster Recovery Tier,Tier 4
+id-3f09331c060c,Next Audit Date,24/04/2025 0:00
+id-3f09331c060c,Modified By,eheller
+id-3f09331c060c,Modified On,17/07/2025 22:51
+id-3f09331c060c,Createdby,eheller
+id-3f09331c060c,Createddatetime,24/10/2024 22:53
+id-3f09331c060c,Recid,3681777AA0FA414AB02CEF8C7814DFB2
+id-3f09331c060c,Patching Exception,FALSE
+id-3f09331c060c,Hitrust,No
+id-3f09331c060c,Sox,No
+id-3f09331c060c,Application Short Code,QAAU
+id-3f09331c060c,Horizon,H1
+id-873415779368,Administratorteam,IT-APAC-ERP
+id-873415779368,Administrator,sarita.shetty
+id-873415779368,Ownerteam,IT-APAC-ERP
+id-873415779368,Owner,SARITA SHETTY
+id-873415779368,Owner Login Id,sarita.shetty
+id-873415779368,Environment,Test
+id-873415779368,In Storage,FALSE
+id-873415779368,Ci Status,Live
+id-873415779368,Contains Phi,FALSE
+id-873415779368,Contains Pii,FALSE
+id-873415779368,Disaster Recovery Tier,Tier 5
+id-873415779368,Next Audit Date,3/05/2025 0:00
+id-873415779368,Modified By,eheller
+id-873415779368,Modified On,17/07/2025 22:51
+id-873415779368,Createdby,eheller
+id-873415779368,Createddatetime,24/10/2024 22:50
+id-873415779368,Recid,5CF78521CEE24901A1D4D3B91A673004
+id-873415779368,Patching Exception,FALSE
+id-873415779368,Hitrust,No
+id-873415779368,Sox,No
+id-873415779368,Internet Exposure,Internally Accessible
+id-873415779368,Application Short Code,QAAU
+id-873415779368,Horizon,H1
+id-c34cbcd5f18f,Administratorteam,IT-APAC-ERP
+id-c34cbcd5f18f,Administrator,sarita.shetty
+id-c34cbcd5f18f,Ownerteam,IT-APAC-ERP
+id-c34cbcd5f18f,Owner,SARITA SHETTY
+id-c34cbcd5f18f,Owner Login Id,sarita.shetty
+id-c34cbcd5f18f,Environment,Production
+id-c34cbcd5f18f,In Storage,FALSE
+id-c34cbcd5f18f,Ci Status,Live
+id-c34cbcd5f18f,Contains Phi,FALSE
+id-c34cbcd5f18f,Contains Pii,FALSE
+id-c34cbcd5f18f,Disaster Recovery Tier,Tier 3
+id-c34cbcd5f18f,Next Audit Date,24/04/2025 0:00
+id-c34cbcd5f18f,Modified By,eheller
+id-c34cbcd5f18f,Modified On,17/07/2025 22:51
+id-c34cbcd5f18f,Createdby,eheller
+id-c34cbcd5f18f,Createddatetime,25/10/2024 2:09
+id-c34cbcd5f18f,Recid,9607261ABB284AC99690A4444D619DA1
+id-c34cbcd5f18f,Patching Exception,FALSE
+id-c34cbcd5f18f,Hitrust,No
+id-c34cbcd5f18f,Sox,No
+id-c34cbcd5f18f,Internet Exposure,Internally Accessible
+id-c34cbcd5f18f,Application Short Code,QAUL
+id-c34cbcd5f18f,Horizon,H1
+id-f01423d8a34e,Administratorteam,IT-APAC-ERP
+id-f01423d8a34e,Administrator,sarita.shetty
+id-f01423d8a34e,Ownerteam,IT-APAC-ERP
+id-f01423d8a34e,Owner,SARITA SHETTY
+id-f01423d8a34e,Owner Login Id,sarita.shetty
+id-f01423d8a34e,Environment,Production
+id-f01423d8a34e,In Storage,FALSE
+id-f01423d8a34e,Ci Status,Live
+id-f01423d8a34e,Contains Phi,FALSE
+id-f01423d8a34e,Contains Pii,FALSE
+id-f01423d8a34e,Disaster Recovery Tier,Tier 1
+id-f01423d8a34e,Next Audit Date,24/04/2025 0:00
+id-f01423d8a34e,Modified By,eheller
+id-f01423d8a34e,Modified On,17/07/2025 22:52
+id-f01423d8a34e,Createdby,eheller
+id-f01423d8a34e,Createddatetime,24/10/2024 23:51
+id-f01423d8a34e,Recid,7F4A87C7249B4761929B4861AAF0737A
+id-f01423d8a34e,Patching Exception,FALSE
+id-f01423d8a34e,Hitrust,No
+id-f01423d8a34e,Sox,No
+id-f01423d8a34e,Internet Exposure,Internally Accessible
+id-f01423d8a34e,Application Short Code,QAJP
+id-f01423d8a34e,Horizon,H1
+id-fc449ff2b2fa,Administratorteam,IT-APAC-ERP
+id-fc449ff2b2fa,Administrator,sarita.shetty
+id-fc449ff2b2fa,Ownerteam,IT-APAC-ERP
+id-fc449ff2b2fa,Owner,SARITA SHETTY
+id-fc449ff2b2fa,Owner Login Id,sarita.shetty
+id-fc449ff2b2fa,Environment,Development
+id-fc449ff2b2fa,In Storage,FALSE
+id-fc449ff2b2fa,Ci Status,Live
+id-fc449ff2b2fa,Contains Phi,FALSE
+id-fc449ff2b2fa,Contains Pii,FALSE
+id-fc449ff2b2fa,Disaster Recovery Tier,Tier 4
+id-fc449ff2b2fa,Next Audit Date,24/04/2025 0:00
+id-fc449ff2b2fa,Modified By,eheller
+id-fc449ff2b2fa,Modified On,17/07/2025 22:53
+id-fc449ff2b2fa,Createdby,eheller
+id-fc449ff2b2fa,Createddatetime,25/10/2024 0:47
+id-fc449ff2b2fa,Recid,975C24C5C7DD49CAB9B9B3DBF64CC300
+id-fc449ff2b2fa,Patching Exception,FALSE
+id-fc449ff2b2fa,Hitrust,No
+id-fc449ff2b2fa,Sox,No
+id-fc449ff2b2fa,Internet Exposure,Internally Accessible
+id-fc449ff2b2fa,Application Short Code,QAJP
+id-fc449ff2b2fa,Horizon,H1
+id-bb783cd11e56,Administratorteam,IT-APAC-Operations
+id-bb783cd11e56,Administrator,neomi.wang
+id-bb783cd11e56,Ownerteam,IT-APAC-Operations
+id-bb783cd11e56,Owner,NEOMI WANG
+id-bb783cd11e56,Owner Login Id,neomi.wang
+id-bb783cd11e56,Environment,Production
+id-bb783cd11e56,In Storage,FALSE
+id-bb783cd11e56,Ci Status,Live
+id-bb783cd11e56,Contains Phi,FALSE
+id-bb783cd11e56,Contains Pii,FALSE
+id-bb783cd11e56,Disaster Recovery Tier,Tier 1
+id-bb783cd11e56,Next Audit Date,26/05/2025 0:00
+id-bb783cd11e56,Modified By,InternalServices
+id-bb783cd11e56,Modified On,25/09/2025 22:53
+id-bb783cd11e56,Createdby,eheller
+id-bb783cd11e56,Createddatetime,26/11/2024 21:01
+id-bb783cd11e56,Recid,A062B3E8418B440EB016C614A722E424
+id-bb783cd11e56,Patching Exception,FALSE
+id-bb783cd11e56,Hitrust,No
+id-bb783cd11e56,Sox,No
+id-bb783cd11e56,Internet Exposure,Internally Accessible
+id-bb783cd11e56,Application Short Code,BCSA
+id-bb783cd11e56,Horizon,H1
+id-be4c0c8b35a2,Administratorteam,IT-APAC-Operations
+id-be4c0c8b35a2,Administrator,neomi.wang
+id-be4c0c8b35a2,Ownerteam,IT-APAC-Operations
+id-be4c0c8b35a2,Owner,NEOMI WANG
+id-be4c0c8b35a2,Owner Login Id,neomi.wang
+id-be4c0c8b35a2,Environment,Production
+id-be4c0c8b35a2,In Storage,FALSE
+id-be4c0c8b35a2,Ci Status,Live
+id-be4c0c8b35a2,Contains Phi,FALSE
+id-be4c0c8b35a2,Contains Pii,FALSE
+id-be4c0c8b35a2,Disaster Recovery Tier,Tier 2
+id-be4c0c8b35a2,Next Audit Date,26/05/2025 0:00
+id-be4c0c8b35a2,Modified By,InternalServices
+id-be4c0c8b35a2,Modified On,25/09/2025 22:53
+id-be4c0c8b35a2,Createdby,eheller
+id-be4c0c8b35a2,Createddatetime,26/11/2024 23:02
+id-be4c0c8b35a2,Recid,867B916B796244DEA380E080CDB6EC5A
+id-be4c0c8b35a2,Patching Exception,FALSE
+id-be4c0c8b35a2,Hitrust,No
+id-be4c0c8b35a2,Sox,No
+id-be4c0c8b35a2,Internet Exposure,Internally Accessible
+id-be4c0c8b35a2,Application Short Code,DSXJ
+id-7441d80fc52b,Administratorteam,IT-APAC-Operations
+id-7441d80fc52b,Administrator,neomi.wang
+id-7441d80fc52b,Ownerteam,IT-APAC-Operations
+id-7441d80fc52b,Owner,NEOMI WANG
+id-7441d80fc52b,Owner Login Id,neomi.wang
+id-7441d80fc52b,Environment,Production
+id-7441d80fc52b,In Storage,FALSE
+id-7441d80fc52b,Ci Status,Live
+id-7441d80fc52b,Contains Phi,FALSE
+id-7441d80fc52b,Contains Pii,FALSE
+id-7441d80fc52b,Disaster Recovery Tier,Tier 3
+id-7441d80fc52b,Next Audit Date,26/05/2025 0:00
+id-7441d80fc52b,Modified By,InternalServices
+id-7441d80fc52b,Modified On,25/09/2025 22:53
+id-7441d80fc52b,Createdby,eheller
+id-7441d80fc52b,Createddatetime,26/11/2024 23:33
+id-7441d80fc52b,Recid,37376BA465494489A4913A3D46111A17
+id-7441d80fc52b,Patching Exception,FALSE
+id-7441d80fc52b,Hitrust,No
+id-7441d80fc52b,Sox,No
+id-7441d80fc52b,Internet Exposure,Publicly Accessible
+id-7441d80fc52b,Application Short Code,EPCI
+id-3454a9e9a056,Administratorteam,IT-APAC-Operations
+id-3454a9e9a056,Administrator,neomi.wang
+id-3454a9e9a056,Ownerteam,IT-APAC-Operations
+id-3454a9e9a056,Owner,NEOMI WANG
+id-3454a9e9a056,Owner Login Id,neomi.wang
+id-3454a9e9a056,Environment,Production
+id-3454a9e9a056,In Storage,FALSE
+id-3454a9e9a056,Ci Status,Live
+id-3454a9e9a056,Contains Phi,FALSE
+id-3454a9e9a056,Contains Pii,FALSE
+id-3454a9e9a056,Disaster Recovery Tier,Tier 3
+id-3454a9e9a056,Next Audit Date,26/05/2025 0:00
+id-3454a9e9a056,Modified By,InternalServices
+id-3454a9e9a056,Modified On,25/09/2025 22:53
+id-3454a9e9a056,Createdby,eheller
+id-3454a9e9a056,Createddatetime,27/11/2024 0:21
+id-3454a9e9a056,Recid,F668FE75902F486DB04D6ABD942D0C40
+id-3454a9e9a056,Patching Exception,FALSE
+id-3454a9e9a056,Hitrust,No
+id-3454a9e9a056,Sox,No
+id-3454a9e9a056,Application Short Code,GYJ
+id-d1d081f7ea63,Administratorteam,IT-APAC-Operations
+id-d1d081f7ea63,Administrator,neomi.wang
+id-d1d081f7ea63,Ownerteam,IT-APAC-Operations
+id-d1d081f7ea63,Owner,NEOMI WANG
+id-d1d081f7ea63,Owner Login Id,neomi.wang
+id-d1d081f7ea63,Environment,Live
+id-d1d081f7ea63,In Storage,FALSE
+id-d1d081f7ea63,Ci Status,FALSE
+id-d1d081f7ea63,Contains Phi,FALSE
+id-d1d081f7ea63,Contains Pii,FALSE
+id-d1d081f7ea63,Disaster Recovery Tier,Tier 5
+id-d1d081f7ea63,Next Audit Date,1/06/2025 0:00
+id-d1d081f7ea63,Modified By,InternalServices
+id-d1d081f7ea63,Modified On,25/09/2025 22:53
+id-d1d081f7ea63,Createdby,eheller
+id-d1d081f7ea63,Createddatetime,3/12/2024 0:44
+id-d1d081f7ea63,Recid,0368CC58B1534C33BDF5A349843E1C1C
+id-d1d081f7ea63,Patching Exception,FALSE
+id-d1d081f7ea63,Hitrust,No
+id-d1d081f7ea63,Sox,No
+id-d1d081f7ea63,Internet Exposure,Internally Accessible
+id-d1d081f7ea63,Application Short Code,W3JP
+id-d1d081f7ea63,Horizon,H2
+id-d05cb7112389,Administratorteam,IT-APAC-Operations
+id-d05cb7112389,Administrator,neomi.wang
+id-d05cb7112389,Ownerteam,IT-APAC-Operations
+id-d05cb7112389,Owner,NEOMI WANG
+id-d05cb7112389,Owner Login Id,neomi.wang
+id-d05cb7112389,Environment,Production
+id-d05cb7112389,In Storage,FALSE
+id-d05cb7112389,Ci Status,FALSE
+id-d05cb7112389,Contains Phi,FALSE
+id-d05cb7112389,Contains Pii,FALSE
+id-d05cb7112389,Disaster Recovery Tier,Tier 5
+id-d05cb7112389,Next Audit Date,2/06/2025 0:00
+id-d05cb7112389,Modified By,yingkiat.gan
+id-d05cb7112389,Modified On,31/10/2025 12:58
+id-d05cb7112389,Createdby,eheller
+id-d05cb7112389,Createddatetime,3/12/2024 0:46
+id-d05cb7112389,Recid,6FA41562EABB4217A80D98E057961018
+id-d05cb7112389,Patching Exception,FALSE
+id-d05cb7112389,Hitrust,No
+id-d05cb7112389,Sox,No
+id-d05cb7112389,Internet Exposure,Publicly Accessible
+id-d05cb7112389,Application Short Code,YASE
+id-d05cb7112389,Horizon,H1
+id-76cc07a4ffec,Application Name,CRM Customer Service
+id-76cc07a4ffec,Business Unit(S),Commercial Services
+id-76cc07a4ffec,Business Capability Supported,Customer Service
+id-76cc07a4ffec,Application Type,SaaS
+id-76cc07a4ffec,Activity Status,In Progress
+id-76cc07a4ffec,Business Owner,Michelle Parkes
+id-c4dc6344f48f,Application Name,DSx Forecasting
+id-c4dc6344f48f,Business Unit(S),Planning
+id-c4dc6344f48f,Business Capability Supported,Forecasting
+id-c4dc6344f48f,Application Type,COTS
+id-c4dc6344f48f,Activity Status,Active
+id-c4dc6344f48f,Business Owner,Kirstin Egan
+id-c4dc6344f48f,App Server (Preprod),AUS01DSXP1
+id-c4dc6344f48f,App Server (Prod),AUS00DSXP1
+id-a32613ed092e,Application Name,eCatalogue
+id-a32613ed092e,Business Unit(S),Marketing
+id-a32613ed092e,Business Capability Supported,Product Marketing
+id-a32613ed092e,Application Type,SaaS
+id-a32613ed092e,Activity Status,In Progress
+id-a32613ed092e,Business Owner,Jeremy Echegoyen
+id-9d666e815b70,Application Name,Electronic Data Interchange
+id-9d666e815b70,Business Unit(S),IT
+id-9d666e815b70,Business Capability Supported,Integration
+id-9d666e815b70,Application Type,Home-grown
+id-9d666e815b70,Activity Status,Active
+id-9d666e815b70,Business Owner,Deepak Parbhoo
+id-1a8e0609fa82,Application Name,PIM - Magento Interface (Boomi)
+id-1a8e0609fa82,Business Unit(S),IT
+id-1a8e0609fa82,Business Capability Supported,Interface between PIM and Magento for Medline Website
+id-1a8e0609fa82,Application Type,Home-grown
+id-1a8e0609fa82,Activity Status,Active
+id-1a8e0609fa82,Business Owner,Michelle Parkes
+id-1a8e0609fa82,App Server (Dev),AUS01BAS01
+id-1a8e0609fa82,App Server (Prod),AUS00BASP1
+id-5b749dbc85d5,Application Name,PricePoint
+id-5b749dbc85d5,Business Unit(S),Commercial Services
+id-5b749dbc85d5,Business Capability Supported,Price quote
+id-5b749dbc85d5,Application Type,Home-grown
+id-5b749dbc85d5,Activity Status,Active
+id-5b749dbc85d5,Business Owner,Michelle Parkes
+id-5b749dbc85d5,App Server (Dev),AUS01PPTD1
+id-5b749dbc85d5,App Server (Prod),AUS00PPTP1
+id-7aac5a789bf1,Application Name,Sample Continence Aged Care
+id-7aac5a789bf1,Business Unit(S),Marketing
+id-7aac5a789bf1,Business Capability Supported,Samples Ordering
+id-7aac5a789bf1,Application Type,SaaS
+id-7aac5a789bf1,Activity Status,In Progress
+id-7aac5a789bf1,Business Owner,Damien Anderson
+id-f45632ef9adc,Application Name,Smartfrieght
+id-f45632ef9adc,Business Unit(S),Logistics & Warehouse
+id-f45632ef9adc,Business Capability Supported,Logistics
+id-f45632ef9adc,Application Type,COTS
+id-f45632ef9adc,Activity Status,Active
+id-f45632ef9adc,Business Owner,David Lawrence
+id-f45632ef9adc,App Server (Test),AUS01SMFT2
+id-f45632ef9adc,App Server (Prod),AUS00SMFP2
+id-128cb0c4eb3c,Application Name,SPT Shortage Automation
+id-128cb0c4eb3c,Business Unit(S),SPT
+id-128cb0c4eb3c,Business Capability Supported,SPT shortage and substitution management
+id-128cb0c4eb3c,Application Type,SaaS
+id-128cb0c4eb3c,Activity Status,In Progress
+id-128cb0c4eb3c,Business Owner,Beatriz Amorim
+id-51fa1562ef05,Application Name,Product Information Management (PIM)
+id-51fa1562ef05,Business Unit(S),Commercial Services
+id-51fa1562ef05,Business Capability Supported,Product Master Data
+id-51fa1562ef05,Application Type,COTS
+id-51fa1562ef05,Activity Status,Active
+id-51fa1562ef05,Business Owner,Michelle Parkes
+id-51fa1562ef05,App Server (Test),AUS01APP09
+id-51fa1562ef05,App Server (Prod),"AUS00APP06, AUS00MAMP1"
+id-51fa1562ef05,Db Server (Prod),AUS00APP05
+id-135f046c524e,Application Name,Contractor Labelling System (SINO)
+id-135f046c524e,Business Unit(S),QA
+id-135f046c524e,Business Capability Supported,Label System for SINO
+id-135f046c524e,Application Type,Home-grown
+id-135f046c524e,Activity Status,Active
+id-135f046c524e,Business Owner,Elvira Stankovich
+id-135f046c524e,App Server (Dev),AUS01IISD3
+id-135f046c524e,Db Server (Dev),AUS01SQLD3
+id-135f046c524e,App Server (Test),AUS01IIST3
+id-135f046c524e,Db Server (Test),AUS01SQLT3
+id-135f046c524e,App Server (Prod),AUS00IISP3
+id-135f046c524e,Db Server (Prod),AUS00SQLP3
+id-135f046c524e,Horizon,H1
+id-c149eb6f5bf2,Application Name,Customer Management Portal
+id-c149eb6f5bf2,Business Unit(S),Sales
+id-c149eb6f5bf2,Business Capability Supported,"Business Pipeline, Forecast, Customer Profile and contacts"
+id-c149eb6f5bf2,Application Type,Home-grown
+id-c149eb6f5bf2,Activity Status,Active
+id-c149eb6f5bf2,Business Owner,Lisa King
+id-c149eb6f5bf2,App Server (Dev),AUS01IISD3
+id-c149eb6f5bf2,Db Server (Dev),AUS01SQLD3
+id-c149eb6f5bf2,App Server (Test),AUS01IIST3
+id-c149eb6f5bf2,Db Server (Test),AUS01SQLT3
+id-c149eb6f5bf2,App Server (Prod),AUS00IISP3
+id-c149eb6f5bf2,Db Server (Prod),AUS00SQLP3
+id-c149eb6f5bf2,Horizon,H1
+id-0b898c53fea8,Application Name,Electronic Pack and Components Instruction (eiFU)
+id-0b898c53fea8,Business Unit(S),RA
+id-0b898c53fea8,Application Type,Home-grown
+id-0b898c53fea8,Activity Status,Active
+id-0b898c53fea8,Business Owner,Matthew Higham
+id-0b898c53fea8,App Server (Dev),AUS01IISD3
+id-0b898c53fea8,Db Server (Dev),AUS01SQLD3
+id-0b898c53fea8,App Server (Test),AUS01IIST3
+id-0b898c53fea8,Db Server (Test),AUS01SQLT3
+id-0b898c53fea8,App Server (Prod),AUS00IISP3
+id-0b898c53fea8,Db Server (Prod),AUS00SQLP3
+id-0b898c53fea8,Horizon,H1
+id-11e891b15fcb,Application Name,MedPack Aus
+id-11e891b15fcb,Business Unit(S),SOS/AccountManagers
+id-11e891b15fcb,Business Capability Supported,View the Packs and its components and pricing.
+id-11e891b15fcb,Application Type,Home-grown
+id-11e891b15fcb,Activity Status,Active
+id-11e891b15fcb,Business Owner,Ali Ijaz
+id-11e891b15fcb,App Server (Dev),AUS01MPKD1
+id-11e891b15fcb,Db Server (Dev),AUS01SQLD3
+id-11e891b15fcb,Db Server (Test),AUS01SQLT3
+id-11e891b15fcb,App Server (Prod),"AUS00MPKP2
+AUS00RFWP1"
+id-11e891b15fcb,Db Server (Prod),AUS00SQLP3
+id-11e891b15fcb,Horizon,H1
+id-828ab93094dd,Application Name,MedPack NZ
+id-828ab93094dd,Business Unit(S),SOS
+id-828ab93094dd,Business Capability Supported,Pack Details for NZ packs
+id-828ab93094dd,Application Type,Home-grown
+id-828ab93094dd,Activity Status,Active
+id-828ab93094dd,Business Owner,Ali Ijaz
+id-828ab93094dd,App Server (Dev),AUS01IISD3
+id-828ab93094dd,Db Server (Dev),AUS01SQLD3
+id-828ab93094dd,App Server (Test),AUS01IIST3
+id-828ab93094dd,Db Server (Test),AUS01SQLT3
+id-828ab93094dd,App Server (Prod),AUS00IISP3
+id-828ab93094dd,Db Server (Prod),AUS00SQLP3
+id-828ab93094dd,Horizon,H1
+id-ace5b6c7e7f8,Application Name,MedQuote Sales
+id-ace5b6c7e7f8,Business Unit(S),SOS
+id-ace5b6c7e7f8,Business Capability Supported,Sales website for Sales Rep
+id-ace5b6c7e7f8,Application Type,Home-grown
+id-ace5b6c7e7f8,Activity Status,Inactive
+id-ace5b6c7e7f8,Business Owner,Ali Ijaz
+id-ace5b6c7e7f8,App Server (Dev),AUS01IISD3
+id-ace5b6c7e7f8,Db Server (Dev),AUS01SQLD3
+id-ace5b6c7e7f8,App Server (Test),AUS01IIST3
+id-ace5b6c7e7f8,Db Server (Test),AUS01SQLT3
+id-ace5b6c7e7f8,App Server (Prod),AUS00IISP3
+id-ace5b6c7e7f8,Db Server (Prod),AUS00SQLP3
+id-ace5b6c7e7f8,Horizon,H1
+id-50addbca8ad1,Technology Stack,Excel
+id-50addbca8ad1,Business Unit(S),QA
+id-50addbca8ad1,Application Type,Excel
+id-50addbca8ad1,Activity Status,Active
+id-50addbca8ad1,Business Owner,Elvira Stankovich
+id-50addbca8ad1,App Server (Dev),NA
+id-50addbca8ad1,Db Server (Dev),NA
+id-50addbca8ad1,App Server (Test),NA
+id-50addbca8ad1,Db Server (Test),NA
+id-50addbca8ad1,App Server (Preprod),NA
+id-50addbca8ad1,App Server (Prod),NA
+id-50addbca8ad1,Db Server (Prod),NA
+id-50addbca8ad1,Horizon,H1
+id-ee6d992988fa,Technology Stack,Excel
+id-ee6d992988fa,Business Unit(S),QA
+id-ee6d992988fa,Application Type,Excel
+id-ee6d992988fa,Activity Status,Active
+id-ee6d992988fa,Business Owner,Elvira Stankovich
+id-ee6d992988fa,App Server (Dev),NA
+id-ee6d992988fa,Db Server (Dev),NA
+id-ee6d992988fa,App Server (Test),NA
+id-ee6d992988fa,Db Server (Test),NA
+id-ee6d992988fa,App Server (Preprod),NA
+id-ee6d992988fa,App Server (Prod),NA
+id-ee6d992988fa,Db Server (Prod),NA
+id-ee6d992988fa,Horizon,H1
+id-60b46c5e1d6f,Technology Stack,SaaS
+id-60b46c5e1d6f,Business Unit(S),QA
+id-60b46c5e1d6f,Application Type,SaaS
+id-60b46c5e1d6f,Activity Status,Active
+id-60b46c5e1d6f,Business Owner,Elvira Stankovich
+id-60b46c5e1d6f,App Server (Dev),NA
+id-60b46c5e1d6f,Db Server (Dev),NA
+id-60b46c5e1d6f,App Server (Test),NA
+id-60b46c5e1d6f,Db Server (Test),NA
+id-60b46c5e1d6f,App Server (Preprod),NA
+id-60b46c5e1d6f,App Server (Prod),NA
+id-60b46c5e1d6f,Db Server (Prod),NA
+id-60b46c5e1d6f,Horizon,H1
+id-a0d79cb1f7e2,Application Name,ADP Payforce
+id-a0d79cb1f7e2,Business Unit(S),Payroll
+id-a0d79cb1f7e2,Business Capability Supported,Payroll
+id-a0d79cb1f7e2,Application Type,SaaS
+id-a0d79cb1f7e2,Activity Status,Active
+id-a0d79cb1f7e2,Business Owner,Navdeep Kaur
+id-a0d79cb1f7e2,1St Level Support,Navdeep Kaur
+id-a0d79cb1f7e2,2Nd Level Support,Vendor
+id-a0d79cb1f7e2,3Rd Level Support,Vendor
+id-a0d79cb1f7e2,Horizon,H1
+id-81c71f217460,Application Name,Axway
+id-81c71f217460,Business Unit(S),IT
+id-81c71f217460,Business Capability Supported,Integration
+id-81c71f217460,Application Type,SaaS
+id-81c71f217460,Activity Status,Active
+id-81c71f217460,Business Owner,Deepak Parbhoo
+id-81c71f217460,1St Level Support,IT Service Desk
+id-81c71f217460,2Nd Level Support,IT Service Desk
+id-81c71f217460,3Rd Level Support,Vendor
+id-81c71f217460,Horizon,H1
+id-2757f9b2452f,Application Name,Batch Control System
+id-2757f9b2452f,Business Unit(S),Manufacturing/QA
+id-2757f9b2452f,Business Capability Supported,Audit for Manufacturing
+id-2757f9b2452f,Application Type,Home-grown
+id-2757f9b2452f,Activity Status,Active
+id-2757f9b2452f,Business Owner,Lesley Turner
+id-2757f9b2452f,1St Level Support,IT Service Desk
+id-2757f9b2452f,2Nd Level Support,Karthi Natarajan
+id-2757f9b2452f,3Rd Level Support,Karthi Natarajan
+id-2757f9b2452f,Horizon,H1
+id-c5c3d441a621,Application Name,BCCR Review - Powerautomate
+id-c5c3d441a621,Business Unit(S),QA
+id-c5c3d441a621,Business Capability Supported,Compliance tracking/audit
+id-c5c3d441a621,Application Type,Home-grown
+id-c5c3d441a621,Activity Status,Active
+id-c5c3d441a621,Business Owner,Elvira Stankovich
+id-c5c3d441a621,1St Level Support,IT Service Desk
+id-c5c3d441a621,2Nd Level Support,Karthi Natarajan
+id-c5c3d441a621,3Rd Level Support,Microsoft
+id-c5c3d441a621,Horizon,H1
+id-12a85d541a4e,Application Name,Compliance DB
+id-12a85d541a4e,Business Unit(S),QA
+id-12a85d541a4e,Business Capability Supported,Compliance DB
+id-12a85d541a4e,Application Type,Excel
+id-12a85d541a4e,Activity Status,Active
+id-12a85d541a4e,Business Owner,Elvira Stankovich
+id-12a85d541a4e,1St Level Support,Maricris Borg
+id-12a85d541a4e,2Nd Level Support,Maricris Borg
+id-12a85d541a4e,3Rd Level Support,IT Service Desk
+id-12a85d541a4e,Horizon,H1
+id-b971e0544d19,Application Name,Concur
+id-b971e0544d19,Business Unit(S),Finance
+id-b971e0544d19,Business Capability Supported,Expense management system
+id-b971e0544d19,Application Type,SaaS
+id-b971e0544d19,Activity Status,Active
+id-b971e0544d19,Business Owner,Phoebe Chen
+id-b971e0544d19,1St Level Support,Perlita Kingsford
+id-b971e0544d19,2Nd Level Support,Steven Shen
+id-b971e0544d19,3Rd Level Support,Pranita Sangle
+id-b971e0544d19,Horizon,H1
+id-ced261bbb6b2,Application Name,Consumer Management (CNS)
+id-ced261bbb6b2,Business Unit(S),Distribution & Community Care
+id-ced261bbb6b2,Business Capability Supported,part of Aged Care website
+id-ced261bbb6b2,Application Type,Home-grown
+id-ced261bbb6b2,Activity Status,Active
+id-ced261bbb6b2,Business Owner,Cath Fry
+id-ced261bbb6b2,1St Level Support,IT Service Desk
+id-ced261bbb6b2,2Nd Level Support,Sujin Balajee
+id-ced261bbb6b2,3Rd Level Support,Sujin Balajee
+id-ced261bbb6b2,Horizon,H1
+id-9b54b92dbc43,Application Name,OnDemand
+id-9b54b92dbc43,Business Unit(S),Logistics & Warehouse
+id-9b54b92dbc43,Business Capability Supported,Logistics
+id-9b54b92dbc43,Application Type,SaaS
+id-9b54b92dbc43,Activity Status,Active
+id-9b54b92dbc43,Business Owner,David Lawrence
+id-9b54b92dbc43,1St Level Support,IT Service Desk
+id-9b54b92dbc43,2Nd Level Support,Neomi Wang/Gordon Foo
+id-9b54b92dbc43,3Rd Level Support,Joe Ha
+id-9b54b92dbc43,Horizon,H1
+id-047f7674ed06,Application Name,Pack Labeling System
+id-047f7674ed06,Business Unit(S),Manufacturing
+id-047f7674ed06,Business Capability Supported,"Leaflets, Picklist printing"
+id-047f7674ed06,Application Type,Home-grown
+id-047f7674ed06,Activity Status,Active
+id-047f7674ed06,Business Owner,Lesley Turner
+id-047f7674ed06,1St Level Support,IT Service Desk
+id-047f7674ed06,2Nd Level Support,Karthi Natarajan
+id-047f7674ed06,3Rd Level Support,Karthi Natarajan
+id-047f7674ed06,Horizon,H1
+id-f5c9616a90ed,Application Name,Pack Specification System (PSS)
+id-f5c9616a90ed,Business Unit(S),Pack Design
+id-f5c9616a90ed,Business Capability Supported,Pack Design and instruction to build the pack
+id-f5c9616a90ed,Application Type,Home-grown
+id-f5c9616a90ed,Activity Status,Active
+id-f5c9616a90ed,Business Owner,Lesley Turner
+id-f5c9616a90ed,1St Level Support,IT Service Desk
+id-f5c9616a90ed,2Nd Level Support,Karthi Natarajan
+id-f5c9616a90ed,3Rd Level Support,Karthi Natarajan
+id-f5c9616a90ed,Horizon,H1
+id-8ed3ac384372,Application Name,PIM - Magento Interface (TSS)
+id-8ed3ac384372,Business Unit(S),IT
+id-8ed3ac384372,Business Capability Supported,Interface between PIM and Magento for TSS
+id-8ed3ac384372,Application Type,Home-grown
+id-8ed3ac384372,Activity Status,Active
+id-8ed3ac384372,Business Owner,Greg Eastwood
+id-8ed3ac384372,1St Level Support,IT Service Desk
+id-8ed3ac384372,2Nd Level Support,Karthi Natarajan
+id-8ed3ac384372,3Rd Level Support,Karthi Natarajan
+id-8ed3ac384372,Horizon,H1
+id-72ce9b846fa4,Application Name,Product Complaints
+id-72ce9b846fa4,Business Unit(S),QA
+id-72ce9b846fa4,Business Capability Supported,Product Complaints DB
+id-72ce9b846fa4,Application Type,Excel
+id-72ce9b846fa4,Activity Status,Active
+id-72ce9b846fa4,Business Owner,Elvira Stankovich
+id-72ce9b846fa4,1St Level Support,Sandra Emett
+id-72ce9b846fa4,2Nd Level Support,Sandra Emett
+id-72ce9b846fa4,3Rd Level Support,IT Service Desk
+id-72ce9b846fa4,Horizon,H1
+id-5aefb9227717,Application Name,QAD - EE
+id-5aefb9227717,Business Unit(S),Various
+id-5aefb9227717,Business Capability Supported,ERP
+id-5aefb9227717,Application Type,COTS
+id-5aefb9227717,Activity Status,Active
+id-5aefb9227717,Business Owner,Various
+id-5aefb9227717,1St Level Support,IT Service Desk
+id-5aefb9227717,2Nd Level Support,Neomi Wang/Gordon Foo
+id-5aefb9227717,3Rd Level Support,Joe Ha
+id-5aefb9227717,Horizon,H1
+id-1b4fa1ed4a1d,Application Name,QAD - SE (Legacy)
+id-1b4fa1ed4a1d,Business Unit(S),Various
+id-1b4fa1ed4a1d,Business Capability Supported,ERP Legacy
+id-1b4fa1ed4a1d,Application Type,COTS
+id-1b4fa1ed4a1d,Activity Status,Active
+id-1b4fa1ed4a1d,Business Owner,Various
+id-1b4fa1ed4a1d,1St Level Support,IT Service Desk
+id-1b4fa1ed4a1d,2Nd Level Support,Neomi Wang/Gordon Foo
+id-1b4fa1ed4a1d,3Rd Level Support,Joe Ha
+id-1b4fa1ed4a1d,Horizon,H1
+id-0f7ee6b78b9f,Application Name,Tableau Server & Reporting
+id-0f7ee6b78b9f,Business Unit(S),IT
+id-0f7ee6b78b9f,Business Capability Supported,Reporting & Visualisation
+id-0f7ee6b78b9f,Application Type,COTS
+id-0f7ee6b78b9f,Activity Status,Active
+id-0f7ee6b78b9f,Business Owner,Deepak Parbhoo
+id-0f7ee6b78b9f,1St Level Support,IT Service Desk
+id-0f7ee6b78b9f,2Nd Level Support,Neomi Wang/Gordon Foo
+id-0f7ee6b78b9f,3Rd Level Support,Sushant Kumkar
+id-0f7ee6b78b9f,Horizon,H1
+id-a953fb74e3ca,Technology Stack,AI
+id-a953fb74e3ca,Horizon,H1
+id-c623bc8d5efd,Technology Stack,AI
+id-c623bc8d5efd,Horizon,H2
+id-048b03adc5b4,Technology Stack,PowerApps
+id-048b03adc5b4,Horizon,H1
+id-352687944df8,Technology Stack,Cloud Services
+id-352687944df8,Horizon,H2
+id-83902728e105,Technology Stack,Azure Service Bus
+id-83902728e105,Horizon,H2
+id-9aa09d95655d,Technology Stack,ERP
+id-9aa09d95655d,Horizon,H1
+id-aea3fe18dd4a,Technology Stack,"PowerApps, Azure Container, Azure Function, Fabric Data Warehouse"
+id-aea3fe18dd4a,Horizon,H1
+id-c895bed04fc0,Technology Stack,"PowerApps, Power FX"
+id-c895bed04fc0,Horizon,H1
+id-1aa2bb0e9f2c,Technology Stack,"Azure Container, Azure OpenAI"
+id-1aa2bb0e9f2c,Horizon,H1
+id-af6770090ad9,Technology Stack,Fabric DW MCP Server
+id-af6770090ad9,Horizon,H1
+id-d06fcf53a742,Technology Stack,Azure Function
+id-d06fcf53a742,Horizon,H1
+id-7552db249856,Technology Stack,Power Automate
+id-7552db249856,Horizon,H1
+id-239a85f0c8e3,Technology Stack,Power Automate
+id-239a85f0c8e3,Horizon,H1
+id-fffcfb9f4f02,Horizon,H1
+id-a40f6332543f,Horizon,H3
+id-0b87b0eb6e93,Horizon,H3
+id-98f9272950bb,Horizon,H3
+id-d2841a3eb2be,Horizon,H1
+id-c0ba9091e0d3,Horizon,H1
+id-46a73e8b181c,Horizon,H1
+id-d4efef1ce86a,Horizon,H1
+id-c209692d6d44,Horizon,H1
+id-f5619ffd7b65,Technology Stack,"Microsoft Dynamics, Microsoft Document Intelligence, QAD ERP"
+id-f5619ffd7b65,Horizon,H1
+id-d4bae9a2200c,Technology Stack,QAD
+id-d4bae9a2200c,Horizon,H1
+id-59051872c987,Technology Stack,Web-based
+id-59051872c987,Horizon,H1
+id-0ebacb70a06c,Technology Stack,AI
+id-0ebacb70a06c,Horizon,H2
+id-074df4ada8b3,Technology Stack,Real-Time Data Processing
+id-074df4ada8b3,Horizon,H1
+id-03c546eca9af,Technology Stack,"Custom, Clean Room Assembly"
+id-03c546eca9af,Horizon,H1
+id-c4b4280f12bb,Technology Stack,Barcode
+id-c4b4280f12bb,Horizon,H1
+id-7579b234fcf2,Domain,Operations
+id-7579b234fcf2,Criticality,Critical
+id-ac2c3f829d9e,Domain,Logistics
+id-ac2c3f829d9e,Criticality,Important
+id-583ac905d753,Domain,Quality Assurance
+id-583ac905d753,Criticality,Important
+id-62b98f65c489,Domain,Quality Assurance
+id-62b98f65c489,Criticality,Important
+id-d03dae6db689,Domain,Quality Assurance
+id-d03dae6db689,Criticality,Critical
+id-795aefdd307f,Domain,Logistics
+id-795aefdd307f,Criticality,Critical
+id-655eab643706,Domain,Logistics
+id-655eab643706,Criticality,Important
+id-68c77ead8205,Domain,Operations
+id-68c77ead8205,Criticality,Critical
+id-2a913e9c1616,Domain,Operations
+id-2a913e9c1616,Criticality,Critical
+id-c7192907e77e,Domain,Operations
+id-c7192907e77e,Criticality,Important
+id-14da17022bdc,Domain,Finance
+id-14da17022bdc,Criticality,Critical
+id-c4025e3144b6,Domain,IT
+id-c4025e3144b6,Criticality,Critical
+id-abe4088a2118,Domain,IT
+id-abe4088a2118,Criticality,Important
+id-2fcb675abe76,Domain,Business Intelligence & Analytics
+id-2fcb675abe76,Criticality,Critical
+id-ebe49d96ba2f,Domain,Business Intelligence & Analytics
+id-ebe49d96ba2f,Criticality,Critical
+id-40ed5ef75eeb,Domain,Business Intelligence & Analytics
+id-40ed5ef75eeb,Criticality,Important
+id-37681a33f27b,Domain,IT Operations
+id-37681a33f27b,Criticality,Important
+id-f36e91659a70,Domain,User Experience
+id-f36e91659a70,Criticality,Critical
+id-77f8f635b6c4,Domain,Business Intelligence & Analytics
+id-77f8f635b6c4,Criticality,Important
+id-c1e4a0c85627,Domain,AI Operations
+id-c1e4a0c85627,Criticality,Critical
+id-b474df81d84f,Domain,Data Management
+id-b474df81d84f,Criticality,Critical
+id-a989f7992dad,Domain,Data Management
+id-a989f7992dad,Criticality,Critical
+id-ee147117a43a,Domain,IT Operations
+id-ee147117a43a,Criticality,Important
+id-f03b2ff95acf,Domain,Compliance
+id-f03b2ff95acf,Criticality,Critical
+id-ac6bcf59a57a,Domain,IT Operations
+id-ac6bcf59a57a,Criticality,Important
+id-10547ee87864,Domain,Support Services
+id-10547ee87864,Criticality,Critical
+id-64f56b7fedd1,Domain,Support Services
+id-64f56b7fedd1,Criticality,Important
+id-1102967cb030,Domain,Support Services
+id-1102967cb030,Criticality,Important
+id-d735d2ea14be,Domain,Support Services
+id-d735d2ea14be,Criticality,Important
+id-addb0744b4dd,Domain,IT
+id-addb0744b4dd,Criticality,Critical
+id-e6c82757f899,Domain,Legal
+id-e6c82757f899,Criticality,Critical
+id-780637973f84,Domain,IT
+id-780637973f84,Criticality,Critical
+id-3a90d544f50a,Domain,IT
+id-3a90d544f50a,Criticality,Critical
+id-d1cbea532b8e,Domain,IT
+id-d1cbea532b8e,Criticality,Critical
+id-27524675ae56,Domain,Operations
+id-27524675ae56,Criticality,Important
+id-8e2f95e2f55e,Domain,Healthcare
+id-8e2f95e2f55e,Criticality,Critical
+id-71b0a5052f6a,Domain,Finance
+id-71b0a5052f6a,Criticality,Critical
 id-75a9eaf4fe89,Domain,Sales
 id-75a9eaf4fe89,Criticality,Critical
-id-3f60170812f9,Domain,Sales
-id-3f60170812f9,Criticality,Critical
-id-832924dde3c6,Domain,Operations
-id-832924dde3c6,Criticality,Important
-id-faad9192a0d7,Domain,Operations
-id-faad9192a0d7,Criticality,Important
-id-14da17022bdc,Domain,Operations
-id-14da17022bdc,Criticality,Critical
-id-454a993499ff,Domain,Operations
-id-454a993499ff,Criticality,Critical
-id-eb79786b3c6c,Domain,Operations
-id-eb79786b3c6c,Criticality,Critical
-id-747df468b064,Domain,Operations
-id-747df468b064,Criticality,Critical
-id-093d71d12f31,Domain,Operations
-id-093d71d12f31,Criticality,Critical
-id-58aacf2e58f9,Domain,Operations
-id-58aacf2e58f9,Criticality,Critical
-id-b5560691d686,Domain,Operations
-id-b5560691d686,Criticality,Important
-id-08d83563ddf2,Domain,Sales
-id-08d83563ddf2,Lifecycle Status,Strategic
-id-46735043cd40,Lifecycle Status,Sunset
+id-ef8339ce9f2e,Domain,Sales
+id-ef8339ce9f2e,Criticality,Critical
+id-6760c2e3042f,Domain,Customer Service
+id-6760c2e3042f,Criticality,Important
+id-6bc03bbdd357,Domain,Operations
+id-6bc03bbdd357,Criticality,Critical
+id-54545fb2d9d5,Domain,Marketing
+id-54545fb2d9d5,Criticality,Important
+id-df8a2ce54ed5,Domain,Logistics
+id-df8a2ce54ed5,Criticality,Important
+id-efe05f9cd8b7,Domain,Healthcare
+id-efe05f9cd8b7,Criticality,Critical
+id-7a9c22258891,Domain,Operations
+id-7a9c22258891,Criticality,Critical
+id-e6329f354112,Domain,Manufacturing
+id-e6329f354112,Criticality,Important
+id-08ea78ef5f0e,Horizon,H1
+id-b40f9f9da66e,Technology Stack,"AI Builder, Docupipe"
+id-cd76245536ab,Technology Stack,Cloud Services
+id-063ebc33aa6a,Technology Stack,Boomi
+id-36f2b18e06cb,Technology Stack,Azure OpenAI
+id-3af70eff77c5,Technology Stack,PowerApps
+id-7fb4c40b6b8a,Technology Stack,Power Automate
+id-2e07d3fd1017,Technology Stack,Azure
+id-2e07d3fd1017,Horizon,H1
+id-a13ced76fc15,Technology Stack,Azure
+id-a13ced76fc15,Horizon,H1
+id-5dc64d476bac,Technology Stack,Azure
+id-5dc64d476bac,Horizon,H1
+id-d418bd3e7f43,Technology Stack,Azure
+id-d418bd3e7f43,Horizon,H3
+id-e1f2c021c9e1,Technology Stack,Azure
+id-e1f2c021c9e1,Horizon,H3
+id-e8e08f6d295a,Technology Stack,Azure
+id-e8e08f6d295a,Horizon,H3
+id-f20af2181f88,Technology Stack,Azure
+id-f20af2181f88,Horizon,H3
+id-1c9f3d0f93e9,Technology Stack,Azure
+id-1c9f3d0f93e9,Horizon,H3
+id-d1c7ae5a85d5,Horizon,H3
+id-2e50916cb555,Technology Stack,"AI, Microsoft"
+id-33cc9e95ad54,Technology Stack,"AWS, QR Code"
+id-c508ffe79f87,Lifecycle Status,Strategic
+id-f01423d8a34e,Domain,Operations
+id-f01423d8a34e,Lifecycle Status,Strategic
+id-be4c0c8b35a2,Domain,Operations
+id-be4c0c8b35a2,Lifecycle Status,Strategic
+id-7441d80fc52b,Domain,Customer Service
+id-7441d80fc52b,Lifecycle Status,Maintain
+id-3454a9e9a056,Domain,Logistics
+id-3454a9e9a056,Lifecycle Status,Maintain
+id-d1d081f7ea63,Domain,Operations
+id-d1d081f7ea63,Lifecycle Status,Strategic
+id-583ac905d753,Lifecycle Status,Maintain
+id-583ac905d753,Rationale,Active application supporting QA processes
+id-ee6d992988fa,Domain,Quality Assurance
+id-ee6d992988fa,Lifecycle Status,Maintain
+id-60b46c5e1d6f,Domain,Quality Assurance
+id-60b46c5e1d6f,Lifecycle Status,Strategic
+id-bb3759f4a808,Lifecycle Status,Strategic
+id-c623bc8d5efd,Domain,Operations
+id-c623bc8d5efd,Lifecycle Status,Strategic
+id-352687944df8,Domain,Operations
+id-352687944df8,Lifecycle Status,Strategic
+id-83902728e105,Domain,IT
+id-83902728e105,Lifecycle Status,Strategic
+id-aea3fe18dd4a,Domain,Business Intelligence & Analytics
+id-aea3fe18dd4a,Lifecycle Status,Strategic
+id-d418bd3e7f43,Domain,Azure Cloud
+id-d418bd3e7f43,Maturity,5
+id-d418bd3e7f43,Lifecycle Status,Strategic
+id-d418bd3e7f43,Remaining Years,10
+id-d418bd3e7f43,Strategic Importance,Critical
+id-d418bd3e7f43,Confidence,0.9
+id-d418bd3e7f43,Rationale,Serverless compute is a strategic target for cost reduction and scalability
+id-0b87b0eb6e93,Domain,Support Services
+id-0b87b0eb6e93,Lifecycle Status,Strategic
+id-d2841a3eb2be,Domain,IT
+id-d2841a3eb2be,Lifecycle Status,Maintain
+id-c0ba9091e0d3,Domain,IT
+id-c0ba9091e0d3,Lifecycle Status,Strategic
+id-d05cb7112389,Lifecycle Status,Maintain
+id-048b03adc5b4,Lifecycle Status,Maintain
+id-9aa09d95655d,Lifecycle Status,Maintain
+id-fffcfb9f4f02,Lifecycle Status,Sunset
+id-c4b4280f12bb,Lifecycle Status,Sunset

@@ -1,0 +1,143 @@
+ID,Key,Value
+diagram-413724910823,Process,Sales
+diagram-413724910823,Horizon,H1
+diagram-c99678c9d181,Process,Operations
+diagram-c99678c9d181,Horizon,H1
+diagram-b01fbfdfed35,Process,Sales
+diagram-b01fbfdfed35,Horizon,H1
+diagram-10eee951ce72,Process,Operations
+diagram-10eee951ce72,Horizon,H2
+diagram-008d131ba0a9,Process,Marketing
+diagram-008d131ba0a9,Horizon,H3
+diagram-61ac39c790a9,Process,Marketing
+diagram-61ac39c790a9,Horizon,H3
+diagram-621058b334f0,Process,Product Support
+diagram-8f44a344c67c,Process,Product Support
+diagram-41c48c702138,Process,Manufacturing
+diagram-f6965f02ee09,Process,Manufacturing
+diagram-0f6c2f3996f9,Process,Distribution
+diagram-91618e9e5571,Domain,IT Security
+diagram-41c48c702138,Horizon,H3
+diagram-8f44a344c67c,Horizon,H2
+diagram-621058b334f0,Horizon,H1
+diagram-f6965f02ee09,Horizon,H2
+diagram-0f6c2f3996f9,Horizon,H2
+diagram-dc55323bc40c,layer,External Users
+diagram-1594ca313796,layer,External Users
+diagram-698af682e520,layer,Data Integration
+diagram-698af682e520,status,EXISTING
+diagram-50b925e5cc77,layer,Data Sources
+diagram-50b925e5cc77,status,EXISTING
+diagram-backend-api,layer,Application
+diagram-backend-api,status,NEW
+diagram-customer-portal,layer,Presentation
+diagram-customer-portal,status,NEW
+diagram-entra-extid,layer,Authentication
+diagram-entra-extid,status,NEW
+id-11e891b15fcb,Application Name,MedPack Aus
+id-11e891b15fcb,Business Unit(S),SOS/AccountManagers
+id-11e891b15fcb,Business Capability Supported,View the Packs and its components and pricing.
+id-11e891b15fcb,Application Type,Home-grown
+id-11e891b15fcb,Activity Status,Active
+id-11e891b15fcb,Business Owner,Ali Ijaz
+id-11e891b15fcb,App Server (Dev),AUS01MPKD1
+id-11e891b15fcb,Db Server (Dev),AUS01SQLD3
+id-11e891b15fcb,Db Server (Test),AUS01SQLT3
+id-11e891b15fcb,App Server (Prod),"AUS00MPKP2
+AUS00RFWP1"
+id-11e891b15fcb,Db Server (Prod),AUS00SQLP3
+id-11e891b15fcb,Horizon,H1
+id-11e891b15fcb,layer,Internal Systems
+id-11e891b15fcb,status,EXISTING
+id-828ab93094dd,Application Name,MedPack NZ
+id-828ab93094dd,Business Unit(S),SOS
+id-828ab93094dd,Business Capability Supported,Pack Details for NZ packs
+id-828ab93094dd,Application Type,Home-grown
+id-828ab93094dd,Activity Status,Active
+id-828ab93094dd,Business Owner,Ali Ijaz
+id-828ab93094dd,App Server (Dev),AUS01IISD3
+id-828ab93094dd,Db Server (Dev),AUS01SQLD3
+id-828ab93094dd,App Server (Test),AUS01IIST3
+id-828ab93094dd,Db Server (Test),AUS01SQLT3
+id-828ab93094dd,App Server (Prod),AUS00IISP3
+id-828ab93094dd,Db Server (Prod),AUS00SQLP3
+id-828ab93094dd,Horizon,H1
+id-828ab93094dd,layer,Internal Systems
+id-828ab93094dd,status,EXISTING
+id-5aefb9227717,Application Name,QAD - EE
+id-5aefb9227717,Business Unit(S),Various
+id-5aefb9227717,Business Capability Supported,ERP
+id-5aefb9227717,Application Type,COTS
+id-5aefb9227717,Activity Status,Active
+id-5aefb9227717,Business Owner,Various
+id-5aefb9227717,1St Level Support,IT Service Desk
+id-5aefb9227717,2Nd Level Support,Neomi Wang/Gordon Foo
+id-5aefb9227717,3Rd Level Support,Joe Ha
+id-5aefb9227717,Horizon,H1
+id-5aefb9227717,layer,Internal Systems
+id-5aefb9227717,status,EXISTING
+id-2e07d3fd1017,Technology Stack,Azure
+id-2e07d3fd1017,Horizon,H1
+id-a13ced76fc15,Technology Stack,Azure
+id-a13ced76fc15,Horizon,H1
+id-08ea78ef5f0e,Horizon,H1
+id-5dc64d476bac,Technology Stack,Azure
+id-5dc64d476bac,Horizon,H1
+id-d418bd3e7f43,Technology Stack,Azure
+id-d418bd3e7f43,Horizon,H2
+id-d418bd3e7f43,Domain,Azure Cloud
+id-d418bd3e7f43,Maturity,5
+id-d418bd3e7f43,Lifecycle Status,Strategic
+id-d418bd3e7f43,Remaining Years,10
+id-d418bd3e7f43,Strategic Importance,Critical
+id-d418bd3e7f43,Confidence,0.9
+id-d418bd3e7f43,Rationale,Serverless compute is a strategic target for cost reduction and scalability
+id-e1f2c021c9e1,Technology Stack,Azure
+id-e1f2c021c9e1,Horizon,H2
+id-1c9f3d0f93e9,Technology Stack,Azure
+id-1c9f3d0f93e9,Horizon,H2
+id-e8e08f6d295a,Technology Stack,Azure
+id-e8e08f6d295a,Horizon,H3
+id-f20af2181f88,Technology Stack,Azure
+id-f20af2181f88,Horizon,H3
+diagram-4165d342a00e,Horizon,H2
+id-0b87b0eb6e93,Horizon,H2
+id-0b87b0eb6e93,Domain,Support Services
+id-0b87b0eb6e93,Lifecycle Status,Strategic
+diagram-a03d51abafab,Horizon,H2
+id-a40f6332543f,Horizon,H3
+id-98f9272950bb,Horizon,H3
+id-d1c7ae5a85d5,Horizon,H3
+id-2e07d3fd1017,Domain,Azure Cloud
+id-a13ced76fc15,Domain,Azure Cloud
+id-08ea78ef5f0e,Domain,Azure Cloud
+id-5dc64d476bac,Domain,Azure Cloud
+id-e1f2c021c9e1,Domain,Azure Cloud
+id-1c9f3d0f93e9,Domain,Azure Cloud
+id-e8e08f6d295a,Domain,Azure Cloud
+id-f20af2181f88,Domain,Azure Cloud
+diagram-48f682d4d7b8,Domain,EUC
+diagram-4926e17a05af,Domain,EUC
+diagram-4165d342a00e,Domain,EUC
+diagram-fdad01525e0d,Domain,EUC
+diagram-7bdcee732243,Domain,EUC
+diagram-7117d51f6353,Domain,Support Services
+diagram-5ad20b1616e8,Domain,Support Services
+diagram-6994b57df1b0,Domain,Support Services
+diagram-35090534b4c8,Domain,Support Services
+diagram-9c682e0afc55,Domain,Support Services
+diagram-a03d51abafab,Domain,Support Services
+diagram-1ca192bcb154,Domain,Support Services
+id-a40f6332543f,Domain,Support Services
+id-98f9272950bb,Domain,Support Services
+id-d1c7ae5a85d5,Domain,Support Services
+diagram-48f682d4d7b8,Horizon,H1
+diagram-4926e17a05af,Horizon,H1
+diagram-fdad01525e0d,Horizon,H3
+diagram-7bdcee732243,Horizon,H3
+diagram-7117d51f6353,Horizon,H1
+diagram-5ad20b1616e8,Horizon,H1
+diagram-6994b57df1b0,Horizon,H1
+diagram-35090534b4c8,Horizon,H1
+diagram-9c682e0afc55,Horizon,H1
+diagram-1ca192bcb154,Horizon,H3

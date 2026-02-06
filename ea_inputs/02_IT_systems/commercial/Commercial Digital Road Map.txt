@@ -1,0 +1,99 @@
+# Extracted from: Commercial Digital Road Map.jpg
+# Source: ea_inputs\images\02_IT_systems\commercial\Commercial Digital Road Map.jpg
+# Extracted: 2025-12-30T12:03:53.212381
+# ---
+
+### Enterprise Architecture Analysis
+
+#### 1. **Applications/Systems**
+- **Consolidated ANZ Digital Presence**: Includes NZ/Medline Uni/Aged Care platforms.
+- **CRM Marketing Module**: A customer relationship management tool for marketing purposes.
+- **Online Portal**: Provides individualized information, including:
+  - Pack visibility
+  - Recipe list
+  - Inventory
+  - Production
+  - Forecast
+  - Pack design
+- **Website Capabilities 2.0**: Enhancements to the website for improved functionality.
+- **AI – Cross Reference Tool**: Used for competitor analysis and referencing:
+  - Competitor codes
+  - Descriptions
+  - Images
+  - Instructions for Use (IFU)
+- **Cost Savings Models/Pack Simulators**: Tools based on customer inputs for cost optimization.
+- **Digital Pack Reviews**: A customer-driven process for reviewing digital pack designs.
+- **Customer Analytics (Portal)**: A platform for analyzing customer data.
+- **Real-Time Inventory Dashboard**: Provides real-time inventory data.
+- **AI**: Includes functionalities such as:
+  - Intuitive pack design
+  - Predictive forecasting
+  - Real-time scanning for ordering and usage identification
+- **UDI (Unique Device Identification)**: Tracks:
+  - Customer feedback (data)
+  - Product scanning
+  - Waste identification
+- **Preconnect**: A system or process for pre-connection of services or data.
+- **EMR Readiness – Integration**: Integration with Electronic Medical Records (EMR).
+
+---
+
+#### 2. **Relationships/Integrations**
+- **Consolidated ANZ Digital Presence** integrates with **CRM Marketing Module** to support marketing efforts.
+- **CRM Marketing Module** supports **Education** and **BAU Functions** (e.g., improving search functions and SEO).
+- **Online Portal** provides individualized information and integrates with **MedPack** for visibility into pack-related data (e.g., inventory, production, forecast).
+- **Website Capabilities 2.0** connects with the **AI – Cross Reference Tool** to enhance competitor analysis and product information.
+- **Digital Pack Reviews** is a customer-driven process that likely integrates with the **Customer Analytics Portal** for data-driven insights.
+- **Real-Time Inventory Dashboard** integrates with **AI** for real-time scanning, ordering, and usage identification.
+- **UDI** integrates with **Real-Time Inventory Dashboard** to track customer feedback, product scanning, and waste identification.
+- **EMR Readiness – Integration** connects with external EMR systems for seamless data exchange.
+
+---
+
+#### 3. **Business Capabilities**
+- **Awareness**:
+  - Consolidated digital presence for NZ/Medline Uni/Aged Care.
+  - CRM marketing for customer engagement.
+- **Compare**:
+  - Education and training.
+  - BAU functions for search improvements and SEO.
+- **Consider**:
+  - Online portal for individualized information (pack visibility, inventory, production, etc.).
+- **Commit**:
+  - Digital pack reviews driven by customer input.
+  - Preconnect system for seamless integration.
+- **Retain**:
+  - Website enhancements (Website Capabilities 2.0).
+  - Real-time inventory tracking and management.
+- **Advocate**:
+  - AI-powered cross-reference tool for competitor analysis.
+  - UDI for customer feedback, product scanning, and waste identification.
+
+---
+
+#### 4. **Technical Details**
+- **Integration Patterns**:
+  - Real-time scanning and ordering (AI, Real-Time Inventory Dashboard).
+  - Data-driven customer analytics (Customer Analytics Portal).
+  - Integration with EMR systems (EMR Readiness – Integration).
+- **AI Capabilities**:
+  - Intuitive pack design.
+  - Predictive forecasting.
+  - Real-time scanning for ordering and usage identification.
+- **Data Types**:
+  - Pack visibility, inventory, production, forecast, pack design, competitor codes, descriptions, images, and IFU.
+
+---
+
+#### 5. **Organizational Context**
+- **Regions**: ANZ (Australia and New Zealand), NZ, Medline Uni, Aged Care.
+- **Departments/Functions**:
+  - Marketing (CRM Marketing Module).
+  - Customer analytics and feedback (Customer Analytics Portal, UDI).
+  - Inventory and production management (Online Portal, Real-Time Inventory Dashboard).
+  - Digital transformation and process improvement (Digital Pack Reviews, Cost Savings Models/Pack Simulators).
+- **Ownership/Responsibility**:
+  - MedPack visibility is a key responsibility area.
+  - Customer-driven processes (Digital Pack Reviews, UDI).
+
+This roadmap outlines a phased digital transformation strategy, emphasizing customer-centric tools, AI-driven insights, and real-time integrations to enhance business capabilities across multiple horizons.

@@ -96,6 +96,8 @@ Extract EA objects and **relationships** from the user input:
 
 **Elements to Extract:**
 - Applications/Systems mentioned (name, description, technology)
+- Infrastructure services and patterns (TechnologyService)
+- Infrastructure components (Node - servers, devices)
 - Business capabilities they support
 - Lifecycle signals (new, replacing, retiring, decommissioning, etc.)
 - Maturity indicators (modern, legacy, outdated, state-of-the-art)
@@ -181,6 +183,74 @@ Every ApplicationComponent SHOULD serve at least one Capability. If you find an 
 - Source and target MUST exist in either discovered or existing elements
 - If source/target not found, DO NOT create the relationship
 - Every relationship MUST have a meaningful description from the text context
+
+### HORIZON PROPERTY (As-Is vs To-Be) - AUTOMATIC DETECTION
+
+**ALWAYS** analyze text for Horizon indicators and assign a "Horizon" property to EVERY discovered element based on context clues:
+
+**H1 (AS-IS) - Current State:**
+Context clues: "current", "existing", "today", "legacy", "in production", "active", "currently uses", "we have", "runs on"
+
+**H2 (NEAR-TERM) - Planned (1-2 years):**
+Context clues: "planned", "roadmap", "2025", "will be", "migration", "upgrade", "replacing", "phase 1", "next year", "in progress", "being implemented", "transition"
+
+**H3 (TO-BE) - Future Vision (3+ years):**
+Context clues: "vision", "future state", "strategic target", "2026", "2027", "long-term", "end state", "target architecture", "aspirational", "phase 2", "phase 3"
+
+**Detection Rules:**
+1. Analyze the CONTEXT around each element mention, not just keywords
+2. If an element is described as being replaced/sunset → mark it H1
+3. If an element is described as the replacement → mark it H2 or H3 based on timeline
+4. If no clear signals, default to H1 (assume current state)
+5. A single document may contain elements across multiple horizons
+
+**Example - Mixed Horizons in Same Document:**
+Input: "We currently use Salesforce.com for CRM. In 2026, we will migrate to Microsoft Dynamics CRM."
+
+```json
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "Salesforce.com",
+        "description": "Current CRM system",
+        "Horizon": "H1",
+        "lifecycle_signals": ["sunset", "to be replaced"]
+      },
+      {
+        "name": "Microsoft Dynamics CRM",
+        "description": "Future CRM platform - 2026 migration target",
+        "Horizon": "H3",
+        "lifecycle_signals": ["strategic", "planned"]
+      }
+    ]
+  }
+}
+```
+
+**Example - Roadmap Document:**
+Input: "Digital Roadmap: Phase 1 (2025) - AI Cross Reference Tool. Phase 2 (2026) - Customer Analytics Portal."
+
+```json
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "AI Cross Reference Tool",
+        "description": "Competitor analysis tool",
+        "Horizon": "H2",
+        "lifecycle_signals": ["planned", "phase 1"]
+      },
+      {
+        "name": "Customer Analytics Portal",
+        "description": "Customer data analytics platform",
+        "Horizon": "H3",
+        "lifecycle_signals": ["planned", "phase 2"]
+      }
+    ]
+  }
+}
+```
 
 ### 2. MATRIX UPDATES
 Determine required changes to EA matrix:
@@ -274,6 +344,14 @@ Return your analysis as a JSON object with the following structure using **Archi
         "name": "Infrastructure Component",
         "description": "Infrastructure description"
       }
+    ],
+    "TechnologyService": [
+      {
+        "name": "Infrastructure Service Name",
+        "description": "Service description",
+        "technology_stack": ["tech1", "tech2"],
+        "lifecycle_signals": ["new", "replacing X", "sunset"]
+      }
     ]
   },
   "relationships": [
@@ -355,8 +433,20 @@ Use these ArchiMate types when classifying discovered objects:
 - `DataObject` - Data entities, databases, data stores
 
 **Technology/Infrastructure Layer:**
-- `Node` - Servers, infrastructure components, devices
+- `Node` - Servers, infrastructure components, devices (physical/logical infrastructure)
+- `TechnologyService` - Infrastructure services provided by nodes (e.g., "VM Hosting", "Database Service", "File Storage", "Cost Monitoring")
 - `CommunicationNetwork` - Networks, connections
+
+**When to use TechnologyService vs Node vs ApplicationComponent:**
+- **TechnologyService**: Infrastructure patterns, hosting services, platform capabilities
+  - Examples: "Heavy VM Expenditure", "Serverless Databases", "Proactive Cost Monitoring", "24x7 Support Operations"
+  - Clue: Describes HOW infrastructure is delivered, not WHAT runs on it
+- **Node**: Physical or logical infrastructure components
+  - Examples: "Azure Container Instance", "SQL Server 2019", "On-Prem File Server (JPN)"
+  - Clue: Specific deployable infrastructure component
+- **ApplicationComponent**: Business applications and software systems
+  - Examples: "Microsoft Dynamics CRM", "SAP ERP", "Salesforce"
+  - Clue: Named software product serving business functions
 
 **Security:**
 - `Node` - Security controls, firewalls (use Node type for security infrastructure)

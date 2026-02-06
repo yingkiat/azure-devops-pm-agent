@@ -1,0 +1,48 @@
+ID,Type,Name,Documentation
+diagram-413724910823,ApplicationComponent,Salesforce.com,Diagram element (not in official EA model)
+diagram-c99678c9d181,ApplicationComponent,SPT Applications,Diagram element (not in official EA model)
+diagram-b01fbfdfed35,ApplicationComponent,Enquiries and PO CRM,Diagram element (not in official EA model)
+diagram-10eee951ce72,ApplicationComponent,Kit Management System,Diagram element (not in official EA model)
+diagram-008d131ba0a9,ApplicationComponent,CRM Marketing Module,Diagram element (not in official EA model)
+diagram-61ac39c790a9,ApplicationComponent,Customer Analytics Portal,Diagram element (not in official EA model)
+diagram-621058b334f0,ApplicationComponent,PSS (Product Support System),Diagram element (not in official EA model)
+diagram-8f44a344c67c,ApplicationComponent,PSS 1.0 Upgrade,Diagram element (not in official EA model)
+diagram-48f682d4d7b8,ApplicationComponent,Limited Regional Office Support,Diagram element (not in official EA model)
+diagram-4926e17a05af,ApplicationComponent,Password-Only Authentication,Diagram element (not in official EA model)
+diagram-4165d342a00e,ApplicationComponent,Windows Hello,Diagram element (not in official EA model)
+diagram-fdad01525e0d,ApplicationComponent,Fingerprint Logon,Diagram element (not in official EA model)
+diagram-7bdcee732243,ApplicationComponent,Tech Days / Regional Outreach,Diagram element (not in official EA model)
+diagram-7117d51f6353,ApplicationComponent,Separate Global/APAC Helpdesks,Diagram element (not in official EA model)
+diagram-5ad20b1616e8,ApplicationComponent,Multiple Ticket Channels,Diagram element (not in official EA model)
+diagram-35090534b4c8,ApplicationComponent,Limited Self-Help,Diagram element (not in official EA model)
+diagram-9c682e0afc55,ApplicationComponent,Business Hours Support,Diagram element (not in official EA model)
+diagram-a03d51abafab,ApplicationComponent,Advanced Ticket Monitoring,Diagram element (not in official EA model)
+diagram-1ca192bcb154,ApplicationComponent,Consolidated Global Helpdesk,Diagram element (not in official EA model)
+diagram-41c48c702138,ApplicationComponent,Iwagaki,Diagram element (not in official EA model)
+diagram-f6965f02ee09,ApplicationComponent,W3 Sirius Extension (DHR),Diagram element (not in official EA model)
+diagram-0f6c2f3996f9,ApplicationComponent,W3 Sirius Japan Expansion,Diagram element (not in official EA model)
+diagram-91618e9e5571,Capability,Cybersecurity Risk Reduction,Diagram element (not in official EA model)
+diagram-entra-extid,TechnologyService,Entra External ID,Diagram element - B2B identity provider for external customer portal
+diagram-backend-api,ApplicationComponent,Backend API,Diagram element - Multi-tenant authorization layer for external customer portal
+diagram-customer-portal,ApplicationComponent,External Customer Portal,Diagram element - Web UI for external customers to access packs and orders
+diagram-dc55323bc40c,Actor,Hospital Buyers,Diagram element (not in official EA model)
+diagram-1594ca313796,Actor,Resellers / Distributors,Diagram element (not in official EA model)
+diagram-698af682e520,ApplicationInterface,MedPack API,Diagram element (not in official EA model)
+diagram-50b925e5cc77,DataObject,QAD Analytics Database,Diagram element (not in official EA model)
+id-11e891b15fcb,ApplicationComponent,MedPack Aus,View the Packs and its components and pricing.
+id-828ab93094dd,ApplicationComponent,MedPack NZ,Pack Details for NZ packs
+id-5aefb9227717,ApplicationComponent,QAD - EE,ERP
+diagram-6994b57df1b0,ApplicationComponent,HEAT ITSM (Current),Diagram element for HEAT ITSM (Current) (not in official EA model)
+id-2e07d3fd1017,TechnologyService,Heavy VM Expenditure,High expenditure on virtual machines running continuously in Azure Cloud
+id-a13ced76fc15,TechnologyService,Dual Region Architecture,Two full Azure regions creating overhead in management and replication
+id-08ea78ef5f0e,Node,On-Prem File Servers (JPN),Japan office maintains on-premises file servers for Excel file editing
+id-5dc64d476bac,TechnologyService,Ad-hoc Cost Monitoring,Reactive and manual cost monitoring in Azure Cloud
+id-d418bd3e7f43,TechnologyService,Azure Container Apps,Serverless container platform that auto-scales based on demand
+id-e1f2c021c9e1,TechnologyService,Serverless Databases,Auto-scaling serverless database tier that pauses when inactive
+id-1c9f3d0f93e9,TechnologyService,Proactive Cost Monitoring,Real-time cost monitoring with Azure Cost Management and custom alerting
+id-e8e08f6d295a,TechnologyService,Single SEA Region,Consolidation from two Azure regions to one primary Southeast Asia region
+id-f20af2181f88,TechnologyService,Azure File Sync to JPN,Hybrid solution for low-latency Excel editing in Japan while retiring on-prem infrastructure
+id-0b87b0eb6e93,ApplicationComponent,Enhanced HEAT ITSM,Upgraded HEAT platform with modern features like chatbot integration and advanced ticket routing
+id-a40f6332543f,ApplicationComponent,AI Support Chatbot,"Intelligent chatbot for first-line support, integrated with HEAT ITSM"
+id-98f9272950bb,ApplicationComponent,Self-Service Portal,Comprehensive self-service portal with searchable knowledge base and guided troubleshooting
+id-d1c7ae5a85d5,TechnologyService,24x7 Support Operations,Round-the-clock support availability using a consolidated global team

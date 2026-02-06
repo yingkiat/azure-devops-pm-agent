@@ -45,6 +45,8 @@ Thumbs.db
 data/
 outputs/
 *.log
+*.bkp
+*.dtmp
 
 # Azure DevOps and Authentication
 *.pat

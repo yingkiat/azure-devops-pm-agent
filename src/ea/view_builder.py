@@ -1,8 +1,14 @@
 """
-View Builder - Spec-Driven View Generation (MVP6)
+View Builder - Spec-Driven View Generation (MVP6 + MVP9)
 
 Generates ArchiMate views from YAML specifications for deterministic, repeatable views.
 Supports hybrid element selection (criteria, name, ID) and relationship filtering.
+
+MVP9 additions:
+- intent: question, audience, decision, key_message
+- story: setup, tension, insight
+- visual: emphasis treatments, grouping_rationale, reading_order, color_strategy
+- iterations: version history with feedback/changes
 """
 
 import csv
@@ -14,7 +20,8 @@ import pandas as pd
 
 from .archi_layouts import (
     LayoutEngine, LayeredLayout, HierarchicalLayout,
-    GridLayout, CompactLayout, ElementPosition
+    GridLayout, CompactLayout, ElementPosition,
+    MatrixLayout, MatrixLayoutResult, ContainerPosition
 )
 
 
@@ -34,6 +41,9 @@ class ViewBuilder:
         self.element_by_id = {e['id']: e for e in self.elements}
         self.element_by_name = {e['name']: e for e in self.elements}
         self.relation_by_id = {r['id']: r for r in self.relations}
+
+        # Property overrides from view specs (element_id -> {property_key: value})
+        self.property_overrides: Dict[str, Dict[str, str]] = {}
 
     def _load_elements(self) -> List[Dict[str, Any]]:
         """Load elements from elements.csv"""
@@ -158,6 +168,9 @@ class ViewBuilder:
 
     def _process_spec(self, spec_file: Path, spec: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Process a single view spec and return view definition"""
+        # Reset property overrides for each new view
+        self.property_overrides = {}
+
         view_config = spec['view']
 
         # Extract view metadata
@@ -184,6 +197,24 @@ class ViewBuilder:
         # Get grouping configuration
         grouping_config = spec.get('grouping', {})
 
+        # Get presentation configuration (MVP8)
+        presentation_config = spec.get('presentation', {})
+
+        # Get output configuration (MVP8)
+        output_config = spec.get('output', {})
+
+        # Get structure configuration (MVP8 enhancement: relationship-based hierarchy)
+        structure_config = spec.get('structure', {})
+
+        # Get annotations configuration (MVP8 enhancement: simple labels)
+        annotations_config = spec.get('annotations', [])
+
+        # MVP9: Intent-driven sections
+        intent_config = spec.get('intent', {})
+        story_config = spec.get('story', {})
+        visual_config = spec.get('visual', {})
+        iterations_config = spec.get('iterations', [])
+
         return {
             'id': view_id,
             'name': view_name,
@@ -192,6 +223,15 @@ class ViewBuilder:
             'relations': selected_relation_ids,
             'layout': layout_config,
             'grouping': grouping_config,
+            'presentation': presentation_config,  # MVP8: color_by, size_by, highlight, notation
+            'output': output_config,               # MVP8: format (archi, drawio, both)
+            'structure': structure_config,         # MVP8: relationship-based hierarchy
+            'annotations': annotations_config,     # MVP8: simple labels
+            # MVP9: Intent-driven sections
+            'intent': intent_config,               # MVP9: question, audience, decision, key_message
+            'story': story_config,                 # MVP9: setup, tension, insight
+            'visual': visual_config,               # MVP9: emphasis, grouping_rationale, reading_order, color_strategy
+            'iterations': iterations_config,       # MVP9: version history with feedback/changes
             'spec_file': spec_file.name
         }
 
@@ -217,15 +257,24 @@ class ViewBuilder:
             elif 'name' in rule:
                 # Name-based selection
                 name = rule['name']
+                elem_id = None
                 if name in self.element_by_name:
-                    selected_ids.add(self.element_by_name[name]['id'])
+                    elem_id = self.element_by_name[name]['id']
                 else:
                     # Try fuzzy matching
                     matched = self._fuzzy_match_name(name)
                     if matched:
-                        selected_ids.add(matched['id'])
+                        elem_id = matched['id']
                     else:
                         print(f"      Element not found: {name}")
+
+                if elem_id:
+                    selected_ids.add(elem_id)
+                    # Capture property overrides if specified
+                    if 'override' in rule:
+                        if elem_id not in self.property_overrides:
+                            self.property_overrides[elem_id] = {}
+                        self.property_overrides[elem_id].update(rule['override'])
 
             elif 'id' in rule:
                 # ID-based selection
@@ -403,10 +452,28 @@ class ViewBuilder:
 
         return False
 
+    def _get_element_property(self, elem_id: str, property_key: str) -> Optional[str]:
+        """
+        Get property value for an element, with override support.
+        Overrides from view spec take precedence over base data.
+        """
+        # Check overrides first
+        if elem_id in self.property_overrides:
+            if property_key in self.property_overrides[elem_id]:
+                return self.property_overrides[elem_id][property_key]
+
+        # Fall back to base properties
+        for prop in self.properties:
+            if prop['element_id'] == elem_id and prop['key'] == property_key:
+                return prop['value']
+
+        return None
+
     def _organize_by_groups(self, element_ids: List[str], grouping_config: Dict[str, Any]) -> Dict[str, List[str]]:
         """
         Organize elements into groups based on property values.
         Supports both single-level and nested two-level grouping.
+        Uses property overrides from view spec when available.
 
         Returns:
             Dict mapping group names to lists of element IDs (single-level)
@@ -430,12 +497,8 @@ class ViewBuilder:
             ungrouped = []
 
             for elem_id in element_ids:
-                # Find property value for this element
-                prop_value = None
-                for prop in self.properties:
-                    if prop['element_id'] == elem_id and prop['key'] == property_key:
-                        prop_value = prop['value']
-                        break
+                # Get property value (with override support)
+                prop_value = self._get_element_property(elem_id, property_key)
 
                 if prop_value:
                     if prop_value not in groups:
@@ -453,6 +516,7 @@ class ViewBuilder:
     def _organize_nested_groups(self, element_ids: List[str], primary_key: str, secondary_key: str) -> Dict[str, Dict[str, List[str]]]:
         """
         Organize elements into nested groups: primary -> secondary -> element IDs
+        Uses property overrides from view spec when available.
 
         Returns:
             Dict mapping primary_group_name -> Dict[secondary_group_name -> [element_ids]]
@@ -460,20 +524,9 @@ class ViewBuilder:
         nested_groups = {}
 
         for elem_id in element_ids:
-            # Find primary and secondary property values
-            primary_value = None
-            secondary_value = None
-
-            for prop in self.properties:
-                if prop['element_id'] == elem_id:
-                    if prop['key'] == primary_key:
-                        primary_value = prop['value']
-                    elif prop['key'] == secondary_key:
-                        secondary_value = prop['value']
-
-            # Use defaults for missing properties
-            primary_value = primary_value or '_ungrouped'
-            secondary_value = secondary_value or '_ungrouped'
+            # Get property values (with override support)
+            primary_value = self._get_element_property(elem_id, primary_key) or '_ungrouped'
+            secondary_value = self._get_element_property(elem_id, secondary_key) or '_ungrouped'
 
             # Create nested structure
             if primary_value not in nested_groups:
@@ -504,6 +557,10 @@ class ViewBuilder:
         elif algorithm == 'compact':
             max_width = layout_config.get('max_width', 800)
             return CompactLayout(max_width=max_width)
+        elif algorithm == 'matrix':
+            row_height = layout_config.get('row_height', 120)
+            column_width = layout_config.get('column_width', 200)
+            return MatrixLayout(row_height=row_height, column_width=column_width)
         else:  # Default to layered
             return LayeredLayout(spacing_x=spacing_x, spacing_y=spacing_y)
 

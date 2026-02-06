@@ -124,7 +124,16 @@ class DiagramLayoutEngine:
         if not match:
             raise ValueError("No <diagram> element found in AI response")
 
-        return match.group(0)
+        xml_str = match.group(0)
+
+        # Inject missing xsi namespace declaration (AI often omits it)
+        if 'xsi:type' in xml_str and 'xmlns:xsi' not in xml_str:
+            xml_str = xml_str.replace(
+                '<diagram ',
+                '<diagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            )
+
+        return xml_str
 
     def _validate_diagram_xml(self, diagram_xml: str) -> None:
         """

@@ -1,0 +1,29 @@
+- Overview of CRM
+	- Customer wants Medline products. 
+		- Customer sends email to certain mailboxes. 
+			- CRM will generate a case for customer service.
+			- The attachment will be in the case for manual.
+        - This system is to have an automated AI solution to process the pdf, and create the necessary PO in QAD.
+
+- Current status of CRM project
+	- Version 1 (Past)
+		- Microsoft AI Builder was misidentifying some fields like units, which is critical. Units became boxes.
+		- Manual intervention was needed to correct.
+		- The project team tried to use stop gaps like if this address, then vlookup configured parameters.
+		- Not flexible, needed manual intervention. 
+        - Error rate meant that the project was paused.
+	- Version 2 (Ongoing)
+		- The decision from project management was that Docupipe would replace AI Builder, to make the AI tool more flexible, faster, does not require training.
+		- IT management raised concerns about how a direct replacement would not replace the fundamental issues.
+		- Docupipe is faster. End to end turnaround time of 1-2mins.
+		- What if the customer extracted does not exist in existing CRM? Parent table mismatches.
+
+- Possible areas to look at
+    - How about smart cross referencing? The backend could verify data against previous similar orders from the same company.
+    - Using PowerApps to do backend processing might not be a good idea? 
+        - Slow, not performant, long codebases means long flows in Canvas App.
+	- How do we improve the UX for recovery of wrong processing?
+        - No AI will get 100% correct all the time.
+        - But users have a 0% tolerance for errors. Rightly so since POs are critical. How to align the 2?
+    - Other systems creating problems. Like Boomi failure. Or QAD slowness causing bad experience for the UI.
+    - Error handling is key.
