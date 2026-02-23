@@ -42,6 +42,8 @@ variables:
     value: 'm3acrdwhsp1'
   - name: prodLocation
     value: 'southeastasia'
+  - name: prodACAEnvironment
+    value: 'm3acaenvdwhsagentp1'
 
 stages:
 - stage: BuildProduction
@@ -118,7 +120,7 @@ stages:
                 LOCATION="$(prodLocation)"
                 RESOURCE_GROUP="$(prodResourceGroup)"
                 CONTAINER_APP_NAME="$(prodContainerAppName)"
-                ENVIRONMENT_NAME="${CONTAINER_APP_NAME}-env"
+                ENVIRONMENT_NAME="$(prodACAEnvironment)"
                 ACR_SERVER="$(prodACRRegistry).azurecr.io"
                 ACR_USERNAME="$(prodACRRegistry)"
 
