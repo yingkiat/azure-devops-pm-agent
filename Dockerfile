@@ -8,6 +8,7 @@ COPY portal/ portal/
 COPY ea_diagrams/ ea_diagrams/
 COPY archi_inputs/ archi_inputs/
 COPY ea_inputs/views/ ea_inputs/views/
+COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
 
 # Build the portal (generates static HTML)
 RUN python portal/build.py
