@@ -1,0 +1,285 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "DSx Forecasting Application Japan",
+        "description": "Japan demand planning system to process product forecast.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 2",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Demand Planning"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Electronic Pack and Components Instruction eiFU",
+        "description": "A website where Customers can access the instruction for use for their packs.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 3",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Customer Support"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Griffin Yusen JPN",
+        "description": "Website of Yusen, as our logistics service provider, provides inbound shipment details. Owned by vendor.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 3",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Inbound Shipment Management"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "GSCM/OCTS JPN",
+        "description": "Excel solution, to download supplier shipment information from Griffin. Used to plan goods receiving at Nagoya port & warehouses.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 3",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Supplier Shipment Planning"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Kenpin JPN",
+        "description": "Inventory management system in Kasugai manufacturing site.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 2",
+        "Next Audit Date": "15/04/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Inventory Management"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "OnDemand AUS",
+        "description": "Outbound transportation system for Medtrans, Medline owned transportation. Descartes is the brand name.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Outbound Transportation"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Pack Labeling System Australia",
+        "description": "Generate and print essential labels used for pack assembly process, including component, inner leaflet, carton labels etc.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Label Printing"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Pack Specfication System PSS Australia",
+        "description": "Manage pack assembly procedure document of how a pack to be assembled. Australia.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 1",
+        "Next Audit Date": "2/06/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Pack Assembly Management"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      },
+      {
+        "name": "Power Platform - Ops AUS",
+        "description": "Power App or Power Automate applications for Australia Operations.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 3",
+        "Next Audit Date": "3/09/2025 0:00",
+        "Horizon": "H1",
+        "capabilities_supported": [
+          "Automation"
+        ],
+        "lifecycle_signals": [
+          "In production"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "DSx Forecasting Application Japan",
+      "target": "Demand Planning",
+      "type": "Serving",
+      "description": "Supports demand planning for Japan."
+    },
+    {
+      "source": "Electronic Pack and Components Instruction eiFU",
+      "target": "Customer Support",
+      "type": "Serving",
+      "description": "Provides instructions for use for customer packs."
+    },
+    {
+      "source": "Griffin Yusen JPN",
+      "target": "Inbound Shipment Management",
+      "type": "Serving",
+      "description": "Provides inbound shipment details for logistics."
+    },
+    {
+      "source": "GSCM/OCTS JPN",
+      "target": "Supplier Shipment Planning",
+      "type": "Serving",
+      "description": "Used to plan goods receiving at Nagoya port and warehouses."
+    },
+    {
+      "source": "Kenpin JPN",
+      "target": "Inventory Management",
+      "type": "Serving",
+      "description": "Supports inventory management at Kasugai manufacturing site."
+    },
+    {
+      "source": "OnDemand AUS",
+      "target": "Outbound Transportation",
+      "type": "Serving",
+      "description": "Supports outbound transportation for Medtrans."
+    },
+    {
+      "source": "Pack Labeling System Australia",
+      "target": "Label Printing",
+      "type": "Serving",
+      "description": "Generates and prints labels for pack assembly."
+    },
+    {
+      "source": "Pack Specfication System PSS Australia",
+      "target": "Pack Assembly Management",
+      "type": "Serving",
+      "description": "Manages pack assembly procedure documents."
+    },
+    {
+      "source": "Power Platform - Ops AUS",
+      "target": "Automation",
+      "type": "Serving",
+      "description": "Provides automation for Australia Operations."
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "DSx Forecasting Application Japan",
+        "capability": "Demand Planning",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Supports critical demand planning for Japan."
+      },
+      {
+        "app_name": "Electronic Pack and Components Instruction eiFU",
+        "capability": "Customer Support",
+        "domain": "Customer Service",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Important",
+        "confidence": 0.8,
+        "rationale": "Provides essential customer support functionality."
+      }
+    ],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified. All applications support critical capabilities.",
+    "sunset_risks": "No immediate sunset risks detected.",
+    "maturity_trends": "Applications are modern and aligned with strategic goals.",
+    "overlaps": "No significant overlaps detected."
+  },
+  "recommendations": [
+    "Continue leveraging existing systems for critical capabilities.",
+    "Monitor lifecycle of applications to ensure alignment with future business needs."
+  ]
+}

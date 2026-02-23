@@ -1,70 +1,75 @@
 ID,Type,Name,Documentation,Element,x,y,w,h
-id-4d13e5fd6ea6,archimate-diagram-model,Commercial Applications Matrix,Matrix view of commercial applications organized by region and sub-domain,,,,,
-,,ANZ,,id-c553856570b8,20,20,800,600
-,,,,id-849edc6949bf,40,40,120,60
-,,,,id-463dc8438ddb,180,40,120,60
-,,,,id-d11d37e2f121,320,40,120,60
-,,,,id-c508ffe79f87,40,120,120,60
-,,,,id-72a9b7ecec65,180,120,120,60
-,,,,id-46735043cd40,320,120,120,60
-,,,,id-94c3ea1ca407,40,200,120,60
-,,,,id-6b4a8e4819a0,180,200,120,60
-,,JPN,,id-b95d83847c0f,870,20,800,600
-,,,,id-8c49a03343b9,40,40,120,60
-id-1b356da53a61,archimate-diagram-model,Commercial CRM AS-IS (Current State),Current fragmented state of commercial applications showing multiple CRM systems and legacy apps across regions and sub-domains,,,,,
-,,ANZ,,id-0fcbb3a8167f,20,20,1400,900
-,,,,id-849edc6949bf,40,40,120,60
-,,,,id-463dc8438ddb,280,40,120,60
-,,,,id-d11d37e2f121,520,40,120,60
-,,,,id-72a9b7ecec65,760,40,120,60
-,,,,id-46735043cd40,1000,40,120,60
-,,,,id-94c3ea1ca407,40,140,120,60
-,,,,id-c508ffe79f87,280,140,120,60
-,,,,id-6b4a8e4819a0,520,140,120,60
-,,JPN,,id-8474d790c8a0,20,980,1400,900
-,,,,id-8c49a03343b9,40,40,120,60
-id-bd50941c8226,archimate-diagram-model,Commercial CRM TO-BE (Target State 2026),Target state of commercial applications after consolidation to Microsoft Dynamics CRM platform with unified cloud-based operations,,,,,
-,,ANZ,,id-d073d8fccdc4,20,20,900,600
-,,,,id-c508ffe79f87,40,40,120,60
+id-7c5bed8bc7cc,archimate-diagram-model,Capability Realization Map,"Shows capabilities with their supporting applications, grouped by domain",,,,,
+,,Operations,,id-8de362c986af,20,20,400,300
+,,,,id-7a9c22258891,40,40,120,60
+,,,,id-68c77ead8205,310,40,120,60
+,,,,id-c7192907e77e,580,40,120,60
+,,,,id-27524675ae56,40,120,120,60
+,,,,id-2a913e9c1616,310,120,120,60
+,,,,id-7579b234fcf2,580,120,120,60
+,,IT Operations,,id-e09f0be36e34,920,20,400,300
+,,,,id-ee147117a43a,40,40,120,60
+,,,,id-ac6bcf59a57a,310,40,120,60
+,,,,id-37681a33f27b,580,40,120,60
+id-304abc8f21f9,archimate-diagram-model,CRM Consolidation Case,MVP9 test - shows CRM landscape with emphasis treatments,,,,,
+,,H1,,id-31d6c26d1344,20,20,400,300
+,,,,id-f5619ffd7b65,40,40,120,60
+,,H3,,id-f66535b50de7,920,20,400,300
+,,,,id-53b594ea52a0,40,40,120,60
 id-94b7749b3520,archimate-diagram-model,Infrastructure Cost Optimization Roadmap,"Infrastructure transformation roadmap focused on reducing Azure and DC overspend through serverless adoption, regional consolidation, and unified support services",,,,,
 ,,,,id-7ae3f9b3ce7b,,,,
 ,,,,id-aded055d6223,,,,
 id-730c91b130d8,archimate-diagram-model,Operations Applications Landscape,Hierarchical landscape view of operations applications organized by region (rows) and sub-domain (columns),,,,,
-,,ANZ,,id-867859453640,20,20,1600,1100
-,,,,id-1665ef05cde9,40,40,120,60
-,,,,id-eb8c94bbf229,280,40,120,60
-,,,,id-57662baf44e5,520,40,120,60
-,,JPN,,id-fdc44092adea,20,1170,1600,1100
-,,,,id-1d3ac771d8b3,40,40,120,60
-,,,,id-bb3759f4a808,280,40,120,60
-,,,,id-6d9eb02243f7,520,40,120,60
-,,,,id-0015d01da270,760,40,120,60
-,,,,id-989487361c07,1000,40,120,60
-,,,,id-6e68a57a6540,1240,40,120,60
-,,,,id-d0be297d0966,40,140,120,60
-,,Other,,id-8a10b4f7e99f,20,3470,1600,1100
-,,,,id-be4c0c8b35a2,40,40,120,60
-,,,,id-f01423d8a34e,280,40,120,60
-,,,,id-352687944df8,520,40,120,60
-,,,,id-d1d081f7ea63,760,40,120,60
+,,ANZ,,id-867859453640,20,20,780,300
+,,,,id-6385d2992d54,40,40,120,60
+,,,,id-c21931642554,280,40,120,60
+,,,,id-b6c0f351c702,520,40,120,60
+,,,,id-57662baf44e5,760,40,120,60
+,,,,id-eb8c94bbf229,1000,40,120,60
+,,,,id-59e3aeffe45f,1240,40,120,60
+,,,,id-40e91ca61f1d,40,140,120,60
+,,,,id-cb7cb0b84df6,280,140,120,60
+,,,,id-41fcb87f8bec,520,140,120,60
+,,,,id-021726ec4519,760,140,120,60
+,,,,id-72d65afe6f14,1000,140,120,60
+,,,,id-32cc2fd973f6,1240,140,120,60
+,,,,id-5f835087595c,40,240,120,60
+,,,,id-d6cdbb1d14ef,280,240,120,60
+,,JPN,,id-fdc44092adea,840,20,780,300
+,,,,id-d0be297d0966,40,40,120,60
+,,,,id-6e68a57a6540,280,40,120,60
+,,,,id-88e532c4c4b9,520,40,120,60
+,,,,id-5732a1cc4d7c,760,40,120,60
+,,,,id-1d3ac771d8b3,1000,40,120,60
+,,,,id-0015d01da270,1240,40,120,60
+,,,,id-528df4932fd2,40,140,120,60
+,,,,id-d0e83168e3ab,280,140,120,60
+,,,,id-6d9eb02243f7,520,140,120,60
+,,Other,,id-8a10b4f7e99f,840,370,780,300
+,,,,id-352687944df8,40,40,120,60
+,,,,id-83902728e105,280,40,120,60
+,,,,id-23c91f32ddaf,520,40,120,60
+,,,,id-df931125de62,760,40,120,60
 ,,,,id-c623bc8d5efd,1000,40,120,60
-id-7c5bed8bc7cc,archimate-diagram-model,Capability Realization Map,"Shows capabilities with their supporting applications, grouped by domain",,,,,
-,,Operations,,id-8de362c986af,20,20,400,300
-,,,,id-7a9c22258891,40,40,120,60
-,,,,id-27524675ae56,360,40,120,60
-,,,,id-2a913e9c1616,680,40,120,60
-,,,,id-7579b234fcf2,40,160,120,60
-,,,,id-68c77ead8205,360,160,120,60
-,,,,id-c7192907e77e,680,160,120,60
-,,,,id-6bc03bbdd357,40,280,120,60
-,,Sales,,id-9bc52af40788,20,370,400,300
-,,,,id-ef8339ce9f2e,40,40,120,60
-,,,,id-75a9eaf4fe89,360,40,120,60
-,,Finance,,id-ce385a2f7007,470,370,400,300
-,,,,id-14da17022bdc,40,40,120,60
-,,,,id-71b0a5052f6a,360,40,120,60
-,,,,id-6c527f4dde37,,,,
-id-304abc8f21f9,archimate-diagram-model,CRM Consolidation Case,MVP9 test - shows CRM landscape with emphasis treatments,,,,,
-,,H3,,id-f66535b50de7,920,20,400,300
-,,,,id-59051872c987,40,40,120,60
-,,,,id-f5619ffd7b65,200,40,120,60
+,,,,id-2194d0299b09,1240,40,120,60
+,,,,id-cbb1eff8f9df,40,140,120,60
+id-1e7a8fa35d35,archimate-diagram-model,Operations Refresh Transformation Roadmap,"Single-view transformation story showing the journey from fragmented legacy
+operations systems to unified W3 Sirius and modernized PSS platforms.
+
+Timeline:
+- H1 (TODAY): Fragmented systems - W3 Sirius (ANZ only), Cargo Master (Japan),
+  Excel macros (GSCM/OCTS), COTS (Kenpin Barcode)
+- H2 (2025-2026): PSS 1.0 Upgrade (Priority 1), W3 Sirius DHR module, Japan expansion
+- H3 (TARGET): Unified W3 Sirius platform (ANZ + Japan), modern PSS, DHR manufacturing, legacy sunset
+",,,,,
+,,H1,,id-52849c205068,20,20,400,300
+,,,,id-d0be297d0966,40,40,120,60
+,,,,id-1d3ac771d8b3,200,40,120,60
+,,,,id-eb8c94bbf229,360,40,120,60
+,,,,id-57662baf44e5,520,40,120,60
+,,,,id-03195777091d,40,140,120,60
+,,,,id-bb3759f4a808,200,140,120,60
+,,,,id-6d9eb02243f7,360,140,120,60
+,,,,id-0015d01da270,520,140,120,60
+,,H3,,id-5acb63862d67,920,20,400,300
+,,,,id-6e68a57a6540,40,40,120,60

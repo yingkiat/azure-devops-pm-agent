@@ -1,0 +1,324 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "CRM Customer Service",
+        "description": "Customer Service application for Commercial Services",
+        "technology_stack": [
+          "SaaS"
+        ],
+        "capabilities_supported": [
+          "Customer Service"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Business Unit(s)": "Commercial Services",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Michelle Parkes",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "DSx Forecasting",
+        "description": "Forecasting application for Planning",
+        "technology_stack": [
+          "COTS"
+        ],
+        "capabilities_supported": [
+          "Forecasting"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Planning",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Kirstin Egan",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "AUS01DSXP1",
+        "App Server (Prod)": "AUS00DSXP1",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "eCatalogue",
+        "description": "Product Marketing application for Marketing",
+        "technology_stack": [
+          "SaaS"
+        ],
+        "capabilities_supported": [
+          "Product Marketing"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Business Unit(s)": "Marketing",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Jeremy Echegoyen",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "Electronic Data Interchange",
+        "description": "Integration application for IT",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Integration"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "IT",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Deepak Parbhoo",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "PIM - Magento Interface (Boomi)",
+        "description": "Interface between PIM and Magento for Medline Website",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Interface between PIM and Magento"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "IT",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "App Server (Dev)": "AUS01BAS01",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00BASP1",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "PricePoint",
+        "description": "Price quote application for Commercial Services",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Price quote"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Commercial Services",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "App Server (Dev)": "AUS01PPTD1",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00PPTP1",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "Sample Continence Aged Care",
+        "description": "Samples Ordering application for Marketing",
+        "technology_stack": [
+          "SaaS"
+        ],
+        "capabilities_supported": [
+          "Samples Ordering"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Business Unit(s)": "Marketing",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Damien Anderson",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "Smartfrieght",
+        "description": "Logistics application for Logistics & Warehouse",
+        "technology_stack": [
+          "COTS"
+        ],
+        "capabilities_supported": [
+          "Logistics"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Logistics & Warehouse",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "David Lawrence",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "AUS01SMFT2",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00SMFP2",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "SPT Shortage Automation",
+        "description": "SPT shortage and substitution management application for SPT",
+        "technology_stack": [
+          "SaaS"
+        ],
+        "capabilities_supported": [
+          "SPT shortage and substitution management"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Business Unit(s)": "SPT",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Beatriz Amorim",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": ""
+      },
+      {
+        "name": "Product Information Management (PIM)",
+        "description": "Product Master Data application for Commercial Services",
+        "technology_stack": [
+          "COTS"
+        ],
+        "capabilities_supported": [
+          "Product Master Data"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Commercial Services",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "AUS01APP09",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00APP06",
+        "DB Server (Prod)": "AUS00APP05"
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "CRM Customer Service",
+      "target": "Customer Service",
+      "type": "Serving",
+      "description": "CRM Customer Service supports Customer Service capability"
+    },
+    {
+      "source": "DSx Forecasting",
+      "target": "Forecasting",
+      "type": "Serving",
+      "description": "DSx Forecasting supports Forecasting capability"
+    },
+    {
+      "source": "eCatalogue",
+      "target": "Product Marketing",
+      "type": "Serving",
+      "description": "eCatalogue supports Product Marketing capability"
+    },
+    {
+      "source": "Electronic Data Interchange",
+      "target": "Integration",
+      "type": "Serving",
+      "description": "Electronic Data Interchange supports Integration capability"
+    },
+    {
+      "source": "PIM - Magento Interface (Boomi)",
+      "target": "Interface between PIM and Magento",
+      "type": "Serving",
+      "description": "PIM - Magento Interface (Boomi) supports Interface between PIM and Magento capability"
+    },
+    {
+      "source": "PricePoint",
+      "target": "Price quote",
+      "type": "Serving",
+      "description": "PricePoint supports Price quote capability"
+    },
+    {
+      "source": "Sample Continence Aged Care",
+      "target": "Samples Ordering",
+      "type": "Serving",
+      "description": "Sample Continence Aged Care supports Samples Ordering capability"
+    },
+    {
+      "source": "Smartfrieght",
+      "target": "Logistics",
+      "type": "Serving",
+      "description": "Smartfrieght supports Logistics capability"
+    },
+    {
+      "source": "SPT Shortage Automation",
+      "target": "SPT shortage and substitution management",
+      "type": "Serving",
+      "description": "SPT Shortage Automation supports SPT shortage and substitution management capability"
+    },
+    {
+      "source": "Product Information Management (PIM)",
+      "target": "Product Master Data",
+      "type": "Serving",
+      "description": "Product Information Management (PIM) supports Product Master Data capability"
+    }
+  ],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "All capabilities mentioned in the input are supported by at least one application.",
+    "sunset_risks": "No applications are marked for sunset or decommissioning.",
+    "maturity_trends": "Most applications are modern (SaaS or COTS) and actively supporting their respective capabilities.",
+    "overlaps": "No significant overlaps detected in the input data."
+  },
+  "recommendations": [
+    "Ensure that all applications in progress are monitored for timely completion.",
+    "Evaluate the integration of PIM - Magento Interface (Boomi) with other systems for efficiency improvements.",
+    "Assess the scalability of Smartfrieght to handle future logistics demands."
+  ]
+}

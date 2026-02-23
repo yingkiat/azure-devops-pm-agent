@@ -15,50 +15,46 @@
       "checksum": "ceee5fd24e848a4f9fed1cf73b846e0c",
       "size": 1297,
       "last_modified": 1759132905.6896775,
-      "last_processed": "2026-01-16T10:38:42.803711",
+      "last_processed": "2026-02-23T10:04:22.117101",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -68,81 +64,85 @@
       "checksum": "cd7d6ae35da1873f6c2fc20e4c53699e",
       "size": 3925,
       "last_modified": 1760576815.2413118,
-      "last_processed": "2026-01-16T10:38:42.810714",
+      "last_processed": "2026-02-23T10:04:22.098902",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
     },
     "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\02_IT_systems\\Application Catalogue.xlsx": {
       "file_path": "ea_inputs\\02_IT_systems\\Application Catalogue.xlsx",
-      "checksum": "9cf70356ce1c4a3b79ecd33700a33b0b",
-      "size": 21344,
-      "last_modified": 1766046047.7172842,
-      "last_processed": "2026-01-16T10:34:17.509954",
+      "checksum": "7b2deb5a1fb4139b60655f3d4214a6f0",
+      "size": 28733,
+      "last_modified": 1771811436.888633,
+      "last_processed": "2026-02-23T10:00:19.410621",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "HEAT CMDB CI",
           "LEANIX",
           "QARA",
-          "Descartes",
-          "SmartFreight",
-          "QAD EE WMS",
-          "DSX",
-          "SAP APO",
-          "VC Vendor Collaboration",
-          "Kenpin Barcode",
-          "Iwagaki Access",
-          "QMS",
           "Yusen",
-          "GSCM/OCTS",
           "Cargo Master",
           "W3 Sirius",
-          "Contractor Labelling System SINO",
-          "Boomi"
+          "Informat",
+          "Okumarukun",
+          "ContractSafe",
+          "Ironclad (Boston Project)",
+          "EthicsPoint",
+          "CSC",
+          "Smartsheet",
+          "8x8 phone",
+          "Adobe Acrobat",
+          "Cisco Meraki",
+          "Cisco Webex",
+          "Heat",
+          "M365",
+          "M365 Copilot",
+          "Microsoft Exchange",
+          "Ocularis",
+          "PhishAlert",
+          "ysoft",
+          "Zscaler",
+          "JIRA"
         ]
       },
       "error_count": 0
@@ -152,11 +152,11 @@
       "checksum": "4008ed1a3e5dc42f86dbbc8dbc0eb860",
       "size": 22394,
       "last_modified": 1768464050.9691353,
-      "last_processed": "2026-01-16T10:35:21.131822",
+      "last_processed": "2026-02-23T10:01:18.799124",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
-          "New WMS Warehouse System",
+          "New WMS warehouse system",
           "Yusen Australia"
         ],
         "Capability": [
@@ -171,7 +171,7 @@
       "checksum": "d39f3e8bd450f047658361f55d9fdba0",
       "size": 13978,
       "last_modified": 1761111917.1873765,
-      "last_processed": "2026-01-16T10:36:08.284595",
+      "last_processed": "2026-02-23T10:02:03.332166",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
@@ -195,7 +195,7 @@
       "checksum": "2c5e0767a93c04dc6ee01c9d016808df",
       "size": 13419,
       "last_modified": 1761113200.48101,
-      "last_processed": "2026-01-16T10:36:44.844618",
+      "last_processed": "2026-02-23T10:02:56.160030",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
@@ -227,50 +227,46 @@
       "checksum": "cd2d0fd97992001223ff7932d478605d",
       "size": 4890,
       "last_modified": 1767067433.212381,
-      "last_processed": "2026-01-16T10:38:42.816812",
+      "last_processed": "2026-02-23T10:04:22.087527",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -280,50 +276,46 @@
       "checksum": "05d0e6308e29be7235a6a04c88ff4cf5",
       "size": 719,
       "last_modified": 1759306751.9516535,
-      "last_processed": "2026-01-16T10:38:42.832340",
+      "last_processed": "2026-02-23T10:04:22.067002",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -333,50 +325,46 @@
       "checksum": "785741a9e527f61414e396a8625aed78",
       "size": 975,
       "last_modified": 1759109212.8849573,
-      "last_processed": "2026-01-16T10:38:42.820097",
+      "last_processed": "2026-02-23T10:04:22.056352",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -386,50 +374,46 @@
       "checksum": "c3c6698fd8fa0bffe29b1b47c5c1af73",
       "size": 1870,
       "last_modified": 1768376390.4235344,
-      "last_processed": "2026-01-16T10:38:42.850346",
+      "last_processed": "2026-02-23T10:04:22.076725",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -439,7 +423,7 @@
       "checksum": "1a9ef6c7e1ebcd34e41e0d1d732a159e",
       "size": 14276,
       "last_modified": 1768384617.2292204,
-      "last_processed": "2026-01-16T10:37:02.747885",
+      "last_processed": "2026-02-23T10:03:10.508432",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
@@ -453,27 +437,27 @@
         ],
         "Capability": [
           "Data Extraction",
-          "Validation",
+          "User Interaction",
           "Error Handling",
+          "Validation",
+          "Customer Matching",
+          "Asynchronous Processing",
           "Order Management",
-          "System Integration",
-          "Asynchronous Processing"
+          "System Integration"
         ],
         "BusinessProcess": [
-          "PO Creation Process",
-          "Error Recovery Process"
+          "PO Automation"
         ],
         "DataObject": [
-          "Purchase Order Data",
-          "Customer Data"
+          "Purchase Order Data"
         ],
         "Node": [
-          "Azure Service Bus"
+          "Azure Service Bus",
+          "Azure Functions"
         ],
         "TechnologyService": [
-          "AI Extraction Service",
-          "Validation Service",
-          "Integration Service"
+          "Asynchronous Processing Service",
+          "Validation Service"
         ]
       },
       "error_count": 0
@@ -483,49 +467,46 @@
       "checksum": "c7b2bebb8ec92606bfe38c45232195e8",
       "size": 13295,
       "last_modified": 1761554952.936548,
-      "last_processed": "2026-01-16T10:37:17.723401",
+      "last_processed": "2026-02-23T10:03:40.963048",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "UDW Agent",
           "PowerApps UI",
+          "Power Automate Flow #1",
+          "Power Automate Flow #2",
           "Azure Container API",
           "Fabric Data Warehouse",
-          "Azure Function (Logging Sink)",
-          "Power Automate Flow #1",
-          "Power Automate Flow #2"
+          "Azure Function (Logging Sink)"
         ],
         "Capability": [
           "Natural Language Query",
           "AI-Powered Analysis",
           "Structured Results",
           "Comprehensive Logging",
-          "User Interaction",
           "Data Visualization",
-          "Execution Strategy Selection",
+          "API Integration",
+          "Event Logging",
+          "Adaptive Execution Strategy Selection",
           "Data Storage",
           "Query Execution",
-          "Event Logging",
           "Audit Trail",
-          "API Integration"
+          "User Interaction"
         ],
         "BusinessProcess": [
           "Query Execution Flow"
         ],
         "DataObject": [
-          "Query Input",
-          "API Response",
-          "Event Log"
+          "Query Metadata",
+          "Structured Results",
+          "Event Logs"
         ],
         "Node": [
           "Azure Container Instance",
-          "Fabric DW MCP Server",
-          "Azure Function Instance"
+          "Fabric Data Warehouse Server"
         ],
         "TechnologyService": [
-          "Azure OpenAI",
-          "PowerApps Environment",
-          "Power Automate Environment"
+          "MCP Server"
         ]
       },
       "error_count": 0
@@ -535,34 +516,40 @@
       "checksum": "67676bd8fb058dd1a68179fb4e9215af",
       "size": 10246,
       "last_modified": 1767939427.1047962,
-      "last_processed": "2026-01-16T10:37:30.320750",
+      "last_processed": "2026-02-23T10:03:55.477162",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "HEAT ITSM",
-          "AI Support Chatbot",
           "Enhanced HEAT ITSM",
-          "Self-Service Portal"
+          "AI Support Chatbot",
+          "Self-Service Portal",
+          "Azure Container Apps",
+          "Serverless Databases",
+          "Proactive Cost Monitoring",
+          "Windows Hello",
+          "Azure File Sync to JPN"
         ],
         "Capability": [
           "Ticket Management",
-          "Ticket Deflection",
           "Proactive Support",
-          "Self-Service"
-        ],
-        "Node": [
-          "On-Prem File Servers (JPN)"
+          "Ticket Deflection",
+          "Self-Service",
+          "Compute Optimization",
+          "Database Optimization",
+          "Cost Optimization",
+          "Authentication",
+          "File Management"
         ],
         "TechnologyService": [
           "Heavy VM Expenditure",
           "Dual Region Architecture",
           "Ad-hoc Cost Monitoring",
-          "Azure Container Apps",
-          "Serverless Databases",
           "Single SEA Region",
-          "Azure File Sync to JPN",
-          "Proactive Cost Monitoring",
           "24x7 Support Operations"
+        ],
+        "Node": [
+          "On-Prem File Servers (JPN)"
         ]
       },
       "error_count": 0
@@ -572,50 +559,46 @@
       "checksum": "e8c70c1f5039e3296784352d0e5d0eb1",
       "size": 616,
       "last_modified": 1759306836.8691404,
-      "last_processed": "2026-01-16T10:38:42.840385",
+      "last_processed": "2026-02-23T10:04:22.038197",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -625,50 +608,46 @@
       "checksum": "144c7f8d0cd58bd8d3d4592710b12862",
       "size": 3483,
       "last_modified": 1768449517.409022,
-      "last_processed": "2026-01-16T10:38:42.857344",
+      "last_processed": "2026-02-23T10:04:22.146873",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
           "Microsoft Dynamics CRM",
-          "Docupipe",
           "QAD ERP",
-          "Medline Online Portal",
+          "Docupipe",
+          "Medline Sterile Procedure Trays (SPTs)",
+          "W3 Sirius",
           "AI Cross Reference Tool",
           "Real-Time Inventory Dashboard",
-          "W3 Sirius",
-          "Medline Sterile Procedure Trays (SPTs)",
-          "Kenpin Barcode System"
+          "Customer Analytics Portal"
         ],
         "Capability": [
           "Customer Relationship Management",
           "Purchase Order Automation",
           "Order Management",
-          "Customer Engagement",
-          "Inventory Management",
-          "Competitor Analysis",
-          "Delivery Note Management",
-          "Healthcare Efficiency",
           "Supply Chain Management",
-          "Manufacturing Data Management"
+          "Healthcare Efficiency",
+          "Competitor Analysis",
+          "Inventory Management",
+          "Customer Analytics"
         ],
         "BusinessProcess": [
           "Purchase Order Processing",
-          "Delivery Note Querying",
-          "Sterile Procedure Tray Management"
+          "Sterile Procedure Tray Assembly",
+          "QR Code Delivery Note Querying"
         ],
         "DataObject": [
           "Purchase Order Data",
           "Inventory Data",
-          "Competitor Data",
-          "Delivery Note Data"
+          "Competitor Data"
         ],
         "Node": [
           "AWS Hosting",
-          "Dedicated Clean Rooms"
+          "Microsoft Document Intelligence API"
         ],
         "TechnologyService": [
-          "Microsoft Document Intelligence",
-          "QR Code Delivery Note System"
+          "AI Document Processing",
+          "Real-Time Data Processing"
         ]
       },
       "error_count": 0
@@ -688,7 +667,7 @@
       "checksum": "aab126e45e6e34ac2abfbdd12b238f44",
       "size": 10972,
       "last_modified": 1761634061.7001674,
-      "last_processed": "2026-01-16T10:37:42.680463",
+      "last_processed": "2026-02-23T10:04:06.714117",
       "insights_extracted": [],
       "discovered_elements": {
         "ApplicationComponent": [
@@ -708,24 +687,16 @@
           "Patient Health Information Management",
           "Financial Management"
         ],
-        "DataObject": [
-          "Medline Data",
-          "Customer Databases",
-          "Financial Transactions",
-          "Patient Health Information (PHI)"
-        ],
         "Node": [
           "Networked IT Devices",
-          "Internet-facing Systems",
-          "Server-class Systems",
-          "End-user Class Systems"
+          "Medline Network"
         ],
         "TechnologyService": [
           "Network Segmentation",
+          "Firewall",
           "SIEM Logging",
-          "Zero Trust Network Access (ZTNA)",
-          "Endpoint Detection and Response (EDR)",
-          "Immutable Backups"
+          "Encryption",
+          "Backup and Recovery"
         ]
       },
       "error_count": 0
@@ -879,13 +850,122 @@
       "insights_extracted": [],
       "discovered_elements": {},
       "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\02_IT_systems\\commercial\\external_customer_portal_design_notes.md": {
+      "file_path": "ea_inputs\\02_IT_systems\\commercial\\external_customer_portal_design_notes.md",
+      "checksum": "83f4f0aaf7136e0cd88de391fc59f6fe",
+      "size": 9643,
+      "last_modified": 1768888227.7800412,
+      "last_processed": "2026-02-23T10:03:24.509393",
+      "insights_extracted": [],
+      "discovered_elements": {
+        "ApplicationComponent": [
+          "External Customer Portal",
+          "Backend API",
+          "Entra External ID",
+          "MedPack API",
+          "QAD Analytics Database",
+          "Microsoft Dynamics CRM",
+          "Real-Time Inventory Dashboard"
+        ],
+        "Capability": [
+          "Customer Engagement",
+          "Inventory Management",
+          "Order Management",
+          "Authentication",
+          "Authorization",
+          "System Integration",
+          "Data Security",
+          "Forecasting",
+          "Product Information Management",
+          "Customer Relationship Management"
+        ],
+        "BusinessProcess": [
+          "External Customer Access",
+          "Multi-Tenant Data Isolation"
+        ],
+        "DataObject": [
+          "SPT Pack Data",
+          "Order History",
+          "Inventory Levels",
+          "Forecast Data"
+        ],
+        "Node": [
+          "Azure Hosting"
+        ],
+        "TechnologyService": [
+          "Authentication Service",
+          "Authorization Service"
+        ]
+      },
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\apac_capability_map.yaml": {
+      "file_path": "ea_inputs\\views\\apac_capability_map.yaml",
+      "checksum": "9269ea4b091cda37512ca5ad8a79a5a3",
+      "size": 7340,
+      "last_modified": 1768807576.8776815,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\commercial\\commercial_roadmap.yaml": {
+      "file_path": "ea_inputs\\views\\commercial\\commercial_roadmap.yaml",
+      "checksum": "5485bbf45b12a21f7df466af7bb1e191",
+      "size": 3977,
+      "last_modified": 1767340490.0771072,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\commercial\\external_customer_portal_architecture.yaml": {
+      "file_path": "ea_inputs\\views\\commercial\\external_customer_portal_architecture.yaml",
+      "checksum": "724b9dd170a7ce23e1d837e3fc6abbb8",
+      "size": 10559,
+      "last_modified": 1768967306.3588881,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\infrastructure\\infrastructure_roadmap.yaml": {
+      "file_path": "ea_inputs\\views\\infrastructure\\infrastructure_roadmap.yaml",
+      "checksum": "5f12dd1a7f26b43726a11467a4ac658b",
+      "size": 9231,
+      "last_modified": 1770262918.2971227,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\operations\\operations_app_landscape.yaml": {
+      "file_path": "ea_inputs\\views\\operations\\operations_app_landscape.yaml",
+      "checksum": "6236717daf49a3011674960bc36bc1d7",
+      "size": 7337,
+      "last_modified": 1768792853.465855,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
+    },
+    "C:\\Users\\yingkiat.gan\\Documents\\Work\\azure-devops-pm-agent\\ea_inputs\\views\\operations\\operations_roadmap.yaml": {
+      "file_path": "ea_inputs\\views\\operations\\operations_roadmap.yaml",
+      "checksum": "090877fd0cb21bf2662970a46bee52b9",
+      "size": 7654,
+      "last_modified": 1768869290.6644065,
+      "last_processed": null,
+      "insights_extracted": [],
+      "discovered_elements": {},
+      "error_count": 0
     }
   },
   "processing_stats": {
-    "total_runs": 39,
-    "total_files_processed": 263,
-    "total_files_skipped": 561,
-    "cache_hit_rate": 68.08252427184466
+    "total_runs": 43,
+    "total_files_processed": 271,
+    "total_files_skipped": 677,
+    "cache_hit_rate": 71.41350210970464
   },
-  "last_updated": "2026-01-16T10:38:42.859382"
+  "last_updated": "2026-02-23T10:04:22.156534"
 }

@@ -1,0 +1,558 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "HEAT CMDB CI",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "HEAT CMDB CI",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "LEANIX",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "LEANIX",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "QARA",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "QARA",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "Yusen",
+        "description": "Inbound shipping management system",
+        "Region": "APAC",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "Yusen",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Inbound Shipment Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Cargo Master",
+        "description": "Warehouse management system for 3PL warehouse",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "Cargo Master",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Warehouse Management"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "W3 Sirius",
+        "description": "Warehouse management system for Medline warehouse",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "W3 Sirius",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Warehouse Management"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "Informat",
+        "description": "Invoice Generation",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "Informat",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Invoice Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Okumarukun",
+        "description": "Delivery Tracking",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "Okumarukun",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Delivery Note Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "ContractSafe",
+        "description": "Contract management system",
+        "Region": "ANZ",
+        "Domain": "Legal",
+        "Sub-Domain": "",
+        "Application Name": "ContractSafe",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Contract Management"
+        ],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "Ironclad (Boston Project)",
+        "description": "Contract management system - 2026 project",
+        "Region": "ANZ",
+        "Domain": "Legal",
+        "Sub-Domain": "",
+        "Application Name": "Ironclad (Boston Project)",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Contract Management"
+        ],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "EthicsPoint",
+        "description": "Due diligence management system for vendor/distributors etc",
+        "Region": "ANZ",
+        "Domain": "Legal",
+        "Sub-Domain": "",
+        "Application Name": "EthicsPoint",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Due Diligence Management"
+        ],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "CSC",
+        "description": "Corporate entity and compliance management",
+        "Region": "ANZ",
+        "Domain": "Legal",
+        "Sub-Domain": "",
+        "Application Name": "CSC",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Compliance Management"
+        ],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "Smartsheet",
+        "description": "IT project and resource planning, used in Marketing, Regulatory and Planning",
+        "Region": "APAC",
+        "Domain": "Project Management",
+        "Sub-Domain": "",
+        "Application Name": "Smartsheet",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Project Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "8x8 phone",
+        "description": "Australia softphone solution - USA standard",
+        "Region": "ANZ",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "8x8 phone",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Telecommunication"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Adobe Acrobat",
+        "description": "PDF document",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Adobe Acrobat",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Document Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Cisco Meraki",
+        "description": "Australia network",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Cisco Meraki",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Network Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Cisco Webex",
+        "description": "Japan Softphone solution - Unable to use 8by8 as no Japanese interface",
+        "Region": "JPN",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Cisco Webex",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Telecommunication"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Heat",
+        "description": "ITSM toolset",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Heat",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "IT Service Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "M365",
+        "description": "Office tools inc Outlook, Word, Excel, PowerPoint, Copilot chat",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "M365",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Office Productivity"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "M365 Copilot",
+        "description": "AI tools for M365",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "M365 Copilot",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "AI Productivity"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Microsoft Exchange",
+        "description": "Exchange server used to send/receive emails from APAC apps",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Microsoft Exchange",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Email Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Ocularis",
+        "description": "Australia security camera system",
+        "Region": "ANZ",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Ocularis",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Security Monitoring"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "PhishAlert",
+        "description": "Phishing add-in for o365 Outlook to add the phishing button",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "PhishAlert",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [
+          "Email Security"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "ysoft",
+        "description": "Follow me print for Fuji Printers",
+        "Region": "ANZ",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "ysoft",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Printing Services"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Zscaler",
+        "description": "End user computer security",
+        "Region": "APAC",
+        "Domain": "End User Computing",
+        "Sub-Domain": "",
+        "Application Name": "Zscaler",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Endpoint Security"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "JIRA",
+        "description": "IT requests and task management",
+        "Region": "APAC",
+        "Domain": "Project Management",
+        "Sub-Domain": "",
+        "Application Name": "JIRA",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Task Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "Yusen",
+      "target": "Inbound Shipment Management",
+      "type": "Serving",
+      "description": "Yusen supports inbound shipment management"
+    },
+    {
+      "source": "Cargo Master",
+      "target": "Warehouse Management",
+      "type": "Serving",
+      "description": "Cargo Master supports warehouse management"
+    },
+    {
+      "source": "W3 Sirius",
+      "target": "Warehouse Management",
+      "type": "Serving",
+      "description": "W3 Sirius supports warehouse management"
+    },
+    {
+      "source": "Informat",
+      "target": "Invoice Management",
+      "type": "Serving",
+      "description": "Informat supports invoice generation"
+    },
+    {
+      "source": "Okumarukun",
+      "target": "Delivery Note Management",
+      "type": "Serving",
+      "description": "Okumarukun supports delivery tracking"
+    },
+    {
+      "source": "ContractSafe",
+      "target": "Contract Management",
+      "type": "Serving",
+      "description": "ContractSafe supports contract management"
+    },
+    {
+      "source": "Ironclad (Boston Project)",
+      "target": "Contract Management",
+      "type": "Serving",
+      "description": "Ironclad supports contract management"
+    },
+    {
+      "source": "EthicsPoint",
+      "target": "Due Diligence Management",
+      "type": "Serving",
+      "description": "EthicsPoint supports due diligence management"
+    },
+    {
+      "source": "CSC",
+      "target": "Compliance Management",
+      "type": "Serving",
+      "description": "CSC supports compliance management"
+    },
+    {
+      "source": "Smartsheet",
+      "target": "Project Management",
+      "type": "Serving",
+      "description": "Smartsheet supports project management"
+    },
+    {
+      "source": "8x8 phone",
+      "target": "Telecommunication",
+      "type": "Serving",
+      "description": "8x8 phone supports telecommunication"
+    },
+    {
+      "source": "Adobe Acrobat",
+      "target": "Document Management",
+      "type": "Serving",
+      "description": "Adobe Acrobat supports document management"
+    },
+    {
+      "source": "Cisco Meraki",
+      "target": "Network Management",
+      "type": "Serving",
+      "description": "Cisco Meraki supports network management"
+    },
+    {
+      "source": "Cisco Webex",
+      "target": "Telecommunication",
+      "type": "Serving",
+      "description": "Cisco Webex supports telecommunication"
+    },
+    {
+      "source": "Heat",
+      "target": "IT Service Management",
+      "type": "Serving",
+      "description": "Heat supports IT service management"
+    },
+    {
+      "source": "M365",
+      "target": "Office Productivity",
+      "type": "Serving",
+      "description": "M365 supports office productivity"
+    },
+    {
+      "source": "M365 Copilot",
+      "target": "AI Productivity",
+      "type": "Serving",
+      "description": "M365 Copilot supports AI productivity"
+    },
+    {
+      "source": "Microsoft Exchange",
+      "target": "Email Management",
+      "type": "Serving",
+      "description": "Microsoft Exchange supports email management"
+    },
+    {
+      "source": "Ocularis",
+      "target": "Security Monitoring",
+      "type": "Serving",
+      "description": "Ocularis supports security monitoring"
+    },
+    {
+      "source": "PhishAlert",
+      "target": "Email Security",
+      "type": "Serving",
+      "description": "PhishAlert supports email security"
+    },
+    {
+      "source": "ysoft",
+      "target": "Printing Services",
+      "type": "Serving",
+      "description": "ysoft supports printing services"
+    },
+    {
+      "source": "Zscaler",
+      "target": "Endpoint Security",
+      "type": "Serving",
+      "description": "Zscaler supports endpoint security"
+    },
+    {
+      "source": "JIRA",
+      "target": "Task Management",
+      "type": "Serving",
+      "description": "JIRA supports task management"
+    }
+  ],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No major gaps identified in the provided data. All applications have clear capabilities supported.",
+    "sunset_risks": "Legacy systems like Cargo Master and W3 Sirius pose risks due to aging technology.",
+    "maturity_trends": "Most systems are modern SaaS solutions, with a few legacy systems requiring attention.",
+    "overlaps": "No significant overlaps detected in the provided data."
+  },
+  "recommendations": [
+    "Prioritize replacement of legacy systems like Cargo Master and W3 Sirius.",
+    "Evaluate the strategic alignment of Ironclad (Boston Project) for future contract management needs.",
+    "Ensure robust integration between systems like Yusen and other supply chain applications."
+  ]
+}

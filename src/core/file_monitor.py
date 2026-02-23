@@ -143,8 +143,15 @@ class FileChangeMonitor:
         files_skipped = len(unchanged_files)
         efficiency_gain = (files_skipped / total_files * 100) if total_files > 0 else 0.0
 
-        # Update tracking data
+        # Update tracking data, preserving processed metadata for unchanged files
         for file_path, file_info in current_files.items():
+            if file_path in self.tracked_files:
+                existing = self.tracked_files[file_path]
+                if file_info.checksum == existing.checksum:
+                    file_info.last_processed = existing.last_processed
+                    file_info.insights_extracted = existing.insights_extracted
+                    file_info.discovered_elements = existing.discovered_elements
+                    file_info.error_count = existing.error_count
             self.tracked_files[file_path] = file_info
 
         # Remove deleted files from tracking
@@ -341,6 +348,9 @@ class FileChangeMonitor:
 
         file_info = self.tracked_files[file_path]
         discovered_elements = file_info.discovered_elements
+
+        if file_info.last_processed is None:
+            return False, "File was tracked but never successfully processed"
 
         if not discovered_elements:
             return True, None  # No elements tracked, assume valid

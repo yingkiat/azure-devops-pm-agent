@@ -155,7 +155,7 @@ class ViewBuilder:
             return []
 
         specs = []
-        for spec_file in self.specs_dir.glob("*.yaml"):
+        for spec_file in self.specs_dir.glob("**/*.yaml"):
             try:
                 with open(spec_file, 'r', encoding='utf-8') as f:
                     spec = yaml.safe_load(f)

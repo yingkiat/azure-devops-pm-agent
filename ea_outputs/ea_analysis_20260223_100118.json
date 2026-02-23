@@ -1,0 +1,147 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "New WMS warehouse system",
+        "description": "New WMS warehouse system will be used in Aisai Distribution Center",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "2025-06-01",
+        "Modified By": "InternalServices",
+        "Modified On": "2025-09-25 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "2024-12-03 00:44",
+        "Patching Exception": "FALSE",
+        "Patching Group": "",
+        "OS": "",
+        "HITRUST": "No",
+        "SOX": "No",
+        "Internet Exposure": "Internally Accessible",
+        "Application ID": "",
+        "Application Short Code": "W3JP",
+        "End of Life": "",
+        "PO Number": "",
+        "Invoice": "",
+        "Funded For Replacement": "",
+        "Horizon": "H2",
+        "lifecycle_signals": [
+          "planned",
+          "will be used"
+        ],
+        "capabilities_supported": [
+          "Warehouse Management"
+        ]
+      },
+      {
+        "name": "Yusen Australia",
+        "description": "Website of Yusen, as our logistics service provider, provides inbound shipment details. Owned by vendor.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Production",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "2025-06-02",
+        "Modified By": "yingkiat.gan",
+        "Modified On": "2025-10-31 12:58",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "2024-12-03 00:46",
+        "Patching Exception": "FALSE",
+        "Patching Group": "",
+        "OS": "",
+        "HITRUST": "No",
+        "SOX": "No",
+        "Internet Exposure": "Publicly Accessible",
+        "Application ID": "",
+        "Application Short Code": "YASE",
+        "End of Life": "",
+        "PO Number": "",
+        "Invoice": "",
+        "Funded For Replacement": "",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "in production",
+          "owned by vendor"
+        ],
+        "capabilities_supported": [
+          "Inbound Shipment Management"
+        ]
+      }
+    ],
+    "Capability": [
+      {
+        "name": "Warehouse Management",
+        "domain": "Operations",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Inbound Shipment Management",
+        "domain": "Logistics",
+        "criticality": "Critical"
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "New WMS warehouse system",
+      "target": "Warehouse Management",
+      "type": "Serving",
+      "description": "New WMS warehouse system supports warehouse management in the Aisai Distribution Center."
+    },
+    {
+      "source": "Yusen Australia",
+      "target": "Inbound Shipment Management",
+      "type": "Serving",
+      "description": "Yusen Australia provides inbound shipment details as a logistics service provider."
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "New WMS warehouse system",
+        "capability": "Warehouse Management",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Planned implementation for Aisai Distribution Center with Tier 5 disaster recovery."
+      },
+      {
+        "app_name": "Yusen Australia",
+        "capability": "Inbound Shipment Management",
+        "domain": "Logistics",
+        "maturity": 3,
+        "lifecycle_status": "Maintain",
+        "remaining_years": 3,
+        "strategic_importance": "Critical",
+        "confidence": 0.8,
+        "rationale": "Currently in production and owned by vendor."
+      }
+    ],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified. Both warehouse management and inbound shipment management are supported by applications.",
+    "sunset_risks": "No immediate sunset risks identified. Yusen Australia is vendor-owned, which may pose dependency risks.",
+    "maturity_trends": "New WMS warehouse system improves maturity in warehouse management. Yusen Australia remains stable but vendor dependency limits flexibility.",
+    "overlaps": "No overlaps detected. Each application supports distinct capabilities."
+  },
+  "recommendations": [
+    "Ensure successful implementation of the New WMS warehouse system to enhance warehouse management capabilities.",
+    "Monitor vendor dependency risks associated with Yusen Australia and evaluate alternative solutions if necessary.",
+    "Conduct regular audits to ensure disaster recovery readiness for critical systems."
+  ]
+}

@@ -1,88 +1,166 @@
 ID,Type,Name,Documentation,Source,Target
-id-a26c52db01e9,Serving,,PO Automation serves the Purchase Order Automation capability,id-6b4a8e4819a0,id-ef8339ce9f2e
-id-d6645c71fe7d,Serving,,New WMS Warehouse System supports Warehouse Management capability,id-d1d081f7ea63,id-7579b234fcf2
-id-5ca9ca20703a,Serving,,Yusen Australia supports Inbound Shipment Management capability,id-d05cb7112389,id-ac2c3f829d9e
-id-6c527f4dde37,Serving,,QMS Change Request DB supports QMS Change Request DB capability,id-583ac905d753,id-583ac905d753
-id-8929e235096a,Serving,,QMS Training Matrix DB supports QMS Training DB capability,id-ee6d992988fa,id-62b98f65c489
-id-86eeec81aaea,Serving,,Reliance supports QMS Documents Management System capability,id-60b46c5e1d6f,id-d03dae6db689
-id-71ed125a2251,Serving,,Yusen supports 3rd party logistics service provider capability,id-bb3759f4a808,id-795aefdd307f
+id-900a0aab4cca,Serving,,MD-NET supports order management through EDI order reception.,id-809fbf7c4841,id-14da17022bdc
+id-28919fd745bf,Serving,,Microsoft Dynamics provides CRM capabilities with advanced automation.,id-c508ffe79f87,id-75a9eaf4fe89
+id-d4c4daa38064,Serving,,Azure Data Lake Storage supports enterprise data storage,id-417c71677e2e,id-b474df81d84f
+id-36d57f8230d3,Serving,,Microsoft Fabric supports enterprise data storage,id-18c3e14355e4,id-b474df81d84f
+id-927bcf34e5af,Serving,,Microsoft PowerBI supports data visualization and reporting,id-b4b0bccf96e6,id-77f8f635b6c4
+id-80524c5ddf10,Serving,,Tableau supports data visualization and reporting,id-f91e6b0dc180,id-77f8f635b6c4
+id-c0a180ce88a8,Serving,,MIMS supports inventory management in ANZ,id-101c48872a1a,id-6bc03bbdd357
+id-f60a21304543,Serving,,Yusen supports inbound shipment management,id-bb3759f4a808,id-ac2c3f829d9e
+id-b71c34bfd367,Serving,,Cargo Master supports warehouse management,id-0015d01da270,id-7579b234fcf2
+id-6ca01865d916,Serving,,W3 Sirius supports warehouse management,id-6d9eb02243f7,id-7579b234fcf2
+id-d42923f443f2,Serving,,QAD Asia - EE - Test supports supply chain management processes,id-23c91f32ddaf,id-7a9c22258891
+id-6cbd9a54122d,Serving,,QAD Australia Enterprise Edition supports supply chain management processes,id-df931125de62,id-7a9c22258891
+id-3f10ed487198,Serving,,QAD Australia Enterprise Edition - DEV supports supply chain management processes,id-3f09331c060c,id-7a9c22258891
+id-04c44956d0aa,Serving,,QAD Australia Enterprise Edition - TST supports supply chain management processes,id-873415779368,id-7a9c22258891
+id-09af3eac2eb4,Serving,,Provides inbound shipment details for logistics.,id-60d10cff0157,id-ac2c3f829d9e
+id-7a446a1b8b1d,Serving,,Supports inventory management at Kasugai manufacturing site.,id-d0c5cbfb36b6,id-6bc03bbdd357
+id-8e34e2e4a297,Serving,,Generates and prints labels for pack assembly.,id-a3ef61b3c95c,id-cb7cb0b84df6
+id-c10ba42e5a9e,Serving,,New WMS warehouse system supports warehouse management in the Aisai Distribution Center.,id-cbb1eff8f9df,id-7579b234fcf2
+id-5ca9ca20703a,Serving,,Yusen Australia provides inbound shipment details as a logistics service provider.,id-d05cb7112389,id-ac2c3f829d9e
+id-34112c57c802,Serving,,DSx Forecasting supports Forecasting capability,id-c4dc6344f48f,id-ab6f08bfb397
+id-6c527f4dde37,Serving,,QMS Change Request DB supports the QMS Change Request DB capability,id-583ac905d753,id-583ac905d753
+id-8929e235096a,Serving,,QMS Training Matrix DB supports the QMS Training DB capability,id-ee6d992988fa,id-62b98f65c489
+id-86eeec81aaea,Serving,,Reliance supports the QMS Documents Management System capability,id-60b46c5e1d6f,id-d03dae6db689
+id-71ed125a2251,Serving,,Yusen supports the 3rd party logistics service provider capability,id-bb3759f4a808,id-795aefdd307f
 id-b81fb08c96a4,Serving,,Yusen supports integration with QAD capability,id-bb3759f4a808,id-655eab643706
 id-532034b874ea,Serving,,Compliance DB supports Compliance DB capability,id-12a85d541a4e,id-12a85d541a4e
-id-dc7239cb6a7f,Serving,,AI Builder supports data extraction capability,id-a953fb74e3ca,id-68c77ead8205
-id-71848dac39f4,Serving,,Docupipe supports data extraction capability,id-c623bc8d5efd,id-68c77ead8205
-id-a341889c1eba,Serving,,Canvas App supports validation capability,id-048b03adc5b4,id-2a913e9c1616
-id-1bcbee3ef2c9,Serving,,Canvas App supports error handling capability,id-048b03adc5b4,id-c7192907e77e
-id-a9239d256397,Serving,,Backend Validation Service supports validation capability,id-352687944df8,id-2a913e9c1616
-id-73f4e202ad8d,Serving,,Queueing System supports asynchronous processing capability,id-83902728e105,id-abe4088a2118
-id-92405de9aea4,Serving,,QAD supports order management capability,id-9aa09d95655d,id-14da17022bdc
-id-838ab375127a,Serving,,Boomi supports system integration capability,id-a5b9ae2e6df9,id-c4025e3144b6
-id-0d3349d78b6b,Access,,Purchase Order Data is accessed during the PO creation process,id-035956274b35,id-c7fa30607f04
-id-5aa9164a04ce,Access,,Customer Data is accessed by the Validation Service,id-c12388ddcc2c,id-cd76245536ab
-id-761cf0ccddd4,Composition,,UDW Agent includes the PowerApps UI as its frontend.,id-aea3fe18dd4a,id-c895bed04fc0
-id-96eac0022d7f,Composition,,UDW Agent includes the Azure Container API as its intelligence engine.,id-aea3fe18dd4a,id-1aa2bb0e9f2c
-id-bb86c57f7b75,Access,,UDW Agent queries the Fabric Data Warehouse for data.,id-aea3fe18dd4a,id-af6770090ad9
-id-8441bc619fa0,Composition,,UDW Agent includes the Azure Function for logging.,id-aea3fe18dd4a,id-d06fcf53a742
-id-95e82067399b,Triggering,,PowerApps UI triggers API calls via Power Automate Flow #1.,id-c895bed04fc0,id-7552db249856
-id-d88ce9881fc7,Flow,,Power Automate Flow #1 sends API requests to the Azure Container API.,id-7552db249856,id-1aa2bb0e9f2c
-id-c98cc1117453,Access,,Azure Container API accesses the Fabric Data Warehouse for query execution.,id-1aa2bb0e9f2c,id-af6770090ad9
-id-d0603b7b7da0,Triggering,,PowerApps UI triggers logging events via Power Automate Flow #2.,id-c895bed04fc0,id-239a85f0c8e3
-id-ae1a4b29db39,Flow,,Power Automate Flow #2 sends log data to the Azure Function.,id-239a85f0c8e3,id-d06fcf53a742
-id-7ae3f9b3ce7b,Serving,,Azure Container Apps serves Enhanced HEAT ITSM by migrating ITSM platform to serverless compute,id-d418bd3e7f43,id-0b87b0eb6e93
+id-e9f6fe051cad,Serving,,Employee Self Service supports Employee Self Service capability,id-16f1e07df703,id-16f1e07df703
+id-479718e20c0f,Serving,,ETO Consignment supports ETO Consignment capability,id-98bafb85d403,id-98bafb85d403
+id-f908f72b1360,Serving,,FAM supports Authorization capability,id-48f5da7a880e,id-37d52ef0e95a
+id-5db57b29455b,Serving,,Sample Continence Aged Care supports Order Management capability,id-7aac5a789bf1,id-14da17022bdc
+id-dc7239cb6a7f,Serving,,AI Builder provides data extraction capabilities,id-a953fb74e3ca,id-68c77ead8205
+id-71848dac39f4,Serving,,Docupipe provides data extraction capabilities,id-c623bc8d5efd,id-68c77ead8205
+id-5bd798ed0edd,Serving,,Canvas App provides user interaction capabilities,id-048b03adc5b4,id-f36e91659a70
+id-1bcbee3ef2c9,Serving,,Canvas App provides error handling capabilities,id-048b03adc5b4,id-c7192907e77e
+id-a341889c1eba,Serving,,Canvas App provides validation capabilities,id-048b03adc5b4,id-2a913e9c1616
+id-a9239d256397,Serving,,Backend Validation Service provides validation capabilities,id-352687944df8,id-2a913e9c1616
+id-7a8667d64af8,Serving,,Backend Validation Service provides error handling capabilities,id-352687944df8,id-c7192907e77e
+id-2c45288961f2,Serving,,Backend Validation Service provides customer matching capabilities,id-352687944df8,id-49ac64275529
+id-73f4e202ad8d,Serving,,Queueing System provides asynchronous processing capabilities,id-83902728e105,id-abe4088a2118
+id-92405de9aea4,Serving,,QAD provides order management capabilities,id-9aa09d95655d,id-14da17022bdc
+id-838ab375127a,Serving,,Boomi provides system integration capabilities,id-a5b9ae2e6df9,id-c4025e3144b6
+id-e00f86fe2752,Realization,,PO Automation process relies on data extraction,id-ad3182804e09,id-68c77ead8205
+id-4e61997aa66a,Realization,,PO Automation process relies on validation,id-ad3182804e09,id-2a913e9c1616
+id-4844213d9288,Realization,,PO Automation process supports order management,id-ad3182804e09,id-14da17022bdc
+id-50bf7a17aa74,Access,,Purchase Order Data is used in the PO Automation process,id-035956274b35,id-ad3182804e09
+id-6850d683e250,Serving,,Portal serves customer engagement capability,id-ba3bb97a7943,id-6760c2e3042f
+id-38f385cbe410,Serving,,Portal serves inventory management capability,id-ba3bb97a7943,id-6bc03bbdd357
+id-afe9e9355ab5,Serving,,Portal serves order management capability,id-ba3bb97a7943,id-14da17022bdc
+id-00d3fc7b72db,Serving,,Backend API supports system integration,id-a356e71b5165,id-c4025e3144b6
+id-a9d11bd3e28a,Serving,,Backend API enforces data security,id-a356e71b5165,id-659df2d73987
+id-18c0bb300e33,Serving,,Backend API enforces authorization,id-a356e71b5165,id-37d52ef0e95a
+id-9eb7bcbf5b58,Serving,,Entra External ID provides authentication service,id-0aa4cf1ac349,id-82be585d3825
+id-cdb9fd26cd6f,Flow,,Backend API retrieves pack data from MedPack API,id-5193554d990b,id-a356e71b5165
+id-40284eb0e939,Flow,,Backend API retrieves order and inventory data from QAD Analytics Database,id-99fc70294a91,id-a356e71b5165
+id-30960b8ffbad,Flow,,Backend API retrieves customer master data from Microsoft Dynamics CRM,id-f5619ffd7b65,id-a356e71b5165
+id-b4800053b0a8,Flow,,Backend API retrieves live inventory data from Real-Time Inventory Dashboard,id-074df4ada8b3,id-a356e71b5165
+id-b694e58e0650,Association,,Backend API is hosted on Azure,id-3d4f8e470fd4,id-a356e71b5165
+id-bd90ad726176,Association,,External Customer Portal is hosted on Azure,id-3d4f8e470fd4,id-ba3bb97a7943
+id-4884f092f359,Composition,,PowerApps UI is the frontend component of UDW Agent.,id-c895bed04fc0,id-aea3fe18dd4a
+id-d88ce9881fc7,Flow,,Power Automate Flow #1 sends API requests to Azure Container API.,id-7552db249856,id-1aa2bb0e9f2c
+id-ae1a4b29db39,Flow,,Power Automate Flow #2 sends event logs to Azure Function.,id-239a85f0c8e3,id-d06fcf53a742
+id-c98cc1117453,Access,,Azure Container API queries Fabric Data Warehouse for data.,id-1aa2bb0e9f2c,id-af6770090ad9
+id-5c923165f21f,Access,,Azure Function persists event logs.,id-d06fcf53a742,id-6cedeb52dd35
+id-be354bd0a7d3,Serving,,UDW Agent supports natural language query capability.,id-aea3fe18dd4a,id-2fcb675abe76
+id-e9d532de179b,Serving,,UDW Agent provides AI-powered analysis.,id-aea3fe18dd4a,id-ebe49d96ba2f
+id-ff0e8fb26030,Serving,,UDW Agent delivers structured results.,id-aea3fe18dd4a,id-cc2f38a9213c
+id-6bc9460e8f1c,Serving,,UDW Agent supports comprehensive logging.,id-aea3fe18dd4a,id-37681a33f27b
+id-f021f8d137e4,Serving,,UDW Agent provides data visualization capabilities.,id-aea3fe18dd4a,id-77f8f635b6c4
+id-7ae3f9b3ce7b,Serving,,Azure Container Apps serves Enhanced HEAT ITSM as the ITSM platform will migrate to serverless compute,id-1e303a74d0f5,id-0b87b0eb6e93
 id-0bdd2d9eeee5,Access,,AI Support Chatbot accesses Enhanced HEAT ITSM for ticket creation and status queries,id-a40f6332543f,id-0b87b0eb6e93
-id-aded055d6223,Serving,,Proactive Cost Monitoring serves Azure Container Apps by tracking container resource usage and costs,id-1c9f3d0f93e9,id-d418bd3e7f43
-id-a192c56e0d9a,Serving,,Medline Systems support cybersecurity capabilities.,id-d2841a3eb2be,id-addb0744b4dd
-id-482576312cba,Serving,,Medline Systems ensure compliance with regulatory requirements.,id-d2841a3eb2be,id-e6c82757f899
-id-7a877410cbc2,Serving,,"Medline Systems protect the confidentiality, integrity, and availability of Medline Data.",id-d2841a3eb2be,id-780637973f84
-id-2aceff1e30da,Serving,,Medline Data Center supports critical infrastructure management.,id-c0ba9091e0d3,id-3a90d544f50a
-id-29d1d4d2915a,Serving,,Medline Data Center provides hosting for regulated data.,id-c0ba9091e0d3,id-d1cbea532b8e
-id-00016a3b2047,Serving,,WMS Portal provides access to internal business applications.,id-46a73e8b181c,id-27524675ae56
-id-bdb500b852a2,Serving,,EMRs manage patient health information.,id-d4efef1ce86a,id-8e2f95e2f55e
-id-bdcc4e4a82a0,Serving,,Financial Systems support financial management capabilities.,id-c209692d6d44,id-71b0a5052f6a
-id-b4c3e014b06d,Flow,,Purchase order data flows from CRM to ERP.,id-f5619ffd7b65,id-d4bae9a2200c
-id-09f63b71662b,Access,,CRM accesses Microsoft Document Intelligence for document processing.,id-f5619ffd7b65,id-2e50916cb555
-id-0e31a711722b,Composition,,W3 Sirius extended to include QR code delivery note querying.,id-6d9eb02243f7,id-33cc9e95ad54
-id-e7ab1ee8485e,Triggering,,Kenpin Barcode System to be replaced by W3 Sirius customization.,id-c4b4280f12bb,id-6d9eb02243f7
-id-712746f60817,Serving,supports,PO Automation supports Purchase Order Automation capability,id-6b4a8e4819a0,id-ef8339ce9f2e
-id-2ff3e3dfe7eb,Serving,supports,QAD EE WMS supports Warehouse Management capability,id-1665ef05cde9,id-7579b234fcf2
+id-aded055d6223,Serving,,Proactive Cost Monitoring serves Azure Container Apps by tracking container resource usage and costs,id-25b170e1d241,id-1e303a74d0f5
+id-a192c56e0d9a,Serving,,Medline Systems ensure cybersecurity,id-d2841a3eb2be,id-addb0744b4dd
+id-482576312cba,Serving,,Medline Systems ensure regulatory compliance,id-d2841a3eb2be,id-e6c82757f899
+id-7a877410cbc2,Serving,,Medline Systems ensure data protection,id-d2841a3eb2be,id-780637973f84
+id-2aceff1e30da,Serving,,Medline Data Center supports critical infrastructure management,id-c0ba9091e0d3,id-3a90d544f50a
+id-29d1d4d2915a,Serving,,Medline Data Center provides data hosting services,id-c0ba9091e0d3,id-d1cbea532b8e
+id-00016a3b2047,Serving,,WMS Portal provides access to internal business applications,id-46a73e8b181c,id-27524675ae56
+id-bdb500b852a2,Serving,,EMRs manage patient health information,id-d4efef1ce86a,id-8e2f95e2f55e
+id-bdcc4e4a82a0,Serving,,Financial Systems support financial management,id-c209692d6d44,id-71b0a5052f6a
+id-0cd0c06a7844,Composition,,Networked IT Devices are part of the Medline Network,id-273bc847e423,id-8a57114f317a
+id-510e331db0ea,Serving,,Network Segmentation supports Medline Network security,id-30262b365715,id-8a57114f317a
+id-885e340710b3,Serving,,Firewall protects Medline Network traffic,id-6e328a074c7d,id-8a57114f317a
+id-7da4bd0ebd66,Serving,,SIEM Logging provides centralized logging for Medline Systems,id-23df0dd7f78e,id-d2841a3eb2be
+id-83e489ff2aab,Serving,,Encryption ensures data security for Medline Systems,id-7a042358472e,id-d2841a3eb2be
+id-adab606403f1,Serving,,Backup and Recovery ensures data recoverability for Medline Systems,id-2392291ad7d2,id-d2841a3eb2be
+id-b4c3e014b06d,Flow,,CRM integrates with ERP for purchase order automation,id-f5619ffd7b65,id-d4bae9a2200c
+id-8c7954737f30,Serving,,Docupipe serves CRM for document processing,id-c623bc8d5efd,id-f5619ffd7b65
+id-28ffbb682000,Realization,,SPTs realize healthcare efficiency by reducing setup time and contamination risk,id-03c546eca9af,id-efe05f9cd8b7
+id-d5242b71aae4,Realization,,AI Cross Reference Tool realizes competitor analysis,id-0ebacb70a06c,id-54545fb2d9d5
+id-bb3b66b0921c,Serving,,Real-Time Inventory Dashboard serves inventory management,id-074df4ada8b3,id-6bc03bbdd357
+id-8c3d5679b9f9,Serving,,Customer Analytics Portal serves customer analytics,id-53b594ea52a0,id-b125663d61f4
+id-42dbdadda393,Serving,supports,MD-NET supports Order Management capability,id-809fbf7c4841,id-14da17022bdc
+id-f1232e15d546,Serving,supports,Microsoft Dynamics supports Customer Relationship Management capability,id-c508ffe79f87,id-75a9eaf4fe89
+id-739b0b01b0d2,Serving,supports,QARA supports Regulatory Compliance capability,id-004063554d97,id-e6c82757f899
+id-04b887d52d35,Serving,supports,Azure Data Lake Storage supports Data Storage capability,id-417c71677e2e,id-b474df81d84f
+id-9bb8ff88b788,Serving,supports,Microsoft Fabric supports Data Storage capability,id-18c3e14355e4,id-b474df81d84f
+id-8f76a51b89b2,Serving,supports,Microsoft PowerBI supports Data Visualization capability,id-b4b0bccf96e6,id-77f8f635b6c4
+id-c0f29bc5d6e4,Serving,supports,Tableau supports Data Visualization capability,id-f91e6b0dc180,id-77f8f635b6c4
+id-fa54b2bd5e00,Serving,supports,MIMS supports Inventory Management capability,id-101c48872a1a,id-6bc03bbdd357
+id-47c8c7cc52de,Serving,supports,QAD EE 2019 supports Supply Chain Management capability,id-1bb927d889bb,id-7a9c22258891
+id-b19e3ada4bcb,Serving,supports,Yusen supports Inbound Shipment Management capability,id-bb3759f4a808,id-ac2c3f829d9e
 id-78e271e792e4,Serving,supports,Cargo Master supports Warehouse Management capability,id-0015d01da270,id-7579b234fcf2
 id-a84608acfa6b,Serving,supports,W3 Sirius supports Warehouse Management capability,id-6d9eb02243f7,id-7579b234fcf2
-id-1fff0fa9d0cc,Serving,supports,Contractor Labelling System SINO supports Warehouse Management capability,id-748bf7687aa4,id-7579b234fcf2
-id-7dc899c24e07,Serving,supports,QAD Enterprise Edition supports Supply Chain Management capability,id-a6acffe61478,id-7a9c22258891
-id-dea84013f2f5,Serving,supports,QAD Australia Enterprise Edition supports Supply Chain Management capability,id-df931125de62,id-7a9c22258891
-id-146d260c514d,Serving,supports,QAD Australia Enterprise Edition - DEV supports Supply Chain Management capability,id-3f09331c060c,id-7a9c22258891
-id-a680abfafdda,Serving,supports,QAD Australia Enterprise Edition - TST supports Supply Chain Management capability,id-873415779368,id-7a9c22258891
-id-3171f4381be4,Serving,supports,Batch Control System AUS supports Regulatory Compliance capability,id-bb783cd11e56,id-e6c82757f899
-id-d231dc9a12da,Serving,supports,New WMS Warehouse System supports Warehouse Management capability,id-d1d081f7ea63,id-7579b234fcf2
+id-57e6868335b7,Serving,supports,Griffin Yusen JPN supports Inbound Shipment Management capability,id-60d10cff0157,id-ac2c3f829d9e
+id-d5ff3845669e,Serving,supports,Kenpin JPN supports Inventory Management capability,id-d0c5cbfb36b6,id-6bc03bbdd357
+id-5cfeafe6efbc,Serving,supports,New WMS warehouse system supports Warehouse Management capability,id-cbb1eff8f9df,id-7579b234fcf2
 id-cc2fe22f3474,Serving,supports,Yusen Australia supports Inbound Shipment Management capability,id-d05cb7112389,id-ac2c3f829d9e
+id-831bd1b4b8ba,Serving,supports,DSx Forecasting supports Forecasting capability,id-c4dc6344f48f,id-ab6f08bfb397
 id-febf189b1110,Serving,supports,QMS Change Request DB supports QMS Change Request DB capability,id-50addbca8ad1,id-583ac905d753
 id-b5b561249ce7,Serving,supports,QMS Training Matrix DB supports QMS Training DB capability,id-ee6d992988fa,id-62b98f65c489
 id-8a9683ad0085,Serving,supports,Reliance supports QMS Documents Management System capability,id-60b46c5e1d6f,id-d03dae6db689
+id-419a82d9a1ec,Serving,supports,FAM supports Authorization capability,id-48f5da7a880e,id-37d52ef0e95a
 id-e7f9a47d9f49,Serving,supports,AI Builder supports Data Extraction capability,id-a953fb74e3ca,id-68c77ead8205
 id-fddc40298ddc,Serving,supports,Docupipe supports Data Extraction capability,id-c623bc8d5efd,id-68c77ead8205
-id-0ff6d43ffadc,Serving,supports,Canvas App supports Validation capability,id-048b03adc5b4,id-2a913e9c1616
+id-ded534a6e78e,Serving,supports,Canvas App supports User Interaction capability,id-048b03adc5b4,id-f36e91659a70
 id-bc0e8f1a7407,Serving,supports,Canvas App supports Error Handling capability,id-048b03adc5b4,id-c7192907e77e
+id-0ff6d43ffadc,Serving,supports,Canvas App supports Validation capability,id-048b03adc5b4,id-2a913e9c1616
 id-b3a1161e65e4,Serving,supports,Backend Validation Service supports Validation capability,id-352687944df8,id-2a913e9c1616
 id-2e62acd2bc65,Serving,supports,Backend Validation Service supports Error Handling capability,id-352687944df8,id-c7192907e77e
+id-15e90e93a295,Serving,supports,Backend Validation Service supports Customer Matching capability,id-352687944df8,id-49ac64275529
 id-6d96fbe1960c,Serving,supports,Queueing System supports Asynchronous Processing capability,id-83902728e105,id-abe4088a2118
 id-5e5eed0fe60c,Serving,supports,QAD supports Order Management capability,id-9aa09d95655d,id-14da17022bdc
+id-8676e11994b4,Serving,supports,External Customer Portal supports Customer Engagement capability,id-ba3bb97a7943,id-6760c2e3042f
+id-47132604c1d4,Serving,supports,External Customer Portal supports Inventory Management capability,id-ba3bb97a7943,id-6bc03bbdd357
+id-c7255aab0238,Serving,supports,External Customer Portal supports Order Management capability,id-ba3bb97a7943,id-14da17022bdc
+id-5d79e200d7dc,Serving,supports,Backend API supports System Integration capability,id-a356e71b5165,id-c4025e3144b6
+id-bedb2dc736b2,Serving,supports,Backend API supports Data Security capability,id-a356e71b5165,id-659df2d73987
+id-bb2608ed26dc,Serving,supports,Backend API supports Authorization capability,id-a356e71b5165,id-37d52ef0e95a
+id-e75590db6c8c,Serving,supports,Entra External ID supports Authentication capability,id-0aa4cf1ac349,id-82be585d3825
+id-3eed2a221b94,Serving,supports,Entra External ID supports Authorization capability,id-0aa4cf1ac349,id-37d52ef0e95a
+id-fdcfc4ba115b,Serving,supports,MedPack API supports Inventory Management capability,id-5193554d990b,id-6bc03bbdd357
+id-5de5d680ee5b,Serving,supports,MedPack API supports Product Information Management capability,id-5193554d990b,id-147b1fe22bd9
+id-82f51ab8fabf,Serving,supports,QAD Analytics Database supports Order Management capability,id-99fc70294a91,id-14da17022bdc
+id-77efd2aa2960,Serving,supports,QAD Analytics Database supports Inventory Management capability,id-99fc70294a91,id-6bc03bbdd357
+id-a6621c5c8f06,Serving,supports,QAD Analytics Database supports Forecasting capability,id-99fc70294a91,id-ab6f08bfb397
+id-5411079a7b50,Serving,supports,Microsoft Dynamics CRM supports Customer Relationship Management capability,id-f5619ffd7b65,id-75a9eaf4fe89
+id-580544cd9d8f,Serving,supports,Real-Time Inventory Dashboard supports Inventory Management capability,id-074df4ada8b3,id-6bc03bbdd357
 id-d05d7f5e7285,Serving,supports,UDW Agent supports Natural Language Query capability,id-aea3fe18dd4a,id-2fcb675abe76
 id-81a9038d4f13,Serving,supports,UDW Agent supports AI-Powered Analysis capability,id-aea3fe18dd4a,id-ebe49d96ba2f
 id-3ba98bd5e71b,Serving,supports,UDW Agent supports Structured Results capability,id-aea3fe18dd4a,id-40ed5ef75eeb
 id-62f70d9e7167,Serving,supports,UDW Agent supports Comprehensive Logging capability,id-aea3fe18dd4a,id-37681a33f27b
+id-081fca931f76,Serving,supports,UDW Agent supports Data Visualization capability,id-aea3fe18dd4a,id-77f8f635b6c4
 id-929c10502ebf,Serving,supports,PowerApps UI supports User Interaction capability,id-c895bed04fc0,id-f36e91659a70
 id-9a5eb2f4fc02,Serving,supports,PowerApps UI supports Data Visualization capability,id-c895bed04fc0,id-77f8f635b6c4
-id-55bd88cce717,Serving,supports,Azure Container API supports Execution Strategy Selection capability,id-1aa2bb0e9f2c,id-c1e4a0c85627
+id-7c97ba491ba4,Serving,supports,Power Automate Flow #1 supports API Integration capability,id-7552db249856,id-ac6bcf59a57a
+id-dc7adac0fbfb,Serving,supports,Power Automate Flow #2 supports Event Logging capability,id-239a85f0c8e3,id-ee147117a43a
+id-594e3ca25ea2,Serving,supports,Azure Container API supports AI-Powered Analysis capability,id-1aa2bb0e9f2c,id-ebe49d96ba2f
+id-b3ee1d567612,Serving,supports,Azure Container API supports Adaptive Execution Strategy Selection capability,id-1aa2bb0e9f2c,id-fcaf3f35677b
 id-95c8d023be7d,Serving,supports,Fabric Data Warehouse supports Data Storage capability,id-af6770090ad9,id-b474df81d84f
 id-5c966655de8c,Serving,supports,Fabric Data Warehouse supports Query Execution capability,id-af6770090ad9,id-a989f7992dad
 id-908dd6c0a421,Serving,supports,Azure Function (Logging Sink) supports Event Logging capability,id-d06fcf53a742,id-ee147117a43a
 id-0bd5804fa047,Serving,supports,Azure Function (Logging Sink) supports Audit Trail capability,id-d06fcf53a742,id-f03b2ff95acf
-id-7c97ba491ba4,Serving,supports,Power Automate Flow #1 supports API Integration capability,id-7552db249856,id-ac6bcf59a57a
-id-dc7adac0fbfb,Serving,supports,Power Automate Flow #2 supports Event Logging capability,id-239a85f0c8e3,id-ee147117a43a
 id-e4b32f8e63cb,Serving,supports,HEAT ITSM supports Ticket Management capability,id-fffcfb9f4f02,id-10547ee87864
-id-132fe29cd139,Serving,supports,AI Support Chatbot supports Ticket Deflection capability,id-a40f6332543f,id-64f56b7fedd1
 id-603c420b2539,Serving,supports,Enhanced HEAT ITSM supports Ticket Management capability,id-0b87b0eb6e93,id-10547ee87864
 id-ee8fc8e3ecae,Serving,supports,Enhanced HEAT ITSM supports Proactive Support capability,id-0b87b0eb6e93,id-1102967cb030
+id-132fe29cd139,Serving,supports,AI Support Chatbot supports Ticket Deflection capability,id-a40f6332543f,id-64f56b7fedd1
 id-4899920f2a85,Serving,supports,Self-Service Portal supports Self-Service capability,id-98f9272950bb,id-d735d2ea14be
+id-b9874f97f348,Serving,supports,Azure Container Apps supports Compute Optimization capability,id-1e303a74d0f5,id-0e56a0175384
+id-ff91c48e00e0,Serving,supports,Serverless Databases supports Database Optimization capability,id-12ae940140d9,id-741a0081fd0a
+id-001a92234963,Serving,supports,Proactive Cost Monitoring supports Cost Optimization capability,id-25b170e1d241,id-6e7f2fa1af32
+id-0ae8727639c8,Serving,supports,Windows Hello supports Authentication capability,id-82356e7149ec,id-82be585d3825
+id-1922152e0a3c,Serving,supports,Azure File Sync to JPN supports File Management capability,id-c70732c287d2,id-2bae26a874de
 id-831f854da7ea,Serving,supports,Medline Systems supports Cybersecurity capability,id-d2841a3eb2be,id-addb0744b4dd
 id-32f5d0ced2ce,Serving,supports,Medline Systems supports Regulatory Compliance capability,id-d2841a3eb2be,id-e6c82757f899
 id-73e83d3f2951,Serving,supports,Medline Systems supports Data Protection capability,id-d2841a3eb2be,id-780637973f84
@@ -91,13 +169,9 @@ id-ff8e4792b9ef,Serving,supports,Medline Data Center supports Data Hosting capab
 id-4846d56dbadc,Serving,supports,WMS Portal supports Internal Business Applications Access capability,id-46a73e8b181c,id-27524675ae56
 id-a5056a1554e6,Serving,supports,EMRs supports Patient Health Information Management capability,id-d4efef1ce86a,id-8e2f95e2f55e
 id-9ab125c7b025,Serving,supports,Financial Systems supports Financial Management capability,id-c209692d6d44,id-71b0a5052f6a
-id-5411079a7b50,Serving,supports,Microsoft Dynamics CRM supports Customer Relationship Management capability,id-f5619ffd7b65,id-75a9eaf4fe89
-id-80c0b1f3904f,Serving,supports,Microsoft Dynamics CRM supports Purchase Order Automation capability,id-f5619ffd7b65,id-ef8339ce9f2e
 id-73b80c740ad9,Serving,supports,QAD ERP supports Order Management capability,id-d4bae9a2200c,id-14da17022bdc
-id-2b350e7ff3cd,Serving,supports,Medline Online Portal supports Customer Engagement capability,id-59051872c987,id-6760c2e3042f
-id-b8bd83429b79,Serving,supports,Medline Online Portal supports Inventory Management capability,id-59051872c987,id-6bc03bbdd357
-id-c5c2ce7621e4,Serving,supports,AI Cross Reference Tool supports Competitor Analysis capability,id-0ebacb70a06c,id-54545fb2d9d5
-id-580544cd9d8f,Serving,supports,Real-Time Inventory Dashboard supports Inventory Management capability,id-074df4ada8b3,id-6bc03bbdd357
+id-fb43fddf16d5,Serving,supports,QAD ERP supports Supply Chain Management capability,id-d4bae9a2200c,id-7a9c22258891
 id-1b354164d648,Serving,supports,Medline Sterile Procedure Trays (SPTs) supports Healthcare Efficiency capability,id-03c546eca9af,id-efe05f9cd8b7
 id-9510986c93a3,Serving,supports,Medline Sterile Procedure Trays (SPTs) supports Supply Chain Management capability,id-03c546eca9af,id-7a9c22258891
-id-ed8d99d1e2e4,Serving,supports,Kenpin Barcode System supports Manufacturing Data Management capability,id-c4b4280f12bb,id-e6329f354112
+id-c5c2ce7621e4,Serving,supports,AI Cross Reference Tool supports Competitor Analysis capability,id-0ebacb70a06c,id-54545fb2d9d5
+id-2c8a1e0f930a,Serving,supports,Customer Analytics Portal supports Customer Analytics capability,id-53b594ea52a0,id-b125663d61f4

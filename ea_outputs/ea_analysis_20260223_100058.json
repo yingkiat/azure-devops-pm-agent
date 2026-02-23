@@ -1,0 +1,272 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "QAD Standard Edition",
+        "description": "An enterprise resource planning software suite that includes a variety of applications for manufacturing companies.",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Owner Login ID": "sarita.shetty",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 1",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:52",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "24/10/2024 23:51",
+        "Application ID": "7F4A87C7249B4761929B4861AAF0737A",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "QAD Japan Standard Edition - DEV",
+        "description": "ERP System Japan - QAD SE on cloud. QAD Standard Edition is an enterprise resource planning software suite that includes a variety of applications for manufacturing companies.",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Owner Login ID": "sarita.shetty",
+        "Environment": "Development",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 4",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "25/10/2024 0:47",
+        "Application ID": "975C24C5C7DD49CAB9B9B3DBF64CC300",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "development"
+        ]
+      },
+      {
+        "name": "QAD Japan Standard Edition - TST",
+        "description": "ERP System Japan - QAD SE on cloud. QAD Standard Edition is an enterprise resource planning software suite that includes a variety of applications for manufacturing companies.",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Owner Login ID": "sarita.shetty",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "3/05/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "25/10/2024 0:46",
+        "Application ID": "A642B314470C4A0C9179076BA93167C9",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "test"
+        ]
+      },
+      {
+        "name": "Batch Control System AUS",
+        "description": "Manages and tracks pack assembly process, ensuring accurate component usage, assembly procedure, quality assurance, and regulatory compliance for each production batch.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 1",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 21:01",
+        "Application ID": "A062B3E8418B440EB016C614A722E424",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "Batch Control System AUS - TST",
+        "description": "Manages and tracks pack assembly process, ensuring accurate component usage, assembly procedure, quality assurance, and regulatory compliance for each production batch.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 21:18",
+        "Application ID": "72AEC22672844865882671FEBD2EC64D",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "test"
+        ]
+      },
+      {
+        "name": "CargoMaster Japan WMS",
+        "description": "WMS warehouse system used in Tokyo Distribution Center, 3rd party warehouse.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 1",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 21:59",
+        "Application ID": "889172F8CC9F4577BAEEB10E4B8390F3",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "CargoMaster Japan WMS - TST",
+        "description": "WMS warehouse system used in Tokyo Distribution Center, 3rd party warehouse.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 22:06",
+        "Application ID": "A213909EA939466E9E43213738BC6AE9",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "test"
+        ]
+      },
+      {
+        "name": "Contractor Labelling System SINO",
+        "description": "Generates and prints essential labels used for OEM Contractor packs, including component, inner leaflet, carton labels, etc.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 2",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 22:16",
+        "Application ID": "C7F1C7E44212409FBB46FC4098756B9A",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "Contractor Labelling System SINO - TST",
+        "description": "Generates and prints essential labels used for OEM Contractor packs, including component, inner leaflet, carton labels, etc.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 22:23",
+        "Application ID": "B806DF3E92814DDAB98812527B87A37A",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "test"
+        ]
+      },
+      {
+        "name": "DSx Forecasting Application Australia",
+        "description": "Australia demand planning system to process product forecast.",
+        "AdministratorTeam": "IT-APAC-Operations",
+        "Administrator": "neomi.wang",
+        "OwnerTeam": "IT-APAC-Operations",
+        "Owner": "NEOMI WANG",
+        "Owner Login ID": "neomi.wang",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 2",
+        "Next Audit Date": "26/05/2025 0:00",
+        "Modified By": "InternalServices",
+        "Modified On": "25/09/2025 22:53",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "26/11/2024 22:33",
+        "Application ID": "5DC1E130FF79414F9C3F5CCD29D98C79",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      }
+    ]
+  },
+  "relationships": [],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No explicit capability gaps identified from the input.",
+    "sunset_risks": "No systems marked for sunset or decommissioning.",
+    "maturity_trends": "All systems appear to be in production or test environments with no explicit modernization signals.",
+    "overlaps": "Potential overlap in WMS systems and batch control systems, but further analysis is required."
+  },
+  "recommendations": [
+    "Conduct a deeper analysis of WMS and batch control systems to identify potential overlaps or consolidation opportunities.",
+    "Evaluate the strategic importance and modernization needs of existing systems to ensure alignment with future business goals."
+  ]
+}

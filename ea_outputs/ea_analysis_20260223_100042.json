@@ -1,0 +1,204 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "QAD Asia - EE - Test",
+        "description": "ERP System Asia - QAD EE on cloud",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:49",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "24/10/2024 23:02",
+        "Patching Exception": "FALSE",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "QAD Australia Enterprise Edition",
+        "description": "QAD Aus - EE\n\nERP System AU - QAD EE on premise\n\nQAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 1",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:51",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "24/10/2024 20:45",
+        "Patching Exception": "FALSE",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "QAD Australia Enterprise Edition - DEV",
+        "description": "QAD Australia Enterprise Edition - DEV\n\nQAD Aus - EE Dev\nERP System AU - QAD EE on premise\n\nQAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Environment": "Development",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 4",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:51",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "24/10/2024 22:53",
+        "Patching Exception": "FALSE",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "QAD Australia Enterprise Edition - TST",
+        "description": "QAD Australia Enterprise Edition - TST\nQAD Aus - EE Test\nERP System AU - QAD EE on premise\n\nQAD Enterprise Edition (EE) is a platform that offers a suite of integrated software solutions for managing manufacturing, financials, operations, customer, and supply chain processes",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Environment": "Test",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 5",
+        "Next Audit Date": "3/05/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:51",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "24/10/2024 22:50",
+        "Patching Exception": "FALSE",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "current",
+          "in production"
+        ]
+      },
+      {
+        "name": "QAD Australia Standard Edition - Legacy",
+        "description": "QAD Aus- SE (Legacy)\n\nQAD Standard Edition is an enterprise resource planning software suite that includes a variety of applications for manufacturing companies.",
+        "AdministratorTeam": "IT-APAC-ERP",
+        "Administrator": "sarita.shetty",
+        "OwnerTeam": "IT-APAC-ERP",
+        "Owner": "SARITA SHETTY",
+        "Environment": "Production",
+        "CI Status": "Live",
+        "Contains PHI": "FALSE",
+        "Contains PII": "FALSE",
+        "Disaster Recovery Tier": "Tier 3",
+        "Next Audit Date": "24/04/2025 0:00",
+        "Modified By": "eheller",
+        "Modified On": "17/07/2025 22:51",
+        "CreatedBy": "eheller",
+        "CreatedDateTime": "25/10/2024 2:09",
+        "Patching Exception": "FALSE",
+        "Horizon": "H1",
+        "lifecycle_signals": [
+          "legacy",
+          "in production"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "QAD Asia - EE - Test",
+      "target": "Supply Chain Management",
+      "type": "Serving",
+      "description": "QAD Asia - EE - Test supports supply chain management processes"
+    },
+    {
+      "source": "QAD Australia Enterprise Edition",
+      "target": "Supply Chain Management",
+      "type": "Serving",
+      "description": "QAD Australia Enterprise Edition supports supply chain management processes"
+    },
+    {
+      "source": "QAD Australia Enterprise Edition - DEV",
+      "target": "Supply Chain Management",
+      "type": "Serving",
+      "description": "QAD Australia Enterprise Edition - DEV supports supply chain management processes"
+    },
+    {
+      "source": "QAD Australia Enterprise Edition - TST",
+      "target": "Supply Chain Management",
+      "type": "Serving",
+      "description": "QAD Australia Enterprise Edition - TST supports supply chain management processes"
+    },
+    {
+      "source": "QAD Australia Standard Edition - Legacy",
+      "target": "Manufacturing",
+      "type": "Serving",
+      "description": "QAD Australia Standard Edition - Legacy supports manufacturing processes"
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "QAD Asia - EE - Test",
+        "capability": "Supply Chain Management",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Cloud-based ERP system supporting supply chain management"
+      },
+      {
+        "app_name": "QAD Australia Enterprise Edition",
+        "capability": "Supply Chain Management",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "On-premise ERP system supporting supply chain management"
+      }
+    ],
+    "updates": [
+      {
+        "app_name": "QAD Australia Standard Edition - Legacy",
+        "capability": "Manufacturing",
+        "maturity": 2,
+        "lifecycle_status": "Sunset",
+        "rationale": "Legacy system with limited functionality"
+      }
+    ],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified in supply chain management capabilities.",
+    "sunset_risks": "QAD Australia Standard Edition - Legacy is a legacy system supporting manufacturing. Replacement plans should be evaluated.",
+    "maturity_trends": "Overall maturity is stable with modern systems supporting critical capabilities.",
+    "overlaps": "No significant overlaps detected in the ERP systems."
+  },
+  "recommendations": [
+    "Evaluate replacement options for QAD Australia Standard Edition - Legacy to modernize manufacturing support.",
+    "Continue leveraging QAD Enterprise Edition systems for supply chain management to maintain strategic alignment."
+  ]
+}

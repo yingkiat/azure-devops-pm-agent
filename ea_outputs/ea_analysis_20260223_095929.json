@@ -1,0 +1,211 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "MD-NET",
+        "description": "EDI Order Reception",
+        "Region": "JPN",
+        "Domain": "Commercial",
+        "Sub-Domain": "Customer Service",
+        "IT Owner": "jose.harima",
+        "Tech Standard": "Approved",
+        "Hosting Type": "",
+        "Vendor Support": "MD=NET",
+        "Risk Level": "High",
+        "Business Criticality": "Tier 1 - Mission Critical",
+        "Administrator Team": "IT-APAC-Commercial",
+        "Disaster Recovery Tier": "",
+        "Application Short Code": "",
+        "Lifecycle": "",
+        "Business Owner": "",
+        "Components": "",
+        "Quality Seal": "",
+        "GXP": "",
+        "Validated": "",
+        "capabilities_supported": [
+          "Order Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Microsoft Dynamics",
+        "description": "New CRM system replacing legacy systems with advanced automation",
+        "Region": "ANZ",
+        "Domain": "Commercial",
+        "Sub-Domain": "Customer Service",
+        "IT Owner": "jose.harima",
+        "Tech Standard": "Approved",
+        "Hosting Type": "SaaS",
+        "Vendor Support": "Microsoft",
+        "Risk Level": "Moderate",
+        "Business Criticality": "Tier 2 - Business Critical",
+        "Administrator Team": "IT-APAC-Commercial",
+        "Disaster Recovery Tier": "",
+        "Application Short Code": "",
+        "Lifecycle": "",
+        "Business Owner": "",
+        "Components": "",
+        "Quality Seal": "",
+        "GXP": "",
+        "Validated": "",
+        "capabilities_supported": [
+          "Customer Relationship Management"
+        ],
+        "lifecycle_signals": [
+          "replacing legacy systems"
+        ],
+        "Horizon": "H2"
+      },
+      {
+        "name": "Genesys",
+        "description": "Call centre soft phone solution",
+        "Region": "ANZ",
+        "Domain": "Commercial",
+        "Sub-Domain": "End User Computing",
+        "IT Owner": "ryan.clarke",
+        "Tech Standard": "Approved",
+        "Hosting Type": "OnPrem",
+        "Vendor Support": "Genesys",
+        "Risk Level": "Moderate",
+        "Business Criticality": "Tier 3 - Business Operational",
+        "Administrator Team": "IT-Genesys Support",
+        "Disaster Recovery Tier": "Tier 1",
+        "Application Short Code": "CCUS",
+        "Lifecycle": "",
+        "Business Owner": "",
+        "Components": "",
+        "Quality Seal": "",
+        "GXP": "",
+        "Validated": "",
+        "capabilities_supported": [
+          "Customer Service"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Vimeo",
+        "description": "Video marketing",
+        "Region": "APAC",
+        "Domain": "Commercial",
+        "Sub-Domain": "End User Computing",
+        "IT Owner": "jose.harima",
+        "Tech Standard": "Approved",
+        "Hosting Type": "SaaS",
+        "Vendor Support": "Vimeo",
+        "Risk Level": "Low",
+        "Business Criticality": "Tier 4 - Support Services",
+        "Administrator Team": "IT-International Europe",
+        "Disaster Recovery Tier": "Tier 3",
+        "Application Short Code": "VIME",
+        "Lifecycle": "",
+        "Business Owner": "",
+        "Components": "",
+        "Quality Seal": "",
+        "GXP": "",
+        "Validated": "",
+        "capabilities_supported": [
+          "Marketing"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Concur Expense Management",
+        "description": "Invoice and employee expense",
+        "Region": "APAC",
+        "Domain": "Commercial",
+        "Sub-Domain": "Finance",
+        "IT Owner": "jose.harima",
+        "Tech Standard": "Approved",
+        "Hosting Type": "SaaS",
+        "Vendor Support": "SAP",
+        "Risk Level": "Low",
+        "Business Criticality": "Tier 4 - Support Services",
+        "Administrator Team": "IT-Finance-Coupa Support",
+        "Disaster Recovery Tier": "Tier 3",
+        "Application Short Code": "CNCR",
+        "Lifecycle": "",
+        "Business Owner": "",
+        "Components": "",
+        "Quality Seal": "",
+        "GXP": "",
+        "Validated": "",
+        "capabilities_supported": [
+          "Finance"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ],
+        "Horizon": "H1"
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "MD-NET",
+      "target": "Order Management",
+      "type": "Serving",
+      "description": "MD-NET supports order management through EDI order reception."
+    },
+    {
+      "source": "Microsoft Dynamics",
+      "target": "Customer Relationship Management",
+      "type": "Serving",
+      "description": "Microsoft Dynamics provides CRM capabilities with advanced automation."
+    },
+    {
+      "source": "Genesys",
+      "target": "Customer Service",
+      "type": "Serving",
+      "description": "Genesys supports customer service as a call centre soft phone solution."
+    },
+    {
+      "source": "Vimeo",
+      "target": "Marketing",
+      "type": "Serving",
+      "description": "Vimeo supports marketing through video content."
+    },
+    {
+      "source": "Concur Expense Management",
+      "target": "Finance",
+      "type": "Serving",
+      "description": "Concur Expense Management supports finance by managing invoices and employee expenses."
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "Microsoft Dynamics",
+        "capability": "Customer Relationship Management",
+        "domain": "Customer Service",
+        "maturity": 4,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Replacing legacy CRM systems with advanced automation."
+      }
+    ],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No major gaps identified. All applications serve at least one capability.",
+    "sunset_risks": "Legacy systems like MD-NET and Genesys may require modernization in the future.",
+    "maturity_trends": "Introduction of Microsoft Dynamics improves CRM maturity in the ANZ region.",
+    "overlaps": "Potential overlap between Genesys and Microsoft Dynamics in customer service capabilities."
+  },
+  "recommendations": [
+    "Prioritize the rollout of Microsoft Dynamics to fully replace legacy CRM systems.",
+    "Evaluate Genesys for potential overlap with Microsoft Dynamics in customer service.",
+    "Monitor legacy systems like MD-NET for modernization opportunities."
+  ]
+}

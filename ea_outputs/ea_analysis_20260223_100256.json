@@ -1,0 +1,518 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "MedQuote Sales",
+        "description": "Sales website for Sales Rep",
+        "Application Name": "MedQuote Sales",
+        "Business Unit(s)": "SOS",
+        "Business Capability Supported": "Sales website for Sales Rep",
+        "Application Type": "Home-grown",
+        "Activity Status": "Inactive",
+        "Business Owner": "Ali Ijaz",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Sujin Balajee",
+        "3rd level Support": "Sujin Balajee",
+        "capabilities_supported": [
+          "Sales"
+        ],
+        "lifecycle_signals": [
+          "Inactive"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "OnDemand",
+        "description": "Logistics",
+        "Application Name": "OnDemand",
+        "Business Unit(s)": "Logistics & Warehouse",
+        "Business Capability Supported": "Logistics",
+        "Application Type": "SaaS",
+        "Activity Status": "Active",
+        "Business Owner": "David Lawrence",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Joe Ha",
+        "capabilities_supported": [
+          "Logistics"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Pack Labeling System",
+        "description": "Leaflets, Picklist printing",
+        "Application Name": "Pack Labeling System",
+        "Business Unit(s)": "Manufacturing",
+        "Business Capability Supported": "Leaflets, Picklist printing",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Lesley Turner",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Karthi Natarajan",
+        "3rd level Support": "Karthi Natarajan",
+        "capabilities_supported": [
+          "Manufacturing"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Pack Specification System (PSS)",
+        "description": "Pack Design and instruction to build the pack",
+        "Application Name": "Pack Specification System (PSS)",
+        "Business Unit(s)": "Pack Design",
+        "Business Capability Supported": "Pack Design and instruction to build the pack",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Lesley Turner",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Karthi Natarajan",
+        "3rd level Support": "Karthi Natarajan",
+        "capabilities_supported": [
+          "Pack Design"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "PIM - Magento Interface (Boomi)",
+        "description": "Interface between PIM and Magento for Medline Website",
+        "Application Name": "PIM - Magento Interface (Boomi)",
+        "Business Unit(s)": "IT",
+        "Business Capability Supported": "Interface between PIM and Magento for Medline Website",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Sujin Balajee",
+        "3rd level Support": "Sujin Balajee",
+        "capabilities_supported": [
+          "Interface Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "PIM - Magento Interface (TSS)",
+        "description": "Interface between PIM and Magento for TSS",
+        "Application Name": "PIM - Magento Interface (TSS)",
+        "Business Unit(s)": "IT",
+        "Business Capability Supported": "Interface between PIM and Magento for TSS",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Greg Eastwood",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Karthi Natarajan",
+        "3rd level Support": "Karthi Natarajan",
+        "capabilities_supported": [
+          "Interface Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "PricePoint",
+        "description": "Price quote",
+        "Application Name": "PricePoint",
+        "Business Unit(s)": "Commercial Services",
+        "Business Capability Supported": "Price quote",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Suyog Khandagale",
+        "capabilities_supported": [
+          "Pricing"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Product Complaints",
+        "description": "Product Complaints DB",
+        "Application Name": "Product Complaints",
+        "Business Unit(s)": "QA",
+        "Business Capability Supported": "Product Complaints DB",
+        "Application Type": "Excel",
+        "Activity Status": "Active",
+        "Business Owner": "Elvira Stankovich",
+        "1st level Support": "Sandra Emett",
+        "2nd level Support": "Sandra Emett",
+        "3rd level Support": "IT Service Desk",
+        "capabilities_supported": [
+          "Quality Assurance"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Product Information Management (PIM)",
+        "description": "Product Master Data",
+        "Application Name": "Product Information Management (PIM)",
+        "Business Unit(s)": "Commercial Services",
+        "Business Capability Supported": "Product Master Data",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Michelle Parkes",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Karthi Natarajan",
+        "capabilities_supported": [
+          "Product Data Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "QAD - EE",
+        "description": "ERP",
+        "Application Name": "QAD - EE",
+        "Business Unit(s)": "Various",
+        "Business Capability Supported": "ERP",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Various",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Joe Ha",
+        "capabilities_supported": [
+          "Enterprise Resource Planning"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "QAD - SE (Legacy)",
+        "description": "ERP Legacy",
+        "Application Name": "QAD - SE (Legacy)",
+        "Business Unit(s)": "Various",
+        "Business Capability Supported": "ERP Legacy",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Various",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Joe Ha",
+        "capabilities_supported": [
+          "Enterprise Resource Planning"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "QMS Change Request DB",
+        "description": "QMS Change Request DB",
+        "Application Name": "QMS Change Request DB",
+        "Business Unit(s)": "QA",
+        "Business Capability Supported": "QMS Change Request DB",
+        "Application Type": "Excel",
+        "Activity Status": "Active",
+        "Business Owner": "Elvira Stankovich",
+        "1st level Support": "Janine Smith",
+        "2nd level Support": "Janine Smith",
+        "3rd level Support": "IT Service Desk",
+        "capabilities_supported": [
+          "Quality Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "QMS Training Matrix DB",
+        "description": "QMS Training DB",
+        "Application Name": "QMS Training Matrix DB",
+        "Business Unit(s)": "QA",
+        "Business Capability Supported": "QMS Training DB",
+        "Application Type": "Excel",
+        "Activity Status": "Active",
+        "Business Owner": "Elvira Stankovich",
+        "1st level Support": "Janine Smith",
+        "2nd level Support": "Janine Smith",
+        "3rd level Support": "IT Service Desk",
+        "capabilities_supported": [
+          "Training Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Reliance",
+        "description": "QMS Documents Management System",
+        "Application Name": "Reliance",
+        "Business Unit(s)": "QA",
+        "Business Capability Supported": "QMS Documents Management System",
+        "Application Type": "SaaS",
+        "Activity Status": "Active",
+        "Business Owner": "Elvira Stankovich",
+        "1st level Support": "Janine Smith",
+        "2nd level Support": "Janine Smith",
+        "3rd level Support": "Dallas Rixie",
+        "capabilities_supported": [
+          "Document Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Sample Continence Aged Care",
+        "description": "Samples Ordering",
+        "Application Name": "Sample Continence Aged Care",
+        "Business Unit(s)": "Aged Care Sales",
+        "Business Capability Supported": "Samples Ordering",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Damien Anderson",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Sujin Balajee",
+        "3rd level Support": "Vendor",
+        "capabilities_supported": [
+          "Order Management"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Horizon": "H2"
+      },
+      {
+        "name": "Smartfrieght",
+        "description": "Logistics",
+        "Application Name": "Smartfrieght",
+        "Business Unit(s)": "Logistics & Warehouse",
+        "Business Capability Supported": "Logistics",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "David Lawrence",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Joe Ha",
+        "capabilities_supported": [
+          "Logistics"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "SPT Shortage Automation",
+        "description": "SPT shortage and substitution management",
+        "Application Name": "SPT Shortage Automation",
+        "Business Unit(s)": "SPT",
+        "Business Capability Supported": "SPT shortage and substitution management",
+        "Application Type": "SaaS",
+        "Activity Status": "In Progress",
+        "Business Owner": "Beatriz Amorim",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Karthi Natarajan",
+        "3rd level Support": "Vendor",
+        "capabilities_supported": [
+          "Shortage Management"
+        ],
+        "lifecycle_signals": [
+          "In Progress"
+        ],
+        "Horizon": "H2"
+      },
+      {
+        "name": "Tableau Server & Reporting",
+        "description": "Reporting & Visualisation",
+        "Application Name": "Tableau Server & Reporting",
+        "Business Unit(s)": "IT",
+        "Business Capability Supported": "Reporting & Visualisation",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Deepak Parbhoo",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Sushant Kumkar",
+        "capabilities_supported": [
+          "Reporting"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Yusen",
+        "description": "3rd party logistics service provider, integrate with QAD",
+        "Application Name": "Yusen",
+        "Business Unit(s)": "Logistics",
+        "Business Capability Supported": "3rd party logistics service provider, integrate with QAD",
+        "Application Type": "SaaS",
+        "Activity Status": "Active",
+        "Business Owner": "David Lawrence",
+        "1st level Support": "IT Service Desk",
+        "2nd level Support": "Neomi Wang/Gordon Foo",
+        "3rd level Support": "Joe Ha",
+        "capabilities_supported": [
+          "Logistics"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Horizon": "H1"
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "MedQuote Sales",
+      "target": "Sales",
+      "type": "Serving",
+      "description": "MedQuote Sales supports Sales capability"
+    },
+    {
+      "source": "OnDemand",
+      "target": "Logistics",
+      "type": "Serving",
+      "description": "OnDemand supports Logistics capability"
+    },
+    {
+      "source": "Pack Labeling System",
+      "target": "Manufacturing",
+      "type": "Serving",
+      "description": "Pack Labeling System supports Manufacturing capability"
+    },
+    {
+      "source": "Pack Specification System (PSS)",
+      "target": "Pack Design",
+      "type": "Serving",
+      "description": "Pack Specification System (PSS) supports Pack Design capability"
+    },
+    {
+      "source": "PIM - Magento Interface (Boomi)",
+      "target": "Interface Management",
+      "type": "Serving",
+      "description": "PIM - Magento Interface (Boomi) supports Interface Management capability"
+    },
+    {
+      "source": "PIM - Magento Interface (TSS)",
+      "target": "Interface Management",
+      "type": "Serving",
+      "description": "PIM - Magento Interface (TSS) supports Interface Management capability"
+    },
+    {
+      "source": "PricePoint",
+      "target": "Pricing",
+      "type": "Serving",
+      "description": "PricePoint supports Pricing capability"
+    },
+    {
+      "source": "Product Complaints",
+      "target": "Quality Assurance",
+      "type": "Serving",
+      "description": "Product Complaints supports Quality Assurance capability"
+    },
+    {
+      "source": "Product Information Management (PIM)",
+      "target": "Product Data Management",
+      "type": "Serving",
+      "description": "Product Information Management (PIM) supports Product Data Management capability"
+    },
+    {
+      "source": "QAD - EE",
+      "target": "Enterprise Resource Planning",
+      "type": "Serving",
+      "description": "QAD - EE supports Enterprise Resource Planning capability"
+    },
+    {
+      "source": "QAD - SE (Legacy)",
+      "target": "Enterprise Resource Planning",
+      "type": "Serving",
+      "description": "QAD - SE (Legacy) supports Enterprise Resource Planning capability"
+    },
+    {
+      "source": "QMS Change Request DB",
+      "target": "Quality Management",
+      "type": "Serving",
+      "description": "QMS Change Request DB supports Quality Management capability"
+    },
+    {
+      "source": "QMS Training Matrix DB",
+      "target": "Training Management",
+      "type": "Serving",
+      "description": "QMS Training Matrix DB supports Training Management capability"
+    },
+    {
+      "source": "Reliance",
+      "target": "Document Management",
+      "type": "Serving",
+      "description": "Reliance supports Document Management capability"
+    },
+    {
+      "source": "Sample Continence Aged Care",
+      "target": "Order Management",
+      "type": "Serving",
+      "description": "Sample Continence Aged Care supports Order Management capability"
+    },
+    {
+      "source": "Smartfrieght",
+      "target": "Logistics",
+      "type": "Serving",
+      "description": "Smartfrieght supports Logistics capability"
+    },
+    {
+      "source": "SPT Shortage Automation",
+      "target": "Shortage Management",
+      "type": "Serving",
+      "description": "SPT Shortage Automation supports Shortage Management capability"
+    },
+    {
+      "source": "Tableau Server & Reporting",
+      "target": "Reporting",
+      "type": "Serving",
+      "description": "Tableau Server & Reporting supports Reporting capability"
+    },
+    {
+      "source": "Yusen",
+      "target": "Logistics",
+      "type": "Serving",
+      "description": "Yusen supports Logistics capability"
+    }
+  ],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified; all applications support at least one capability.",
+    "sunset_risks": "QAD - SE (Legacy) is marked as legacy but still supports critical ERP functions.",
+    "maturity_trends": "Most applications are modern and active, with a few legacy systems requiring attention.",
+    "overlaps": "Multiple systems support Logistics (e.g., OnDemand, Smartfrieght, Yusen), indicating potential for consolidation."
+  },
+  "recommendations": [
+    "Evaluate the replacement of QAD - SE (Legacy) with a modern ERP solution.",
+    "Consolidate logistics systems to reduce redundancy and improve efficiency.",
+    "Monitor in-progress systems (e.g., Sample Continence Aged Care, SPT Shortage Automation) to ensure timely delivery."
+  ]
+}

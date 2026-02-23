@@ -1,0 +1,291 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "Medline Systems",
+        "description": "Core IT systems ensuring cybersecurity, regulatory compliance, and data protection",
+        "technology_stack": [],
+        "capabilities_supported": [
+          "Cybersecurity",
+          "Regulatory Compliance",
+          "Data Protection"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Medline Data Center",
+        "description": "Critical infrastructure management and data hosting",
+        "technology_stack": [],
+        "capabilities_supported": [
+          "Critical Infrastructure Management",
+          "Data Hosting"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "WMS Portal",
+        "description": "Internal business applications access",
+        "technology_stack": [],
+        "capabilities_supported": [
+          "Internal Business Applications Access"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "EMRs",
+        "description": "System for managing patient health information",
+        "technology_stack": [],
+        "capabilities_supported": [
+          "Patient Health Information Management"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Financial Systems",
+        "description": "System for financial management",
+        "technology_stack": [],
+        "capabilities_supported": [
+          "Financial Management"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ],
+        "Horizon": "H1"
+      }
+    ],
+    "Capability": [
+      {
+        "name": "Cybersecurity",
+        "domain": "IT",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Regulatory Compliance",
+        "domain": "IT",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Data Protection",
+        "domain": "IT",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Critical Infrastructure Management",
+        "domain": "IT",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Data Hosting",
+        "domain": "IT",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Internal Business Applications Access",
+        "domain": "Operations",
+        "criticality": "Important"
+      },
+      {
+        "name": "Patient Health Information Management",
+        "domain": "Healthcare",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Financial Management",
+        "domain": "Finance",
+        "criticality": "Critical"
+      }
+    ],
+    "BusinessProcess": [],
+    "DataObject": [],
+    "Node": [
+      {
+        "name": "Networked IT Devices",
+        "description": "Includes servers, endpoints, IoT devices, and appliances connected to Medline networks"
+      },
+      {
+        "name": "Medline Network",
+        "description": "Network infrastructure for Medline's IT systems"
+      }
+    ],
+    "TechnologyService": [
+      {
+        "name": "Network Segmentation",
+        "description": "Service to segment networks for security purposes",
+        "technology_stack": [],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Firewall",
+        "description": "Service to protect network traffic",
+        "technology_stack": [],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "SIEM Logging",
+        "description": "Service for centralized logging and monitoring",
+        "technology_stack": [],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Encryption",
+        "description": "Service for encrypting data at rest and in transit",
+        "technology_stack": [],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Backup and Recovery",
+        "description": "Service for data backup and recovery",
+        "technology_stack": [],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "Medline Systems",
+      "target": "Cybersecurity",
+      "type": "Serving",
+      "description": "Medline Systems ensure cybersecurity"
+    },
+    {
+      "source": "Medline Systems",
+      "target": "Regulatory Compliance",
+      "type": "Serving",
+      "description": "Medline Systems ensure regulatory compliance"
+    },
+    {
+      "source": "Medline Systems",
+      "target": "Data Protection",
+      "type": "Serving",
+      "description": "Medline Systems ensure data protection"
+    },
+    {
+      "source": "Medline Data Center",
+      "target": "Critical Infrastructure Management",
+      "type": "Serving",
+      "description": "Medline Data Center supports critical infrastructure management"
+    },
+    {
+      "source": "Medline Data Center",
+      "target": "Data Hosting",
+      "type": "Serving",
+      "description": "Medline Data Center provides data hosting services"
+    },
+    {
+      "source": "WMS Portal",
+      "target": "Internal Business Applications Access",
+      "type": "Serving",
+      "description": "WMS Portal provides access to internal business applications"
+    },
+    {
+      "source": "EMRs",
+      "target": "Patient Health Information Management",
+      "type": "Serving",
+      "description": "EMRs manage patient health information"
+    },
+    {
+      "source": "Financial Systems",
+      "target": "Financial Management",
+      "type": "Serving",
+      "description": "Financial Systems support financial management"
+    },
+    {
+      "source": "Networked IT Devices",
+      "target": "Medline Network",
+      "type": "Composition",
+      "description": "Networked IT Devices are part of the Medline Network"
+    },
+    {
+      "source": "Network Segmentation",
+      "target": "Medline Network",
+      "type": "Serving",
+      "description": "Network Segmentation supports Medline Network security"
+    },
+    {
+      "source": "Firewall",
+      "target": "Medline Network",
+      "type": "Serving",
+      "description": "Firewall protects Medline Network traffic"
+    },
+    {
+      "source": "SIEM Logging",
+      "target": "Medline Systems",
+      "type": "Serving",
+      "description": "SIEM Logging provides centralized logging for Medline Systems"
+    },
+    {
+      "source": "Encryption",
+      "target": "Medline Systems",
+      "type": "Serving",
+      "description": "Encryption ensures data security for Medline Systems"
+    },
+    {
+      "source": "Backup and Recovery",
+      "target": "Medline Systems",
+      "type": "Serving",
+      "description": "Backup and Recovery ensures data recoverability for Medline Systems"
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "Medline Systems",
+        "capability": "Cybersecurity",
+        "domain": "IT",
+        "maturity": 4,
+        "lifecycle_status": "Maintain",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Core system ensuring cybersecurity compliance"
+      },
+      {
+        "app_name": "Medline Data Center",
+        "capability": "Critical Infrastructure Management",
+        "domain": "IT",
+        "maturity": 4,
+        "lifecycle_status": "Maintain",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Supports critical infrastructure for Medline operations"
+      }
+    ],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified. All critical capabilities are supported by existing systems.",
+    "sunset_risks": "No systems identified for sunset in the current analysis.",
+    "maturity_trends": "Systems supporting critical capabilities are modern and well-aligned with business needs.",
+    "overlaps": "No overlapping systems identified in the current analysis."
+  },
+  "recommendations": [
+    "Continue maintaining Medline Systems and Medline Data Center as critical infrastructure.",
+    "Ensure regular updates and monitoring of SIEM logging and encryption services.",
+    "Evaluate the maturity of existing systems periodically to ensure alignment with business goals.",
+    "Consider implementing additional security measures for high-risk networked devices."
+  ]
+}

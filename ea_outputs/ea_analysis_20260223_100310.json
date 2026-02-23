@@ -1,0 +1,339 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "AI Builder",
+        "description": "AI tool for data extraction",
+        "technology_stack": [
+          "AI"
+        ],
+        "capabilities_supported": [
+          "Data Extraction"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Docupipe",
+        "description": "AI tool for faster data extraction",
+        "technology_stack": [
+          "AI"
+        ],
+        "capabilities_supported": [
+          "Data Extraction"
+        ],
+        "lifecycle_signals": [
+          "planned",
+          "replacing AI Builder"
+        ]
+      },
+      {
+        "name": "Canvas App",
+        "description": "User interface for PO automation",
+        "technology_stack": [
+          "PowerApps"
+        ],
+        "capabilities_supported": [
+          "User Interaction",
+          "Error Handling",
+          "Validation"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Backend Validation Service",
+        "description": "Service for validation and error handling",
+        "technology_stack": [
+          "Azure Functions"
+        ],
+        "capabilities_supported": [
+          "Validation",
+          "Error Handling",
+          "Customer Matching"
+        ],
+        "lifecycle_signals": [
+          "planned"
+        ]
+      },
+      {
+        "name": "Queueing System",
+        "description": "System for asynchronous processing and PO creation",
+        "technology_stack": [
+          "Azure Service Bus"
+        ],
+        "capabilities_supported": [
+          "Asynchronous Processing",
+          "Retry Logic"
+        ],
+        "lifecycle_signals": [
+          "planned"
+        ]
+      },
+      {
+        "name": "QAD",
+        "description": "ERP system for order management",
+        "technology_stack": [
+          "ERP"
+        ],
+        "capabilities_supported": [
+          "Order Management"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      },
+      {
+        "name": "Boomi",
+        "description": "Integration platform for system connectivity",
+        "technology_stack": [
+          "Integration Platform"
+        ],
+        "capabilities_supported": [
+          "System Integration"
+        ],
+        "lifecycle_signals": [
+          "existing"
+        ]
+      }
+    ],
+    "Capability": [
+      {
+        "name": "Data Extraction",
+        "domain": "Operations",
+        "criticality": "Critical"
+      },
+      {
+        "name": "User Interaction",
+        "domain": "Operations",
+        "criticality": "Important"
+      },
+      {
+        "name": "Error Handling",
+        "domain": "Operations",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Validation",
+        "domain": "Operations",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Customer Matching",
+        "domain": "Operations",
+        "criticality": "Important"
+      },
+      {
+        "name": "Asynchronous Processing",
+        "domain": "Operations",
+        "criticality": "Important"
+      },
+      {
+        "name": "Order Management",
+        "domain": "Finance",
+        "criticality": "Critical"
+      },
+      {
+        "name": "System Integration",
+        "domain": "IT",
+        "criticality": "Critical"
+      }
+    ],
+    "BusinessProcess": [
+      {
+        "name": "PO Automation",
+        "description": "Process for automating purchase order creation and validation"
+      }
+    ],
+    "DataObject": [
+      {
+        "name": "Purchase Order Data",
+        "description": "Data related to purchase orders, including extracted fields and validation results"
+      }
+    ],
+    "Node": [
+      {
+        "name": "Azure Service Bus",
+        "description": "Infrastructure for asynchronous processing and message queuing"
+      },
+      {
+        "name": "Azure Functions",
+        "description": "Serverless compute service for backend validation and error handling"
+      }
+    ],
+    "TechnologyService": [
+      {
+        "name": "Asynchronous Processing Service",
+        "description": "Service for handling asynchronous tasks and retries",
+        "technology_stack": [
+          "Azure Service Bus"
+        ],
+        "lifecycle_signals": [
+          "planned"
+        ]
+      },
+      {
+        "name": "Validation Service",
+        "description": "Service for validating extracted data and handling errors",
+        "technology_stack": [
+          "Azure Functions"
+        ],
+        "lifecycle_signals": [
+          "planned"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "AI Builder",
+      "target": "Data Extraction",
+      "type": "Serving",
+      "description": "AI Builder provides data extraction capabilities"
+    },
+    {
+      "source": "Docupipe",
+      "target": "Data Extraction",
+      "type": "Serving",
+      "description": "Docupipe provides data extraction capabilities"
+    },
+    {
+      "source": "Canvas App",
+      "target": "User Interaction",
+      "type": "Serving",
+      "description": "Canvas App provides user interaction capabilities"
+    },
+    {
+      "source": "Canvas App",
+      "target": "Error Handling",
+      "type": "Serving",
+      "description": "Canvas App provides error handling capabilities"
+    },
+    {
+      "source": "Canvas App",
+      "target": "Validation",
+      "type": "Serving",
+      "description": "Canvas App provides validation capabilities"
+    },
+    {
+      "source": "Backend Validation Service",
+      "target": "Validation",
+      "type": "Serving",
+      "description": "Backend Validation Service provides validation capabilities"
+    },
+    {
+      "source": "Backend Validation Service",
+      "target": "Error Handling",
+      "type": "Serving",
+      "description": "Backend Validation Service provides error handling capabilities"
+    },
+    {
+      "source": "Backend Validation Service",
+      "target": "Customer Matching",
+      "type": "Serving",
+      "description": "Backend Validation Service provides customer matching capabilities"
+    },
+    {
+      "source": "Queueing System",
+      "target": "Asynchronous Processing",
+      "type": "Serving",
+      "description": "Queueing System provides asynchronous processing capabilities"
+    },
+    {
+      "source": "QAD",
+      "target": "Order Management",
+      "type": "Serving",
+      "description": "QAD provides order management capabilities"
+    },
+    {
+      "source": "Boomi",
+      "target": "System Integration",
+      "type": "Serving",
+      "description": "Boomi provides system integration capabilities"
+    },
+    {
+      "source": "PO Automation",
+      "target": "Data Extraction",
+      "type": "Realization",
+      "description": "PO Automation process relies on data extraction"
+    },
+    {
+      "source": "PO Automation",
+      "target": "Validation",
+      "type": "Realization",
+      "description": "PO Automation process relies on validation"
+    },
+    {
+      "source": "PO Automation",
+      "target": "Order Management",
+      "type": "Realization",
+      "description": "PO Automation process supports order management"
+    },
+    {
+      "source": "Purchase Order Data",
+      "target": "PO Automation",
+      "type": "Access",
+      "description": "Purchase Order Data is used in the PO Automation process"
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "Docupipe",
+        "capability": "Data Extraction",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Planned",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Docupipe is planned to replace AI Builder for faster data extraction"
+      },
+      {
+        "app_name": "Backend Validation Service",
+        "capability": "Validation",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Planned",
+        "remaining_years": 5,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Backend Validation Service will handle validation and error handling"
+      },
+      {
+        "app_name": "Queueing System",
+        "capability": "Asynchronous Processing",
+        "domain": "Operations",
+        "maturity": 4,
+        "lifecycle_status": "Planned",
+        "remaining_years": 5,
+        "strategic_importance": "Important",
+        "confidence": 0.8,
+        "rationale": "Queueing System will decouple PO creation from user interaction"
+      }
+    ],
+    "updates": [
+      {
+        "app_name": "Canvas App",
+        "capability": "Validation",
+        "maturity": 3,
+        "lifecycle_status": "Maintain",
+        "rationale": "Canvas App will focus on UI and delegate validation to backend"
+      }
+    ],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "Validation and error handling are currently overburdened in the Canvas App. Backend services will address this gap.",
+    "sunset_risks": "AI Builder is being replaced by Docupipe, which may require retraining users and reconfiguring integrations.",
+    "maturity_trends": "Overall maturity will improve as validation and asynchronous processing are moved to dedicated services.",
+    "overlaps": "AI Builder and Docupipe overlap in data extraction capabilities. Transition plan needed to avoid redundancy."
+  },
+  "recommendations": [
+    "Implement Backend Validation Service to offload validation and error handling from Canvas App.",
+    "Deploy Queueing System to decouple PO creation from user interaction and improve resilience.",
+    "Plan a phased transition from AI Builder to Docupipe to minimize disruption."
+  ]
+}

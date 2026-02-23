@@ -1,0 +1,345 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "Contractor Labelling System (SINO)",
+        "description": "Label System for SINO",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Label System for SINO"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "QA",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Elvira Stankovich",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "Customer Management Portal",
+        "description": "Business Pipeline, Forecast, Customer Profile and contacts",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Business Pipeline",
+          "Forecast",
+          "Customer Profile",
+          "Contacts"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Sales",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Lisa King",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "Electronic Pack and Components Instruction (eiFU)",
+        "description": "",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "RA",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Matthew Higham",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "MedOps",
+        "description": "MedQuote to QAD integration",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "MedQuote to QAD integration"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Manufacturing/QA",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Lesley Turner",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "MedPack Aus",
+        "description": "View the Packs and its components and pricing.",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "View Packs",
+          "Components and Pricing"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "SOS/AccountManagers",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Ali Ijaz",
+        "App Server (Dev)": "AUS01MPKD1",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00MPKP2, AUS00RFWP1",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "MedPack NZ",
+        "description": "Pack Details for NZ packs",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Pack Details for NZ"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "SOS",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Ali Ijaz",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "MedQuote",
+        "description": "Quote creation system/Source for QAD",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Quote Creation",
+          "Source for QAD"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "SOS",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Ali Ijaz",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "MedQuote Sales",
+        "description": "Sales website for Sales Rep",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Sales Website for Sales Rep"
+        ],
+        "lifecycle_signals": [
+          "Inactive"
+        ],
+        "Business Unit(s)": "SOS",
+        "Application Type": "Home-grown",
+        "Activity Status": "Inactive",
+        "Business Owner": "Ali Ijaz",
+        "App Server (Dev)": "AUS01IISD3",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "AUS01IIST3",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "AUS00IISP3",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "PIM - Magento Interface (TSS)",
+        "description": "Interface between PIM and Magento for TSS",
+        "technology_stack": [
+          "Home-grown"
+        ],
+        "capabilities_supported": [
+          "Interface between PIM and Magento for TSS"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "IT",
+        "Application Type": "Home-grown",
+        "Activity Status": "Active",
+        "Business Owner": "Greg Eastwood",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "AUS01SQLD3",
+        "App Server (Test)": "",
+        "DB Server (Test)": "AUS01SQLT3",
+        "App Server (PreProd)": "",
+        "App Server (Prod)": "",
+        "DB Server (Prod)": "AUS00SQLP3"
+      },
+      {
+        "name": "QAD - SE (Legacy)",
+        "description": "ERP Legacy",
+        "technology_stack": [
+          "COTS"
+        ],
+        "capabilities_supported": [
+          "ERP Legacy"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ],
+        "Business Unit(s)": "Various",
+        "Application Type": "COTS",
+        "Activity Status": "Active",
+        "Business Owner": "Various",
+        "App Server (Dev)": "",
+        "DB Server (Dev)": "",
+        "App Server (Test)": "",
+        "DB Server (Test)": "",
+        "App Server (PreProd)": "AUS00QPD01, AUS00FTSP1",
+        "App Server (Prod)": "AUS01PRO01, AUS00SQLP1",
+        "DB Server (Prod)": ""
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "Contractor Labelling System (SINO)",
+      "target": "Label System for SINO",
+      "type": "Serving",
+      "description": "Supports labeling for SINO"
+    },
+    {
+      "source": "Customer Management Portal",
+      "target": "Business Pipeline",
+      "type": "Serving",
+      "description": "Supports business pipeline management"
+    },
+    {
+      "source": "Customer Management Portal",
+      "target": "Forecast",
+      "type": "Serving",
+      "description": "Supports forecasting"
+    },
+    {
+      "source": "Customer Management Portal",
+      "target": "Customer Profile",
+      "type": "Serving",
+      "description": "Supports customer profiling"
+    },
+    {
+      "source": "Customer Management Portal",
+      "target": "Contacts",
+      "type": "Serving",
+      "description": "Supports contact management"
+    },
+    {
+      "source": "MedOps",
+      "target": "MedQuote to QAD integration",
+      "type": "Serving",
+      "description": "Supports integration between MedQuote and QAD"
+    },
+    {
+      "source": "MedPack Aus",
+      "target": "View Packs",
+      "type": "Serving",
+      "description": "Supports viewing of packs"
+    },
+    {
+      "source": "MedPack Aus",
+      "target": "Components and Pricing",
+      "type": "Serving",
+      "description": "Supports viewing of components and pricing"
+    },
+    {
+      "source": "MedPack NZ",
+      "target": "Pack Details for NZ",
+      "type": "Serving",
+      "description": "Supports pack details for NZ"
+    },
+    {
+      "source": "MedQuote",
+      "target": "Quote Creation",
+      "type": "Serving",
+      "description": "Supports quote creation"
+    },
+    {
+      "source": "MedQuote",
+      "target": "Source for QAD",
+      "type": "Serving",
+      "description": "Acts as a source for QAD"
+    },
+    {
+      "source": "PIM - Magento Interface (TSS)",
+      "target": "Interface between PIM and Magento for TSS",
+      "type": "Serving",
+      "description": "Supports interface between PIM and Magento"
+    },
+    {
+      "source": "QAD - SE (Legacy)",
+      "target": "ERP Legacy",
+      "type": "Serving",
+      "description": "Supports legacy ERP functionality"
+    }
+  ],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No significant gaps identified in the provided data.",
+    "sunset_risks": "MedQuote Sales is inactive, but no replacement system is identified.",
+    "maturity_trends": "Most systems are home-grown and active, indicating adequate maturity.",
+    "overlaps": "Potential overlap between MedPack Aus and MedPack NZ for pack management."
+  },
+  "recommendations": [
+    "Evaluate the need for consolidating MedPack Aus and MedPack NZ into a single system.",
+    "Identify a replacement or modernization plan for MedQuote Sales.",
+    "Assess the scalability and modernization needs of home-grown systems like MedOps and Customer Management Portal."
+  ]
+}

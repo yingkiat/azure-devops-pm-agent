@@ -1,0 +1,383 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "HEAT CMDB CI",
+        "description": "Configuration management database for IT assets",
+        "Region": "",
+        "Domain": "Global Standards",
+        "Sub-Domain": "",
+        "Application Name": "HEAT CMDB CI",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [
+          "IT Asset Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ]
+      },
+      {
+        "name": "LEANIX",
+        "description": "Enterprise architecture management tool",
+        "Region": "",
+        "Domain": "Global Standards",
+        "Sub-Domain": "",
+        "Application Name": "LEANIX",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [
+          "Enterprise Architecture Management"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ]
+      },
+      {
+        "name": "QARA",
+        "description": "Quality assurance and regulatory affairs tool",
+        "Region": "",
+        "Domain": "Global Standards",
+        "Sub-Domain": "",
+        "Application Name": "QARA",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [
+          "Quality Assurance",
+          "Regulatory Compliance"
+        ],
+        "lifecycle_signals": [
+          "Active"
+        ]
+      },
+      {
+        "name": "Azure Data Factory",
+        "description": "Data integration service",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Data Ingestion",
+        "Application Name": "Azure Data Factory",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Data Integration"
+        ],
+        "lifecycle_signals": [
+          "Restricted",
+          "Active"
+        ]
+      },
+      {
+        "name": "Azure Data Lake Storage",
+        "description": "Cloud-based enterprise data lake solution",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Data Storage",
+        "Application Name": "Azure Data Lake Storage",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Data Storage"
+        ],
+        "lifecycle_signals": [
+          "Approved",
+          "Active"
+        ]
+      },
+      {
+        "name": "Microsoft Fabric",
+        "description": "Complete data platform",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Data Storage",
+        "Application Name": "Microsoft Fabric",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Data Storage"
+        ],
+        "lifecycle_signals": [
+          "Approved",
+          "Phase In"
+        ]
+      },
+      {
+        "name": "Medlink FG",
+        "description": "Product cross-referencing tool for SPT Tendering process (FG). ML Code in Python",
+        "Region": "ANZ",
+        "Domain": "Data",
+        "Sub-Domain": "Marketing",
+        "Application Name": "Medlink FG",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Product Cross-Referencing"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Medlink SPT",
+        "description": "Product cross-referencing tool for SPT Tendering process (SPT). ML Code in Python",
+        "Region": "ANZ",
+        "Domain": "Data",
+        "Sub-Domain": "Marketing",
+        "Application Name": "Medlink SPT",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Product Cross-Referencing"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "TC Portal",
+        "description": "Approval workflows for Raw Material SPT Temporary Changes",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Planning",
+        "Application Name": "TC Portal",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Approval Workflows"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Microsoft PowerBI",
+        "description": "Data visualization and reporting tool",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Reporting",
+        "Application Name": "Microsoft PowerBI",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Data Visualization",
+          "Reporting"
+        ],
+        "lifecycle_signals": [
+          "Approved",
+          "Phase In"
+        ]
+      },
+      {
+        "name": "Tableau",
+        "description": "Data visualization and reporting tool",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Reporting",
+        "Application Name": "Tableau",
+        "Application Type": "IaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Data Visualization",
+          "Reporting"
+        ],
+        "lifecycle_signals": [
+          "Legacy",
+          "Phase Out"
+        ]
+      },
+      {
+        "name": "APAC Buddy",
+        "description": "AI agent created in Azure",
+        "Region": "APAC",
+        "Domain": "Data",
+        "Sub-Domain": "Sales",
+        "Application Name": "APAC Buddy",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "AI Assistance"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "MIMS",
+        "description": "ANZ inventory management created in Power Apps",
+        "Region": "ANZ",
+        "Domain": "Data",
+        "Sub-Domain": "Warehouse Management",
+        "Application Name": "MIMS",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Inventory Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Pro2SQL",
+        "description": "Pro2SQL is a component of Progress OpenEdge Pro2",
+        "Region": "ANZ",
+        "Domain": "ERP",
+        "Sub-Domain": "ERP",
+        "Application Name": "Pro2SQL ANZ",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "ERP"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "QAD EE 2019",
+        "description": "ERP system for finance and supply chain management",
+        "Region": "ANZ",
+        "Domain": "ERP",
+        "Sub-Domain": "ERP",
+        "Application Name": "QAD EE 2019",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Finance",
+          "Supply Chain Management"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "Blackline Financial Close",
+        "description": "Global Finance Compliance",
+        "Region": "APAC",
+        "Domain": "ERP",
+        "Sub-Domain": "Finance",
+        "Application Name": "Blackline Financial Close",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "Finance Compliance"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      },
+      {
+        "name": "Oracle EPM",
+        "description": "Global Finance Reporting - Data Feeds",
+        "Region": "APAC",
+        "Domain": "ERP",
+        "Sub-Domain": "Finance",
+        "Application Name": "Oracle EPM",
+        "Application Type": "OnPrem",
+        "Comments": "",
+        "capabilities_supported": [
+          "Finance Reporting"
+        ],
+        "lifecycle_signals": [
+          "Legacy"
+        ]
+      },
+      {
+        "name": "Workday",
+        "description": "Global HRIS system",
+        "Region": "APAC",
+        "Domain": "Operations",
+        "Sub-Domain": "HR",
+        "Application Name": "Workday",
+        "Application Type": "SaaS",
+        "Comments": "",
+        "capabilities_supported": [
+          "HR Management"
+        ],
+        "lifecycle_signals": [
+          "Approved"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "Azure Data Factory",
+      "target": "Data Integration",
+      "type": "Serving",
+      "description": "Azure Data Factory supports data integration services"
+    },
+    {
+      "source": "Azure Data Lake Storage",
+      "target": "Data Storage",
+      "type": "Serving",
+      "description": "Azure Data Lake Storage supports enterprise data storage"
+    },
+    {
+      "source": "Microsoft Fabric",
+      "target": "Data Storage",
+      "type": "Serving",
+      "description": "Microsoft Fabric supports enterprise data storage"
+    },
+    {
+      "source": "Microsoft PowerBI",
+      "target": "Data Visualization",
+      "type": "Serving",
+      "description": "Microsoft PowerBI supports data visualization and reporting"
+    },
+    {
+      "source": "Tableau",
+      "target": "Data Visualization",
+      "type": "Serving",
+      "description": "Tableau supports data visualization and reporting"
+    },
+    {
+      "source": "MIMS",
+      "target": "Inventory Management",
+      "type": "Serving",
+      "description": "MIMS supports inventory management in ANZ"
+    },
+    {
+      "source": "Workday",
+      "target": "HR Management",
+      "type": "Serving",
+      "description": "Workday supports global HR management"
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "Microsoft Fabric",
+        "capability": "Data Storage",
+        "domain": "Data",
+        "maturity": 5,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 10,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Modern, strategic data platform"
+      }
+    ],
+    "updates": [
+      {
+        "app_name": "Tableau",
+        "capability": "Data Visualization",
+        "maturity": 2,
+        "lifecycle_status": "Sunset",
+        "rationale": "Legacy system being phased out"
+      }
+    ],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No major gaps identified, but legacy systems like Tableau need replacement.",
+    "sunset_risks": "Tableau phase-out requires a clear migration plan to PowerBI.",
+    "maturity_trends": "Data capabilities are improving with the introduction of Microsoft Fabric.",
+    "overlaps": "Multiple tools for data visualization (PowerBI, Tableau) indicate potential redundancy."
+  },
+  "recommendations": [
+    "Prioritize migration from Tableau to PowerBI.",
+    "Invest in modernizing legacy systems like Pro2SQL.",
+    "Ensure strategic alignment for data platforms like Microsoft Fabric."
+  ]
+}

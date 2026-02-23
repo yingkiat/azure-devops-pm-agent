@@ -1,0 +1,326 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "HEAT ITSM",
+        "description": "Existing ITSM platform handling ticket management with limited features",
+        "technology_stack": [
+          "ITSM"
+        ],
+        "capabilities_supported": [
+          "Ticket Management"
+        ],
+        "lifecycle_signals": [
+          "Maintain"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Enhanced HEAT ITSM",
+        "description": "Upgraded ITSM platform with modern features like chatbot integration and advanced analytics",
+        "technology_stack": [
+          "ITSM",
+          "Chatbot Integration",
+          "Analytics"
+        ],
+        "capabilities_supported": [
+          "Ticket Management",
+          "Proactive Support"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "AI Support Chatbot",
+        "description": "Intelligent chatbot for first-line support, integrated with HEAT ITSM",
+        "technology_stack": [
+          "AI",
+          "Chatbot"
+        ],
+        "capabilities_supported": [
+          "Ticket Deflection"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Self-Service Portal",
+        "description": "Comprehensive self-service portal with knowledge base and guided troubleshooting",
+        "technology_stack": [
+          "Web Portal"
+        ],
+        "capabilities_supported": [
+          "Self-Service"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Azure Container Apps",
+        "description": "Serverless container platform that auto-scales based on demand",
+        "technology_stack": [
+          "Azure",
+          "Serverless"
+        ],
+        "capabilities_supported": [
+          "Compute Optimization"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Serverless Databases",
+        "description": "Auto-scaling serverless database tier that pauses when inactive",
+        "technology_stack": [
+          "Azure SQL Serverless",
+          "Cosmos DB Serverless"
+        ],
+        "capabilities_supported": [
+          "Database Optimization"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Proactive Cost Monitoring",
+        "description": "Real-time cost monitoring with automated shutdown policies and optimization recommendations",
+        "technology_stack": [
+          "Azure Cost Management"
+        ],
+        "capabilities_supported": [
+          "Cost Optimization"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Windows Hello",
+        "description": "Modern passwordless authentication using biometrics and PIN-based authentication",
+        "technology_stack": [
+          "Windows Hello for Business"
+        ],
+        "capabilities_supported": [
+          "Authentication"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "Azure File Sync to JPN",
+        "description": "Hybrid solution for low-latency file access in Japan while retiring on-prem infrastructure",
+        "technology_stack": [
+          "Azure File Sync"
+        ],
+        "capabilities_supported": [
+          "File Management"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      }
+    ],
+    "Capability": [
+      {
+        "name": "Ticket Management",
+        "domain": "Support Services",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Proactive Support",
+        "domain": "Support Services",
+        "criticality": "Important"
+      },
+      {
+        "name": "Ticket Deflection",
+        "domain": "Support Services",
+        "criticality": "Important"
+      },
+      {
+        "name": "Self-Service",
+        "domain": "Support Services",
+        "criticality": "Important"
+      },
+      {
+        "name": "Compute Optimization",
+        "domain": "Azure Cloud Infrastructure",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Database Optimization",
+        "domain": "Azure Cloud Infrastructure",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Cost Optimization",
+        "domain": "Azure Cloud Infrastructure",
+        "criticality": "Critical"
+      },
+      {
+        "name": "Authentication",
+        "domain": "End User Computing",
+        "criticality": "Critical"
+      },
+      {
+        "name": "File Management",
+        "domain": "Azure Cloud Infrastructure",
+        "criticality": "Important"
+      }
+    ],
+    "TechnologyService": [
+      {
+        "name": "Heavy VM Expenditure",
+        "description": "High expenditure on always-on virtual machines in Azure",
+        "technology_stack": [
+          "Azure"
+        ],
+        "lifecycle_signals": [
+          "Sunset"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Dual Region Architecture",
+        "description": "Two full Azure regions creating overhead in management and resource duplication",
+        "technology_stack": [
+          "Azure"
+        ],
+        "lifecycle_signals": [
+          "Maintain"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Ad-hoc Cost Monitoring",
+        "description": "Reactive and manual cost monitoring approach",
+        "technology_stack": [
+          "Azure"
+        ],
+        "lifecycle_signals": [
+          "Sunset"
+        ],
+        "Horizon": "H1"
+      },
+      {
+        "name": "Single SEA Region",
+        "description": "Consolidation from two Azure regions to one primary Southeast Asia region",
+        "technology_stack": [
+          "Azure"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      },
+      {
+        "name": "24x7 Support Operations",
+        "description": "Round-the-clock support availability using a follow-the-sun model",
+        "technology_stack": [
+          "Global Helpdesk"
+        ],
+        "lifecycle_signals": [
+          "Strategic"
+        ],
+        "Horizon": "H3"
+      }
+    ],
+    "Node": [
+      {
+        "name": "On-Prem File Servers (JPN)",
+        "description": "On-premises file servers in Japan for low-latency Excel editing",
+        "lifecycle_signals": [
+          "Sunset"
+        ],
+        "Horizon": "H1"
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "source": "Azure Container Apps",
+      "target": "Enhanced HEAT ITSM",
+      "type": "Serving",
+      "description": "Azure Container Apps serves Enhanced HEAT ITSM as the ITSM platform will migrate to serverless compute"
+    },
+    {
+      "source": "AI Support Chatbot",
+      "target": "Enhanced HEAT ITSM",
+      "type": "Access",
+      "description": "AI Support Chatbot accesses Enhanced HEAT ITSM for ticket creation and status queries"
+    },
+    {
+      "source": "Self-Service Portal",
+      "target": "Consolidated Global Helpdesk",
+      "type": "Serving",
+      "description": "Self-Service Portal serves Consolidated Global Helpdesk by reducing ticket volume"
+    },
+    {
+      "source": "Proactive Cost Monitoring",
+      "target": "Azure Container Apps",
+      "type": "Serving",
+      "description": "Proactive Cost Monitoring serves Azure Container Apps by tracking container resource usage and costs"
+    }
+  ],
+  "changes": {
+    "inserts": [
+      {
+        "app_name": "Azure Container Apps",
+        "capability": "Compute Optimization",
+        "domain": "Azure Cloud Infrastructure",
+        "maturity": 5,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 10,
+        "strategic_importance": "Critical",
+        "confidence": 0.9,
+        "rationale": "Serverless compute platform aligns with cost reduction goals"
+      },
+      {
+        "app_name": "Enhanced HEAT ITSM",
+        "capability": "Proactive Support",
+        "domain": "Support Services",
+        "maturity": 5,
+        "lifecycle_status": "Strategic",
+        "remaining_years": 8,
+        "strategic_importance": "Important",
+        "confidence": 0.8,
+        "rationale": "Modernized ITSM platform improves support efficiency"
+      }
+    ],
+    "updates": [
+      {
+        "app_name": "HEAT ITSM",
+        "capability": "Ticket Management",
+        "maturity": 2,
+        "lifecycle_status": "Sunset",
+        "rationale": "Legacy ITSM platform being replaced by Enhanced HEAT ITSM"
+      }
+    ],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "Authentication capability is currently underserved with outdated password-only methods. File management in Japan relies on legacy on-prem servers, which need modernization.",
+    "sunset_risks": "HEAT ITSM is being retired but has a clear replacement in Enhanced HEAT ITSM. On-prem file servers in Japan are critical for low-latency Excel editing and require a hybrid solution.",
+    "maturity_trends": "Azure Cloud Infrastructure and Support Services domains show significant improvement with serverless adoption and ITSM modernization.",
+    "overlaps": "Dual region architecture in Azure creates unnecessary redundancy, which will be addressed by consolidating to a single SEA region."
+  },
+  "recommendations": [
+    "Prioritize Azure Container Apps pilot to validate serverless cost savings.",
+    "Accelerate Enhanced HEAT ITSM deployment to improve support efficiency.",
+    "Implement Windows Hello to address authentication gaps and improve security.",
+    "Deploy Azure File Sync in Japan to retire on-prem file servers while maintaining low-latency access."
+  ]
+}

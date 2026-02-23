@@ -37,7 +37,7 @@ variables:
   - name: prodResourceGroup
     value: 'M3-RG-ALZ-DWHS-ALYTICS-P-1'  # Update with your production resource group
   - name: prodContainerAppName
-    value: 'm3acadwhsagentp1'
+    value: 'm3acaeaportalp1'  # EA Portal - separate from other deployments
   - name: prodACRRegistry
     value: 'm3acrdwhsp1'
   - name: prodLocation

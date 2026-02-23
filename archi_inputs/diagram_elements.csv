@@ -46,3 +46,6 @@ id-0b87b0eb6e93,ApplicationComponent,Enhanced HEAT ITSM,Upgraded HEAT platform w
 id-a40f6332543f,ApplicationComponent,AI Support Chatbot,"Intelligent chatbot for first-line support, integrated with HEAT ITSM"
 id-98f9272950bb,ApplicationComponent,Self-Service Portal,Comprehensive self-service portal with searchable knowledge base and guided troubleshooting
 id-d1c7ae5a85d5,TechnologyService,24x7 Support Operations,Round-the-clock support availability using a consolidated global team
+diagram-8682f2755f93,ApplicationComponent,CRM Purchase Order Automation System,Diagram element (not in official EA model)
+diagram-c3441e892e6f,ApplicationComponent,Online Portal,Diagram element (not in official EA model)
+diagram-e43c019b1964,ApplicationComponent,SAP APO,Diagram element (not in official EA model)

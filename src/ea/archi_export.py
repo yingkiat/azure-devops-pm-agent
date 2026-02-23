@@ -152,7 +152,7 @@ class ArchiExporter:
             from pathlib import Path
             specs_dir = Path("ea_inputs/views")
 
-            if specs_dir.exists() and list(specs_dir.glob("*.yaml")):
+            if specs_dir.exists() and list(specs_dir.glob("**/*.yaml")):
                 # MVP6 Mode: Generate views from specs (deterministic)
                 print(f" MVP6 Mode: Using view specifications from {specs_dir}")
                 from .view_builder import ViewBuilder

@@ -1,0 +1,434 @@
+{
+  "discovery": {
+    "ApplicationComponent": [
+      {
+        "name": "HEAT CMDB CI",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "HEAT CMDB CI",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "LEANIX",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "LEANIX",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "QARA",
+        "description": "",
+        "Region": "Global",
+        "Domain": "Standards",
+        "Sub-Domain": "",
+        "Application Name": "QARA",
+        "Application Type": "",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": []
+      },
+      {
+        "name": "Boomi",
+        "description": "Cloud-hosted private integration platform service",
+        "Region": "APAC",
+        "Domain": "Integration",
+        "Sub-Domain": "Integration",
+        "Application Name": "Boomi",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "High",
+          "Tier 1 - Mission Critical"
+        ]
+      },
+      {
+        "name": "MedTrans Stocktake App",
+        "description": "MedTrans Stocktake PowerApp (by Katherine)",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Logistics",
+        "Application Name": "MedTrans Stocktake App",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 4 - Support Services"
+        ]
+      },
+      {
+        "name": "Batch Control",
+        "description": "Manufacturing system used to manage batch records",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Batch Control",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "High",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "Label Printing",
+        "description": "Label printing system for manufacturing",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Label Printing",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "High",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "Label Printing Sino",
+        "description": "Label printing system for contractor manufacturing",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Label Printing Sino",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "eiFU",
+        "description": "Electronic instructions system for manufacturing",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "eiFU",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "PSS 1.0",
+        "description": "Product specification system",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "PSS 1.0",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "PSS 1.0",
+        "description": "Product specification system",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "PSS 1.0",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "Iwagaki Access",
+        "description": "Access-based tools supporting manufacturing & planning processes",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Iwagaki Access",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "Kenpin Barcode",
+        "description": "Assembly inventory tracking system",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Manufacturing",
+        "Application Name": "Kenpin Barcode",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "Blue Bin Label Printing",
+        "description": "Blue Bin Label Printing (Powerapp by Katherine)",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Production",
+        "Application Name": "Blue Bin Label Printing",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 4 - Support Services"
+        ]
+      },
+      {
+        "name": "Label Room Automation Work Order Prep",
+        "description": "Label Room Automation Work Order Prep (Powerapp by Katherine)",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Production",
+        "Application Name": "Label Room Automation Work Order Prep",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 4 - Support Services"
+        ]
+      },
+      {
+        "name": "Education Designer",
+        "description": "Quality management system for regulatory assurance",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "QA",
+        "Application Name": "Education Designer",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "Quality Designer",
+        "description": "Quality management system for regulatory assurance",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "QA",
+        "Application Name": "Quality Designer",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "ETQ Reliance",
+        "description": "Global quality management system for regulatory assurance",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "QA",
+        "Application Name": "ETQ Reliance",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "BCCR",
+        "description": "Flow supporting approval for ANZ external communications",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "QA",
+        "Application Name": "BCCR",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "Rimsys",
+        "description": "Global regulatory info & product registration management",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "RA",
+        "Application Name": "Rimsys",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "Rimsys",
+        "description": "Global regulatory info & product registration management",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "RA",
+        "Application Name": "Rimsys",
+        "Application Type": "Approved",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "DSX",
+        "description": "Demand planning and forecasting tool",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "DSX",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "DSX",
+        "description": "Demand planning and forecasting tool",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "DSX",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "GSC SAP APO",
+        "description": "Supply chain planning and global sourcing system",
+        "Region": "APAC",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "GSC SAP APO",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "VC Vendor Collaboration",
+        "description": "Vendor collaboration portal for supply chain",
+        "Region": "APAC",
+        "Domain": "Operations",
+        "Sub-Domain": "SCM Planning",
+        "Application Name": "VC Vendor Collaboration",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "GSCM/OCTS",
+        "description": "Custom Excel-based system for inbound shipment tracking",
+        "Region": "JPN",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "GSCM/OCTS",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 3 - Business Operational"
+        ]
+      },
+      {
+        "name": "Descartes",
+        "description": "Transportation management system for MedTrans",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "Descartes",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      },
+      {
+        "name": "SmartFreight",
+        "description": "Transportation management system for 3PL transportation",
+        "Region": "ANZ",
+        "Domain": "Operations",
+        "Sub-Domain": "Transport and Logistics",
+        "Application Name": "SmartFreight",
+        "Application Type": "Legacy",
+        "Comments": "",
+        "capabilities_supported": [],
+        "lifecycle_signals": [
+          "Moderate",
+          "Tier 2 - Business Critical"
+        ]
+      }
+    ]
+  },
+  "relationships": [],
+  "changes": {
+    "inserts": [],
+    "updates": [],
+    "deletes": []
+  },
+  "exploration": {
+    "gap_analysis": "No explicit capability gaps identified from input.",
+    "sunset_risks": "Legacy systems like 'Batch Control' and 'Label Printing' are critical and may require modernization.",
+    "maturity_trends": "Several legacy systems indicate a need for modernization in manufacturing and logistics domains.",
+    "overlaps": "Potential overlaps in label printing systems ('Label Printing' and 'Label Printing Sino') and forecasting tools ('DSX')."
+  },
+  "recommendations": [
+    "Prioritize modernization of critical legacy systems in manufacturing and logistics.",
+    "Evaluate overlaps in label printing and forecasting tools for potential consolidation.",
+    "Assess the strategic importance of legacy systems and plan for replacements where necessary."
+  ]
+}
