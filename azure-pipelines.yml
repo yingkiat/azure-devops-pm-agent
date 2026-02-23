@@ -173,15 +173,15 @@ stages:
                     # --registry-password "${ACR_PASSWORD}"
                 else
                   echo "🏗️  Creating new Production Container App..."
+                  ACR_PASSWORD=$(az acr credential show --name "${ACR_USERNAME}" --query "passwords[0].value" -o tsv)
                   az containerapp create \
                     --name "${CONTAINER_APP_NAME}" \
                     --resource-group "${RESOURCE_GROUP}" \
                     --environment "$ENVIRONMENT_NAME" \
                     --image "${FULL_IMAGE_NAME}" \
-                    # COMMENTED OUT: Using managed identity instead
-                    # --registry-server "${ACR_SERVER}" \
-                    # --registry-username "${ACR_USERNAME}" \
-                    # --registry-password "${ACR_PASSWORD}" \
+                    --registry-server "${ACR_SERVER}" \
+                    --registry-username "${ACR_USERNAME}" \
+                    --registry-password "${ACR_PASSWORD}" \
                     --target-port 80 \
                     --ingress external \
                     --min-replicas 2 \
