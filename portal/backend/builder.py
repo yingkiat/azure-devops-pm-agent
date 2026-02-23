@@ -197,7 +197,7 @@ class PortalBuilder:
             if len(df_all) > 0:
                 # Forward-fill NaN values in grouping row (row 0) to handle merged cells
                 grouping_row = df_all.iloc[0].copy()
-                grouping_row = grouping_row.fillna(method='ffill')
+                grouping_row = grouping_row.ffill()
 
                 for col_idx, col_name in enumerate(df_all.iloc[1]):
                     if pd.notna(col_name):
