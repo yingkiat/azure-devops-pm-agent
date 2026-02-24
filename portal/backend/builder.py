@@ -80,7 +80,7 @@ class PortalBuilder:
         print(f"      ✓ Converted {len(diagrams_info)} diagrams\n")
 
         # Step 4: Generate indexes
-        print("[4/5] Generating indexes...")
+        print("[4/6] Generating indexes...")
         element_index = index_gen.generate_element_index(
             {
                 "views": [
@@ -101,11 +101,19 @@ class PortalBuilder:
         print(f"      ✓ Registered {len(view_registry)} views\n")
 
         # Step 5: Save indexes
-        print("[5/5] Saving files...")
+        print("[5/6] Saving indexes...")
         if not index_gen.save_indexes(
             str(self.data_dir), element_index, relationship_graph, view_registry
         ):
             errors.append("Failed to save indexes")
+
+        # Step 6: Generate analytics
+        print("[6/6] Generating analytics...")
+        analytics_ok = self._generate_analytics_data()
+        if analytics_ok:
+            print(f"      ✓ Analytics data written\n")
+        else:
+            print(f"      ⚠ Skipped (missing elements.csv or properties.csv)\n")
 
         # Copy frontend files
         self._copy_frontend_files()
@@ -123,6 +131,200 @@ class PortalBuilder:
             "output_path": str(self.output_dir),
             "errors": errors,
         }
+
+    def _generate_analytics_data(self) -> bool:
+        """Compute portfolio analytics scoped to the application catalogue.
+
+        Strategy:
+        - Scope = catalogue apps (99 rows) — domain/region/tech_standard come from here
+          since the catalogue has complete coverage for those fields.
+        - Rich attributes (Application Type, Horizon, Lifecycle Status, Criticality) only
+          exist in properties.csv, so we match catalogue app names to ArchiMate element IDs
+          and pull those properties from there.
+        """
+        import csv
+
+        catalogue_json = self.data_dir / "catalogue.json"
+        elements_file = self.model_dir / "elements.csv"
+        properties_file = self.model_dir / "properties.csv"
+
+        if not catalogue_json.exists():
+            return False
+
+        try:
+            with open(catalogue_json, encoding="utf-8") as f:
+                raw = json.load(f)
+        except Exception:
+            return False
+
+        catalogue = raw.get("data", raw) if isinstance(raw, dict) else raw
+        if not catalogue:
+            return False
+
+        # Resolve catalogue column names (they may vary slightly between Excel versions)
+        col_keys = list(catalogue[0].keys())
+        lower_map = {k.lower().strip(): k for k in col_keys}
+
+        def find_col(*candidates):
+            for c in candidates:
+                match = lower_map.get(c.lower().strip())
+                if match:
+                    return match
+            return None
+
+        col_name    = find_col("name", "application name", "app name")
+        col_domain  = find_col("domain", "business domain")
+        col_region  = find_col("region")
+        col_tech    = find_col("tech_standard", "tech standard", "technology standard")
+        col_biz_crit = find_col("business_criticality", "business criticality")
+
+        _skip = {"", "-", "none", "nan", "n/a"}
+
+        def clean(val):
+            return str(val or "").strip()
+
+        # Catalogue app names (our universe)
+        catalogue_names = {clean(app.get(col_name, "")) for app in catalogue if col_name}
+        catalogue_names.discard("")
+        catalogue_names_lower = {n.lower(): n for n in catalogue_names}
+
+        # Match catalogue names → ArchiMate element IDs (single pass)
+        matched_ids = set()
+        id_to_name  = {}
+        if elements_file.exists():
+            with open(elements_file, encoding="utf-8") as f:
+                for row in csv.DictReader(f):
+                    if row["Type"] != "ApplicationComponent":
+                        continue
+                    ename = row["Name"].strip()
+                    if ename in catalogue_names or ename.lower() in catalogue_names_lower:
+                        matched_ids.add(row["ID"])
+                        id_to_name[row["ID"]] = ename
+
+        # Load properties only for matched elements
+        matched_props = {}  # eid -> {key: value}
+        if properties_file.exists() and matched_ids:
+            with open(properties_file, encoding="utf-8") as f:
+                for row in csv.DictReader(f):
+                    if row["ID"] in matched_ids:
+                        matched_props.setdefault(row["ID"], {})[row["Key"]] = row["Value"]
+
+        # Count a property key across matched elements
+        def count_prop(prop_key):
+            counts = {}
+            for props in matched_props.values():
+                val = clean(props.get(prop_key, ""))
+                if val.lower() not in _skip:
+                    counts[val] = counts.get(val, 0) + 1
+            return dict(sorted(counts.items(), key=lambda x: -x[1]))
+
+        # Count a catalogue column across all 99 apps (full coverage)
+        def count_col(col):
+            if not col:
+                return {}
+            counts = {}
+            for app in catalogue:
+                val = clean(app.get(col, ""))
+                if val.lower() not in _skip:
+                    counts[val] = counts.get(val, 0) + 1
+            return dict(sorted(counts.items(), key=lambda x: -x[1]))
+
+        # App name lists per property value (for drilldown)
+        def apps_by_prop(prop_key):
+            result = {}
+            for eid, props in matched_props.items():
+                val = clean(props.get(prop_key, ""))
+                name = id_to_name.get(eid, "")
+                if val.lower() not in _skip and name:
+                    result.setdefault(val, []).append(name)
+            return result
+
+        # App name lists per catalogue column value (for drilldown)
+        def apps_by_col(col):
+            if not col:
+                return {}
+            result = {}
+            for app in catalogue:
+                val = clean(app.get(col, ""))
+                name = clean(app.get(col_name, "")) if col_name else ""
+                if val.lower() not in _skip and name:
+                    result.setdefault(val, []).append(name)
+            return result
+
+        # Rich attributes from properties.csv (scoped to catalogue-matched elements)
+        app_type  = count_prop("Application Type")
+        lifecycle = count_prop("Lifecycle Status")
+        horizon_raw = count_prop("Horizon")
+
+        horizon_raw_apps = apps_by_prop("Horizon")
+        horizon = {
+            "labels": ["H1 (Current)", "H2 (Transitional)", "H3 (Future)"],
+            "values": [horizon_raw.get("H1", 0), horizon_raw.get("H2", 0), horizon_raw.get("H3", 0)],
+            "apps": {
+                "H1 (Current)":    horizon_raw_apps.get("H1", []),
+                "H2 (Transitional)": horizon_raw_apps.get("H2", []),
+                "H3 (Future)":     horizon_raw_apps.get("H3", []),
+            },
+        }
+
+        # Legacy by domain — use catalogue domain for matched legacy apps
+        cat_name_to_domain = {}
+        if col_domain and col_name:
+            for app in catalogue:
+                n = clean(app.get(col_name, ""))
+                d = clean(app.get(col_domain, ""))
+                if n and d.lower() not in _skip:
+                    cat_name_to_domain[n] = d
+
+        legacy_by_domain = {}
+        legacy_domain_apps = {}
+        for eid, props in matched_props.items():
+            if props.get("Application Type") == "Legacy":
+                ename = id_to_name.get(eid, "")
+                domain_val = cat_name_to_domain.get(ename) or clean(props.get("Domain", ""))
+                if domain_val and domain_val.lower() not in _skip:
+                    legacy_by_domain[domain_val] = legacy_by_domain.get(domain_val, 0) + 1
+                    if ename:
+                        legacy_domain_apps.setdefault(domain_val, []).append(ename)
+        legacy_by_domain = dict(sorted(legacy_by_domain.items(), key=lambda x: -x[1]))
+
+        # Structural attributes from catalogue (complete coverage for all 99 apps)
+        domain = count_col(col_domain)
+        region = count_col(col_region)
+        tech_std = count_col(col_tech)
+        criticality = count_col(col_biz_crit)
+
+        total  = len(catalogue) or 1
+        saas   = app_type.get("SaaS", 0)
+        legacy = app_type.get("Legacy", 0)
+        custom = app_type.get("Home-grown", 0) + app_type.get("COTS", 0) + app_type.get("Excel", 0)
+
+        analytics = {
+            "summary": {
+                "total_apps": len(catalogue),
+                "legacy_count": legacy,
+                "legacy_pct": round(legacy / total * 100, 1),
+                "saas_count": saas,
+                "saas_pct": round(saas / total * 100, 1),
+                "custom_count": custom,
+                "custom_pct": round(custom / total * 100, 1),
+                "tech_standard_approved": tech_std.get("Approved", 0),
+                "strategic_count": lifecycle.get("Strategic", 0),
+                "sunset_count": lifecycle.get("Sunset", 0),
+            },
+            "application_type": {"labels": list(app_type.keys()), "values": list(app_type.values()), "apps": apps_by_prop("Application Type")},
+            "horizon": horizon,
+            "lifecycle_status": {"labels": list(lifecycle.keys()), "values": list(lifecycle.values()), "apps": apps_by_prop("Lifecycle Status")},
+            "domain": {"labels": list(domain.keys()), "values": list(domain.values()), "apps": apps_by_col(col_domain)},
+            "region": {"labels": list(region.keys()), "values": list(region.values()), "apps": apps_by_col(col_region)},
+            "criticality": {"labels": list(criticality.keys()), "values": list(criticality.values()), "apps": apps_by_col(col_biz_crit)},
+            "legacy_by_domain": {"labels": list(legacy_by_domain.keys()), "values": list(legacy_by_domain.values()), "apps": legacy_domain_apps},
+            "tech_standard": {"labels": list(tech_std.keys()), "values": list(tech_std.values()), "apps": apps_by_col(col_tech)},
+        }
+
+        with open(self.data_dir / "analytics.json", "w", encoding="utf-8") as f:
+            json.dump(analytics, f, indent=2)
+        return True
 
     def _convert_diagrams_to_svg(self) -> List[Dict]:
         """Convert all .drawio files to SVG, preserving folder structure."""
@@ -319,6 +521,7 @@ class PortalBuilder:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EA Portal</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; }
@@ -354,8 +557,29 @@ class PortalBuilder:
         .sidebar-header p { font-size: 0.75rem; opacity: 0.85; margin-top: 0.25rem; }
 
         .view-list { padding: 1rem; }
-        .view-category { margin-bottom: 2rem; }
-        .view-category-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; padding: 0.75rem 1rem; margin-bottom: 0.5rem; letter-spacing: 0.5px; }
+        .view-category { margin-bottom: 1.5rem; }
+        .view-category-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.55;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.8px;
+        }
+        .sidebar-section-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            margin: 0.75rem 1rem 1.25rem;
+        }
+        .view-subcategory-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.45;
+            padding: 0.4rem 1rem 0.25rem 1.75rem;
+            letter-spacing: 0.6px;
+        }
         .view-item {
             padding: 0.875rem 1rem;
             margin-bottom: 0.5rem;
@@ -499,7 +723,11 @@ class PortalBuilder:
             position: sticky;
             z-index: 10;
             overflow: visible;
+            cursor: pointer;
+            user-select: none;
         }
+        .catalogue-table th:hover { opacity: 0.85; }
+        .sort-indicator { margin-left: 0.3rem; font-size: 0.6rem; }
         .catalogue-table thead tr:first-child th {
             background: linear-gradient(135deg, __GRADIENT_START__40 0%, __GRADIENT_END__40 100%);
             padding: 0.5rem 0.75rem;
@@ -579,6 +807,18 @@ class PortalBuilder:
         .element-panel {
             padding: 2rem;
         }
+        .drilldown-list { margin-top: 0.5rem; }
+        .drilldown-item {
+            padding: 0.6rem 0.75rem;
+            margin-bottom: 0.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+        .drilldown-item:hover { background: #f5f7fa; border-left-color: __PRIMARY__; }
+        .drilldown-item-sub { font-size: 0.72rem; color: #999; margin-top: 0.1rem; }
 
         .element-header {
             display: flex;
@@ -651,6 +891,78 @@ class PortalBuilder:
             color: #999;
         }
 
+        .analytics-viewer {
+            flex: 1;
+            background: #f9fafc;
+            overflow: auto;
+            padding: 1.5rem;
+        }
+        .analytics-stat-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .analytics-stat-card {
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.25rem;
+            text-align: center;
+            border-top: 3px solid __PRIMARY__;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.15s;
+        }
+        .analytics-stat-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+            transform: translateY(-2px);
+        }
+        .analytics-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: __PRIMARY__;
+            line-height: 1;
+        }
+        .analytics-stat-label {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-weight: 600;
+        }
+        .analytics-stat-sub {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 0.2rem;
+        }
+        .analytics-chart-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .analytics-chart-card {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.25rem;
+        }
+        .analytics-chart-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .analytics-chart-wrap {
+            position: relative;
+            height: 220px;
+        }
+
         @media (max-width: 1024px) {
             .sidebar-right { width: 100%; z-index: 100; }
         }
@@ -676,11 +988,26 @@ class PortalBuilder:
                     </div>
                 </div>
 
+                <!-- Analytics -->
+                <div class="view-category" v-if="analyticsData">
+                    <div class="view-category-title">Insights</div>
+                    <div class="view-item" :class="{ active: viewMode === 'analytics' }" @click="showAnalytics()">
+                        <div class="view-item-name">Portfolio Analytics</div>
+                        <div class="view-item-count">{{ analyticsData.summary.total_apps }} apps analysed</div>
+                    </div>
+                </div>
+
+                <!-- Divider + header before diagram categories -->
+                <template v-if="Object.keys(viewsByCategory).length > 0">
+                    <div class="sidebar-section-divider"></div>
+                    <div class="view-category-title" style="margin-bottom: 0.75rem;">Diagrams</div>
+                </template>
+
                 <!-- Diagram categories -->
                 <template v-for="(views, category) in viewsByCategory" :key="category">
                     <div class="view-category" v-if="views.length > 0">
-                        <div class="view-category-title">{{ category.charAt(0).toUpperCase() + category.slice(1) }}</div>
-                        <div v-for="view in views" :key="view.id" class="view-item" :class="{ active: currentView === view.id }" @click="loadView(view.id)">
+                        <div class="view-subcategory-title">{{ category.charAt(0).toUpperCase() + category.slice(1) }}</div>
+                        <div v-for="view in views" :key="view.id" class="view-item" style="padding-left: 1.75rem;" :class="{ active: currentView === view.id }" @click="loadView(view.id)">
                             <div class="view-item-name">{{ view.name }}</div>
                             <div class="view-item-count">{{ view.metadata.element_count }} elements</div>
                         </div>
@@ -697,6 +1024,9 @@ class PortalBuilder:
         <div class="main">
             <div class="header" v-if="viewMode === 'catalogue'">
                 <h2>Application Catalogue</h2>
+            </div>
+            <div class="header" v-else-if="viewMode === 'analytics'">
+                <h2>Portfolio Analytics</h2>
             </div>
             <div class="header" v-else-if="currentView && views[currentView]">
                 <h2>{{ views[currentView].name }}</h2>
@@ -720,8 +1050,9 @@ class PortalBuilder:
                                 <tr>
                                     <th v-for="col in catalogueColumns" :key="col"
                                         :class="{ 'name-column': col === catalogueNameColumn }"
-                                        :style="{ minWidth: col === catalogueNameColumn ? '200px' : 'auto' }">
-                                        {{ col }}
+                                        :style="{ minWidth: col === catalogueNameColumn ? '200px' : 'auto' }"
+                                        @click="sortBy(col)">
+                                        {{ col }}<span class="sort-indicator" v-if="sortColumn === col">{{ sortDir === 1 ? '▲' : '▼' }}</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -740,6 +1071,85 @@ class PortalBuilder:
                     <p>No applications in catalogue</p>
                 </div>
             </div>
+            <div v-else-if="viewMode === 'analytics'" class="analytics-viewer">
+                <div v-if="!analyticsData" class="empty-state">
+                    <p>No analytics data. Rebuild the portal to generate analytics.</p>
+                </div>
+                <div v-else>
+                    <!-- Stat Cards -->
+                    <div class="analytics-stat-row">
+                        <div class="analytics-stat-card" @click="showDrilldown('All Applications', cardApps('total'))">
+                            <div class="analytics-stat-value">{{ analyticsData.summary.total_apps }}</div>
+                            <div class="analytics-stat-label">Total Applications</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#dc3545;" @click="showDrilldown('Legacy', cardApps('legacy'))">
+                            <div class="analytics-stat-value" style="color:#dc3545;">{{ analyticsData.summary.legacy_pct }}%</div>
+                            <div class="analytics-stat-label">Legacy</div>
+                            <div class="analytics-stat-sub">{{ analyticsData.summary.legacy_count }} apps</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#28a745;" @click="showDrilldown('SaaS', cardApps('saas'))">
+                            <div class="analytics-stat-value" style="color:#28a745;">{{ analyticsData.summary.saas_pct }}%</div>
+                            <div class="analytics-stat-label">SaaS</div>
+                            <div class="analytics-stat-sub">{{ analyticsData.summary.saas_count }} apps</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#17a2b8;" @click="showDrilldown('Custom / COTS', cardApps('custom'))">
+                            <div class="analytics-stat-value" style="color:#17a2b8;">{{ analyticsData.summary.custom_pct }}%</div>
+                            <div class="analytics-stat-label">Custom / COTS</div>
+                            <div class="analytics-stat-sub">{{ analyticsData.summary.custom_count }} apps</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
+                            <div class="analytics-stat-value" style="color:#ffc107;">{{ analyticsData.summary.tech_standard_approved }}</div>
+                            <div class="analytics-stat-label">Tech Std Approved</div>
+                            <div class="analytics-stat-sub">of {{ analyticsData.summary.total_apps }} apps</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#6f42c1;" @click="showDrilldown('Strategic', cardApps('strategic'))">
+                            <div class="analytics-stat-value" style="color:#6f42c1;">{{ analyticsData.summary.strategic_count }}</div>
+                            <div class="analytics-stat-label">Strategic</div>
+                            <div class="analytics-stat-sub" style="cursor:pointer;" @click.stop="showDrilldown('Sunset', cardApps('sunset'))">{{ analyticsData.summary.sunset_count }} sunset ↗</div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 1: App Type + Horizon -->
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card">
+                            <div class="analytics-chart-title">Application Type Breakdown</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartAppType"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card">
+                            <div class="analytics-chart-title">Horizon Distribution</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartHorizon"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card">
+                            <div class="analytics-chart-title">Lifecycle Status</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartLifecycle"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 2: Legacy by Domain + Criticality -->
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:2;">
+                            <div class="analytics-chart-title">Legacy Applications by Domain</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Business Criticality</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartCriticality"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 3: Domain + Region -->
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:2;">
+                            <div class="analytics-chart-title">Applications by Domain</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartDomain"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Region Distribution</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartRegion"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div v-else class="diagram-viewer" @click="deselectElement()">
                 <div v-html="diagramHtml"></div>
                 <div class="zoom-controls" v-if="currentView">
@@ -756,8 +1166,26 @@ class PortalBuilder:
         <div class="sidebar-right" :class="{ open: sidebarRightOpen }">
             <button class="sidebar-close" @click="closeSidebar()">×</button>
 
+            <!-- Analytics drilldown app list -->
+            <div v-if="drilldownApps.length > 0 && !selectedElement && !selectedCatalogueApp" class="element-panel">
+                <div class="element-header">
+                    <div class="element-icon">📊</div>
+                    <div class="element-name">
+                        <h2>{{ drilldownTitle }}</h2>
+                        <div class="element-type">{{ drilldownApps.length }} applications</div>
+                    </div>
+                </div>
+                <div class="drilldown-list">
+                    <div v-for="app in drilldownApps" :key="app[catalogueNameColumn]"
+                         class="drilldown-item" @click="selectDrilldownApp(app)">
+                        {{ app[catalogueNameColumn] }}
+                        <div class="drilldown-item-sub">{{ [app.domain, app.region].filter(Boolean).join(' · ') }}</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Show catalogue app details if no matching ArchiMate element -->
-            <div v-if="!selectedElement && selectedCatalogueApp" class="element-panel">
+            <div v-else-if="!selectedElement && selectedCatalogueApp" class="element-panel">
                 <div class="element-header">
                     <div class="element-icon">📦</div>
                     <div class="element-name">
@@ -849,7 +1277,13 @@ class PortalBuilder:
                     viewMode: 'catalogue',
                     sidebarRightOpen: false,
                     zoomLevel: 1,
-                    fitToWidth: true
+                    fitToWidth: true,
+                    analyticsData: null,
+                    analyticsCharts: {},
+                    sortColumn: null,
+                    sortDir: 1,
+                    drilldownTitle: '',
+                    drilldownApps: []
                 };
             },
             computed: {
@@ -870,13 +1304,21 @@ class PortalBuilder:
                     return nameCol || this.catalogueColumns[0];
                 },
                 filteredCatalogue() {
-                    if (!this.catalogueSearch) return this.catalogue;
-                    const search = this.catalogueSearch.toLowerCase();
-                    return this.catalogue.filter(app => {
-                        return Object.values(app).some(val => {
-                            return val && String(val).toLowerCase().includes(search);
+                    let result = this.catalogue;
+                    if (this.catalogueSearch) {
+                        const search = this.catalogueSearch.toLowerCase();
+                        result = result.filter(app =>
+                            Object.values(app).some(val => val && String(val).toLowerCase().includes(search))
+                        );
+                    }
+                    if (this.sortColumn) {
+                        result = [...result].sort((a, b) => {
+                            const va = String(a[this.sortColumn] ?? '');
+                            const vb = String(b[this.sortColumn] ?? '');
+                            return va.localeCompare(vb, undefined, { numeric: true }) * this.sortDir;
                         });
-                    });
+                    }
+                    return result;
                 },
                 viewsByCategory() {
                     const byCategory = {};
@@ -927,6 +1369,14 @@ class PortalBuilder:
                             this.catalogueMetadata = { groupings: {}, columns: [] };
                         }
 
+                        // Load analytics if available
+                        try {
+                            this.analyticsData = await fetch('data/analytics.json').then(r => r.json());
+                            console.log('[EA Portal] Loaded analytics data');
+                        } catch (err) {
+                            console.log('[EA Portal] No analytics data found (optional):', err);
+                        }
+
                         console.log(`[EA Portal] Loaded ${Object.keys(this.views).length} views, ${Object.keys(this.elements).length} elements`);
                         console.log('[EA Portal] totalApps:', this.totalApps, 'totalViews:', this.totalViews);
 
@@ -952,6 +1402,149 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                },
+                showAnalytics() {
+                    this.viewMode = 'analytics';
+                    this.currentView = null;
+                    this.selectedElement = null;
+                    this.selectedCatalogueApp = null;
+                    this.sidebarRightOpen = false;
+                    this.$nextTick(() => { this.initAnalyticsCharts(); });
+                },
+                initAnalyticsCharts() {
+                    if (!this.analyticsData) return;
+                    Object.values(this.analyticsCharts).forEach(c => c.destroy());
+                    this.analyticsCharts = {};
+
+                    const appTypeColors = {
+                        'SaaS': '#28a745', 'Home-grown': '#17a2b8', 'Legacy': '#dc3545',
+                        'OnPrem': '#ffc107', 'COTS': '#6f42c1', 'Excel': '#fd7e14',
+                        'IaaS': '#20c997', 'Approved': '#007bff'
+                    };
+                    const primaryColor = '__PRIMARY__';
+                    const paletteBar = ['#0052CC','#1E5FD9','#00A651','#F39200','#6f42c1','#17a2b8','#dc3545','#fd7e14','#20c997','#e83e8c'];
+
+                    const make = (id, config) => {
+                        const el = document.getElementById(id);
+                        if (el) this.analyticsCharts[id] = new Chart(el, config);
+                    };
+
+                    // Shared click/hover helpers
+                    const clickFor = (dataKey) => (evt, elements, chart) => {
+                        if (!elements.length) return;
+                        const label = chart.data.labels[elements[0].index];
+                        const apps = this.analyticsData[dataKey]?.apps?.[label] || [];
+                        if (apps.length) this.showDrilldown(label, apps);
+                    };
+                    const hoverCursor = (evt, elements) => {
+                        evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+                    };
+
+                    // Application Type — doughnut
+                    make('chartAppType', {
+                        type: 'doughnut',
+                        data: {
+                            labels: this.analyticsData.application_type.labels,
+                            datasets: [{ data: this.analyticsData.application_type.values,
+                                backgroundColor: this.analyticsData.application_type.labels.map(l => appTypeColors[l] || '#aaa'),
+                                borderWidth: 2 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('application_type'),
+                            plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
+                    });
+
+                    // Horizon — bar
+                    make('chartHorizon', {
+                        type: 'bar',
+                        data: {
+                            labels: this.analyticsData.horizon.labels,
+                            datasets: [{ label: 'Apps', data: this.analyticsData.horizon.values,
+                                backgroundColor: [primaryColor, '#F39200', '#aaaaaa'], borderRadius: 4 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('horizon'),
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+
+                    // Lifecycle Status — doughnut
+                    const lcColors = { 'Strategic': '#28a745', 'Maintain': primaryColor, 'Planned': '#F39200', 'Sunset': '#dc3545' };
+                    make('chartLifecycle', {
+                        type: 'doughnut',
+                        data: {
+                            labels: this.analyticsData.lifecycle_status.labels,
+                            datasets: [{ data: this.analyticsData.lifecycle_status.values,
+                                backgroundColor: this.analyticsData.lifecycle_status.labels.map(l => lcColors[l] || '#aaa'),
+                                borderWidth: 2 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('lifecycle_status'),
+                            plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
+                    });
+
+                    // Legacy by Domain — horizontal bar
+                    make('chartLegacyDomain', {
+                        type: 'bar',
+                        data: {
+                            labels: this.analyticsData.legacy_by_domain.labels,
+                            datasets: [{ label: 'Legacy Apps', data: this.analyticsData.legacy_by_domain.values,
+                                backgroundColor: '#dc3545', borderRadius: 4 }]
+                        },
+                        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('legacy_by_domain'),
+                            plugins: { legend: { display: false } },
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+
+                    // Business Criticality — doughnut (Tier 1-4 from catalogue)
+                    const critColors = {
+                        'Tier 1 - Mission Critical': '#dc3545',
+                        'Tier 2 - Business Critical': '#F39200',
+                        'Tier 3 - Business Operational': '#ffc107',
+                        'Tier 4 - Support Services': '#28a745'
+                    };
+                    make('chartCriticality', {
+                        type: 'doughnut',
+                        data: {
+                            labels: this.analyticsData.criticality.labels,
+                            datasets: [{ data: this.analyticsData.criticality.values,
+                                backgroundColor: this.analyticsData.criticality.labels.map(l => critColors[l] || '#aaa'),
+                                borderWidth: 2 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('criticality'),
+                            plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+                    });
+
+                    // Domain — horizontal bar
+                    make('chartDomain', {
+                        type: 'bar',
+                        data: {
+                            labels: this.analyticsData.domain.labels,
+                            datasets: [{ label: 'Apps', data: this.analyticsData.domain.values,
+                                backgroundColor: this.analyticsData.domain.labels.map((_, i) => paletteBar[i % paletteBar.length]),
+                                borderRadius: 4 }]
+                        },
+                        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('domain'),
+                            plugins: { legend: { display: false } },
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+
+                    // Region — bar
+                    make('chartRegion', {
+                        type: 'bar',
+                        data: {
+                            labels: this.analyticsData.region.labels,
+                            datasets: [{ label: 'Apps', data: this.analyticsData.region.values,
+                                backgroundColor: [primaryColor, '#00A651', '#F39200'], borderRadius: 4 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('region'),
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
                 },
                 selectCatalogueApp(app) {
                     // Find the name column - look for column named "NAME", "Application Name", "name", etc.
@@ -980,10 +1573,51 @@ class PortalBuilder:
                         this.sidebarRightOpen = true;
                     }
                 },
+                sortBy(col) {
+                    if (this.sortColumn === col) {
+                        this.sortDir = this.sortDir === 1 ? -1 : 1;
+                    } else {
+                        this.sortColumn = col;
+                        this.sortDir = 1;
+                    }
+                },
+                cardApps(key) {
+                    const d = this.analyticsData;
+                    if (!d) return [];
+                    const at = d.application_type?.apps || {};
+                    const lc = d.lifecycle_status?.apps || {};
+                    const ts = d.tech_standard?.apps || {};
+                    switch (key) {
+                        case 'total':        return this.catalogue.map(a => String(a[this.catalogueNameColumn] || '').trim());
+                        case 'legacy':       return at['Legacy'] || [];
+                        case 'saas':         return at['SaaS'] || [];
+                        case 'custom':       return [...(at['Home-grown'] || []), ...(at['COTS'] || []), ...(at['Excel'] || [])];
+                        case 'tech_approved': return ts['Approved'] || [];
+                        case 'strategic':    return lc['Strategic'] || [];
+                        case 'sunset':       return lc['Sunset'] || [];
+                        default:             return [];
+                    }
+                },
+                showDrilldown(title, appNames) {
+                    const nameCol = this.catalogueNameColumn;
+                    const nameSet = new Set(appNames);
+                    this.drilldownTitle = title;
+                    this.drilldownApps = this.catalogue.filter(app => nameSet.has(String(app[nameCol] || '').trim()));
+                    this.selectedElement = null;
+                    this.selectedCatalogueApp = null;
+                    this.sidebarRightOpen = true;
+                },
+                selectDrilldownApp(app) {
+                    this.drilldownApps = [];
+                    this.drilldownTitle = '';
+                    this.selectCatalogueApp(app);
+                },
                 closeSidebar() {
                     this.sidebarRightOpen = false;
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
+                    this.drilldownApps = [];
+                    this.drilldownTitle = '';
                 },
                 async loadView(viewId, keepElement = null) {
                     const view = this.views[viewId];
