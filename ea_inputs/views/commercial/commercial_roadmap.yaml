@@ -14,7 +14,7 @@ story:
 # === VISUAL STRATEGY (MVP9) ===
 visual:
   emphasis:
-    - element: "Microsoft Dynamics CRM"
+    - element: "Microsoft Dynamics"
       role: "Strategic target platform - consolidates all CRM functions"
       treatment: "prominent"
     - element: "Salesforce.com"
@@ -66,7 +66,7 @@ elements:
         Horizon: "H2"
 
     # TO-BE (H3 - Future unified platform)
-    - name: "Microsoft Dynamics CRM"
+    - name: "Microsoft Dynamics"
       override:
         Process: "Sales"
         Horizon: "H3"
@@ -107,7 +107,7 @@ layout:
 # === ANNOTATIONS ===
 annotations:
   - text: "Target Platform (2026)"
-    near: "Microsoft Dynamics CRM"
+    near: "Microsoft Dynamics"
   - text: "Retire post-migration"
     near: "Salesforce.com"
   - text: "Legacy - Functional refresh Dec 2025"

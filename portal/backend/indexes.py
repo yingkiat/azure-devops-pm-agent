@@ -7,6 +7,19 @@ from typing import Dict, List
 from collections import defaultdict
 
 
+def _mask_it_owner(value: str) -> str:
+    if not value:
+        return value
+    if "." in value:
+        first, _ = value.split(".", 1)
+        return first[:3] + "*.***"
+    return value[:3] + "***"
+
+
+def _mask_properties(props: dict) -> dict:
+    return {k: _mask_it_owner(v) if k == "It Owner" else v for k, v in props.items()}
+
+
 class PortalIndexGenerator:
     """Generate element index, relationship graph, and view registry."""
 
@@ -115,7 +128,7 @@ class PortalIndexGenerator:
                 "id": elem_id,
                 "name": elem_data["name"],
                 "type": elem_data["type"],
-                "properties": self.properties.get(elem_id, {}),
+                "properties": _mask_properties(self.properties.get(elem_id, {})),
                 "appears_in": appearances_list.get(elem_id, []),
                 "documentation": elem_data.get("documentation", ""),
             }
@@ -129,7 +142,7 @@ class PortalIndexGenerator:
                     "id": elem_id,
                     "name": f"Diagram Element {elem_id}",
                     "type": "DiagramComponent",
-                    "properties": self.properties.get(elem_id, {}),
+                    "properties": _mask_properties(self.properties.get(elem_id, {})),
                     "appears_in": appearances_list.get(elem_id, []),
                     "documentation": "Diagram-specific element",
                 }

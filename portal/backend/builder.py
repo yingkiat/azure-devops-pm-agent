@@ -422,6 +422,10 @@ class PortalBuilder:
                         cleaned_record[key] = value.isoformat()
                     else:
                         cleaned_record[key] = value
+                if cleaned_record.get("it_owner"):
+                    v = str(cleaned_record["it_owner"])
+                    first, _ = v.split(".", 1) if "." in v else (v, "")
+                    cleaned_record["it_owner"] = first[:3] + ("*.***" if "." in v else "***")
                 catalogue.append(cleaned_record)
 
             # Save to JSON with metadata

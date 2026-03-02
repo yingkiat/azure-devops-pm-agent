@@ -17,7 +17,10 @@ RUN pip install pandas openpyxl --quiet
 RUN python portal/build.py
 
 # Production stage - lightweight nginx server
-FROM nginx:alpine
+FROM nginx:1.27-alpine
+
+# Copy hardened nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built static files from builder
 COPY --from=builder /app/portal/dist /usr/share/nginx/html

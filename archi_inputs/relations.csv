@@ -1,6 +1,5 @@
 ID,Type,Name,Documentation,Source,Target
 id-900a0aab4cca,Serving,,MD-NET supports order management through EDI order reception.,id-809fbf7c4841,id-14da17022bdc
-id-28919fd745bf,Serving,,Microsoft Dynamics provides CRM capabilities with advanced automation.,id-c508ffe79f87,id-75a9eaf4fe89
 id-d4c4daa38064,Serving,,Azure Data Lake Storage supports enterprise data storage,id-417c71677e2e,id-b474df81d84f
 id-36d57f8230d3,Serving,,Microsoft Fabric supports enterprise data storage,id-18c3e14355e4,id-b474df81d84f
 id-927bcf34e5af,Serving,,Microsoft PowerBI supports data visualization and reporting,id-b4b0bccf96e6,id-77f8f635b6c4
@@ -91,7 +90,6 @@ id-d5242b71aae4,Realization,,AI Cross Reference Tool realizes competitor analysi
 id-bb3b66b0921c,Serving,,Real-Time Inventory Dashboard serves inventory management,id-074df4ada8b3,id-6bc03bbdd357
 id-8c3d5679b9f9,Serving,,Customer Analytics Portal serves customer analytics,id-53b594ea52a0,id-b125663d61f4
 id-42dbdadda393,Serving,supports,MD-NET supports Order Management capability,id-809fbf7c4841,id-14da17022bdc
-id-f1232e15d546,Serving,supports,Microsoft Dynamics supports Customer Relationship Management capability,id-c508ffe79f87,id-75a9eaf4fe89
 id-739b0b01b0d2,Serving,supports,QARA supports Regulatory Compliance capability,id-004063554d97,id-e6c82757f899
 id-04b887d52d35,Serving,supports,Azure Data Lake Storage supports Data Storage capability,id-417c71677e2e,id-b474df81d84f
 id-9bb8ff88b788,Serving,supports,Microsoft Fabric supports Data Storage capability,id-18c3e14355e4,id-b474df81d84f

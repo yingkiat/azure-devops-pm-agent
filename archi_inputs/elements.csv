@@ -1,6 +1,5 @@
 ID,Type,Name,Documentation
 id-809fbf7c4841,ApplicationComponent,MD-NET,EDI Order Reception
-id-c508ffe79f87,ApplicationComponent,Microsoft Dynamics,New CRM system replacing legacy systems with advanced automation
 id-bcd853b64ad0,ApplicationComponent,Genesys,Call centre soft phone solution
 id-892495dbc37d,ApplicationComponent,Vimeo,Video marketing
 id-14367eedc98c,ApplicationComponent,Concur Expense Management,Invoice and employee expense
@@ -165,7 +164,7 @@ id-a356e71b5165,ApplicationComponent,Backend API,New integration layer with mult
 id-0aa4cf1ac349,ApplicationComponent,Entra External ID,"B2B identity for external customers, managed by Microsoft"
 id-5193554d990b,ApplicationComponent,MedPack API,"Existing API providing pack BOM, components, pricing, and availability"
 id-99fc70294a91,ApplicationComponent,QAD Analytics Database,"Existing database providing order history, inventory levels, and forecasts"
-id-f5619ffd7b65,ApplicationComponent,Microsoft Dynamics CRM,Existing CRM system managing customer master data; CRM system integrating with Microsoft Document Intelligence for purchase order automation
+id-f5619ffd7b65,ApplicationComponent,Microsoft Dynamics,Existing CRM system managing customer master data; CRM system integrating with Microsoft Document Intelligence for purchase order automation
 id-074df4ada8b3,ApplicationComponent,Real-Time Inventory Dashboard,Existing system for live inventory tracking; Dashboard providing real-time inventory data and integration with AI
 id-aea3fe18dd4a,ApplicationComponent,UDW Agent,AI-powered query and analysis platform enabling natural language queries and multi-stage reasoning for data analysis.
 id-c895bed04fc0,ApplicationComponent,PowerApps UI,"Frontend interface for UDW Agent, enabling user interaction, query submission, and result visualization."

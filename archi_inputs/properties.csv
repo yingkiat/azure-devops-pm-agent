@@ -9,17 +9,6 @@ id-809fbf7c4841,Risk Level,High
 id-809fbf7c4841,Business Criticality,Tier 1 - Mission Critical
 id-809fbf7c4841,Administrator Team,IT-APAC-Commercial
 id-809fbf7c4841,Horizon,H1
-id-c508ffe79f87,Region,ANZ
-id-c508ffe79f87,Domain,Commercial
-id-c508ffe79f87,Sub-Domain,Customer Service
-id-c508ffe79f87,It Owner,jose.harima
-id-c508ffe79f87,Tech Standard,Approved
-id-c508ffe79f87,Hosting Type,SaaS
-id-c508ffe79f87,Vendor Support,Microsoft
-id-c508ffe79f87,Risk Level,Moderate
-id-c508ffe79f87,Business Criticality,Tier 2 - Business Critical
-id-c508ffe79f87,Administrator Team,IT-APAC-Commercial
-id-c508ffe79f87,Horizon,H2
 id-bcd853b64ad0,Region,ANZ
 id-bcd853b64ad0,Domain,Commercial
 id-bcd853b64ad0,Sub-Domain,End User Computing
@@ -1181,6 +1170,17 @@ id-99fc70294a91,Technology Stack,"SQL, Analytics"
 id-99fc70294a91,Horizon,H1
 id-f5619ffd7b65,Technology Stack,Microsoft Dynamics
 id-f5619ffd7b65,Horizon,H1
+id-f5619ffd7b65,Region,ANZ
+id-f5619ffd7b65,Domain,Commercial
+id-f5619ffd7b65,Sub-Domain,Customer Service
+id-f5619ffd7b65,It Owner,jose.harima
+id-f5619ffd7b65,Tech Standard,Approved
+id-f5619ffd7b65,Hosting Type,SaaS
+id-f5619ffd7b65,Vendor Support,Microsoft
+id-f5619ffd7b65,Risk Level,Moderate
+id-f5619ffd7b65,Business Criticality,Tier 2 - Business Critical
+id-f5619ffd7b65,Administrator Team,IT-APAC-Commercial
+id-f5619ffd7b65,Lifecycle Status,Strategic
 id-074df4ada8b3,Technology Stack,"Dashboard, Real-Time Analytics"
 id-074df4ada8b3,Horizon,H1
 id-aea3fe18dd4a,Technology Stack,"PowerApps, Azure Container, Fabric Data Warehouse, Azure Function, Power Automate"
@@ -1356,7 +1356,6 @@ id-d1c7ae5a85d5,Technology Stack,Global Helpdesk
 id-d1c7ae5a85d5,Horizon,H3
 id-214db3ae8aec,Technology Stack,"AI, Document Processing"
 id-4e5b71a75424,Technology Stack,Real-Time Analytics
-id-c508ffe79f87,Lifecycle Status,Strategic
 id-18c3e14355e4,Lifecycle Status,Strategic
 id-23c91f32ddaf,Domain,Operations
 id-23c91f32ddaf,Lifecycle Status,Strategic
