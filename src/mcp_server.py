@@ -155,6 +155,26 @@ class UnifiedMCPServer:
             result = await self._ea_discover_directory(directory, file_pattern)
             return json.dumps(result, indent=2)
 
+        @mcp.tool()
+        async def ea_import_catalogue(catalogue_path: str = "ea_inputs/02_IT_systems/Application Catalogue.xlsx") -> str:
+            """
+            Directly import properties from Application Catalogue.xlsx (no LLM).
+
+            Reads the catalogue deterministically - the catalogue is the authoritative
+            source for all application properties. Handles multi-row headers automatically.
+            Matches rows to model elements by "Application Name" column.
+            All columns become properties; catalogue values win on conflict.
+            Regenerates model.xml with updated properties.
+
+            Args:
+                catalogue_path: Path to Application Catalogue.xlsx (default: ea_inputs/02_IT_systems/Application Catalogue.xlsx)
+
+            Returns:
+                Import summary with matched/unmatched rows and property counts
+            """
+            result = self.archi_exporter.import_catalogue_properties(catalogue_path)
+            return json.dumps(result, indent=2)
+
         # ===== MVP6: Spec-Driven View Generation Tools =====
         # Note: View specs are YAML files that Claude Code writes/edits directly
         # Only provide essential read/generate operations here
@@ -678,6 +698,60 @@ class UnifiedMCPServer:
         """Estimate token count for text (rough approximation: 1 token ≈ 4 chars)."""
         return len(text) // 4
 
+    def _inject_raw_csv_properties(self, csv_content: str, discovery_file: str) -> None:
+        """
+        Inject raw CSV column values into a discovery JSON file verbatim.
+
+        The LLM may rename or drop CSV columns (e.g. hosting_type -> Hosting Type,
+        GXP silently omitted). This method re-reads the raw CSV and merges all columns
+        back into the matching element entries in the discovery JSON so no data is lost.
+        """
+        import csv as csv_module
+        import io
+
+        try:
+            reader = csv_module.DictReader(io.StringIO(csv_content))
+            fieldnames = reader.fieldnames
+            if not fieldnames:
+                return
+
+            # Find the name column
+            name_col = next(
+                (f for f in fieldnames if f.lower() in ('name', 'application name', 'app name')),
+                None
+            )
+            if not name_col:
+                return
+
+            rows_by_name = {}
+            for row in reader:
+                app_name = (row.get(name_col) or '').strip().lower()
+                if app_name:
+                    rows_by_name[app_name] = dict(row)
+
+            if not rows_by_name:
+                return
+
+            with open(discovery_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            skip_cols = {name_col.lower(), 'description'}
+            discovery = data.get('discovery', {})
+            for elements in discovery.values():
+                for element in elements:
+                    element_name = (element.get('name') or '').strip().lower()
+                    raw_row = rows_by_name.get(element_name)
+                    if raw_row:
+                        for col, val in raw_row.items():
+                            if col.lower() not in skip_cols and val:
+                                element[col] = val
+
+            with open(discovery_file, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+
+        except Exception as e:
+            print(f"[!] Warning: Could not inject raw CSV properties: {e}")
+
     def _chunk_csv_content(self, csv_content: str, max_rows: int = 25) -> List[str]:
         """
         Split CSV content into chunks by rows.
@@ -946,6 +1020,19 @@ class UnifiedMCPServer:
                     # Run discovery WITHOUT updating archi (saves to ea_outputs/ only)
                     # LLM will extract ALL CSV columns based on prompt instructions
                     discovery_result = await self._ea_discover(combined_content, update_archi=False)
+
+                    # For CSV/XLSX batches: inject raw column values verbatim so the LLM
+                    # cannot rename or drop columns (e.g. GXP, disaster_recovery_tier).
+                    import re
+                    is_csv_batch = any(
+                        re.search(r'\.(csv|xlsx)(:.+)?$', str(fp), re.IGNORECASE)
+                        for fp in batch_files
+                    )
+                    if discovery_result.get("success") and is_csv_batch:
+                        self._inject_raw_csv_properties(
+                            combined_content,
+                            discovery_result.get("discovery_file")
+                        )
 
                     if discovery_result.get("success"):
                         # Collect discovery file for final merge

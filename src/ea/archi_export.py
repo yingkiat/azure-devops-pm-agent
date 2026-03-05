@@ -717,6 +717,189 @@ class ArchiExporter:
 
         return list(merged.values())
 
+    def import_catalogue_properties(self, catalogue_path: str) -> Dict[str, Any]:
+        """
+        Directly import properties from Application Catalogue.xlsx.
+
+        Reads the catalogue deterministically (no LLM). Handles multi-row headers
+        by combining rows 1+2 (sub-header takes precedence where non-empty).
+        Matches rows to model elements by "Application Name" column.
+        Merges all column values as properties - catalogue is authoritative.
+        """
+        try:
+            from openpyxl import load_workbook
+        except ImportError:
+            return {"success": False, "error": "openpyxl required: pip install openpyxl"}
+
+        cat_path = Path(catalogue_path)
+        if not cat_path.exists():
+            return {"success": False, "error": f"File not found: {catalogue_path}"}
+
+        wb = load_workbook(cat_path, data_only=True)
+        ws = wb.active
+
+        # Build combined header: if merged cells exist in row 1, combine rows 1+2
+        # Sub-header (row 2) takes precedence over parent header (row 1) when non-empty
+        has_merged = any(m.min_row == 1 for m in ws.merged_cells.ranges)
+
+        if has_merged and ws.max_row >= 2:
+            row1_vals = list(next(ws.iter_rows(min_row=1, max_row=1, values_only=True)))
+            row2_vals = list(next(ws.iter_rows(min_row=2, max_row=2, values_only=True)))
+            headers = []
+            for c1, c2 in zip(row1_vals, row2_vals):
+                c1_s = str(c1).strip() if c1 is not None else ''
+                c2_s = str(c2).strip() if c2 is not None else ''
+                headers.append(c2_s if c2_s else (c1_s if c1_s else None))
+            data_start_row = 3
+        else:
+            row1_vals = list(next(ws.iter_rows(min_row=1, max_row=1, values_only=True)))
+            headers = [str(c).strip() if c is not None else None for c in row1_vals]
+            data_start_row = 2
+
+        wb.close()
+
+        # Map catalogue column names → canonical property names used in the model
+        # Catalogue uses snake_case sub-headers; model uses title case property keys
+        COLUMN_MAP = {
+            'name': 'Application Name',
+            'domain': 'Domain',
+            'region': 'Region',
+            'sub_domain': 'Sub-Domain',
+            'it_owner': 'It Owner',
+            'description': 'Description',
+            'tech_standard': 'Tech Standard',
+            'hosting_type': 'Hosting Type',
+            'vendor_support': 'Vendor Support',
+            'risk_level': 'Risk Level',
+            'business_criticality': 'Business Criticality',
+            'administrator_team': 'Administrator Team',
+            'disaster_recovery_tier': 'Disaster Recovery Tier',
+            'application_short_code': 'Application Short Code',
+        }
+
+        def canonical(col_name: str) -> str:
+            return COLUMN_MAP.get(col_name, col_name)
+
+        # Find the application name column (raw header "name" or "application name")
+        app_name_col = None
+        for i, h in enumerate(headers):
+            if h and h.lower() in ('name', 'application name'):
+                app_name_col = i
+                break
+
+        if app_name_col is None:
+            return {
+                "success": False,
+                "error": f"Application name column not found. Headers detected: {[h for h in headers if h]}"
+            }
+
+        # Build name → element_id lookup from elements.csv
+        name_to_id = {
+            elem['name'].lower().strip(): elem['id']
+            for elem in self._load_existing_elements()
+        }
+
+        # Process catalogue rows
+        wb = load_workbook(cat_path, data_only=True)
+        ws = wb.active
+
+        catalogue_props = []
+        new_elements = []
+        rows_matched = 0
+        rows_created = 0
+
+        for row in ws.iter_rows(min_row=data_start_row, values_only=True):
+            raw_name = row[app_name_col]
+            if raw_name is None or not str(raw_name).strip():
+                continue
+
+            app_name = str(raw_name).strip()
+            element_id = name_to_id.get(app_name.lower())
+
+            if element_id is None:
+                # Create new element from catalogue row
+                description_col = next(
+                    (i for i, h in enumerate(headers) if h and h.lower() == 'description'), None
+                )
+                description = ''
+                if description_col is not None and row[description_col] is not None:
+                    description = str(row[description_col]).strip()
+
+                element_id = self._generate_id(app_name)
+                new_elements.append({
+                    'id': element_id,
+                    'type': 'ApplicationComponent',
+                    'name': app_name,
+                    'documentation': description,
+                    'layer': 'application',
+                    'category': 'ApplicationComponent',
+                    'raw_data': {}
+                })
+                name_to_id[app_name.lower()] = element_id
+                rows_created += 1
+            else:
+                rows_matched += 1
+
+            for col_idx, header in enumerate(headers):
+                if not header:
+                    continue
+                value = row[col_idx]
+                if value is None or str(value).strip() in ('', 'nan', 'None'):
+                    continue
+                catalogue_props.append({
+                    'element_id': element_id,
+                    'key': canonical(header),
+                    'value': str(value).strip()
+                })
+
+        wb.close()
+
+        # Merge elements (new catalogue elements added to existing)
+        existing_elements = self._load_existing_elements()
+        merged_elements = self._merge_elements(existing_elements, new_elements)
+        self._write_elements_csv(merged_elements)
+
+        # Merge: existing first, then catalogue overwrites (catalogue is authoritative)
+        existing_props = self._load_existing_properties()
+        merged_props = self._merge_properties(existing_props, catalogue_props)
+
+        # Write updated properties.csv
+        self._write_properties_csv(merged_props)
+
+        # Regenerate model.xml with updated properties
+        elements = self._load_existing_elements()
+        relations = self._load_existing_relations()
+
+        views = []
+        specs_dir = Path("ea_inputs/views")
+        if specs_dir.exists() and list(specs_dir.glob("**/*.yaml")):
+            from .view_builder import ViewBuilder
+            result = ViewBuilder().generate_views_from_specs()
+            view_defs = result.get('view_definitions', [])
+            views = [ViewDefinition(
+                id=v['id'],
+                type='archimate-diagram-model',
+                name=v['name'],
+                documentation=v['documentation'],
+                elements=v['elements'],
+                relations=v['relations'],
+                grouping=v.get('grouping'),
+                layout=v.get('layout')
+            ) for v in view_defs]
+
+        self._write_archimate_xml(elements, relations, merged_props, views)
+
+        return {
+            "success": True,
+            "catalogue": str(cat_path),
+            "headers_detected": [h for h in headers if h],
+            "rows_matched": rows_matched,
+            "rows_created": rows_created,
+            "properties_imported": len(catalogue_props),
+            "total_properties": len(merged_props),
+            "model_xml_updated": True
+        }
+
     def _write_views_csv(self, views: List[ViewDefinition],
                         elements: List[Dict[str, Any]],
                         relations: List[Dict[str, Any]]) -> str:
@@ -825,8 +1008,11 @@ class ArchiExporter:
             return True
 
         # Check if property is in the allowlist for this type
+        # Normalize underscores to spaces so snake_case CSV headers match schema names
+        # e.g. "risk_level" matches "risk level" (from "Risk Level" in schema)
+        prop_normalized = prop_lower.replace('_', ' ')
         allowed = self.property_schema[type_lower]
-        return any(prop_lower == attr for attr in allowed)
+        return any(prop_normalized == attr.replace('_', ' ') for attr in allowed)
 
     def _generate_id(self, text: str) -> str:
         """Generate unique ID from text"""

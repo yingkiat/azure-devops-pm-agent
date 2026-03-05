@@ -18,6 +18,13 @@ ApplicationComponent:
   - It Owner
   - Tech Standard
   - Lifecycle Status
+  - GXP
+  - Risk Level
+  - Business Criticality
+  - Administrator Team
+  - Disaster Recovery Tier
+  - Application Short Code
+  - Description
 
 Capability:
   - Domain
