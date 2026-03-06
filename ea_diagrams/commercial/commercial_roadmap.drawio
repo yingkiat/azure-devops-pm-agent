@@ -88,13 +88,13 @@
         <mxCell id="id-ef8339ce9f2e" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5DEAA;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Purchase Order Automation" vertex="1">
           <mxGeometry height="60" width="200" x="456" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="id-f5619ffd7b65" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;" value="Microsoft Dynamics" vertex="1">
+        <mxCell id="id-c508ffe79f87" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;" value="Microsoft Dynamics" vertex="1">
           <mxGeometry height="60" width="176" x="230" y="500" as="geometry" />
         </mxCell>
-        <mxCell id="id-f5619ffd7b65_to_id-2e50916cb555" edge="1" parent="1" source="id-f5619ffd7b65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=open;startArrow=none;" target="id-2e50916cb555" value="Access">
+        <mxCell id="id-c508ffe79f87_to_id-2e50916cb555" edge="1" parent="1" source="id-c508ffe79f87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=open;startArrow=none;" target="id-2e50916cb555" value="Access">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="id-f5619ffd7b65_to_id-ef8339ce9f2e" edge="1" parent="1" source="id-f5619ffd7b65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=0;endArrow=open;startArrow=none;" target="id-ef8339ce9f2e" value="Serving">
+        <mxCell id="id-c508ffe79f87_to_id-ef8339ce9f2e" edge="1" parent="1" source="id-c508ffe79f87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=0;endArrow=open;startArrow=none;" target="id-ef8339ce9f2e" value="Serving">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ann-0" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;" value="Target Platform (2026)" vertex="1">

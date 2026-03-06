@@ -109,11 +109,42 @@ class PortalBuilder:
 
         # Step 6: Generate analytics
         print("[6/6] Generating analytics...")
-        analytics_ok = self._generate_analytics_data()
-        if analytics_ok:
-            print(f"      ✓ Analytics data written\n")
+        analytics_result = self._generate_analytics_data()
+        if not analytics_result.get("success"):
+            print(f"      ⚠ Skipped (missing catalogue or elements data)\n")
         else:
-            print(f"      ⚠ Skipped (missing elements.csv or properties.csv)\n")
+            cat_count    = analytics_result["catalogue_count"]
+            matched      = analytics_result["matched_count"]
+            unmatched    = analytics_result["unmatched"]
+            coverage     = analytics_result["property_coverage"]
+            domain_sum   = analytics_result["domain_sum"]
+            region_sum   = analytics_result["region_sum"]
+            match_pct    = round(matched / cat_count * 100, 1) if cat_count else 0
+
+            print(f"      ✓ Analytics data written")
+            print(f"\n      --- Analytics Validation ---")
+            match_flag = "✓" if match_pct >= 95 else "✗ FAIL"
+            print(f"      Element match rate: {matched}/{cat_count} ({match_pct}%)  {match_flag}")
+            if unmatched:
+                print(f"      Unmatched ({len(unmatched)}): {', '.join(unmatched[:5])}" +
+                      (f" ... +{len(unmatched)-5} more" if len(unmatched) > 5 else ""))
+
+            for prop, count in coverage.items():
+                pct = round(count / matched * 100, 1) if matched else 0
+                flag = "✓" if pct >= 80 else ("⚠ WARN" if pct >= 50 else "✗ FAIL")
+                print(f"      {prop:<22} {count:>3}/{matched} ({pct:>5}%)  {flag}")
+
+            dom_flag = "✓" if domain_sum == cat_count else f"✗ FAIL (got {domain_sum}, expected {cat_count})"
+            reg_flag = "✓" if region_sum == cat_count else f"✗ FAIL (got {region_sum}, expected {cat_count})"
+            print(f"      Domain totals:         {dom_flag}")
+            print(f"      Region totals:         {reg_flag}")
+            print()
+
+            if match_pct < 95:
+                errors.append(
+                    f"Analytics match rate too low: {matched}/{cat_count} ({match_pct}%). "
+                    "Run ea_import_catalogue to sync all apps."
+                )
 
         # Copy frontend files
         self._copy_frontend_files()
@@ -149,17 +180,17 @@ class PortalBuilder:
         properties_file = self.model_dir / "properties.csv"
 
         if not catalogue_json.exists():
-            return False
+            return {"success": False}
 
         try:
             with open(catalogue_json, encoding="utf-8") as f:
                 raw = json.load(f)
         except Exception:
-            return False
+            return {"success": False}
 
         catalogue = raw.get("data", raw) if isinstance(raw, dict) else raw
         if not catalogue:
-            return False
+            return {"success": False}
 
         # Resolve catalogue column names (they may vary slightly between Excel versions)
         col_keys = list(catalogue[0].keys())
@@ -252,7 +283,8 @@ class PortalBuilder:
             return result
 
         # Rich attributes from properties.csv (scoped to catalogue-matched elements)
-        app_type  = count_prop("Application Type")
+        app_type  = count_prop("Hosting Type")
+        tech_std_props = count_prop("Tech Standard")
         lifecycle = count_prop("Lifecycle Status")
         horizon_raw = count_prop("Horizon")
 
@@ -279,7 +311,7 @@ class PortalBuilder:
         legacy_by_domain = {}
         legacy_domain_apps = {}
         for eid, props in matched_props.items():
-            if props.get("Application Type") == "Legacy":
+            if props.get("Tech Standard") == "Legacy":
                 ename = id_to_name.get(eid, "")
                 domain_val = cat_name_to_domain.get(ename) or clean(props.get("Domain", ""))
                 if domain_val and domain_val.lower() not in _skip:
@@ -296,7 +328,7 @@ class PortalBuilder:
 
         total  = len(catalogue) or 1
         saas   = app_type.get("SaaS", 0)
-        legacy = app_type.get("Legacy", 0)
+        legacy = tech_std_props.get("Legacy", 0)
         custom = app_type.get("Home-grown", 0) + app_type.get("COTS", 0) + app_type.get("Excel", 0)
 
         analytics = {
@@ -312,7 +344,7 @@ class PortalBuilder:
                 "strategic_count": lifecycle.get("Strategic", 0),
                 "sunset_count": lifecycle.get("Sunset", 0),
             },
-            "application_type": {"labels": list(app_type.keys()), "values": list(app_type.values()), "apps": apps_by_prop("Application Type")},
+            "application_type": {"labels": list(app_type.keys()), "values": list(app_type.values()), "apps": apps_by_prop("Hosting Type")},
             "horizon": horizon,
             "lifecycle_status": {"labels": list(lifecycle.keys()), "values": list(lifecycle.values()), "apps": apps_by_prop("Lifecycle Status")},
             "domain": {"labels": list(domain.keys()), "values": list(domain.values()), "apps": apps_by_col(col_domain)},
@@ -324,7 +356,24 @@ class PortalBuilder:
 
         with open(self.data_dir / "analytics.json", "w", encoding="utf-8") as f:
             json.dump(analytics, f, indent=2)
-        return True
+
+        # Compute validation stats
+        rich_props = ["Hosting Type", "Tech Standard", "Horizon", "Lifecycle Status", "GXP"]
+        property_coverage = {
+            prop: sum(1 for p in matched_props.values() if clean(p.get(prop, "")))
+            for prop in rich_props
+        }
+        unmatched_names = sorted(catalogue_names - {n for n in id_to_name.values()})
+
+        return {
+            "success": True,
+            "catalogue_count": len(catalogue),
+            "matched_count": len(matched_ids),
+            "unmatched": unmatched_names,
+            "property_coverage": property_coverage,
+            "domain_sum": sum(domain.values()),
+            "region_sum": sum(region.values()),
+        }
 
     def _convert_diagrams_to_svg(self) -> List[Dict]:
         """Convert all .drawio files to SVG, preserving folder structure."""
@@ -1113,17 +1162,13 @@ class PortalBuilder:
                         </div>
                     </div>
 
-                    <!-- Charts Row 1: App Type + Horizon -->
+                    <!-- Charts Row 1: App Type + Lifecycle -->
                     <div class="analytics-chart-row">
-                        <div class="analytics-chart-card">
+                        <div class="analytics-chart-card" style="flex:2;">
                             <div class="analytics-chart-title">Application Type Breakdown</div>
                             <div class="analytics-chart-wrap"><canvas id="chartAppType"></canvas></div>
                         </div>
-                        <div class="analytics-chart-card">
-                            <div class="analytics-chart-title">Horizon Distribution</div>
-                            <div class="analytics-chart-wrap"><canvas id="chartHorizon"></canvas></div>
-                        </div>
-                        <div class="analytics-chart-card">
+                        <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">Lifecycle Status</div>
                             <div class="analytics-chart-wrap"><canvas id="chartLifecycle"></canvas></div>
                         </div>
@@ -1421,9 +1466,9 @@ class PortalBuilder:
                     this.analyticsCharts = {};
 
                     const appTypeColors = {
-                        'SaaS': '#28a745', 'Home-grown': '#17a2b8', 'Legacy': '#dc3545',
-                        'OnPrem': '#ffc107', 'COTS': '#6f42c1', 'Excel': '#fd7e14',
-                        'IaaS': '#20c997', 'Approved': '#007bff'
+                        'SaaS': '#28a745', 'Cloud': '#17a2b8', 'OnPrem': '#ffc107',
+                        'Azure': '#0052CC', 'Hybrid': '#6f42c1', 'IaaS': '#20c997',
+                        'Home-grown': '#fd7e14', 'COTS': '#e83e8c'
                     };
                     const primaryColor = '__PRIMARY__';
                     const paletteBar = ['#0052CC','#1E5FD9','#00A651','#F39200','#6f42c1','#17a2b8','#dc3545','#fd7e14','#20c997','#e83e8c'];
@@ -1456,20 +1501,6 @@ class PortalBuilder:
                         options: { responsive: true, maintainAspectRatio: false,
                             onHover: hoverCursor, onClick: clickFor('application_type'),
                             plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
-                    });
-
-                    // Horizon — bar
-                    make('chartHorizon', {
-                        type: 'bar',
-                        data: {
-                            labels: this.analyticsData.horizon.labels,
-                            datasets: [{ label: 'Apps', data: this.analyticsData.horizon.values,
-                                backgroundColor: [primaryColor, '#F39200', '#aaaaaa'], borderRadius: 4 }]
-                        },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            onHover: hoverCursor, onClick: clickFor('horizon'),
-                            plugins: { legend: { display: false } },
-                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
 
                     // Lifecycle Status — doughnut
@@ -1593,7 +1624,7 @@ class PortalBuilder:
                     const ts = d.tech_standard?.apps || {};
                     switch (key) {
                         case 'total':        return this.catalogue.map(a => String(a[this.catalogueNameColumn] || '').trim());
-                        case 'legacy':       return at['Legacy'] || [];
+                        case 'legacy':       return ts['Legacy'] || [];
                         case 'saas':         return at['SaaS'] || [];
                         case 'custom':       return [...(at['Home-grown'] || []), ...(at['COTS'] || []), ...(at['Excel'] || [])];
                         case 'tech_approved': return ts['Approved'] || [];
