@@ -129,15 +129,25 @@ class PortalBuilder:
                 print(f"      Unmatched ({len(unmatched)}): {', '.join(unmatched[:5])}" +
                       (f" ... +{len(unmatched)-5} more" if len(unmatched) > 5 else ""))
 
+            print(f"\n      Property coverage (matched elements):")
             for prop, count in coverage.items():
                 pct = round(count / matched * 100, 1) if matched else 0
                 flag = "✓" if pct >= 80 else ("⚠ WARN" if pct >= 50 else "✗ FAIL")
-                print(f"      {prop:<22} {count:>3}/{matched} ({pct:>5}%)  {flag}")
+                print(f"        {prop:<22} {count:>3}/{matched} ({pct:>5}%)  {flag}")
+
+            print(f"\n      Chart data checks:")
+            chart_counts = analytics_result["chart_counts"]
+            for chart, count in chart_counts.items():
+                flag = "✓" if count > 0 else "✗ FAIL"
+                print(f"        {chart:<30} {count:>4} entries  {flag}")
+                if count == 0:
+                    errors.append(f"Analytics chart '{chart}' has no data.")
 
             dom_flag = "✓" if domain_sum == cat_count else f"✗ FAIL (got {domain_sum}, expected {cat_count})"
             reg_flag = "✓" if region_sum == cat_count else f"✗ FAIL (got {region_sum}, expected {cat_count})"
-            print(f"      Domain totals:         {dom_flag}")
-            print(f"      Region totals:         {reg_flag}")
+            print(f"\n      Sum integrity:")
+            print(f"        Domain totals:         {dom_flag}")
+            print(f"        Region totals:         {reg_flag}")
             print()
 
             if match_pct < 95:
@@ -358,7 +368,7 @@ class PortalBuilder:
             json.dump(analytics, f, indent=2)
 
         # Compute validation stats
-        rich_props = ["Hosting Type", "Tech Standard", "Horizon", "Lifecycle Status", "GXP"]
+        rich_props = ["Hosting Type", "Tech Standard", "GXP"]
         property_coverage = {
             prop: sum(1 for p in matched_props.values() if clean(p.get(prop, "")))
             for prop in rich_props
@@ -373,6 +383,16 @@ class PortalBuilder:
             "property_coverage": property_coverage,
             "domain_sum": sum(domain.values()),
             "region_sum": sum(region.values()),
+            "chart_counts": {
+                "Application Type Breakdown": sum(app_type.values()),
+                "Legacy Applications":        legacy,
+                "SaaS Applications":          saas,
+                "Legacy by Domain":           len(legacy_by_domain),
+                "Business Criticality":       sum(criticality.values()),
+                "Tech Standard":              sum(tech_std.values()),
+                "Domain Breakdown":           sum(domain.values()),
+                "Region Breakdown":           sum(region.values()),
+            },
         }
 
     def _convert_diagrams_to_svg(self) -> List[Dict]:
@@ -1145,40 +1165,18 @@ class PortalBuilder:
                             <div class="analytics-stat-label">SaaS</div>
                             <div class="analytics-stat-sub">{{ analyticsData.summary.saas_count }} apps</div>
                         </div>
-                        <div class="analytics-stat-card" style="border-top-color:#17a2b8;" @click="showDrilldown('Custom / COTS', cardApps('custom'))">
-                            <div class="analytics-stat-value" style="color:#17a2b8;">{{ analyticsData.summary.custom_pct }}%</div>
-                            <div class="analytics-stat-label">Custom / COTS</div>
-                            <div class="analytics-stat-sub">{{ analyticsData.summary.custom_count }} apps</div>
-                        </div>
-                        <div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
+<div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
                             <div class="analytics-stat-value" style="color:#ffc107;">{{ analyticsData.summary.tech_standard_approved }}</div>
                             <div class="analytics-stat-label">Tech Std Approved</div>
                             <div class="analytics-stat-sub">of {{ analyticsData.summary.total_apps }} apps</div>
                         </div>
-                        <div class="analytics-stat-card" style="border-top-color:#6f42c1;" @click="showDrilldown('Strategic', cardApps('strategic'))">
-                            <div class="analytics-stat-value" style="color:#6f42c1;">{{ analyticsData.summary.strategic_count }}</div>
-                            <div class="analytics-stat-label">Strategic</div>
-                            <div class="analytics-stat-sub" style="cursor:pointer;" @click.stop="showDrilldown('Sunset', cardApps('sunset'))">{{ analyticsData.summary.sunset_count }} sunset ↗</div>
-                        </div>
                     </div>
 
-                    <!-- Charts Row 1: App Type + Lifecycle -->
+                    <!-- Charts Row 1: App Type + Criticality -->
                     <div class="analytics-chart-row">
-                        <div class="analytics-chart-card" style="flex:2;">
+                        <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">Application Type Breakdown</div>
                             <div class="analytics-chart-wrap"><canvas id="chartAppType"></canvas></div>
-                        </div>
-                        <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">Lifecycle Status</div>
-                            <div class="analytics-chart-wrap"><canvas id="chartLifecycle"></canvas></div>
-                        </div>
-                    </div>
-
-                    <!-- Charts Row 2: Legacy by Domain + Criticality -->
-                    <div class="analytics-chart-row">
-                        <div class="analytics-chart-card" style="flex:2;">
-                            <div class="analytics-chart-title">Legacy Applications by Domain</div>
-                            <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
                         </div>
                         <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">Business Criticality</div>
@@ -1186,7 +1184,7 @@ class PortalBuilder:
                         </div>
                     </div>
 
-                    <!-- Charts Row 3: Domain + Region -->
+                    <!-- Charts Row 2: Domain + Region -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:2;">
                             <div class="analytics-chart-title">Applications by Domain</div>
@@ -1195,6 +1193,14 @@ class PortalBuilder:
                         <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">Region Distribution</div>
                             <div class="analytics-chart-wrap"><canvas id="chartRegion"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 3: Legacy by Domain -->
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Legacy Applications by Domain</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
                         </div>
                     </div>
                 </div>
@@ -1503,20 +1509,7 @@ class PortalBuilder:
                             plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
                     });
 
-                    // Lifecycle Status — doughnut
-                    const lcColors = { 'Strategic': '#28a745', 'Maintain': primaryColor, 'Planned': '#F39200', 'Sunset': '#dc3545' };
-                    make('chartLifecycle', {
-                        type: 'doughnut',
-                        data: {
-                            labels: this.analyticsData.lifecycle_status.labels,
-                            datasets: [{ data: this.analyticsData.lifecycle_status.values,
-                                backgroundColor: this.analyticsData.lifecycle_status.labels.map(l => lcColors[l] || '#aaa'),
-                                borderWidth: 2 }]
-                        },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            onHover: hoverCursor, onClick: clickFor('lifecycle_status'),
-                            plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
-                    });
+
 
                     // Legacy by Domain — horizontal bar
                     make('chartLegacyDomain', {
