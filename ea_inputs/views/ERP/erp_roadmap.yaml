@@ -1,0 +1,161 @@
+# === INTENT ===
+intent:
+  question: "How do we evolve the ERP landscape from today's fragmented estate to a future SAP platform?"
+  audience: "CIO, ERP Leadership, Enterprise Architecture"
+  decision: "Align on a phased ERP roadmap: stabilize current platforms first, then transition to SAP"
+  key_message: "The immediate priority is stabilizing and improving the current ERP estate; the longer-term target is consolidation onto SAP"
+
+# === STORY ===
+story:
+  setup: |
+    The current ERP domain is made up of multiple QAD variants, regional Pro2SQL instances,
+    finance platforms, planning tools, and product information systems across APAC.
+    This creates fragmentation across regions and capabilities.
+
+  tension: |
+    The current estate creates complexity through multiple ERP variants, legacy platforms,
+    uneven operational performance, and replication/design constraints that limit scale
+    and resilience.
+
+  insight: |
+    The roadmap should start with near-term stabilization and replication design improvements,
+    then move toward a longer-term SAP target platform that simplifies the ERP landscape.
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "QAD EE"
+      role: "Current strategic ERP backbone"
+      treatment: "normal"
+    - element: "QAD SE"
+      role: "Legacy/sunset ERP variant"
+      treatment: "faded"
+    - element: "QAD EE 2019"
+      role: "Legacy ERP footprint requiring stabilization"
+      treatment: "faded"
+    - element: "QAD SE 11"
+      role: "Legacy ERP footprint requiring stabilization"
+      treatment: "faded"
+    - element: "ERP Performance Stabilization"
+      role: "Short-term operational focus"
+      treatment: "highlighted"
+    - element: "ERP Replication Design Improvements"
+      role: "Short-term architecture improvement"
+      treatment: "highlighted"
+    - element: "SAP"
+      role: "Long-term target ERP platform"
+      treatment: "prominent"
+  grouping_rationale: "Rows show time horizon from current estate to target state; H1 breaks the ERP estate into region-specific columns ordered alphabetically, alongside Finance and Product Management."
+  reading_order: "Top to bottom: current landscape, near-term stabilization, then long-term SAP transition."
+  color_strategy: "Faded = legacy/current complexity, highlighted = H2 transition initiatives, prominent = H3 target platform."
+
+# === VIEW DEFINITION ===
+view:
+  name: "ERP Modernization Roadmap"
+  documentation: |
+    Roadmap view for the ERP domain.
+    H1 shows the current ERP estate sourced from the model.
+    H2 introduces short-term stabilization and replication design improvements.
+    H3 shows the longer-term move to SAP.
+
+# === ELEMENT SELECTION ===
+elements:
+  include:
+    # --- H1: AS-IS ERP landscape ---
+    - name: "QAD EE"
+      override:
+        Horizon: "H1"
+        Process: "ERP - AEM"
+    - name: "QAD EE 2019"
+      override:
+        Horizon: "H1"
+        Process: "ERP - ANZ"
+    - name: "QAD SE 11"
+      override:
+        Horizon: "H1"
+        Process: "ERP - JPN"
+    - name: "QAD Standard Edition"
+      override:
+        Horizon: "H1"
+        Process: "ERP - ANZ"
+    - name: "Pro2SQL ANZ"
+      override:
+        Horizon: "H1"
+        Process: "ERP - ANZ"
+    - name: "Pro2SQL JPN"
+      override:
+        Horizon: "H1"
+        Process: "ERP - JPN"
+    - name: "Blackline Financial Close"
+      override:
+        Horizon: "H1"
+        Process: "Finance"
+    - name: "Oracle EPM"
+      override:
+        Horizon: "H1"
+        Process: "Planning"
+    - name: "Informatica PIM ANZ"
+      override:
+        Horizon: "H1"
+        Process: "Product Management"
+    - name: "Informatica PIM JPN"
+      override:
+        Horizon: "H1"
+        Process: "Product Management"
+
+    # --- H2: Short-term improvements ---
+    - name: "ERP Performance Stabilization"
+      override:
+        Horizon: "H2"
+        Process: "ERP - AEM"
+    - name: "ERP Replication Design Improvements"
+      override:
+        Horizon: "H2"
+        Process: "ERP - AEM"
+
+    # --- H3: Long-term target ---
+    - name: "SAP"
+      override:
+        Horizon: "H3"
+        Process: "ERP - AEM"
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: ["Serving", "Flow"]
+      between: "included_elements"
+
+# === GROUPING ===
+grouping:
+  by_property: "Horizon"
+  order: ["H1", "H2", "H3"]
+  secondary_by_property: "Process"
+  secondary_order: ["ERP - AEM", "ERP - ANZ", "ERP - JPN", "ERP", "Finance", "Product Management"]
+
+# === LAYOUT ===
+layout:
+  algorithm: "matrix"
+  row_height: 180
+  column_width: 210
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Current strategic ERP backbone"
+    near: "QAD EE"
+  - text: "Legacy / sunset variants"
+    near: "QAD SE 11"
+  - text: "Short-term operational priority"
+    near: "ERP Performance Stabilization"
+  - text: "Improve resilience and design"
+    near: "ERP Replication Design Improvements"
+  - text: "Long-term target platform"
+    near: "SAP"
+  - text: "Common transition outcome across AEM, ANZ, and JPN ERP estate"
+    near: "SAP"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

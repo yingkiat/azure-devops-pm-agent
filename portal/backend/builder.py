@@ -215,6 +215,7 @@ class PortalBuilder:
 
         col_name    = find_col("name", "application name", "app name")
         col_domain  = find_col("domain", "business domain")
+        col_sub_domain = find_col("sub_domain", "sub-domain", "sub domain", "subdomain")
         col_region  = find_col("region")
         col_tech    = find_col("tech_standard", "tech standard", "technology standard")
         col_biz_crit = find_col("business_criticality", "business criticality")
@@ -232,6 +233,7 @@ class PortalBuilder:
         # Match catalogue names → ArchiMate element IDs (single pass)
         matched_ids = set()
         id_to_name  = {}
+        name_to_id  = {}
         if elements_file.exists():
             with open(elements_file, encoding="utf-8") as f:
                 for row in csv.DictReader(f):
@@ -241,6 +243,7 @@ class PortalBuilder:
                     if ename in catalogue_names or ename.lower() in catalogue_names_lower:
                         matched_ids.add(row["ID"])
                         id_to_name[row["ID"]] = ename
+                        name_to_id[ename] = row["ID"]
 
         # Load properties only for matched elements
         matched_props = {}  # eid -> {key: value}
@@ -292,6 +295,27 @@ class PortalBuilder:
                     result.setdefault(val, []).append(name)
             return result
 
+        # Build per-application analytics records so the UI can filter client-side by domain
+        records = []
+        for app in catalogue:
+            name = clean(app.get(col_name, "")) if col_name else ""
+            if not name:
+                continue
+            elem_id = name_to_id.get(name) or name_to_id.get(catalogue_names_lower.get(name.lower(), ""))
+            props = matched_props.get(elem_id, {}) if elem_id else {}
+            records.append({
+                "name": name,
+                "domain": clean(app.get(col_domain, "")) if col_domain else "",
+                "sub_domain": clean(app.get(col_sub_domain, "")) if col_sub_domain else "",
+                "region": clean(app.get(col_region, "")) if col_region else "",
+                "catalogue_tech_standard": clean(app.get(col_tech, "")) if col_tech else "",
+                "business_criticality": clean(app.get(col_biz_crit, "")) if col_biz_crit else "",
+                "hosting_type": clean(props.get("Hosting Type", "")),
+                "tech_standard": clean(props.get("Tech Standard", "")),
+                "lifecycle_status": clean(props.get("Lifecycle Status", "")),
+                "horizon": clean(props.get("Horizon", "")),
+            })
+
         # Rich attributes from properties.csv (scoped to catalogue-matched elements)
         app_type  = count_prop("Hosting Type")
         tech_std_props = count_prop("Tech Standard")
@@ -309,26 +333,33 @@ class PortalBuilder:
             },
         }
 
-        # Legacy by domain — use catalogue domain for matched legacy apps
+        # Legacy by sub-domain — use catalogue sub-domain for matched legacy apps
         cat_name_to_domain = {}
+        cat_name_to_sub_domain = {}
         if col_domain and col_name:
             for app in catalogue:
                 n = clean(app.get(col_name, ""))
                 d = clean(app.get(col_domain, ""))
                 if n and d.lower() not in _skip:
                     cat_name_to_domain[n] = d
+        if col_sub_domain and col_name:
+            for app in catalogue:
+                n = clean(app.get(col_name, ""))
+                sd = clean(app.get(col_sub_domain, ""))
+                if n and sd.lower() not in _skip:
+                    cat_name_to_sub_domain[n] = sd
 
-        legacy_by_domain = {}
-        legacy_domain_apps = {}
+        legacy_by_sub_domain = {}
+        legacy_sub_domain_apps = {}
         for eid, props in matched_props.items():
             if props.get("Tech Standard") == "Legacy":
                 ename = id_to_name.get(eid, "")
-                domain_val = cat_name_to_domain.get(ename) or clean(props.get("Domain", ""))
-                if domain_val and domain_val.lower() not in _skip:
-                    legacy_by_domain[domain_val] = legacy_by_domain.get(domain_val, 0) + 1
+                sub_domain_val = cat_name_to_sub_domain.get(ename) or clean(props.get("Sub-Domain", ""))
+                if sub_domain_val and sub_domain_val.lower() not in _skip:
+                    legacy_by_sub_domain[sub_domain_val] = legacy_by_sub_domain.get(sub_domain_val, 0) + 1
                     if ename:
-                        legacy_domain_apps.setdefault(domain_val, []).append(ename)
-        legacy_by_domain = dict(sorted(legacy_by_domain.items(), key=lambda x: -x[1]))
+                        legacy_sub_domain_apps.setdefault(sub_domain_val, []).append(ename)
+        legacy_by_sub_domain = dict(sorted(legacy_by_sub_domain.items(), key=lambda x: (-x[1], x[0])))
 
         # Structural attributes from catalogue (complete coverage for all 99 apps)
         domain = count_col(col_domain)
@@ -360,8 +391,12 @@ class PortalBuilder:
             "domain": {"labels": list(domain.keys()), "values": list(domain.values()), "apps": apps_by_col(col_domain)},
             "region": {"labels": list(region.keys()), "values": list(region.values()), "apps": apps_by_col(col_region)},
             "criticality": {"labels": list(criticality.keys()), "values": list(criticality.values()), "apps": apps_by_col(col_biz_crit)},
-            "legacy_by_domain": {"labels": list(legacy_by_domain.keys()), "values": list(legacy_by_domain.values()), "apps": legacy_domain_apps},
+            "legacy_by_sub_domain": {"labels": list(legacy_by_sub_domain.keys()), "values": list(legacy_by_sub_domain.values()), "apps": legacy_sub_domain_apps},
             "tech_standard": {"labels": list(tech_std.keys()), "values": list(tech_std.values()), "apps": apps_by_col(col_tech)},
+            "filters": {
+                "domains": ["ALL"] + sorted([k for k in domain.keys() if k and k.lower() not in _skip])
+            },
+            "records": records,
         }
 
         with open(self.data_dir / "analytics.json", "w", encoding="utf-8") as f:
@@ -387,7 +422,7 @@ class PortalBuilder:
                 "Application Type Breakdown": sum(app_type.values()),
                 "Legacy Applications":        legacy,
                 "SaaS Applications":          saas,
-                "Legacy by Domain":           len(legacy_by_domain),
+                "Legacy by Sub-Domain":       len(legacy_by_sub_domain),
                 "Business Criticality":       sum(criticality.values()),
                 "Tech Standard":              sum(tech_std.values()),
                 "Domain Breakdown":           sum(domain.values()),
@@ -970,6 +1005,36 @@ class PortalBuilder:
             overflow: auto;
             padding: 1.5rem;
         }
+        .analytics-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 1rem 1.25rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .analytics-filter-bar label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .analytics-filter-bar select {
+            min-width: 220px;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid #d7dce3;
+            border-radius: 6px;
+            background: #fff;
+            font: inherit;
+            color: #333;
+        }
+        .analytics-filter-meta {
+            font-size: 0.78rem;
+            color: #666;
+        }
         .analytics-stat-row {
             display: flex;
             gap: 1rem;
@@ -1149,26 +1214,33 @@ class PortalBuilder:
                     <p>No analytics data. Rebuild the portal to generate analytics.</p>
                 </div>
                 <div v-else>
+                    <div class="analytics-filter-bar">
+                        <label for="analytics-domain-filter">Domain</label>
+                        <select id="analytics-domain-filter" v-model="selectedAnalyticsDomain" @change="refreshAnalyticsCharts()">
+                            <option v-for="domain in availableAnalyticsDomains" :key="domain" :value="domain">{{ domain }}</option>
+                        </select>
+                        <div class="analytics-filter-meta">{{ filteredAnalyticsData.summary.total_apps }} applications in scope</div>
+                    </div>
                     <!-- Stat Cards -->
                     <div class="analytics-stat-row">
                         <div class="analytics-stat-card" @click="showDrilldown('All Applications', cardApps('total'))">
-                            <div class="analytics-stat-value">{{ analyticsData.summary.total_apps }}</div>
+                            <div class="analytics-stat-value">{{ filteredAnalyticsData.summary.total_apps }}</div>
                             <div class="analytics-stat-label">Total Applications</div>
                         </div>
                         <div class="analytics-stat-card" style="border-top-color:#dc3545;" @click="showDrilldown('Legacy', cardApps('legacy'))">
-                            <div class="analytics-stat-value" style="color:#dc3545;">{{ analyticsData.summary.legacy_pct }}%</div>
+                            <div class="analytics-stat-value" style="color:#dc3545;">{{ filteredAnalyticsData.summary.legacy_pct }}%</div>
                             <div class="analytics-stat-label">Legacy</div>
-                            <div class="analytics-stat-sub">{{ analyticsData.summary.legacy_count }} apps</div>
+                            <div class="analytics-stat-sub">{{ filteredAnalyticsData.summary.legacy_count }} apps</div>
                         </div>
                         <div class="analytics-stat-card" style="border-top-color:#28a745;" @click="showDrilldown('SaaS', cardApps('saas'))">
-                            <div class="analytics-stat-value" style="color:#28a745;">{{ analyticsData.summary.saas_pct }}%</div>
+                            <div class="analytics-stat-value" style="color:#28a745;">{{ filteredAnalyticsData.summary.saas_pct }}%</div>
                             <div class="analytics-stat-label">SaaS</div>
-                            <div class="analytics-stat-sub">{{ analyticsData.summary.saas_count }} apps</div>
+                            <div class="analytics-stat-sub">{{ filteredAnalyticsData.summary.saas_count }} apps</div>
                         </div>
 <div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
-                            <div class="analytics-stat-value" style="color:#ffc107;">{{ analyticsData.summary.tech_standard_approved }}</div>
+                            <div class="analytics-stat-value" style="color:#ffc107;">{{ filteredAnalyticsData.summary.tech_standard_approved }}</div>
                             <div class="analytics-stat-label">Tech Std Approved</div>
-                            <div class="analytics-stat-sub">of {{ analyticsData.summary.total_apps }} apps</div>
+                            <div class="analytics-stat-sub">of {{ filteredAnalyticsData.summary.total_apps }} apps</div>
                         </div>
                     </div>
 
@@ -1199,7 +1271,7 @@ class PortalBuilder:
                     <!-- Charts Row 3: Legacy by Domain -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">Legacy Applications by Domain</div>
+                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Legacy Applications by Domain' : 'Legacy Applications by Sub-Domain' }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
                         </div>
                     </div>
@@ -1334,6 +1406,7 @@ class PortalBuilder:
                     zoomLevel: 1,
                     fitToWidth: true,
                     analyticsData: null,
+                    selectedAnalyticsDomain: 'ALL',
                     analyticsCharts: {},
                     sortColumn: null,
                     sortDir: 1,
@@ -1391,6 +1464,72 @@ class PortalBuilder:
                     });
                     keys.forEach(k => { sorted[k] = byCategory[k]; });
                     return sorted;
+                },
+                availableAnalyticsDomains() {
+                    const domains = this.analyticsData?.filters?.domains;
+                    if (Array.isArray(domains) && domains.length) return domains;
+                    const found = new Set(['ALL']);
+                    (this.analyticsData?.records || []).forEach(r => {
+                        const d = String(r.domain || '').trim();
+                        if (d) found.add(d);
+                    });
+                    return Array.from(found).sort((a, b) => {
+                        if (a === 'ALL') return -1;
+                        if (b === 'ALL') return 1;
+                        return a.localeCompare(b);
+                    });
+                },
+                filteredAnalyticsRecords() {
+                    const records = this.analyticsData?.records || [];
+                    if (this.selectedAnalyticsDomain === 'ALL') return records;
+                    return records.filter(r => String(r.domain || '').trim() === this.selectedAnalyticsDomain);
+                },
+                filteredAnalyticsData() {
+                    const records = this.filteredAnalyticsRecords;
+                    const countBy = (key, options = {}) => {
+                        const counts = {};
+                        const apps = {};
+                        for (const rec of records) {
+                            const raw = rec[key];
+                            const val = String(raw || '').trim();
+                            if (!val) continue;
+                            if (options.filter && !options.filter(rec, val)) continue;
+                            counts[val] = (counts[val] || 0) + 1;
+                            apps[val] = apps[val] || [];
+                            apps[val].push(rec.name);
+                        }
+                        const entries = Object.entries(counts).sort((a, b) => {
+                            if (b[1] !== a[1]) return b[1] - a[1];
+                            return a[0].localeCompare(b[0]);
+                        });
+                        return {
+                            labels: entries.map(([label]) => label),
+                            values: entries.map(([, value]) => value),
+                            apps
+                        };
+                    };
+                    const total = records.length;
+                    const legacyApps = records.filter(r => r.tech_standard === 'Legacy').map(r => r.name);
+                    const saasApps = records.filter(r => r.hosting_type === 'SaaS').map(r => r.name);
+                    const approvedApps = records.filter(r => r.catalogue_tech_standard === 'Approved').map(r => r.name);
+                    return {
+                        summary: {
+                            total_apps: total,
+                            legacy_count: legacyApps.length,
+                            legacy_pct: total ? Math.round((legacyApps.length / total) * 1000) / 10 : 0,
+                            saas_count: saasApps.length,
+                            saas_pct: total ? Math.round((saasApps.length / total) * 1000) / 10 : 0,
+                            tech_standard_approved: approvedApps.length
+                        },
+                        application_type: countBy('hosting_type'),
+                        criticality: countBy('business_criticality'),
+                        domain: countBy('domain'),
+                        region: countBy('region'),
+                        legacy_by_domain: countBy('domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
+                        legacy_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
+                        lifecycle_status: countBy('lifecycle_status'),
+                        tech_standard: countBy('tech_standard')
+                    };
                 }
             },
             methods: {
@@ -1427,6 +1566,7 @@ class PortalBuilder:
                         // Load analytics if available
                         try {
                             this.analyticsData = await fetch('data/analytics.json').then(r => r.json());
+                            this.selectedAnalyticsDomain = 'ALL';
                             console.log('[EA Portal] Loaded analytics data');
                         } catch (err) {
                             console.log('[EA Portal] No analytics data found (optional):', err);
@@ -1466,10 +1606,16 @@ class PortalBuilder:
                     this.sidebarRightOpen = false;
                     this.$nextTick(() => { this.initAnalyticsCharts(); });
                 },
+                refreshAnalyticsCharts() {
+                    if (this.viewMode === 'analytics') {
+                        this.$nextTick(() => { this.initAnalyticsCharts(); });
+                    }
+                },
                 initAnalyticsCharts() {
                     if (!this.analyticsData) return;
                     Object.values(this.analyticsCharts).forEach(c => c.destroy());
                     this.analyticsCharts = {};
+                    const dashboard = this.filteredAnalyticsData;
 
                     const appTypeColors = {
                         'SaaS': '#28a745', 'Cloud': '#17a2b8', 'OnPrem': '#ffc107',
@@ -1488,7 +1634,7 @@ class PortalBuilder:
                     const clickFor = (dataKey) => (evt, elements, chart) => {
                         if (!elements.length) return;
                         const label = chart.data.labels[elements[0].index];
-                        const apps = this.analyticsData[dataKey]?.apps?.[label] || [];
+                        const apps = dashboard[dataKey]?.apps?.[label] || [];
                         if (apps.length) this.showDrilldown(label, apps);
                     };
                     const hoverCursor = (evt, elements) => {
@@ -1499,9 +1645,9 @@ class PortalBuilder:
                     make('chartAppType', {
                         type: 'doughnut',
                         data: {
-                            labels: this.analyticsData.application_type.labels,
-                            datasets: [{ data: this.analyticsData.application_type.values,
-                                backgroundColor: this.analyticsData.application_type.labels.map(l => appTypeColors[l] || '#aaa'),
+                            labels: dashboard.application_type.labels,
+                            datasets: [{ data: dashboard.application_type.values,
+                                backgroundColor: dashboard.application_type.labels.map(l => appTypeColors[l] || '#aaa'),
                                 borderWidth: 2 }]
                         },
                         options: { responsive: true, maintainAspectRatio: false,
@@ -1512,15 +1658,16 @@ class PortalBuilder:
 
 
                     // Legacy by Domain — horizontal bar
+                    const legacyBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'legacy_by_domain' : 'legacy_by_sub_domain';
                     make('chartLegacyDomain', {
                         type: 'bar',
                         data: {
-                            labels: this.analyticsData.legacy_by_domain.labels,
-                            datasets: [{ label: 'Legacy Apps', data: this.analyticsData.legacy_by_domain.values,
+                            labels: dashboard[legacyBreakdownKey].labels,
+                            datasets: [{ label: 'Legacy Apps', data: dashboard[legacyBreakdownKey].values,
                                 backgroundColor: '#dc3545', borderRadius: 4 }]
                         },
                         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                            onHover: hoverCursor, onClick: clickFor('legacy_by_domain'),
+                            onHover: hoverCursor, onClick: clickFor(legacyBreakdownKey),
                             plugins: { legend: { display: false } },
                             scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
@@ -1535,9 +1682,9 @@ class PortalBuilder:
                     make('chartCriticality', {
                         type: 'doughnut',
                         data: {
-                            labels: this.analyticsData.criticality.labels,
-                            datasets: [{ data: this.analyticsData.criticality.values,
-                                backgroundColor: this.analyticsData.criticality.labels.map(l => critColors[l] || '#aaa'),
+                            labels: dashboard.criticality.labels,
+                            datasets: [{ data: dashboard.criticality.values,
+                                backgroundColor: dashboard.criticality.labels.map(l => critColors[l] || '#aaa'),
                                 borderWidth: 2 }]
                         },
                         options: { responsive: true, maintainAspectRatio: false,
@@ -1549,9 +1696,9 @@ class PortalBuilder:
                     make('chartDomain', {
                         type: 'bar',
                         data: {
-                            labels: this.analyticsData.domain.labels,
-                            datasets: [{ label: 'Apps', data: this.analyticsData.domain.values,
-                                backgroundColor: this.analyticsData.domain.labels.map((_, i) => paletteBar[i % paletteBar.length]),
+                            labels: dashboard.domain.labels,
+                            datasets: [{ label: 'Apps', data: dashboard.domain.values,
+                                backgroundColor: dashboard.domain.labels.map((_, i) => paletteBar[i % paletteBar.length]),
                                 borderRadius: 4 }]
                         },
                         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
@@ -1564,9 +1711,9 @@ class PortalBuilder:
                     make('chartRegion', {
                         type: 'bar',
                         data: {
-                            labels: this.analyticsData.region.labels,
-                            datasets: [{ label: 'Apps', data: this.analyticsData.region.values,
-                                backgroundColor: [primaryColor, '#00A651', '#F39200'], borderRadius: 4 }]
+                            labels: dashboard.region.labels,
+                            datasets: [{ label: 'Apps', data: dashboard.region.values,
+                                backgroundColor: dashboard.region.labels.map((_, i) => paletteBar[i % paletteBar.length]), borderRadius: 4 }]
                         },
                         options: { responsive: true, maintainAspectRatio: false,
                             onHover: hoverCursor, onClick: clickFor('region'),
@@ -1610,13 +1757,13 @@ class PortalBuilder:
                     }
                 },
                 cardApps(key) {
-                    const d = this.analyticsData;
+                    const d = this.filteredAnalyticsData;
                     if (!d) return [];
                     const at = d.application_type?.apps || {};
                     const lc = d.lifecycle_status?.apps || {};
                     const ts = d.tech_standard?.apps || {};
                     switch (key) {
-                        case 'total':        return this.catalogue.map(a => String(a[this.catalogueNameColumn] || '').trim());
+                        case 'total':        return this.filteredAnalyticsRecords.map(r => r.name);
                         case 'legacy':       return ts['Legacy'] || [];
                         case 'saas':         return at['SaaS'] || [];
                         case 'custom':       return [...(at['Home-grown'] || []), ...(at['COTS'] || []), ...(at['Excel'] || [])];
