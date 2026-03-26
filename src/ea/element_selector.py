@@ -130,15 +130,19 @@ class ElementSelector:
                     elem_id = self.element_by_name[name]['id']
                     official_count += 1
                 else:
-                    # Try fuzzy matching
-                    matched = self._fuzzy_match_name(name)
-                    if matched:
-                        elem_id = matched['id']
-                        official_count += 1
-                    else:
-                        # MVP9: Create synthetic diagram element
+                    if rule.get('synthetic') is True:
                         elem_id = self._create_synthetic_element(name, rule)
                         synthetic_count += 1
+                    else:
+                        # Try fuzzy matching
+                        matched = self._fuzzy_match_name(name)
+                        if matched:
+                            elem_id = matched['id']
+                            official_count += 1
+                        else:
+                            # MVP9: Create synthetic diagram element
+                            elem_id = self._create_synthetic_element(name, rule)
+                            synthetic_count += 1
 
                 if elem_id:
                     selected_ids.add(elem_id)

@@ -1,0 +1,422 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the JPN ERP core, and what direct external applications cooperate with it?"
+  audience: "Enterprise Architecture, ERP delivery, Finance stakeholders"
+  decision: "Validate the JPN ERP application boundary and its direct external integrations"
+  key_message: "ERP JPN should read as a central core containing QAD SE 11 and Pro2SQL JPN, with external systems arranged around it"
+
+# === STORY ===
+story:
+  setup: "The JPN ERP landscape has a clear internal core and a broad set of direct outbound integrations."
+  tension: "The diagram needs to preserve the ERP JPN boundary while still making each source-to-target integration explicit."
+  insight: "A center-surround application cooperation view keeps the ERP core stable in the middle while allowing many external systems to grow around it."
+
+# === VIEW DEFINITION ===
+view:
+  name: "ERP JPN Landscape"
+  documentation: |
+    Application cooperation view for the JPN ERP realm.
+    ERP JPN is the central collaboration/core.
+    QAD SE 11 and Pro2SQL JPN are contained within that core.
+    External systems sit around the core and connect only through explicit outbound flows.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "ERP JPN"
+      type: "ApplicationCollaboration"
+      override:
+        Role: "ERP JPN Core"
+      description: "Central JPN ERP collaboration boundary."
+
+    - name: "QAD SE 11"
+      override:
+        Internal Group: "QAD"
+        Role: "ERP Core"
+      description: "Primary JPN ERP platform."
+
+    - name: "Pro2SQL JPN"
+      override:
+        Internal Group: "Services"
+        Role: "ERP Core"
+      description: "JPN ERP reporting/data component."
+
+    - name: "Bank Payments System"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Payments integration component inside ERP JPN."
+
+    - name: "Boomi"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Integration middleware component inside ERP JPN."
+
+    - name: "Informatica PIM JPN"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Product information management integration component inside ERP JPN."
+
+    - name: "EDI"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "EDI integration component inside ERP JPN."
+
+    - name: "GSC SAP APO"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Supply Chain Planning"
+      description: "Forecast outbound from QAD SE 11."
+
+    - name: "DSX"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Forecasting"
+      description: "Forecast outbound from QAD SE 11."
+
+    - name: "Formtrap"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "right"
+        External Group: "Finance"
+        Role: "Invoice Output"
+      description: "Invoice outbound from QAD SE 11."
+
+    - name: "Infomart"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "right"
+        External Group: "Finance"
+        Role: "Invoice and Shipment Integration"
+      description: "Invoice and shipment outbound from QAD SE 11."
+
+    - name: "CargoMaster Japan WMS"
+      override:
+        Spoke Side: "right"
+        External Group: "Logistics"
+        Role: "Warehouse Management"
+      description: "PO/SO outbound from QAD SE 11."
+
+    - name: "W3 Sirius"
+      override:
+        Spoke Side: "right"
+        External Group: "Logistics"
+        Role: "Warehouse Management"
+      description: "PO/SO outbound from QAD SE 11."
+
+    - name: "MD-NET"
+      override:
+        Spoke Side: "left"
+        External Group: "Commercial"
+        Role: "EDI Network"
+      description: "EDI outbound from QAD SE 11."
+
+    - name: "SFDC"
+      override:
+        Spoke Side: "left"
+        External Group: "Commercial"
+        Role: "CRM Integration"
+      description: "Sales and shipment data outbound from QAD SE 11."
+
+    - name: "Kenpin JPN"
+      override:
+        Spoke Side: "left"
+        External Group: "Manufacturing Operations"
+        Role: "Operational Tracking"
+      description: "Item outbound from QAD SE 11."
+
+    - name: "JPMorgan Online"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "bottom"
+        External Group: "Finance"
+        Role: "Banking"
+      description: "Payment outbound from QAD SE 11."
+
+    - name: "Yusen"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Logistics"
+        Role: "Logistics Integration"
+      description: "PO outbound from QAD SE 11."
+
+    - name: "Okumarukun"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Logistics"
+        Role: "Delivery Tracking"
+      description: "Shipment data outbound from QAD SE 11."
+
+    - name: "X-Point"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Finance"
+        Role: "Finance Integration"
+      description: "Journal entries outbound from QAD SE 11."
+
+    - name: "Tableau"
+      override:
+        Spoke Side: "left"
+        External Group: "Reporting"
+        Role: "Reporting"
+      description: "Outbound from Pro2SQL JPN."
+
+    - name: "Oracle EPM"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Planning and Reporting"
+      description: "Account balance outbound from Pro2SQL JPN."
+
+    - name: "PSS 1.0"
+      override:
+        Spoke Side: "left"
+        External Group: "Manufacturing Operations"
+        Role: "Specification Management"
+      description: "Item/BOM outbound from Pro2SQL JPN."
+
+    - name: "MedQuote"
+      override:
+        Spoke Side: "left"
+        External Group: "Commercial"
+        Role: "Quote Integration"
+      description: "Item outbound from Pro2SQL JPN."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "QAD SE 11"
+      label: "contains"
+      description: "ERP JPN contains QAD SE 11."
+
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "Pro2SQL JPN"
+      label: "contains"
+      description: "ERP JPN contains Pro2SQL JPN."
+
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "Bank Payments System"
+      label: "contains"
+      description: "ERP JPN contains Bank Payments System."
+
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "Boomi"
+      label: "contains"
+      description: "ERP JPN contains Boomi."
+
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "Informatica PIM JPN"
+      label: "contains"
+      description: "ERP JPN contains Informatica PIM JPN."
+
+    - type: "Composition"
+      source_name: "ERP JPN"
+      target_name: "EDI"
+      label: "contains"
+      description: "ERP JPN contains EDI."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "GSC SAP APO"
+      label: "Forecast"
+      description: "Forecast outbound from QAD SE 11 to GSC SAP APO."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "DSX"
+      label: "Forecast"
+      description: "Forecast outbound from QAD SE 11 to DSX."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Formtrap"
+      label: "Invoices"
+      description: "Invoices outbound from QAD SE 11 to Formtrap."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Infomart"
+      label: "Invoices"
+      description: "Invoices outbound from QAD SE 11 to Infomart."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "CargoMaster Japan WMS"
+      label: "PO/SO"
+      description: "PO/SO outbound from QAD SE 11 to CargoMaster Japan WMS."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "W3 Sirius"
+      label: "PO/SO"
+      description: "PO/SO outbound from QAD SE 11 to W3 Sirius."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "MD-NET"
+      label: "EDI"
+      description: "EDI outbound from QAD SE 11 to MD-NET."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Infomart"
+      label: "Shipment"
+      description: "Shipment outbound from QAD SE 11 to Infomart."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "SFDC"
+      label: "Sales and Shipment Data"
+      description: "Sales and shipment data outbound from QAD SE 11 to SFDC."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Informatica PIM JPN"
+      label: "Item"
+      description: "Item outbound from QAD SE 11 to Informatica PIM JPN."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Kenpin JPN"
+      label: "Item"
+      description: "Item outbound from QAD SE 11 to Kenpin JPN."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "JPMorgan Online"
+      label: "Payment"
+      description: "Payment outbound from QAD SE 11 to JPMorgan Online."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Yusen"
+      label: "PO"
+      description: "PO outbound from QAD SE 11 to Yusen."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "Okumarukun"
+      label: "Shipment Data"
+      description: "Shipment data outbound from QAD SE 11 to Okumarukun."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "X-Point"
+      label: "Journal Entries"
+      description: "Journal entries outbound from QAD SE 11 to X-Point."
+
+    - type: "Flow"
+      source_name: "Pro2SQL JPN"
+      target_name: "Tableau"
+      label: "Tableau"
+      description: "Outbound integration from Pro2SQL JPN to Tableau."
+
+    - type: "Flow"
+      source_name: "Pro2SQL JPN"
+      target_name: "Oracle EPM"
+      label: "Account Balance"
+      description: "Account balance outbound from Pro2SQL JPN to Oracle EPM."
+
+    - type: "Flow"
+      source_name: "Pro2SQL JPN"
+      target_name: "PSS 1.0"
+      label: "Item/BOM"
+      description: "Item/BOM outbound from Pro2SQL JPN to PSS 1.0."
+
+    - type: "Flow"
+      source_name: "Pro2SQL JPN"
+      target_name: "MedQuote"
+      label: "Item"
+      description: "Item outbound from Pro2SQL JPN to MedQuote."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "ERP JPN"
+      role: "Central application cooperation boundary"
+      treatment: "prominent"
+    - element: "QAD SE 11"
+      role: "Primary ERP application inside the JPN core"
+      treatment: "prominent"
+    - element: "Pro2SQL JPN"
+      role: "Supporting JPN ERP component inside the core"
+      treatment: "highlighted"
+    - element: "Bank Payments System"
+      role: "Internal payments integration component"
+      treatment: "normal"
+    - element: "Boomi"
+      role: "Internal integration middleware"
+      treatment: "normal"
+    - element: "Informatica PIM JPN"
+      role: "Internal product information integration"
+      treatment: "normal"
+    - element: "EDI"
+      role: "Internal EDI integration component"
+      treatment: "normal"
+  grouping_rationale: "ERP JPN should be visually central, with external systems kept outside the core boundary."
+  reading_order: "Start in the middle with ERP JPN, then read outward to its connected external systems."
+  color_strategy: "Core elements are visually stronger than surrounding external systems."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["QAD", "Services", "Integration"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Commercial", "Planning", "Finance", "Logistics", "Manufacturing Operations", "Reporting"]
+  external_group_side_map:
+    Commercial: "left"
+    Planning: "top"
+    Finance: "right"
+    Logistics: "right"
+    Manufacturing Operations: "left"
+    Reporting: "left"
+  hub_width: 560
+  hub_height: 360
+  center_y: 330
+  external_width: 220
+  external_offset: 90
+  external_spacing: 24
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Central ERP JPN cooperation boundary"
+    near: "ERP JPN"
+  - text: "QAD-led outbound integrations"
+    near: "QAD SE 11"
+  - text: "Pro2SQL-led outbound integrations"
+    near: "Pro2SQL JPN"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

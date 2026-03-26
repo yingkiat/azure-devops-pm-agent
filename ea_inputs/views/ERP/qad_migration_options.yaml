@@ -1,0 +1,423 @@
+# === INTENT ===
+intent:
+  question: "What are the first two QAD migration options?"
+  audience: "ERP leadership, PMO, enterprise architecture"
+  decision: "Compare the migration paths into QAD AUX versus SAP S/4HANA"
+  key_message: "Option 1 upgrades into QAD AUX; Option 2 upgrades into SAP S/4HANA, with both paths passing through an analytical database and Boomi to common downstream services"
+
+# === STORY ===
+story:
+  setup: "Today the ERP estate is split across ANZ, AEM, and JPN QAD variants."
+  tension: "The migration path must reduce fragmentation while sequencing the rollout in a lower-risk order."
+  insight: "The two options share the same source estate and downstream service pattern, but differ in their target core and analytical database choices."
+
+# === VIEW DEFINITION ===
+view:
+  name: "QAD Migration Options"
+  documentation: |
+    Comparison view showing two stacked migration options from the three current QAD instances
+    into alternative target cores, then through an analytical database and Boomi to shared
+    downstream services.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "QAD EE ANZ"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Current Estate"
+        Sequence: "1"
+      description: "Current ANZ QAD estate."
+
+    - name: "QAD EE AEM"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Current Estate"
+        Sequence: "2"
+      description: "Current AEM QAD estate."
+
+    - name: "QAD SE JPN"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Current Estate"
+        Sequence: "3"
+      description: "Current JPN QAD estate."
+
+    - name: "QAD AUX"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Target Core"
+        Sequence: "1"
+      description: "Target single APAC QAD instance."
+
+    - name: "Pro2SQL"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Analytical Database"
+        Sequence: "1"
+      description: "Analytical database layer between QAD AUX and Boomi."
+
+    - name: "Boomi"
+      override:
+        Section: "Option 1"
+        Stage: "Integration"
+        Sequence: "1"
+      description: "Integration layer between target ERP and downstream platforms."
+
+    - name: "PIM EU"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Downstream"
+        Sequence: "1"
+      description: "Downstream PIM target."
+
+    - name: "3PL"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Downstream"
+        Sequence: "2"
+      description: "Downstream 3PL service."
+
+    - name: "EDI"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Downstream"
+        Sequence: "3"
+      description: "Downstream EDI service."
+
+    - name: "Bank Payments System"
+      type: "ApplicationComponent"
+      override:
+        Section: "Option 1"
+        Stage: "Downstream"
+        Sequence: "4"
+      description: "Downstream bank payments service."
+
+    - name: "opt2_source_anz"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Current Estate"
+        Sequence: "1"
+        Display Name: "QAD EE ANZ"
+      description: "Current ANZ QAD estate for option 2."
+
+    - name: "opt2_source_aem"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Current Estate"
+        Sequence: "2"
+        Display Name: "QAD EE AEM"
+      description: "Current AEM QAD estate for option 2."
+
+    - name: "opt2_source_jpn"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Current Estate"
+        Sequence: "3"
+        Display Name: "QAD SE JPN"
+      description: "Current JPN QAD estate for option 2."
+
+    - name: "SAP S/4HANA"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Target Core"
+        Sequence: "1"
+      description: "Target SAP S/4HANA core."
+
+    - name: "SAP HANA"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Analytical Database"
+        Sequence: "1"
+      description: "Analytical database layer for option 2."
+
+    - name: "Boomi - Option 2"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Integration"
+        Sequence: "1"
+        Display Name: "Boomi"
+      description: "Integration layer between target ERP and downstream platforms for option 2."
+
+    - name: "PIM EU - Option 2"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Downstream"
+        Sequence: "1"
+        Display Name: "PIM EU"
+      description: "Downstream PIM target for option 2."
+
+    - name: "3PL - Option 2"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Downstream"
+        Sequence: "2"
+        Display Name: "3PL"
+      description: "Downstream 3PL service for option 2."
+
+    - name: "EDI - Option 2"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Downstream"
+        Sequence: "3"
+        Display Name: "EDI"
+      description: "Downstream EDI service for option 2."
+
+    - name: "Bank Payments System - Option 2"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Section: "Option 2"
+        Stage: "Downstream"
+        Sequence: "4"
+        Display Name: "Bank Payments System"
+      description: "Downstream bank payments service for option 2."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Flow"
+      source_name: "QAD EE ANZ"
+      target_name: "QAD AUX"
+      label: "upgrade"
+      description: "Upgrade ANZ estate into QAD AUX."
+
+    - type: "Flow"
+      source_name: "QAD EE AEM"
+      target_name: "QAD AUX"
+      label: "upgrade"
+      description: "Upgrade AEM estate into QAD AUX."
+
+    - type: "Flow"
+      source_name: "QAD SE JPN"
+      target_name: "QAD AUX"
+      label: "reimplement"
+      description: "Reimplement JPN estate into QAD AUX."
+
+    - type: "Flow"
+      source_name: "QAD AUX"
+      target_name: "Pro2SQL"
+      label: ""
+      description: "Target ERP flows into Pro2SQL."
+
+    - type: "Flow"
+      source_name: "Pro2SQL"
+      target_name: "Boomi"
+      label: ""
+      description: "Pro2SQL flows into Boomi integration."
+
+    - type: "Flow"
+      source_name: "Boomi"
+      target_name: "PIM EU"
+      label: ""
+      description: "Boomi integrates with PIM EU."
+
+    - type: "Flow"
+      source_name: "Boomi"
+      target_name: "3PL"
+      label: ""
+      description: "Boomi integrates with 3PL."
+
+    - type: "Flow"
+      source_name: "Boomi"
+      target_name: "EDI"
+      label: ""
+      description: "Boomi integrates with EDI."
+
+    - type: "Flow"
+      source_name: "Boomi"
+      target_name: "Bank Payments System"
+      label: ""
+      description: "Boomi integrates with Bank Payments System."
+
+    - type: "Flow"
+      source_name: "opt2_source_anz"
+      target_name: "SAP S/4HANA"
+      label: "upgrade"
+      description: "Upgrade ANZ estate into SAP S/4HANA."
+
+    - type: "Flow"
+      source_name: "opt2_source_aem"
+      target_name: "SAP S/4HANA"
+      label: "upgrade"
+      description: "Upgrade AEM estate into SAP S/4HANA."
+
+    - type: "Flow"
+      source_name: "opt2_source_jpn"
+      target_name: "SAP S/4HANA"
+      label: "reimplement"
+      description: "Reimplement JPN estate into SAP S/4HANA."
+
+    - type: "Flow"
+      source_name: "SAP S/4HANA"
+      target_name: "SAP HANA"
+      label: ""
+      description: "Target ERP flows into SAP HANA."
+
+    - type: "Flow"
+      source_name: "SAP HANA"
+      target_name: "Boomi - Option 2"
+      label: ""
+      description: "SAP HANA flows into Boomi integration."
+
+    - type: "Flow"
+      source_name: "Boomi - Option 2"
+      target_name: "PIM EU - Option 2"
+      label: ""
+      description: "Boomi integrates with PIM EU."
+
+    - type: "Flow"
+      source_name: "Boomi - Option 2"
+      target_name: "3PL - Option 2"
+      label: ""
+      description: "Boomi integrates with 3PL."
+
+    - type: "Flow"
+      source_name: "Boomi - Option 2"
+      target_name: "EDI - Option 2"
+      label: ""
+      description: "Boomi integrates with EDI."
+
+    - type: "Flow"
+      source_name: "Boomi - Option 2"
+      target_name: "Bank Payments System - Option 2"
+      label: ""
+      description: "Boomi integrates with Bank Payments System."
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "QAD AUX"
+      role: "Option 1 target core"
+      treatment: "prominent"
+    - element: "Pro2SQL"
+      role: "Option 1 analytical database"
+      treatment: "highlighted"
+    - element: "Boomi"
+      role: "Option 1 integration hub"
+      treatment: "highlighted"
+    - element: "SAP S/4HANA"
+      role: "Option 2 target core"
+      treatment: "prominent"
+    - element: "SAP HANA"
+      role: "Option 2 analytical database"
+      treatment: "highlighted"
+    - element: "Boomi - Option 2"
+      role: "Option 2 integration hub"
+      treatment: "highlighted"
+  grouping_rationale: "Each horizontal section is a migration option, read left to right from current estate to downstream services."
+  reading_order: "Read Option 1 first, then Option 2 below it."
+  color_strategy: "Target and platform layers are emphasized more strongly than the duplicated current and downstream systems."
+
+# === LAYOUT ===
+layout:
+  algorithm: "flow_left_right"
+  section_property: "Section"
+  sections:
+    - name: "Option 1"
+      y: 80
+    - name: "Option 2"
+      y: 620
+  stage_property: "Stage"
+  stage_order: ["Current Estate", "Target Core", "Analytical Database", "Integration", "Downstream"]
+  order_property: "Sequence"
+  stage_width: 240
+  stage_gap: 35
+  node_gap: 26
+  edge_label_mode: "near_source"
+  include_narrative: false
+  text_boxes:
+    - x: 50
+      y: 20
+      width: 520
+      height: 40
+      style_kind: "title"
+      text: "Option 1: Upgrade to QAD AUX"
+    - x: 258
+      y: 162
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$1M<br/>12mths</div>"
+    - x: 258
+      y: 248
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$100k<br/>6mths</div>"
+    - x: 258
+      y: 334
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$2m<br/>18m</div>"
+    - x: 1060
+      y: 120
+      width: 420
+      height: 220
+      html: true
+      text: "<div><b><u>Principles</u></b><br/><ul><li>Single APAC instance</li><li>AEM first to lower risk and increase learning</li><li>ANZ before JPN due to readiness</li><li>Use the cloud/SaaS version</li></ul></div>"
+    - x: 50
+      y: 560
+      width: 620
+      height: 40
+      style_kind: "title"
+      text: "Option 2: Upgrade to SAP S/4HANA"
+    - x: 258
+      y: 702
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$1M<br/>12mths</div>"
+    - x: 258
+      y: 788
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$100k<br/>6mths</div>"
+    - x: 258
+      y: 874
+      width: 80
+      height: 34
+      html: true
+      text: "<div>$2m<br/>18m</div>"
+    - x: 1060
+      y: 660
+      width: 420
+      height: 220
+      html: true
+      text: "<div><b><u>Principles</u></b><br/><ul><li>Single APAC instance</li><li>AEM first to lower risk and increase learning</li><li>ANZ before JPN due to readiness</li><li>Use the cloud/SaaS version</li></ul></div>"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

@@ -1,0 +1,444 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the ANZ ERP core, and what direct external applications cooperate with it?"
+  audience: "Enterprise Architecture, ERP delivery, Finance stakeholders"
+  decision: "Validate the ANZ ERP application boundary and its direct external integrations before expanding to JPN and AEM"
+  key_message: "ERP ANZ should read as a central core containing QAD EE 2019 and Pro2SQL ANZ, with external systems arranged around it"
+
+# === STORY ===
+story:
+  setup: "The ANZ ERP landscape has a clear internal core and a growing set of direct outbound integrations."
+  tension: "As external integrations grow, the diagram must preserve the ERP ANZ boundary while still making each source-to-target integration explicit."
+  insight: "A center-surround application cooperation view keeps the ERP core stable in the middle while allowing many external systems to grow around it."
+
+# === VIEW DEFINITION ===
+view:
+  name: "ERP ANZ Landscape"
+  documentation: |
+    Application cooperation view for the ANZ ERP realm.
+    ERP ANZ is the central collaboration/core.
+    QAD EE 2019 and Pro2SQL ANZ are contained within that core.
+    External systems sit around the core and connect only through explicit outbound flows.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "ERP ANZ"
+      type: "ApplicationCollaboration"
+      override:
+        Role: "ERP ANZ Core"
+      description: "Central ANZ ERP collaboration boundary."
+
+    - name: "QAD EE 2019"
+      override:
+        Internal Group: "QAD"
+        Role: "ERP Core"
+      description: "Primary ANZ ERP platform."
+
+    - name: "Pro2SQL ANZ"
+      override:
+        Internal Group: "Services"
+        Role: "ERP Core"
+      description: "ANZ ERP reporting/data component."
+
+    - name: "Bank Payments System"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Payments integration component inside ERP ANZ."
+
+    - name: "Boomi"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Integration middleware component inside ERP ANZ."
+
+    - name: "Informatica PIM ANZ"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "Product information management integration component inside ERP ANZ."
+
+    - name: "EDI"
+      override:
+        Internal Group: "Integration"
+        Role: "ERP Integration"
+      description: "EDI integration component inside ERP ANZ."
+
+    - name: "Blackline Financial Close"
+      override:
+        Spoke Side: "right"
+        External Group: "Finance"
+        Role: "Finance Integration"
+      description: "Journal entry integration from QAD EE 2019."
+
+    - name: "Magento ANZ"
+      override:
+        Spoke Side: "top"
+        External Group: "Commercial"
+        Role: "Digital Commerce"
+      description: "Shipment confirmation outbound from QAD EE 2019."
+
+    - name: "Informatica PIM ANZ"
+      override:
+        Spoke Side: "top"
+        Role: "Product Master Data"
+      description: "Item master outbound from QAD EE 2019."
+
+    - name: "DSX"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Forecasting"
+      description: "Forecast outbound from QAD EE 2019."
+
+    - name: "On Demand"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Logistics"
+        Role: "Shipment Integration"
+      description: "SO shipment data outbound from QAD EE 2019."
+
+    - name: "SmartFreight"
+      override:
+        Spoke Side: "right"
+        External Group: "Logistics"
+        Role: "Freight Integration"
+      description: "SO shipment data outbound from QAD EE 2019."
+
+    - name: "Microsoft Dynamics"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Commercial"
+        Role: "CRM Integration"
+      description: "ERP data outbound from QAD EE 2019."
+
+    - name: "eInvoice Govt Portal (India, China)"
+      override:
+        Spoke Side: "right"
+        External Group: "Finance"
+        Role: "Government eInvoicing"
+      description: "Invoice outbound from QAD EE 2019."
+
+    - name: "Concur Expense Management"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Finance"
+        Role: "Staff Expenses"
+      description: "Staff expenses outbound from QAD EE 2019."
+
+    - name: "GSC SAP APO"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Supply Chain Planning"
+      description: "Forecast data outbound from QAD EE 2019."
+
+    - name: "Yusen"
+      override:
+        Spoke Side: "right"
+        External Group: "Logistics"
+        Role: "Logistics Integration"
+      description: "Purchase Orders and ASN outbound from QAD EE 2019."
+
+    - name: "Label Printing"
+      override:
+        Spoke Side: "left"
+        External Group: "Manufacturing Operations"
+        Role: "Operational Service"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "Batch Control System"
+      override:
+        Spoke Side: "left"
+        External Group: "Manufacturing Operations"
+        Role: "Operational Service"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "MedQuote"
+      override:
+        Spoke Side: "left"
+        External Group: "Commercial"
+        Role: "Quote Integration"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "MedPack"
+      override:
+        Spoke Side: "left"
+        External Group: "Manufacturing Operations"
+        Role: "Pack Integration"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "Pack Specification System (PSS)"
+      override:
+        Spoke Side: "bottom"
+        External Group: "Manufacturing Operations"
+        Role: "Planning and Reporting"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "Oracle EPM"
+      override:
+        Spoke Side: "top"
+        External Group: "Planning"
+        Role: "Planning and Reporting"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "Tableau"
+      override:
+        Spoke Side: "left"
+        External Group: "Reporting"
+        Role: "Reporting"
+      description: "Outbound from Pro2SQL ANZ."
+
+    - name: "GSC Reporting"
+      override:
+        Spoke Side: "left"
+        External Group: "Reporting"
+        Role: "Reporting"
+      description: "Outbound from Pro2SQL ANZ."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "QAD EE 2019"
+      label: "contains"
+      description: "ERP ANZ contains QAD EE 2019."
+
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "Pro2SQL ANZ"
+      label: "contains"
+      description: "ERP ANZ contains Pro2SQL ANZ."
+
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "Bank Payments System"
+      label: "contains"
+      description: "ERP ANZ contains Bank Payments System."
+
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "Boomi"
+      label: "contains"
+      description: "ERP ANZ contains Boomi."
+
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "Informatica PIM ANZ"
+      label: "contains"
+      description: "ERP ANZ contains Informatica PIM ANZ."
+
+    - type: "Composition"
+      source_name: "ERP ANZ"
+      target_name: "EDI"
+      label: "contains"
+      description: "ERP ANZ contains EDI."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Magento ANZ"
+      label: "Shipment Confirm"
+      description: "Shipment confirm outbound from QAD EE 2019 to Magento."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Informatica PIM ANZ"
+      label: "Item"
+      description: "Item outbound from QAD EE 2019 to PIM."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "DSX"
+      label: "Forecast"
+      description: "Forecast outbound from QAD EE 2019 to DSX."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "EDI"
+      label: "Order and Invoice"
+      description: "Orders and invoices outbound from QAD EE 2019 to EDI."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "On Demand"
+      label: "SO Shipment Data"
+      description: "SO shipment data outbound from QAD EE 2019 to On Demand."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "SmartFreight"
+      label: "SO Shipment Data"
+      description: "SO shipment data outbound from QAD EE 2019 to SmartFreight."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Microsoft Dynamics"
+      label: "ERP Data"
+      description: "ERP data outbound from QAD EE 2019 to Microsoft Dynamics."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Blackline Financial Close"
+      label: "Journal Entry"
+      description: "Journal entry outbound from QAD EE 2019 to Blackline."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "eInvoice Govt Portal (India, China)"
+      label: "Invoice"
+      description: "Invoice outbound from QAD EE 2019 to eInvoice government portals."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Bank Payments System"
+      label: "Supplier Payments"
+      description: "Supplier payments outbound from QAD EE 2019 to Bank Payments System."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Concur Expense Management"
+      label: "Staff Expenses"
+      description: "Staff expenses outbound from QAD EE 2019 to Concur."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "GSC SAP APO"
+      label: "Forecast Data"
+      description: "Forecast data outbound from QAD EE 2019 to GSC SAP APO."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Yusen"
+      label: "Purchase Orders and ASN"
+      description: "Purchase orders and ASN outbound from QAD EE 2019 to Yusen."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Label Printing"
+      label: "Label Printing"
+      description: "Outbound integration from Pro2SQL ANZ to Label Printing."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Batch Control System"
+      label: "Batch Control System"
+      description: "Outbound integration from Pro2SQL ANZ to Batch Control System."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "MedQuote"
+      label: "MedQuote"
+      description: "Outbound integration from Pro2SQL ANZ to MedQuote."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "MedPack"
+      label: "MedPack"
+      description: "Outbound integration from Pro2SQL ANZ to MedPack."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Pack Specification System (PSS)"
+      label: "PSS"
+      description: "Outbound integration from Pro2SQL ANZ to Pack Specification System (PSS)."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Oracle EPM"
+      label: "EPM"
+      description: "Outbound integration from Pro2SQL ANZ to Oracle EPM."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Tableau"
+      label: "Tableau"
+      description: "Outbound integration from Pro2SQL ANZ to Tableau."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "GSC Reporting"
+      label: "GSC Reporting"
+      description: "Outbound integration from Pro2SQL ANZ to GSC Reporting."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "ERP ANZ"
+      role: "Central application cooperation boundary"
+      treatment: "prominent"
+    - element: "QAD EE 2019"
+      role: "Primary ERP application inside the ANZ core"
+      treatment: "prominent"
+    - element: "Pro2SQL ANZ"
+      role: "Supporting ANZ ERP component inside the core"
+      treatment: "highlighted"
+    - element: "Bank Payments System"
+      role: "Internal payments integration component"
+      treatment: "normal"
+    - element: "Boomi"
+      role: "Internal integration middleware"
+      treatment: "normal"
+    - element: "Informatica PIM ANZ"
+      role: "Internal product information integration"
+      treatment: "normal"
+    - element: "EDI"
+      role: "Internal EDI integration component"
+      treatment: "normal"
+    - element: "Blackline Financial Close"
+      role: "External finance close integration"
+      treatment: "normal"
+  grouping_rationale: "ERP ANZ should be visually central, with external systems kept outside the core boundary."
+  reading_order: "Start in the middle with ERP ANZ, then read outward to its connected external systems."
+  color_strategy: "Core elements are visually stronger than surrounding external systems."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["QAD", "Services", "Integration"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Commercial", "Planning", "Finance", "Logistics", "Manufacturing Operations", "Reporting"]
+  external_group_side_map:
+    Commercial: "top"
+    Planning: "top"
+    Finance: "right"
+    Logistics: "right"
+    Manufacturing Operations: "left"
+    Reporting: "left"
+  hub_width: 560
+  hub_height: 360
+  center_y: 330
+  external_width: 220
+  external_offset: 90
+  external_spacing: 24
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Central ERP ANZ cooperation boundary"
+    near: "ERP ANZ"
+  - text: "QAD-led outbound integrations"
+    near: "QAD EE 2019"
+  - text: "Pro2SQL-led outbound integrations"
+    near: "Pro2SQL ANZ"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

@@ -153,3 +153,126 @@ diagram-146bf1a90eb2,Horizon,H2
 diagram-146bf1a90eb2,Process,Architecture
 diagram-999bc6b18351,Horizon,H3
 diagram-999bc6b18351,Process,Core ERP
+diagram-a7ab1b9c9e13,Zone,Core
+diagram-a7ab1b9c9e13,Role,ERP ANZ Core
+diagram-4d2e27158ca5,Spoke Side,right
+diagram-4d2e27158ca5,Role,EDI Integration
+diagram-592eac202131,Spoke Side,bottom
+diagram-592eac202131,Role,Government eInvoicing
+diagram-6e50f09e49bc,Spoke Side,bottom
+diagram-6e50f09e49bc,Role,Payments Integration
+diagram-ea4940c3975f,Spoke Side,left
+diagram-ea4940c3975f,Role,Reporting
+diagram-40db945ac8a9,Internal Group,Integration
+diagram-40db945ac8a9,Role,ERP Integration
+diagram-6e50f09e49bc,Internal Group,Integration
+diagram-4d2e27158ca5,Internal Group,Integration
+diagram-ea4940c3975f,External Group,Reporting
+diagram-592eac202131,External Group,Finance
+diagram-c1ee6539c4c1,Stage,Current Estate
+diagram-2fb46a0faaf4,Stage,Current Estate
+diagram-34d028e779c6,Stage,Current Estate
+diagram-63dc6b45c4ee,Stage,Target Core
+diagram-8b27dfe89e55,Stage,Destination
+diagram-8b27dfe89e55,Sequence,1
+diagram-c1ee6539c4c1,Sequence,1
+diagram-2fb46a0faaf4,Sequence,2
+diagram-34d028e779c6,Sequence,3
+diagram-63dc6b45c4ee,Sequence,1
+diagram-3756c657e4b5,Stage,Downstream
+diagram-3756c657e4b5,Sequence,2
+diagram-4d2e27158ca5,Stage,Downstream
+diagram-4d2e27158ca5,Sequence,3
+diagram-6e50f09e49bc,Stage,Downstream
+diagram-6e50f09e49bc,Sequence,4
+diagram-3517192abc8d,Section,Option 2
+diagram-3517192abc8d,Stage,Current Estate
+diagram-3517192abc8d,Sequence,1
+diagram-3517192abc8d,Display Name,QAD EE ANZ
+diagram-5baf2bf1b297,Section,Option 2
+diagram-5baf2bf1b297,Stage,Target Core
+diagram-5baf2bf1b297,Sequence,1
+diagram-86083f3ea21c,Section,Option 2
+diagram-86083f3ea21c,Stage,Analytical Database
+diagram-86083f3ea21c,Sequence,1
+diagram-abd005bbfed8,Section,Option 2
+diagram-abd005bbfed8,Stage,Integration
+diagram-abd005bbfed8,Sequence,1
+diagram-abd005bbfed8,Display Name,Boomi
+diagram-2c98107bcfc2,Section,Option 2
+diagram-2c98107bcfc2,Stage,Downstream
+diagram-2c98107bcfc2,Sequence,1
+diagram-2c98107bcfc2,Display Name,PIM EU
+diagram-8ebbcec90dbb,Section,Option 2
+diagram-8ebbcec90dbb,Stage,Downstream
+diagram-8ebbcec90dbb,Sequence,2
+diagram-8ebbcec90dbb,Display Name,3PL
+diagram-fe1187019dbe,Section,Option 2
+diagram-fe1187019dbe,Stage,Downstream
+diagram-fe1187019dbe,Sequence,3
+diagram-fe1187019dbe,Display Name,EDI
+diagram-47732b9fe45f,Section,Option 2
+diagram-47732b9fe45f,Stage,Downstream
+diagram-47732b9fe45f,Sequence,4
+diagram-47732b9fe45f,Display Name,Bank Payments System
+diagram-c1ee6539c4c1,Section,Option 1
+diagram-34d028e779c6,Section,Option 1
+diagram-2fb46a0faaf4,Section,Option 1
+diagram-8b27dfe89e55,Section,Option 1
+diagram-4d2e27158ca5,Section,Option 1
+diagram-63dc6b45c4ee,Section,Option 1
+diagram-3756c657e4b5,Section,Option 1
+diagram-6e50f09e49bc,Section,Option 1
+diagram-484f69ccc5fd,Section,Option 2
+diagram-484f69ccc5fd,Stage,Current Estate
+diagram-484f69ccc5fd,Sequence,1
+diagram-484f69ccc5fd,Display Name,QAD EE ANZ
+diagram-865b3deff05f,Section,Option 2
+diagram-865b3deff05f,Stage,Current Estate
+diagram-865b3deff05f,Sequence,1
+diagram-865b3deff05f,Display Name,QAD EE ANZ
+diagram-68a03542b50f,Section,Option 2
+diagram-68a03542b50f,Stage,Current Estate
+diagram-68a03542b50f,Sequence,2
+diagram-68a03542b50f,Display Name,QAD EE AEM
+diagram-6c608fcfa0fc,Section,Option 2
+diagram-6c608fcfa0fc,Stage,Current Estate
+diagram-6c608fcfa0fc,Sequence,3
+diagram-6c608fcfa0fc,Display Name,QAD SE JPN
+diagram-d3b66bf25f92,Role,ERP JPN Core
+diagram-5754267c38d1,Spoke Side,right
+diagram-5754267c38d1,External Group,Finance
+diagram-5754267c38d1,Role,Invoice Output
+diagram-369ff6c2505e,Spoke Side,bottom
+diagram-369ff6c2505e,External Group,Finance
+diagram-369ff6c2505e,Role,Banking
+diagram-e43c019b1964,Spoke Side,top
+diagram-e43c019b1964,External Group,Planning
+diagram-e43c019b1964,Role,Supply Chain Planning
+diagram-2655dd91f4ba,Spoke Side,right
+diagram-2655dd91f4ba,External Group,Finance
+diagram-2655dd91f4ba,Role,Invoice and Shipment Integration
+diagram-08ecc16adefd,Role,Data and Analytics Core
+diagram-8ce941e0e955,Internal Group,Data Warehousing
+diagram-8ce941e0e955,Role,Data Transformation
+diagram-e5c930f4134c,Internal Group,Analytics
+diagram-e5c930f4134c,Role,Analytics and Visualisation
+diagram-d6e470ab0228,Internal Group,Automation
+diagram-d6e470ab0228,Role,Application Automation
+diagram-fd43422d2b79,Internal Group,Automation
+diagram-fd43422d2b79,Role,Event and Service Automation
+diagram-dad8ff215542,Internal Group,Automation
+diagram-dad8ff215542,Role,Low-Code Automation
+diagram-c566d6d9bc3c,Internal Group,DevOps
+diagram-c566d6d9bc3c,Role,Platform Delivery
+diagram-78898e52fcbd,Spoke Side,left
+diagram-78898e52fcbd,External Group,Inbound Sources
+diagram-78898e52fcbd,Role,Source System
+diagram-c2c709bcec80,Spoke Side,right
+diagram-c2c709bcec80,External Group,Outbound Consumers
+diagram-c2c709bcec80,Role,Downstream Consumer
+diagram-83399f78bd83,Internal Group,Automation
+diagram-83399f78bd83,Role,Cloud Automation
+diagram-e96ac39ac85e,Role,Operations ANZ Core
+diagram-60b8500d6810,Internal Group,Warehouse
+diagram-60b8500d6810,Role,Warehouse Management

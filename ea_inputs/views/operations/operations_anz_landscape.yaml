@@ -1,0 +1,296 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the Operations - ANZ core, and which upstream ERP components integrate with it?"
+  audience: "Enterprise Architecture, Operations leadership, ERP delivery"
+  decision: "Validate the ANZ operations application boundary and the key inbound integrations from ERP."
+  key_message: "Operations - ANZ should read as a central core organised by operational domain, with QAD EE 2019 and Pro2SQL ANZ feeding selected production applications from the left."
+
+# === STORY ===
+story:
+  setup: "The ANZ operations estate spans production support, warehousing, planning, and quality and regulatory applications."
+  tension: "The view needs to show the internal operational groupings clearly without losing sight of the two key ERP-to-operations integration paths."
+  insight: "A center-surround cooperation view keeps Operations - ANZ visually coherent while making the inbound ERP dependencies explicit."
+
+# === VIEW DEFINITION ===
+view:
+  name: "Operations ANZ Landscape"
+  documentation: |
+    Application cooperation view for the ANZ operations domain.
+    Operations - ANZ is the central collaboration boundary.
+    The internal estate is grouped into Production/QA, Warehouse, Planning, and QARA.
+    QAD EE 2019 and Pro2SQL ANZ are shown on the left as upstream systems with direct inbound integrations.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Operations - ANZ"
+      type: "ApplicationCollaboration"
+      synthetic: true
+      override:
+        Role: "Operations ANZ Core"
+      description: "Central ANZ operations collaboration boundary."
+
+    - name: "Label Printing"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Production Labelling"
+      description: "Production labelling application for ANZ operations."
+
+    - name: "Batch Control"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Batch Control"
+      description: "Batch control application supporting production execution."
+
+    - name: "PSS 1.0"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Pack Specification"
+      description: "Pack specification application used by ANZ operations."
+
+    - name: "ETO Consignment"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Consignment Operations"
+      description: "Consignment support application for operations."
+
+    - name: "eiFU"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Electronic IFU"
+      description: "Electronic instructions for use application."
+
+    - name: "Label Printing Sino"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Production/QA"
+        Role: "Contractor Labelling"
+      description: "Contractor labelling application used for Sino production flows."
+
+    - name: "SmartFreight"
+      type: "ApplicationComponent"
+      override:
+        Internal Group: "Warehouse"
+        Role: "Freight Management"
+      description: "Warehouse and freight support application."
+
+    - name: "Descartes"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Warehouse"
+        Role: "Transport Management"
+      description: "Warehouse transport management application."
+
+    - name: "MIMS"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Warehouse"
+        Role: "Warehouse Operations"
+      description: "Warehouse support application."
+
+    - name: "QAD WMS"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Warehouse"
+        Role: "Warehouse Management"
+      description: "Warehouse management system for ANZ operations."
+
+    - name: "DSX"
+      type: "ApplicationComponent"
+      override:
+        Internal Group: "Planning"
+        Role: "Demand Planning"
+      description: "Planning application supporting ANZ operations."
+
+    - name: "Rimsys"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "QARA"
+        Role: "Quality and Regulatory"
+      description: "Quality assurance and regulatory application."
+
+    - name: "QAD EE 2019"
+      type: "ApplicationComponent"
+      override:
+        Spoke Side: "left"
+        External Group: "ERP Sources"
+        Role: "ERP Core"
+      description: "Upstream ERP system integrating into ANZ operations."
+
+    - name: "Pro2SQL ANZ"
+      type: "ApplicationComponent"
+      override:
+        Spoke Side: "left"
+        External Group: "ERP Sources"
+        Role: "Reporting and Replication"
+      description: "Upstream replicated ERP data service integrating into ANZ operations."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "Label Printing"
+      label: "contains"
+      description: "Operations - ANZ contains Label Printing."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "Batch Control"
+      label: "contains"
+      description: "Operations - ANZ contains Batch Control."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "PSS 1.0"
+      label: "contains"
+      description: "Operations - ANZ contains PSS 1.0."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "ETO Consignment"
+      label: "contains"
+      description: "Operations - ANZ contains ETO Consignment."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "eiFU"
+      label: "contains"
+      description: "Operations - ANZ contains eiFU."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "Label Printing Sino"
+      label: "contains"
+      description: "Operations - ANZ contains Label Printing Sino."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "SmartFreight"
+      label: "contains"
+      description: "Operations - ANZ contains SmartFreight."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "Descartes"
+      label: "contains"
+      description: "Operations - ANZ contains Descartes."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "MIMS"
+      label: "contains"
+      description: "Operations - ANZ contains MIMS."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "QAD WMS"
+      label: "contains"
+      description: "Operations - ANZ contains QAD WMS."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "DSX"
+      label: "contains"
+      description: "Operations - ANZ contains DSX."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "Rimsys"
+      label: "contains"
+      description: "Operations - ANZ contains Rimsys."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Label Printing"
+      label: "integration"
+      description: "Inbound integration from QAD EE 2019 to Label Printing."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "PSS 1.0"
+      label: "integration"
+      description: "Inbound integration from Pro2SQL ANZ to PSS 1.0."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Operations - ANZ"
+      role: "Central operations collaboration boundary"
+      treatment: "prominent"
+    - element: "Label Printing"
+      role: "Primary production integration target"
+      treatment: "highlighted"
+    - element: "PSS 1.0"
+      role: "Primary Pro2SQL integration target"
+      treatment: "highlighted"
+    - element: "QAD EE 2019"
+      role: "Upstream ERP source"
+      treatment: "normal"
+    - element: "Pro2SQL ANZ"
+      role: "Upstream replicated ERP source"
+      treatment: "normal"
+  grouping_rationale: "Operations - ANZ should remain central, with internal applications grouped by operational function and upstream ERP systems kept outside the boundary on the left."
+  reading_order: "Start at the Operations - ANZ core, then read across the production, warehouse, planning, and QARA groups, with the inbound ERP links read from left to right."
+  color_strategy: "The operations core and the two inbound integration targets are visually stronger than surrounding applications."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["Production/QA", "Warehouse", "Planning", "QARA"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["ERP Sources"]
+  external_group_side_map:
+    ERP Sources: "left"
+  hub_width: 760
+  hub_height: 420
+  center_x: 760
+  center_y: 340
+  external_width: 220
+  external_offset: 100
+  external_spacing: 28
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Central Operations - ANZ cooperation boundary"
+    near: "Operations - ANZ"
+  - text: "Inbound from QAD EE 2019"
+    near: "Label Printing"
+  - text: "Inbound from Pro2SQL ANZ"
+    near: "PSS 1.0"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

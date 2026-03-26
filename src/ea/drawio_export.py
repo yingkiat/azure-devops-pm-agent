@@ -10,6 +10,7 @@ MVP9 additions:
 """
 
 from dataclasses import dataclass
+import hashlib
 from typing import List, Dict, Optional, Tuple
 from lxml import etree
 
@@ -189,6 +190,7 @@ class DrawIOEdge:
     to_id: str
     label: str = ""
     edge_type: str = "Serving"
+    style_overrides: Optional[Dict[str, str]] = None
 
 
 class DrawIOExporter:
@@ -357,7 +359,9 @@ class DrawIOExporter:
 
     def _add_edge(self, edge: DrawIOEdge) -> None:
         """Add a connection between two elements with relationship-specific styling."""
-        cell_id = f'{edge.from_id}_to_{edge.to_id}'
+        edge_key = f'{edge.from_id}|{edge.to_id}|{edge.edge_type}|{edge.label}'
+        edge_suffix = hashlib.md5(edge_key.encode('utf-8')).hexdigest()[:10]
+        cell_id = f'{edge.from_id}_to_{edge.to_id}_{edge_suffix}'
 
         cell = etree.SubElement(self.root_cell, 'mxCell')
         cell.set('id', cell_id)
@@ -369,6 +373,8 @@ class DrawIOExporter:
 
         # Style: use relationship-specific styling
         style = get_relationship_style(edge.edge_type)
+        if edge.style_overrides:
+            style = style[:-1] + ';' + ''.join(f"{k}={v};" for k, v in edge.style_overrides.items())
         cell.set('style', style)
 
         geo = etree.SubElement(cell, 'mxGeometry')

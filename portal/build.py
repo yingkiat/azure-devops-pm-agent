@@ -23,4 +23,4 @@ if __name__ == "__main__":
         print(f"\nErrors: {result['errors']}")
         sys.exit(1)
     else:
-        print(f"\n✨ Portal ready at: {Path(result['output_path']).absolute()}/index.html")
+        print(f"\nPortal ready at: {Path(result['output_path']).absolute()}/index.html")

@@ -2,6 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import re
+import html
 from pathlib import Path
 from typing import Dict, List
 
@@ -268,11 +269,32 @@ class DrawioToSvg:
             .replace("'", "&apos;")
         )
 
+    def _normalize_html_text(self, text: str) -> str:
+        """Convert limited draw.io HTML labels into plain multiline text."""
+        if not text:
+            return ""
+
+        normalized = str(text)
+        for _ in range(3):
+            unescaped = html.unescape(normalized)
+            if unescaped == normalized:
+                break
+            normalized = unescaped
+
+        normalized = re.sub(r'</?(div|p|b|strong|u|em|span|font)[^>]*>', '', normalized, flags=re.IGNORECASE)
+        normalized = re.sub(r'<li[^>]*>', '• ', normalized, flags=re.IGNORECASE)
+        normalized = re.sub(r'</li\s*>', '<br/>', normalized, flags=re.IGNORECASE)
+        normalized = re.sub(r'</?(ul|ol)[^>]*>', '', normalized, flags=re.IGNORECASE)
+        normalized = re.sub(r'<br\s*/?>', '<br/>', normalized, flags=re.IGNORECASE)
+        normalized = re.sub(r'\s*<br/>\s*', '<br/>', normalized)
+        normalized = re.sub(r'(<br/>){2,}', '<br/>', normalized)
+        normalized = re.sub(r'<[^>]+>', '', normalized)
+        return normalized.strip()
+
     def _render_multiline_text(self, text: str, x: float, y: float, font_size: str = "11", **attrs) -> str:
-        """Render text with <br/> tags as multi-line SVG using tspan elements."""
-        # Handle various br formats: <br/>, <br>, <BR/>, <BR>
-        import re
-        lines = re.split(r'<br\s*/?>|<BR\s*/?>', text, flags=re.IGNORECASE)
+        """Render text with basic HTML line breaks/lists as multi-line SVG using tspan elements."""
+        normalized_text = self._normalize_html_text(text)
+        lines = re.split(r'<br\s*/?>', normalized_text, flags=re.IGNORECASE)
 
         # Helper function to escape XML
         def escape(t):
@@ -281,7 +303,7 @@ class DrawioToSvg:
         if len(lines) == 1:
             # Single line - simple text element
             attrs_str = ' '.join(f'{k}="{v}"' for k, v in attrs.items())
-            return f'<text x="{x:.1f}" y="{y:.1f}" font-size="{font_size}" {attrs_str}>{escape(text)}</text>'
+            return f'<text x="{x:.1f}" y="{y:.1f}" font-size="{font_size}" {attrs_str}>{escape(normalized_text)}</text>'
 
         # Multi-line - use tspan elements
         line_height = float(font_size) * 1.2  # 1.2x line height

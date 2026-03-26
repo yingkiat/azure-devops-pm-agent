@@ -64,20 +64,20 @@ class PortalBuilder:
                 "output_path": str(self.output_dir),
             }
 
-        print(f"      ✓ Loaded {len(index_gen.elements)} elements\n")
+        print(f"      OK Loaded {len(index_gen.elements)} elements\n")
 
         # Step 2: Convert application catalogue (optional)
         print("[2/5] Converting application catalogue...")
         catalogue_count = self._convert_catalogue()
         if catalogue_count > 0:
-            print(f"      ✓ Converted {catalogue_count} applications from catalogue\n")
+            print(f"      OK Converted {catalogue_count} applications from catalogue\n")
         else:
-            print(f"      ⚠ No catalogue file found (optional)\n")
+            print(f"      WARN No catalogue file found (optional)\n")
 
         # Step 3: Convert diagrams to SVG
         print("[3/5] Converting diagrams to SVG...")
         diagrams_info = self._convert_diagrams_to_svg()
-        print(f"      ✓ Converted {len(diagrams_info)} diagrams\n")
+        print(f"      OK Converted {len(diagrams_info)} diagrams\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")
@@ -96,9 +96,9 @@ class PortalBuilder:
         relationship_graph = index_gen.generate_relationship_graph(element_index)
         view_registry = index_gen.generate_view_registry(diagrams_info)
 
-        print(f"      ✓ Indexed {len(element_index)} elements")
-        print(f"      ✓ Mapped {sum(len(v['outbound']) + len(v['inbound']) for v in relationship_graph.values())} relationships")
-        print(f"      ✓ Registered {len(view_registry)} views\n")
+        print(f"      OK Indexed {len(element_index)} elements")
+        print(f"      OK Mapped {sum(len(v['outbound']) + len(v['inbound']) for v in relationship_graph.values())} relationships")
+        print(f"      OK Registered {len(view_registry)} views\n")
 
         # Step 5: Save indexes
         print("[5/6] Saving indexes...")
@@ -111,7 +111,7 @@ class PortalBuilder:
         print("[6/6] Generating analytics...")
         analytics_result = self._generate_analytics_data()
         if not analytics_result.get("success"):
-            print(f"      ⚠ Skipped (missing catalogue or elements data)\n")
+            print(f"      WARN Skipped (missing catalogue or elements data)\n")
         else:
             cat_count    = analytics_result["catalogue_count"]
             matched      = analytics_result["matched_count"]
@@ -121,9 +121,9 @@ class PortalBuilder:
             region_sum   = analytics_result["region_sum"]
             match_pct    = round(matched / cat_count * 100, 1) if cat_count else 0
 
-            print(f"      ✓ Analytics data written")
+            print(f"      OK Analytics data written")
             print(f"\n      --- Analytics Validation ---")
-            match_flag = "✓" if match_pct >= 95 else "✗ FAIL"
+            match_flag = "OK" if match_pct >= 95 else "FAIL"
             print(f"      Element match rate: {matched}/{cat_count} ({match_pct}%)  {match_flag}")
             if unmatched:
                 print(f"      Unmatched ({len(unmatched)}): {', '.join(unmatched[:5])}" +
@@ -132,19 +132,19 @@ class PortalBuilder:
             print(f"\n      Property coverage (matched elements):")
             for prop, count in coverage.items():
                 pct = round(count / matched * 100, 1) if matched else 0
-                flag = "✓" if pct >= 80 else ("⚠ WARN" if pct >= 50 else "✗ FAIL")
+                flag = "OK" if pct >= 80 else ("WARN" if pct >= 50 else "FAIL")
                 print(f"        {prop:<22} {count:>3}/{matched} ({pct:>5}%)  {flag}")
 
             print(f"\n      Chart data checks:")
             chart_counts = analytics_result["chart_counts"]
             for chart, count in chart_counts.items():
-                flag = "✓" if count > 0 else "✗ FAIL"
+                flag = "OK" if count > 0 else "FAIL"
                 print(f"        {chart:<30} {count:>4} entries  {flag}")
                 if count == 0:
                     errors.append(f"Analytics chart '{chart}' has no data.")
 
-            dom_flag = "✓" if domain_sum == cat_count else f"✗ FAIL (got {domain_sum}, expected {cat_count})"
-            reg_flag = "✓" if region_sum == cat_count else f"✗ FAIL (got {region_sum}, expected {cat_count})"
+            dom_flag = "OK" if domain_sum == cat_count else f"FAIL (got {domain_sum}, expected {cat_count})"
+            reg_flag = "OK" if region_sum == cat_count else f"FAIL (got {region_sum}, expected {cat_count})"
             print(f"\n      Sum integrity:")
             print(f"        Domain totals:         {dom_flag}")
             print(f"        Region totals:         {reg_flag}")
@@ -159,9 +159,9 @@ class PortalBuilder:
         # Copy frontend files
         self._copy_frontend_files()
 
-        print(f"\n[Portal Builder] Complete! ✓")
-        print(f"  📁 Output: {self.output_dir.absolute()}")
-        print(f"  🌐 Open: file://{self.output_dir.absolute() / 'index.html'}\n")
+        print(f"\n[Portal Builder] Complete! OK")
+        print(f"  Output: {self.output_dir.absolute()}")
+        print(f"  Open: file://{self.output_dir.absolute() / 'index.html'}\n")
 
         return {
             "success": len(errors) == 0,
@@ -473,9 +473,9 @@ class PortalBuilder:
                         "created": datetime.now().isoformat(),
                     }
                 )
-                print(f"      ✓ {view_id:45s} ({len(element_ids):2d} elements)")
+                print(f"      OK {view_id:45s} ({len(element_ids):2d} elements)")
             else:
-                print(f"      ✗ {view_id:45s} {result.get('error', 'Unknown error')}")
+                print(f"      FAIL {view_id:45s} {result.get('error', 'Unknown error')}")
 
         return diagrams_info
 
@@ -487,11 +487,11 @@ class PortalBuilder:
             Number of applications converted (0 if catalogue not found or pandas not available)
         """
         if not PANDAS_AVAILABLE:
-            print(f"      ⚠ pandas not installed, skipping catalogue conversion")
+            print(f"      WARN pandas not installed, skipping catalogue conversion")
             return 0
 
         if not self.catalogue_file.exists():
-            print(f"      ⚠ Catalogue file not found: {self.catalogue_file}")
+            print(f"      WARN Catalogue file not found: {self.catalogue_file}")
             return 0
 
         try:
@@ -550,7 +550,7 @@ class PortalBuilder:
             return len(catalogue)
 
         except Exception as e:
-            print(f"      ✗ Error converting catalogue: {e}")
+            print(f"      FAIL Error converting catalogue: {e}")
             return 0
 
     def _copy_frontend_files(self) -> None:
@@ -574,7 +574,7 @@ class PortalBuilder:
         # Create index.html with Vue 3 app
         html_content = self._get_html_template(colors, logo_url)
         (self.output_dir / "index.html").write_text(html_content, encoding="utf-8")
-        print(f"      ✓ Created index.html with branding")
+        print(f"      OK Created index.html with branding")
 
     def _load_branding_colors(self) -> Dict:
         """Load color scheme from branding/colors.json."""
@@ -583,7 +583,7 @@ class PortalBuilder:
             try:
                 return json.loads(colors_file.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, IOError):
-                print(f"      ⚠ Failed to load colors.json, using defaults")
+                print(f"      WARN Failed to load colors.json, using defaults")
                 return self._get_default_colors()
         return self._get_default_colors()
 
@@ -1259,7 +1259,7 @@ class PortalBuilder:
                     <!-- Charts Row 2: Domain + Region -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:2;">
-                            <div class="analytics-chart-title">Applications by Domain</div>
+                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Applications by Domain' : 'Applications by Sub-Domain' }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartDomain"></canvas></div>
                         </div>
                         <div class="analytics-chart-card" style="flex:1;">
@@ -1524,6 +1524,7 @@ class PortalBuilder:
                         application_type: countBy('hosting_type'),
                         criticality: countBy('business_criticality'),
                         domain: countBy('domain'),
+                        sub_domain: countBy('sub_domain'),
                         region: countBy('region'),
                         legacy_by_domain: countBy('domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
                         legacy_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
@@ -1693,16 +1694,17 @@ class PortalBuilder:
                     });
 
                     // Domain — horizontal bar
+                    const domainBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'domain' : 'sub_domain';
                     make('chartDomain', {
                         type: 'bar',
                         data: {
-                            labels: dashboard.domain.labels,
-                            datasets: [{ label: 'Apps', data: dashboard.domain.values,
-                                backgroundColor: dashboard.domain.labels.map((_, i) => paletteBar[i % paletteBar.length]),
+                            labels: dashboard[domainBreakdownKey].labels,
+                            datasets: [{ label: 'Apps', data: dashboard[domainBreakdownKey].values,
+                                backgroundColor: dashboard[domainBreakdownKey].labels.map((_, i) => paletteBar[i % paletteBar.length]),
                                 borderRadius: 4 }]
                         },
                         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                            onHover: hoverCursor, onClick: clickFor('domain'),
+                            onHover: hoverCursor, onClick: clickFor(domainBreakdownKey),
                             plugins: { legend: { display: false } },
                             scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });

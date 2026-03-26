@@ -390,5 +390,55 @@ def ea_artifacts(
         raise typer.Exit(1)
 
 
+@app.command("ea-view")
+def ea_view(
+    spec_path: str = typer.Argument(..., help="Path to YAML view spec"),
+    rebuild_portal: bool = typer.Option(False, "--portal/--no-portal", help="Rebuild portal after generating the diagram"),
+):
+    """Generate a draw.io diagram from a YAML view spec and optionally rebuild the portal."""
+    from pathlib import Path
+    from ..ea.drawio_generator import DrawIOGenerator
+    from portal.backend.builder import PortalBuilder
+
+    try:
+        spec = Path(spec_path)
+        if not spec.exists():
+            rprint(f"[red]View spec not found:[/red] {spec_path}")
+            raise typer.Exit(1)
+
+        rprint(f"[cyan]Generating view from:[/cyan] {spec_path}")
+        generator = DrawIOGenerator()
+        result = generator.generate(str(spec))
+
+        if result.get("error"):
+            rprint(f"[red]Diagram generation failed:[/red] {result['error']}")
+            raise typer.Exit(1)
+
+        for output_file in result.get("output_files", []):
+            rprint(f"[green]Generated:[/green] {output_file}")
+
+        if rebuild_portal:
+            rprint("[cyan]Rebuilding portal...[/cyan]")
+            builder = PortalBuilder(
+                diagrams_dir="ea_diagrams",
+                model_dir="archi_inputs",
+                specs_dir="ea_inputs/views",
+                output_dir="portal/dist",
+            )
+            portal_result = builder.build()
+
+            if not portal_result.get("success"):
+                rprint(f"[red]Portal rebuild failed:[/red] {portal_result.get('errors', [])}")
+                raise typer.Exit(1)
+
+            rprint(f"[green]Portal ready:[/green] {Path(portal_result['output_path']).absolute() / 'index.html'}")
+
+    except typer.Exit:
+        raise
+    except Exception as e:
+        rprint(f"[red]Failed to generate view:[/red] {e}")
+        raise typer.Exit(1)
+
+
 if __name__ == "__main__":
     app()
