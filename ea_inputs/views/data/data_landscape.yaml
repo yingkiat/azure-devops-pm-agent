@@ -1,0 +1,324 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the Data and Analytics core, and which upstream and downstream applications integrate with it?"
+  audience: "Enterprise Architecture, Data and Analytics, IT leadership"
+  decision: "Validate the application boundary for Data and Analytics and its direct integrations."
+  key_message: "Data and Analytics should read as a central core organised by domain, with source systems feeding in from the left and Medlink consuming outbound services on the right."
+
+# === STORY ===
+story:
+  setup: "Data and Analytics is emerging as a shared internal capability spanning data engineering, analytics, automation, and platform delivery."
+  tension: "The view needs to keep the internal domain structure clear while still showing which peripheral applications feed the platform and which consumers sit downstream."
+  insight: "A center-surround cooperation view makes the domain boundary explicit and shows the main data and automation paths without overloading the diagram."
+
+# === METADATA ===
+metadata:
+  domain: "data"
+  region: "APAC"
+
+# === VIEW DEFINITION ===
+view:
+  name: "Data and Analytics Landscape"
+  documentation: |
+    Application cooperation view for the Data and Analytics domain.
+    The central collaboration contains the major platform and service components grouped into
+    Data Ingestion, Data Warehousing, Analytics, Automation, and DevOps.
+    Source applications integrate inbound from the left, while Medlink is shown as a downstream consumer on the right.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Data and Analytics"
+      type: "ApplicationCollaboration"
+      synthetic: true
+      override:
+        Role: "Data and Analytics Core"
+      description: "Central collaboration boundary for the data and analytics estate."
+
+    - name: "Microsoft Fabric"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Data Warehousing"
+        Role: "Data Platform"
+      description: "Core data platform for warehousing and downstream data consumption."
+
+    - name: "Azure Data Factory"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Data Ingestion"
+        Role: "Data Integration"
+        Roadmap Disposition: "Tolerate"
+      description: "Primary ingestion and orchestration service for source extracts."
+
+    - name: "DBT"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Data Ingestion"
+        Role: "Data Transformation"
+        Roadmap Disposition: "Tolerate"
+      description: "Transformation layer for curated analytical models."
+
+    - name: "Tableau"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Analytics"
+        Role: "Analytics and Visualisation"
+      description: "Analytics and reporting consumer of curated data."
+
+    - name: "Power BI"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Analytics"
+        Role: "Analytics and Visualisation"
+        Roadmap Disposition: "Invest"
+      description: "Business intelligence and reporting consumer of curated data."
+
+    - name: "Power Platform"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "Automation"
+        Role: "Low-Code Automation"
+        Roadmap Disposition: "Invest"
+      description: "Low-code automation and app capability."
+
+    - name: "Azure DevOps"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Internal Group: "DevOps"
+        Role: "Platform Delivery"
+        Roadmap Disposition: "Tolerate"
+      description: "Delivery, release, and pipeline platform supporting Data and Analytics services."
+
+    - name: "Pro2SQL"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "left"
+        External Group: "Inbound Sources"
+        Role: "Source System"
+        Roadmap Disposition: "Tolerate"
+      description: "Inbound source feeding the Data and Analytics platform."
+
+    - name: "Microsoft SQL Server"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "left"
+        External Group: "Inbound Sources"
+        Role: "Source System"
+        Roadmap Disposition: "Tolerate"
+      description: "Inbound database source feeding the Data and Analytics platform."
+
+    - name: "Medlink"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "right"
+        External Group: "Outbound Consumers"
+        Role: "Downstream Consumer"
+        Roadmap Disposition: "Tolerate"
+      description: "Downstream application receiving outbound integrations from Data and Analytics automation services."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Microsoft Fabric"
+      label: "contains"
+      description: "Data and Analytics contains Microsoft Fabric."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Azure Data Factory"
+      label: "contains"
+      description: "Data and Analytics contains Azure Data Factory."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "DBT"
+      label: "contains"
+      description: "Data and Analytics contains DBT."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Power BI"
+      label: "contains"
+      description: "Data and Analytics contains Power BI."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Tableau"
+      label: "contains"
+      description: "Data and Analytics contains Tableau."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Power Platform"
+      label: "contains"
+      description: "Data and Analytics contains Power Platform."
+
+    - type: "Composition"
+      source_name: "Data and Analytics"
+      target_name: "Azure DevOps"
+      label: "contains"
+      description: "Data and Analytics contains Azure DevOps."
+
+    - type: "Flow"
+      source_name: "Pro2SQL"
+      target_name: "Azure Data Factory"
+      label: "extract"
+      description: "Inbound extract from Pro2SQL into Azure Data Factory."
+
+    - type: "Flow"
+      source_name: "Microsoft SQL Server"
+      target_name: "Azure Data Factory"
+      label: "extract"
+      description: "Inbound extract from Microsoft SQL Server into Azure Data Factory."
+
+    - type: "Flow"
+      source_name: "Azure Data Factory"
+      target_name: "Microsoft Fabric"
+      label: "load"
+      description: "Azure Data Factory loads source data into Microsoft Fabric."
+
+    - type: "Flow"
+      source_name: "DBT"
+      target_name: "Microsoft Fabric"
+      label: "transform"
+      description: "DBT transforms and structures data within Microsoft Fabric."
+
+    - type: "Flow"
+      source_name: "Microsoft Fabric"
+      target_name: "Tableau"
+      label: "serve"
+      description: "Microsoft Fabric provides curated data to Tableau."
+
+    - type: "Flow"
+      source_name: "Microsoft Fabric"
+      target_name: "Power BI"
+      label: "serve"
+      description: "Microsoft Fabric provides curated data to Power BI."
+
+    - type: "Flow"
+      source_name: "Azure DevOps"
+      target_name: "Azure Data Factory"
+      label: "deploy"
+      description: "Azure DevOps deploys and manages Azure Data Factory pipelines."
+
+    - type: "Flow"
+      source_name: "Azure DevOps"
+      target_name: "DBT"
+      label: "deploy"
+      description: "Azure DevOps deploys and manages DBT transformations."
+
+    - type: "Flow"
+      source_name: "Power Platform"
+      target_name: "Medlink"
+      label: "outbound"
+      description: "Outbound integration from Power Platform to Medlink."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Data and Analytics"
+      role: "Central application cooperation boundary"
+      treatment: "prominent"
+    - element: "Microsoft Fabric"
+      role: "Primary data platform"
+      treatment: "prominent"
+    - element: "Azure Data Factory"
+      role: "Primary ingestion and orchestration platform"
+      treatment: "highlighted"
+    - element: "DBT"
+      role: "Transformation layer"
+      treatment: "highlighted"
+    - element: "Tableau"
+      role: "Analytics consumer"
+      treatment: "normal"
+    - element: "Power BI"
+      role: "Analytics consumer"
+      treatment: "normal"
+    - element: "Power Platform"
+      role: "Outbound automation service"
+      treatment: "highlighted"
+    - element: "Medlink"
+      role: "Downstream consumer"
+      treatment: "normal"
+  grouping_rationale: "The core should stay central, grouped by capability domain, with inbound sources on the left and outbound consumers on the right."
+  reading_order: "Start with the Data and Analytics core, then read left-to-right from source ingestion through warehousing and analytics to outbound automation."
+  color_strategy: "The central data platform is visually stronger than surrounding source and consumer applications."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["Data Ingestion", "Data Warehousing", "Analytics", "Automation", "DevOps"]
+  standardize_edges_to_group: false
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Inbound Sources", "Outbound Consumers"]
+  external_group_side_map:
+    Inbound Sources: "left"
+    Outbound Consumers: "right"
+  hub_width: 760
+  hub_height: 380
+  center_x: 760
+  center_y: 330
+  external_width: 220
+  external_offset: 100
+  external_spacing: 28
+  text_boxes:
+    - kind: "stacked_lines"
+      x: 540
+      y: 555
+      header_width: 150
+      header_height: 28
+      header_text: "Principles"
+      line_x: 560
+      line_y: 592
+      line_width: 455
+      line_height: 24
+      line_gap: 6
+      lines:
+        - "Extract from source unless there are explicit performance exceptions."
+        - "Follow global direction for technical standards."
+        - "AI strategy remains pending global direction."
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Inbound source integrations"
+    near: "Azure Data Factory"
+    offset_x: -138
+    offset_y: 125
+    width: 150
+  - text: "Outbound integrations to Medlink"
+    near: "Power Platform"
+    offset_x: 252
+    offset_y: 125
+    width: 185
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

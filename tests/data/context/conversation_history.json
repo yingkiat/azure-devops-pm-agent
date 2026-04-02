@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-08-08T06:39:25.111022",
+    "user_request": "What's the health of our data platform?",
+    "intent": "ANALYSIS",
+    "success": true,
+    "key_learnings": {
+      "intent": "ANALYSIS",
+      "success": true,
+      "projects_involved": [],
+      "query_patterns": []
+    },
+    "session_id": "default",
+    "ai_response_summary": "",
+    "topic_keywords": []
+  },
+  {
+    "timestamp": "2025-08-08T06:39:25.121872",
+    "user_request": "Show me who's overloaded",
+    "intent": "ANALYSIS",
+    "success": true,
+    "key_learnings": {
+      "intent": "ANALYSIS",
+      "success": true,
+      "projects_involved": [],
+      "query_patterns": []
+    },
+    "session_id": "default",
+    "ai_response_summary": "",
+    "topic_keywords": []
+  }
+]

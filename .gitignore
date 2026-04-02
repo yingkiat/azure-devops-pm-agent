@@ -42,7 +42,6 @@ ENV/
 Thumbs.db
 
 # Project-specific Data and Outputs
-data/
 outputs/
 *.log
 *.bkp
