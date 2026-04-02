@@ -11,6 +11,11 @@ story:
   tension: "The diagram needs to preserve the ERP JPN boundary while still making each source-to-target integration explicit."
   insight: "A center-surround application cooperation view keeps the ERP core stable in the middle while allowing many external systems to grow around it."
 
+# === METADATA ===
+metadata:
+  domain: "ERP"
+  region: "JPN"
+
 # === VIEW DEFINITION ===
 view:
   name: "ERP JPN Landscape"
@@ -46,6 +51,7 @@ elements:
       override:
         Internal Group: "Integration"
         Role: "ERP Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Payments integration component inside ERP JPN."
 
     - name: "Boomi"
@@ -64,6 +70,7 @@ elements:
       override:
         Internal Group: "Integration"
         Role: "ERP Integration"
+        Roadmap Disposition: "Tolerate"
       description: "EDI integration component inside ERP JPN."
 
     - name: "GSC SAP APO"
@@ -87,6 +94,7 @@ elements:
         Spoke Side: "right"
         External Group: "Finance"
         Role: "Invoice Output"
+        Roadmap Disposition: "Tolerate"
       description: "Invoice outbound from QAD SE 11."
 
     - name: "Infomart"
@@ -96,6 +104,7 @@ elements:
         Spoke Side: "right"
         External Group: "Finance"
         Role: "Invoice and Shipment Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Invoice and shipment outbound from QAD SE 11."
 
     - name: "CargoMaster Japan WMS"
@@ -103,6 +112,7 @@ elements:
         Spoke Side: "right"
         External Group: "Logistics"
         Role: "Warehouse Management"
+        Roadmap Disposition: "Tolerate"
       description: "PO/SO outbound from QAD SE 11."
 
     - name: "W3 Sirius"
@@ -117,6 +127,7 @@ elements:
         Spoke Side: "left"
         External Group: "Commercial"
         Role: "EDI Network"
+        Roadmap Disposition: "Tolerate"
       description: "EDI outbound from QAD SE 11."
 
     - name: "SFDC"
@@ -140,6 +151,7 @@ elements:
         Spoke Side: "bottom"
         External Group: "Finance"
         Role: "Banking"
+        Roadmap Disposition: "Tolerate"
       description: "Payment outbound from QAD SE 11."
 
     - name: "Yusen"
@@ -189,6 +201,7 @@ elements:
         Spoke Side: "left"
         External Group: "Commercial"
         Role: "Quote Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Item outbound from Pro2SQL JPN."
 
 # === RELATIONSHIPS ===
@@ -407,12 +420,16 @@ layout:
 
 # === ANNOTATIONS ===
 annotations:
-  - text: "Central ERP JPN cooperation boundary"
-    near: "ERP JPN"
   - text: "QAD-led outbound integrations"
     near: "QAD SE 11"
+    offset_x: -20
+    offset_y: -110
+    width: 170
   - text: "Pro2SQL-led outbound integrations"
     near: "Pro2SQL JPN"
+    offset_x: -10
+    offset_y: -110
+    width: 190
 
 # === OUTPUT ===
 output:

@@ -11,6 +11,11 @@ story:
   tension: "Business needs external customers to self-serve: view their packs, check inventory, see order history, understand forecasts."
   insight: "A thin external layer (Portal + Backend) sitting atop existing MedPack API and QAD Analytics DB enables secure B2B access without rebuilding core systems."
 
+# === METADATA ===
+metadata:
+  domain: "commercial"
+  region: "ANZ"
+
 # === DIAGRAM TYPE ===
 type: "freeform"
 viewpoint: "Application Cooperation"

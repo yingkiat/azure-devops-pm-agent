@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 110 1150 660" preserveAspectRatio="xMidYMid meet">
+<defs><style type="text/css">
+.element { cursor: pointer; }
+.element:hover { opacity: 0.85; }
+.element-highlighted rect { stroke: #FFC107 !important; stroke-width: 3 !important; }
+</style></defs>
+<defs><marker id="arrow-classic" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><marker id="arrow-block" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><marker id="arrow-open" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker><marker id="arrow-oval" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" markerUnits="strokeWidth"><circle cx="5" cy="5" r="3" fill="context-stroke"/></marker><marker id="arrow-diamond-thin-filled" markerWidth="14" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 6 L 5 1 L 10 6 L 5 11 z" fill="context-stroke" stroke="context-stroke" stroke-width="1"/></marker><marker id="arrow-diamond-thin-open" markerWidth="14" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 6 L 5 1 L 10 6 L 5 11 z" fill="white" stroke="context-stroke" stroke-width="1"/></marker></defs>
+<title>Operations ANZ Landscape</title>
+<rect x="10" y="110" width="1150" height="660" fill="white"/>
+<rect x="974.0" y="300.0" width="120.0" height="60.0" fill="#B9E0A5" stroke="#82b366" stroke-width="1" rx="8"/>
+<text x="984.0" y="330.0" font-size="12" font-weight="normal" font-family="Verdana">ETQ Reliance</text>
+<rect x="30.0" y="245.0" width="250.0" height="475.0" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="1" rx="0"/>
+<text x="40.0" y="260.0" font-size="12" font-weight="bold" font-family="Verdana">ERP Sources</text>
+<path d="M 265.0 520.0 L 345.0 520.0 L 345.0 630.0 L 425.0 630.0" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-classic)"/>
+<path d="M 265.0 340.0 L 340.5 340.0 L 340.5 410.0 L 416.0 410.0" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-classic)"/>
+<path d="M 265.0 340.0 L 342.2 340.0 L 342.2 260.0 L 419.5 260.0" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-classic)"/>
+<path d="M 265.0 340.0 L 341.2 340.0 L 341.2 550.0 L 417.5 550.0" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-classic)"/>
+<g class="element" data-element-id="diagram-e96ac39ac85e">
+  <rect x="380.0" y="130.0" width="760.0" height="620.0" fill="#E3F2FD" stroke="#1565C0" stroke-width="2" rx="0" opacity="1"/>
+  <text x="760.0" y="440.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Operations - ANZ</text>
+</g>
+<g class="element" data-element-id="diagram-e96ac39ac85e-grp-0">
+  <rect x="404.0" y="184.0" width="163.0" height="526.0" fill="#F8FBFF" stroke="#90CAF9" stroke-width="1" rx="0" opacity="1"/>
+  <text x="485.5" y="447.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Production/QA</text>
+</g>
+<g class="element" data-element-id="id-021726ec4519">
+  <rect x="425.0" y="600.0" width="120.0" height="60.0" fill="#FF9999" stroke="#1976D2" stroke-width="3" rx="4" opacity="100"/>
+  <text x="485.0" y="630.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">PSS 1.0</text>
+</g>
+<g class="element" data-element-id="id-40e91ca61f1d">
+  <rect x="425.0" y="450.0" width="124.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="487.0" y="480.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Batch Control</text>
+</g>
+<g class="element" data-element-id="id-41fcb87f8bec">
+  <rect x="416.0" y="380.0" width="139.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="485.5" y="410.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Label Printing Sino</text>
+</g>
+<g class="element" data-element-id="id-59e3aeffe45f">
+  <rect x="425.0" y="306.0" width="120.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="485.0" y="336.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">eiFU</text>
+</g>
+<g class="element" data-element-id="id-98bafb85d403">
+  <rect x="417.5" y="520.0" width="139.0" height="60.0" fill="#B9E0A5" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="487.0" y="550.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">ETO Consignment</text>
+</g>
+<g class="element" data-element-id="id-cb7cb0b84df6">
+  <rect x="419.5" y="230.0" width="132.0" height="60.0" fill="#FFFF99" stroke="#1976D2" stroke-width="3" rx="4" opacity="100"/>
+  <text x="485.5" y="260.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Label Printing</text>
+</g>
+<g class="element" data-element-id="diagram-e96ac39ac85e-grp-1">
+  <rect x="587.0" y="184.0" width="163.0" height="342.0" fill="#F8FBFF" stroke="#90CAF9" stroke-width="1" rx="0" opacity="1"/>
+  <text x="668.5" y="355.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Warehouse</text>
+</g>
+<g class="element" data-element-id="id-101c48872a1a">
+  <rect x="608.0" y="306.0" width="120.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="668.0" y="336.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">MIMS</text>
+</g>
+<g class="element" data-element-id="id-57662baf44e5">
+  <rect x="608.0" y="222.0" width="120.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="668.0" y="252.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Descartes</text>
+</g>
+<g class="element" data-element-id="id-784902c1ffb1">
+  <rect x="608.0" y="390.0" width="120.0" height="60.0" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="668.0" y="420.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Smartfreight</text>
+</g>
+<g class="element" data-element-id="diagram-60b8500d6810">
+  <rect x="608.0" y="470.0" width="119.0" height="32.5" fill="#FFFF99" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="667.5" y="486.2" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">QAD WMS</text>
+</g>
+<g class="element" data-element-id="diagram-e96ac39ac85e-grp-2">
+  <rect x="770.0" y="184.0" width="163.0" height="342.0" fill="#F8FBFF" stroke="#90CAF9" stroke-width="1" rx="0" opacity="1"/>
+  <text x="851.5" y="355.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Planning</text>
+</g>
+<g class="element" data-element-id="id-6385d2992d54">
+  <rect x="791.0" y="222.0" width="120.0" height="60.0" fill="#FF9999" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="851.0" y="252.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">DSX</text>
+</g>
+<g class="element" data-element-id="diagram-e96ac39ac85e-grp-3">
+  <rect x="953.0" y="184.0" width="163.0" height="342.0" fill="#F8FBFF" stroke="#90CAF9" stroke-width="1" rx="0" opacity="1"/>
+  <text x="1034.5" y="355.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">QARA</text>
+</g>
+<g class="element" data-element-id="id-5f835087595c">
+  <rect x="974.0" y="222.0" width="120.0" height="60.0" fill="#B9E0A5" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="1034.0" y="252.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Rimsys</text>
+</g>
+<g class="element" data-element-id="id-021f48755bef">
+  <rect x="45.0" y="490.0" width="220.0" height="60.0" fill="#B5D4E8" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="155.0" y="520.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">Pro2SQL ANZ</text>
+</g>
+<g class="element" data-element-id="id-1b2283706bf4">
+  <rect x="45.0" y="310.0" width="220.0" height="60.0" fill="#B5D4E8" stroke="#666666" stroke-width="1" rx="4" opacity="1"/>
+  <text x="155.0" y="340.0" font-size="11" text-anchor="middle" dominant-baseline="middle" font-family="Verdana" pointer-events="none">QAD EE 2019</text>
+</g>
+</svg>

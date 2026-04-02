@@ -470,6 +470,24 @@ When `annotations` is present, add text labels near specified elements:
 
 ---
 
+## Text Box Placement Rules
+
+When a view spec includes `layout.text_boxes`, treat them as source-level callouts and place them deliberately:
+
+1. Short labels or small metrics may sit near the related stage, edge, or section.
+2. Long explanatory text, principles, assumptions, and narrative notes MUST be placed at the bottom center of the diagram.
+3. Prefer plain multiline text for long notes.
+4. Do NOT place long text boxes as top banners or long horizontal strips across the working diagram area.
+5. Reserve the main canvas for architecture content first; use the lower whitespace for these longer notes.
+
+**Default convention for long text boxes:**
+- horizontal alignment: centered
+- vertical placement: below the main content block
+- width: 360-520px
+- height: enough for 3-6 lines of text without wrapping into a single unreadable line
+
+---
+
 ## Output Requirements
 
 1. Complete, valid draw.io XML

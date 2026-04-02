@@ -31,7 +31,7 @@ AZURE_OPENAI_DEPLOYMENT=gpt-4o
 2. Run: ea_discover_directory()
 3. Output: archi_inputs/model.xml (import into Archi)
 4. Create YAML view spec in ea_inputs/views/
-5. Run: ea_generate_diagram("ea_inputs/views/myview.yaml")
+5. Run: `python -m src.cli.main ea-view ea_inputs/views/myview.yaml`
 6. Output: ea_diagrams/myview.drawio (open in draw.io)
 ```
 
@@ -62,7 +62,7 @@ All interaction is via Claude Code MCP interface. Available tools:
 | `ea_discover_directory` | Process all files in ea_inputs/, generate model |
 | `ea_discover` | Process single text, add to model |
 | `ea_get_data_summary` | Show current model statistics |
-| `ea_generate_diagram` | Generate draw.io from YAML view spec |
+| `ea_generate_diagram` | MCP tool for generating draw.io from YAML view spec |
 | `ea_generate_views_from_specs` | Generate views.csv from all YAML specs |
 
 ## View Specifications (YAML)
@@ -144,6 +144,12 @@ output:
 | `layout` | Layout algorithm and spacing |
 | `output` | Output format (drawio, archi, both) |
 
+For `layout.text_boxes`, use source-level placement rules:
+- Keep short labels close to the relevant stage or section.
+- Put long notes such as principles, assumptions, and explanatory text at the bottom center of the diagram.
+- Prefer plain multiline text over HTML bullet lists for long callouts.
+- Prefer `kind: stacked_lines` when a note needs one header box plus multiple equal-width statement rows.
+
 ## ArchiMate Types
 
 The system uses standard ArchiMate 3.0 types:
@@ -172,6 +178,20 @@ The system uses standard ArchiMate 3.0 types:
 YAML Spec → Element Selection → Relationship Filtering → Layout → draw.io XML
 ```
 
+### CLI Command
+
+Generate a draw.io diagram from a YAML view spec with:
+
+```bash
+python -m src.cli.main ea-view ea_inputs/views/myview.yaml
+```
+
+Optionally rebuild the portal at the same time:
+
+```bash
+python -m src.cli.main ea-view ea_inputs/views/myview.yaml --portal
+```
+
 1. **Element Selection**: WHERE clauses filter elements.csv
 2. **Structure Building**: Find children via relationships (if specified)
 3. **Grouping**: Organize into containers by property
@@ -198,6 +218,19 @@ Elements are colored by:
 - **Relationship edges** with ArchiMate-style arrows
 - **Annotations** as small text labels
 - **Narrative textbox** with summary statistics
+
+## Draw.io Generator Maintenance
+
+For current guidance on maintaining the generator without rewriting it, see:
+
+- [DRAWIO_GENERATOR_MAINTENANCE.md](DRAWIO_GENERATOR_MAINTENANCE.md)
+
+This note captures the agreed position that:
+
+- the current generator is tangled but still viable
+- common diagramming rules are generic, not diagram-specific hacks
+- behavior-preserving incremental detangling is preferred over a rewrite
+- visual behavior changes and structural refactors should be committed separately
 
 ## Example Outputs
 

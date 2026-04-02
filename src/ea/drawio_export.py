@@ -15,7 +15,15 @@ from typing import List, Dict, Optional, Tuple
 from lxml import etree
 
 
-# Lifecycle status colors (priority 1)
+# Roadmap disposition colors (priority 1)
+ROADMAP_DISPOSITION_COLORS = {
+    "Invest": "#81C784",      # Green
+    "Tolerate": "#FFD54F",    # Yellow
+    "Migrate": "#E57373",     # Red
+    "Eliminate": "#E57373",   # Red
+}
+
+# Lifecycle status colors (priority 2)
 LIFECYCLE_COLORS = {
     "Strategic": "#81C784",   # Green
     "Maintain": "#FFB74D",    # Orange
@@ -191,6 +199,7 @@ class DrawIOEdge:
     label: str = ""
     edge_type: str = "Serving"
     style_overrides: Optional[Dict[str, str]] = None
+    waypoints: Optional[List[Tuple[int, int]]] = None
 
 
 class DrawIOExporter:
@@ -359,7 +368,15 @@ class DrawIOExporter:
 
     def _add_edge(self, edge: DrawIOEdge) -> None:
         """Add a connection between two elements with relationship-specific styling."""
-        edge_key = f'{edge.from_id}|{edge.to_id}|{edge.edge_type}|{edge.label}'
+        overrides_key = ''
+        if edge.style_overrides:
+            overrides_key = '|'.join(
+                f'{key}={value}' for key, value in sorted(edge.style_overrides.items())
+            )
+        waypoint_key = ''
+        if edge.waypoints:
+            waypoint_key = '|'.join(f'{x},{y}' for x, y in edge.waypoints)
+        edge_key = f'{edge.from_id}|{edge.to_id}|{edge.edge_type}|{edge.label}|{overrides_key}|{waypoint_key}'
         edge_suffix = hashlib.md5(edge_key.encode('utf-8')).hexdigest()[:10]
         cell_id = f'{edge.from_id}_to_{edge.to_id}_{edge_suffix}'
 
@@ -380,35 +397,46 @@ class DrawIOExporter:
         geo = etree.SubElement(cell, 'mxGeometry')
         geo.set('relative', '1')
         geo.set('as', 'geometry')
+        if edge.waypoints:
+            points = etree.SubElement(geo, 'Array')
+            points.set('as', 'points')
+            for x, y in edge.waypoints:
+                point = etree.SubElement(points, 'mxPoint')
+                point.set('x', str(x))
+                point.set('y', str(y))
 
 
-def get_element_color(element_dict: Dict, lifecycle_property: Optional[str] = None) -> str:
+def get_element_color(element_dict: Dict, status_property: Optional[str] = None) -> str:
     """
     Determine fill color based on element properties.
 
     Priority:
-    1. Lifecycle Status property (Strategic, Maintain, Sunset, New)
-    2. ArchiMate layer color based on element type
-    3. Default gray
+    1. Roadmap Disposition property (Invest, Tolerate, Migrate, Eliminate)
+    2. Lifecycle Status property (Strategic, Maintain, Sunset, New)
+    3. ArchiMate layer color based on element type
+    4. Default gray
 
     Args:
         element_dict: Element data (must have 'type' key)
-        lifecycle_property: Value of "Lifecycle Status" property, if available
+        status_property: Value of a color-driving property, if available
 
     Returns:
         Color hex code
     """
-    # Priority 1: Lifecycle Status property (if provided and known)
-    if lifecycle_property and lifecycle_property in LIFECYCLE_COLORS:
-        return LIFECYCLE_COLORS[lifecycle_property]
+    if status_property:
+        normalized = str(status_property).strip()
+        if normalized in ROADMAP_DISPOSITION_COLORS:
+            return ROADMAP_DISPOSITION_COLORS[normalized]
+        if normalized in LIFECYCLE_COLORS:
+            return LIFECYCLE_COLORS[normalized]
 
-    # Priority 2: ArchiMate layer color based on element type
+    # Priority 3: ArchiMate layer color based on element type
     elem_type = element_dict.get('type', 'ApplicationComponent')
     layer = ELEMENT_LAYERS.get(elem_type)
     if layer and layer in LAYER_COLORS:
         return LAYER_COLORS[layer]
 
-    # Priority 3: Legacy type-specific color (backward compatibility)
+    # Priority 4: Legacy type-specific color (backward compatibility)
     if elem_type in ARCHIMATE_COLORS:
         return ARCHIMATE_COLORS[elem_type]
 

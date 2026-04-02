@@ -433,6 +433,73 @@ class DrawIOGenerator:
 
         return label
 
+    @staticmethod
+    def _should_render_edge_labels(layout: Dict[str, Any], default: bool = True) -> bool:
+        """Return whether visible edge labels should be rendered for a layout."""
+        suppress = layout.get('suppress_edge_labels')
+        if suppress is not None:
+            return not suppress
+        return default
+
+    @staticmethod
+    def _expand_text_boxes(text_boxes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Expand higher-level text box configs into plain draw.io text boxes."""
+        expanded_boxes: List[Dict[str, Any]] = []
+
+        for box in text_boxes:
+            if box.get('kind') != 'stacked_lines':
+                expanded_boxes.append(box)
+                continue
+
+            default_x = box.get('x', 50)
+            default_y = box.get('y', 50)
+            header_height = box.get('header_height', 28)
+            line_height = box.get('line_height', 24)
+            line_gap = box.get('line_gap', 6)
+
+            header_text = box.get('header_text', '')
+            if header_text:
+                expanded_boxes.append({
+                    'x': box.get('header_x', default_x),
+                    'y': box.get('header_y', default_y),
+                    'width': box.get('header_width', box.get('width', 150)),
+                    'height': header_height,
+                    'style_kind': box.get('header_style_kind', 'note_header'),
+                    'text': header_text,
+                    'html': box.get('header_html', False),
+                })
+
+            line_x = box.get('line_x', default_x)
+            line_y = box.get('line_y', default_y + header_height + line_gap)
+            line_width = box.get('line_width', box.get('width', 320))
+            line_style_kind = box.get('line_style_kind', 'note_line')
+
+            for idx, line in enumerate(box.get('lines', [])):
+                default_line_box = {
+                    'x': line_x,
+                    'y': line_y + (idx * (line_height + line_gap)),
+                    'width': line_width,
+                    'height': line_height,
+                    'style_kind': line_style_kind,
+                    'html': False,
+                }
+
+                if isinstance(line, dict):
+                    line_box = {
+                        **default_line_box,
+                        **line,
+                    }
+                else:
+                    line_box = {
+                        **default_line_box,
+                        'text': str(line),
+                    }
+
+                if line_box.get('text'):
+                    expanded_boxes.append(line_box)
+
+        return expanded_boxes
+
     def _build_structure_hierarchy(self, selected_elements: List[Dict],
                                     structure_config: Dict[str, Any],
                                     relations: Optional[List[Dict[str, Any]]] = None) -> Tuple[List[Dict], List[Dict]]:
@@ -474,8 +541,9 @@ class DrawIOGenerator:
         for parent in parents:
             parent_id = parent['id']
 
-            # Find children based on relationship direction (deduplicated)
-            children_ids = set()
+            # Find children based on relationship direction while preserving relationship order.
+            children_ids = []
+            seen_child_ids = set()
             if direction == 'inbound':
                 # Children point TO parent (e.g., App -Serving-> Capability)
                 # So parent is target, children are sources
@@ -484,7 +552,9 @@ class DrawIOGenerator:
                         if not relationship_type or rel['type'] == relationship_type:
                             child_elem = self.element_by_id.get(rel['source'])
                             if child_elem and child_elem['type'] == child_type:
-                                children_ids.add(rel['source'])
+                                if rel['source'] not in seen_child_ids:
+                                    children_ids.append(rel['source'])
+                                    seen_child_ids.add(rel['source'])
             else:
                 # Parent points TO children (e.g., BusinessFunction -Composition-> Capability)
                 # So parent is source, children are targets
@@ -493,7 +563,9 @@ class DrawIOGenerator:
                         if not relationship_type or rel['type'] == relationship_type:
                             child_elem = self.element_by_id.get(rel['target'])
                             if child_elem and child_elem['type'] == child_type:
-                                children_ids.add(rel['target'])
+                                if rel['target'] not in seen_child_ids:
+                                    children_ids.append(rel['target'])
+                                    seen_child_ids.add(rel['target'])
 
             # Get child element details
             children = []
@@ -543,15 +615,20 @@ class DrawIOGenerator:
             # Determine color
             if color_by and color_by in props:
                 # Use specified property for coloring
-                lifecycle = props.get(color_by, '')
-                color = get_element_color(elem, lifecycle)
+                status_value = props.get(color_by, '')
+                color = get_element_color(elem, status_value)
             else:
-                # Default to lifecycle if available, else layer color
-                lifecycle = props.get('Lifecycle Status', '')
-                color = get_element_color(elem, lifecycle)
+                # Default to roadmap disposition, then lifecycle status, else layer color
+                status_value = props.get('Roadmap Disposition', '') or props.get('Lifecycle Status', '')
+                color = get_element_color(elem, status_value)
 
-            # Calculate width
-            width = calculate_element_width(elem['name'])
+            explicit_width = None
+            width_override = props.get('Width')
+            if width_override not in (None, ''):
+                try:
+                    explicit_width = int(width_override)
+                except (TypeError, ValueError):
+                    explicit_width = None
 
             # MVP9: Apply emphasis treatment
             emphasis = emphasis_map.get(elem['name'].lower(), {'treatment': 'normal', 'role': ''})
@@ -561,7 +638,7 @@ class DrawIOGenerator:
                 'display_name': props.get('Display Name', elem['name']),
                 'layer': layer,
                 'color': color,
-                'width': calculate_element_width(props.get('Display Name', elem['name'])),
+                'width': explicit_width or calculate_element_width(props.get('Display Name', elem['name'])),
                 'height': 60,
                 'properties': props,  # Now includes property overrides
                 'emphasis': emphasis['treatment'],  # MVP9: prominent, faded, highlighted, normal
@@ -940,7 +1017,8 @@ class DrawIOGenerator:
 
         hub_entry = structure_hierarchy[0]
         hub = elements_by_id.get(hub_entry['parent']['id'], hub_entry['parent'])
-        child_ids = {child['id'] for child in hub_entry.get('children', [])}
+        ordered_child_ids = [child['id'] for child in hub_entry.get('children', [])]
+        child_ids = set(ordered_child_ids)
         child_by_id = {child_id: elements_by_id.get(child_id, child) for child_id, child in ((c['id'], c) for c in hub_entry.get('children', []))}
         hub_prop = layout.get('core_group_by', 'Internal Group')
         spoke_side_prop = layout.get('spoke_side_property', 'Spoke Side')
@@ -952,23 +1030,10 @@ class DrawIOGenerator:
         center_x = layout.get('center_x', 700)
         center_y = layout.get('center_y', 260)
         hub_width = layout.get('hub_width', 560)
-        hub_height = layout.get('hub_height', 300)
+        requested_hub_height = layout.get('hub_height', 300)
         hub_x = center_x - (hub_width // 2)
-        hub_y = center_y - (hub_height // 2)
 
-        # Use the hub element id as the outer container id so future edges can target it if needed.
-        containers.append(DrawIOContainer(
-            id=hub['id'],
-            label=hub['name'],
-            x=hub_x,
-            y=hub_y,
-            width=hub_width,
-            height=hub_height,
-            style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;"
-        ))
-        elem_positions[hub['name'].lower()] = {'x': hub_x + 20, 'y': hub_y + 20, 'width': hub_width - 40}
-
-        children = [child_by_id[cid] for cid in child_ids]
+        children = [child_by_id[cid] for cid in ordered_child_ids if cid in child_by_id]
         grouped_children = {}
         for child in children:
             group_name = child.get('properties', {}).get(hub_prop, '_ungrouped')
@@ -984,7 +1049,59 @@ class DrawIOGenerator:
         subgroup_gap = layout.get('core_group_spacing', 20)
         subgroup_inner_margin = layout.get('core_inner_margin', 24)
         subgroup_top = 54
-        subgroup_height = hub_height - subgroup_top - subgroup_inner_margin
+        subgroup_child_top = layout.get('core_child_top', 38)
+        subgroup_child_height = layout.get('core_child_height', 60)
+        subgroup_child_spacing = layout.get('core_child_spacing', 24)
+        subgroup_bottom_padding = layout.get('core_group_bottom_padding', 24)
+        row_pitch = subgroup_child_height + subgroup_child_spacing
+        group_index_by_name = {name: idx for idx, name in enumerate(ordered_group_names)}
+        reserved_leading_rows = {name: 0 for name in ordered_group_names}
+
+        for group_name in ordered_group_names:
+            source_idx = group_index_by_name[group_name]
+            for row_idx, child in enumerate(grouped_children[group_name]):
+                span_to_group = str(child.get('properties', {}).get('Span To Group', '')).strip()
+                target_idx = group_index_by_name.get(span_to_group)
+                if target_idx is None or target_idx <= source_idx:
+                    continue
+                for covered_group in ordered_group_names[source_idx + 1:target_idx + 1]:
+                    reserved_leading_rows[covered_group] = max(
+                        reserved_leading_rows[covered_group],
+                        row_idx + 1
+                    )
+
+        max_group_rows = max(
+            (len(grouped_children[group_name]) + reserved_leading_rows.get(group_name, 0)
+             for group_name in ordered_group_names),
+            default=0
+        )
+        if max_group_rows > 0:
+            subgroup_content_height = (
+                subgroup_child_top +
+                (max_group_rows * subgroup_child_height) +
+                ((max_group_rows - 1) * subgroup_child_spacing) +
+                subgroup_bottom_padding
+            )
+        else:
+            subgroup_content_height = subgroup_child_top + subgroup_child_height + subgroup_bottom_padding
+        subgroup_height = max(
+            requested_hub_height - subgroup_top - subgroup_inner_margin,
+            subgroup_content_height
+        )
+        hub_height = subgroup_top + subgroup_height + subgroup_inner_margin
+        hub_y = center_y - (hub_height // 2)
+
+        # Use the hub element id as the outer container id so future edges can target it if needed.
+        containers.append(DrawIOContainer(
+            id=hub['id'],
+            label=hub['name'],
+            x=hub_x,
+            y=hub_y,
+            width=hub_width,
+            height=hub_height,
+            style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;align=center;"
+        ))
+        elem_positions[hub['name'].lower()] = {'x': hub_x + 20, 'y': hub_y + 20, 'width': hub_width - 40}
         subgroup_width = int((hub_width - (2 * subgroup_inner_margin) - ((group_count - 1) * subgroup_gap)) / group_count)
         subgroup_container_by_child = {}
         subgroup_meta = {}
@@ -1001,25 +1118,33 @@ class DrawIOGenerator:
                 width=subgroup_width,
                 height=subgroup_height,
                 parent_id=hub['id'],
-                style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;"
+                style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;"
             ))
             subgroup_meta[subgroup_id] = {
                 'index': idx,
                 'group_name': group_name
             }
 
-            child_y = 38
+            child_y = subgroup_child_top + reserved_leading_rows.get(group_name, 0) * row_pitch
             for child in grouped_children[group_name]:
                 subgroup_container_by_child[child['id']] = subgroup_id
+                child_props = child.get('properties', {})
                 child_width = min(child.get('width', 180), subgroup_width - 24)
                 child_x = int((subgroup_width - child_width) / 2)
+                span_to_group = str(child_props.get('Span To Group', '')).strip()
+                span_target_idx = group_index_by_name.get(span_to_group)
+                if span_target_idx is not None and span_target_idx > idx:
+                    span_groups = span_target_idx - idx + 1
+                    span_width = (span_groups * subgroup_width) + ((span_groups - 1) * subgroup_gap)
+                    child_width = min(max(child.get('width', 180), span_width - 24), span_width - 24)
+                    child_x = int((span_width - child_width) / 2)
                 drawio_elements.append(DrawIOElement(
                     id=child['id'],
                     name=child['name'],
                     x=child_x,
                     y=child_y,
                     width=child_width,
-                    height=60,
+                    height=subgroup_child_height,
                     elem_type=child['type'],
                     parent_id=subgroup_id,
                     color=child.get('color', '#B5D4E8'),
@@ -1030,7 +1155,7 @@ class DrawIOGenerator:
                     'y': hub_y + subgroup_y + child_y,
                     'width': child_width
                 }
-                child_y += 84
+                child_y += subgroup_child_height + subgroup_child_spacing
 
         external_elements = [e for e in elements if e['id'] not in child_ids and e['id'] != hub['id']]
 
@@ -1067,6 +1192,8 @@ class DrawIOGenerator:
 
         grouped_external = group_external_elems(external_elements)
         by_side = {'top': [], 'right': [], 'bottom': [], 'left': []}
+        external_group_container_by_elem = {}
+        external_side_by_id = {}
         for group_name, group_elems, side in grouped_external:
             if side not in by_side:
                 side = 'right'
@@ -1087,6 +1214,7 @@ class DrawIOGenerator:
                 current_y = start_y
                 for idx, (group_name, group_elems, group_width, group_height) in enumerate(group_dims):
                     group_id = f"ext-{side}-{idx}"
+                    external_side_by_id[group_id] = side
                     containers.append(DrawIOContainer(
                         id=group_id,
                         label=group_name,
@@ -1094,10 +1222,12 @@ class DrawIOGenerator:
                         y=current_y,
                         width=group_width,
                         height=group_height,
-                        style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;"
+                        style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;"
                     ))
                     inner_y = 38
                     for elem in group_elems:
+                        external_group_container_by_elem[elem['id']] = group_id
+                        external_side_by_id[elem['id']] = side
                         drawio_elements.append(DrawIOElement(
                             id=elem['id'],
                             name=elem['name'],
@@ -1125,6 +1255,7 @@ class DrawIOGenerator:
                 current_x = start_x
                 for idx, (group_name, group_elems, group_width, group_height) in enumerate(group_dims):
                     group_id = f"ext-{side}-{idx}"
+                    external_side_by_id[group_id] = side
                     containers.append(DrawIOContainer(
                         id=group_id,
                         label=group_name,
@@ -1132,10 +1263,12 @@ class DrawIOGenerator:
                         y=y,
                         width=group_width,
                         height=group_height,
-                        style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;"
+                        style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;"
                     ))
                     inner_x = 15
                     for elem in group_elems:
+                        external_group_container_by_elem[elem['id']] = group_id
+                        external_side_by_id[elem['id']] = side
                         drawio_elements.append(DrawIOElement(
                             id=elem['id'],
                             name=elem['name'],
@@ -1158,56 +1291,158 @@ class DrawIOGenerator:
         drawio_edges = []
         seen_edges = set()
         standardize_to_group = layout.get('standardize_edges_to_group', False)
-        subgroup_anchor_usage = {}
+        render_edge_labels = self._should_render_edge_labels(layout, default=False)
+
+        def anchor_for_side(side: str, prefix: str) -> Optional[Dict[str, str]]:
+            mapping = {
+                'top': {'X': '0.5', 'Y': '0'},
+                'bottom': {'X': '0.5', 'Y': '1'},
+                'left': {'X': '0', 'Y': '0.5'},
+                'right': {'X': '1', 'Y': '0.5'},
+            }
+            coords = mapping.get(side)
+            if not coords:
+                return None
+            return {
+                f'{prefix}X': coords['X'],
+                f'{prefix}Y': coords['Y'],
+                f'{prefix}Perimeter': '1',
+            }
 
         def anchor_for_subgroup(subgroup_id: str, target_side: str) -> Optional[Dict[str, str]]:
-            meta = subgroup_meta.get(subgroup_id)
-            if not meta:
+            if subgroup_id not in subgroup_meta:
                 return None
-            idx = meta['index']
-            # Left column: top / left / bottom
-            # Middle column: top / bottom
-            # Right column: top / right / bottom
-            if idx == 0:
-                allowed = ['top', 'left', 'bottom']
-            elif idx == 1:
-                allowed = ['top', 'bottom']
-            else:
-                allowed = ['top', 'right', 'bottom']
-
-            preferred = {
-                'top': 'top',
-                'bottom': 'bottom',
-                'left': 'left',
-                'right': 'right'
-            }.get(target_side, 'top')
-
-            fallback_vertical = ['top', 'bottom']
-            if preferred in allowed:
-                chosen = preferred
-            else:
-                usage_key = (subgroup_id, target_side)
-                used = subgroup_anchor_usage.get(usage_key, 0)
-                usable = [a for a in fallback_vertical if a in allowed] or allowed
-                chosen = usable[min(used, len(usable) - 1)]
-                subgroup_anchor_usage[usage_key] = used + 1
-
-            mapping = {
-                'top': {'exitX': '0.5', 'exitY': '0', 'exitPerimeter': '1'},
-                'bottom': {'exitX': '0.5', 'exitY': '1', 'exitPerimeter': '1'},
-                'left': {'exitX': '0', 'exitY': '0.5', 'exitPerimeter': '1'},
-                'right': {'exitX': '1', 'exitY': '0.5', 'exitPerimeter': '1'},
-            }
-            return mapping.get(chosen)
+            return anchor_for_side(target_side, 'exit')
 
         def entry_for_side(side: str) -> Optional[Dict[str, str]]:
+            return anchor_for_side(side, 'entry')
+
+        def opposite_side(side: str) -> str:
             mapping = {
-                'top': {'entryX': '0.5', 'entryY': '1', 'entryPerimeter': '1'},
-                'bottom': {'entryX': '0.5', 'entryY': '0', 'entryPerimeter': '1'},
-                'left': {'entryX': '1', 'entryY': '0.5', 'entryPerimeter': '1'},
-                'right': {'entryX': '0', 'entryY': '0.5', 'entryPerimeter': '1'},
+                'top': 'bottom',
+                'bottom': 'top',
+                'left': 'right',
+                'right': 'left',
             }
-            return mapping.get(side)
+            return mapping.get(side, side)
+
+        def normalize_diagram_origin(padding: int = 40) -> None:
+            min_x = None
+            min_y = None
+
+            for container in containers:
+                min_x = container.x if min_x is None else min(min_x, container.x)
+                min_y = container.y if min_y is None else min(min_y, container.y)
+
+            for element in drawio_elements:
+                absolute_x = element.x
+                absolute_y = element.y
+                if element.parent_id:
+                    parent_container = next((c for c in containers if c.id == element.parent_id), None)
+                    while parent_container is not None:
+                        absolute_x += parent_container.x
+                        absolute_y += parent_container.y
+                        if parent_container.parent_id:
+                            parent_container = next((c for c in containers if c.id == parent_container.parent_id), None)
+                        else:
+                            parent_container = None
+                min_x = absolute_x if min_x is None else min(min_x, absolute_x)
+                min_y = absolute_y if min_y is None else min(min_y, absolute_y)
+
+            if min_x is None or min_y is None:
+                return
+
+            shift_x = max(0, padding - min_x)
+            shift_y = max(0, padding - min_y)
+            if shift_x == 0 and shift_y == 0:
+                return
+
+            for container in containers:
+                if not container.parent_id or container.parent_id == '1':
+                    container.x += shift_x
+                    container.y += shift_y
+
+            for key, pos in elem_positions.items():
+                pos['x'] += shift_x
+                pos['y'] += shift_y
+
+        normalize_diagram_origin()
+
+        container_by_id = {container.id: container for container in containers}
+
+        def absolute_container_bounds(container_id: str) -> Optional[Dict[str, float]]:
+            container = container_by_id.get(container_id)
+            if not container:
+                return None
+            x = float(container.x)
+            y = float(container.y)
+            parent_id = container.parent_id
+            while parent_id and parent_id != '1':
+                parent = container_by_id.get(parent_id)
+                if not parent:
+                    break
+                x += float(parent.x)
+                y += float(parent.y)
+                parent_id = parent.parent_id
+            return {
+                'left': x,
+                'right': x + float(container.width),
+                'top': y,
+                'bottom': y + float(container.height),
+                'center_x': x + float(container.width) / 2,
+                'center_y': y + float(container.height) / 2,
+            }
+
+        def edge_waypoints(from_container_id: str, to_container_id: str,
+                           source_side: str, target_side: str) -> Optional[List[Tuple[int, int]]]:
+            source_bounds = absolute_container_bounds(from_container_id)
+            target_bounds = absolute_container_bounds(to_container_id)
+            if not source_bounds or not target_bounds:
+                return None
+
+            clearance = int(layout.get('edge_clearance', 24))
+
+            if source_side == 'top' and target_side == 'bottom':
+                source_guide_y = int(source_bounds['top'] - clearance)
+                target_guide_y = int(target_bounds['bottom'] + clearance)
+                guide_y = int(min(source_guide_y, target_guide_y))
+                return [
+                    (int(source_bounds['center_x']), source_guide_y),
+                    (int(source_bounds['center_x']), guide_y),
+                    (int(target_bounds['center_x']), guide_y),
+                    (int(target_bounds['center_x']), target_guide_y),
+                ]
+            if source_side == 'bottom' and target_side == 'top':
+                source_guide_y = int(source_bounds['bottom'] + clearance)
+                target_guide_y = int(target_bounds['top'] - clearance)
+                guide_y = int(max(source_guide_y, target_guide_y))
+                return [
+                    (int(source_bounds['center_x']), source_guide_y),
+                    (int(source_bounds['center_x']), guide_y),
+                    (int(target_bounds['center_x']), guide_y),
+                    (int(target_bounds['center_x']), target_guide_y),
+                ]
+            if source_side == 'left' and target_side == 'right':
+                source_guide_x = int(source_bounds['left'] - clearance)
+                target_guide_x = int(target_bounds['right'] + clearance)
+                guide_x = int(min(source_guide_x, target_guide_x))
+                return [
+                    (source_guide_x, int(source_bounds['center_y'])),
+                    (guide_x, int(source_bounds['center_y'])),
+                    (guide_x, int(target_bounds['center_y'])),
+                    (target_guide_x, int(target_bounds['center_y'])),
+                ]
+            if source_side == 'right' and target_side == 'left':
+                source_guide_x = int(source_bounds['right'] + clearance)
+                target_guide_x = int(target_bounds['left'] - clearance)
+                guide_x = int(max(source_guide_x, target_guide_x))
+                return [
+                    (source_guide_x, int(source_bounds['center_y'])),
+                    (guide_x, int(source_bounds['center_y'])),
+                    (guide_x, int(target_bounds['center_y'])),
+                    (target_guide_x, int(target_bounds['center_y'])),
+                ]
+            return None
 
         for rel in relations:
             # Composition is used to define containment here; do not render it as a visible edge.
@@ -1216,28 +1451,56 @@ class DrawIOGenerator:
             from_id = rel['source']
             to_id = rel['target']
             style_overrides = {}
+            route_waypoints = None
             if standardize_to_group and rel['type'] != 'Composition':
                 from_id = subgroup_container_by_child.get(from_id, from_id)
                 to_id = subgroup_container_by_child.get(to_id, to_id)
+                from_id = external_group_container_by_elem.get(from_id, from_id)
+                to_id = external_group_container_by_elem.get(to_id, to_id)
                 if from_id in subgroup_meta and to_id not in subgroup_meta:
                     target_elem = elements_by_id.get(rel['target'])
-                    target_side = (target_elem or {}).get('properties', {}).get(spoke_side_prop, '').strip().lower()
+                    target_side = external_side_by_id.get(to_id)
+                    if not target_side:
+                        target_side = (target_elem or {}).get('properties', {}).get(spoke_side_prop, '').strip().lower() or 'right'
                     style_overrides.update(anchor_for_subgroup(from_id, target_side) or {})
-                    style_overrides.update(entry_for_side(target_side) or {})
+                    style_overrides.update(entry_for_side(opposite_side(target_side)) or {})
+                    route_waypoints = edge_waypoints(from_id, to_id, target_side, opposite_side(target_side))
                 elif from_id not in subgroup_meta and to_id in subgroup_meta:
                     source_elem = elements_by_id.get(rel['source'])
-                    source_side = (source_elem or {}).get('properties', {}).get(spoke_side_prop, '').strip().lower()
+                    source_placement_side = external_side_by_id.get(from_id)
+                    if not source_placement_side:
+                        source_placement_side = (source_elem or {}).get('properties', {}).get(spoke_side_prop, '').strip().lower() or 'left'
+                    source_side = opposite_side(source_placement_side)
+                    target_side = source_placement_side
+                    style_overrides.update(anchor_for_side(source_side, 'exit') or {})
+                    style_overrides.update(entry_for_side(target_side) or {})
+                    route_waypoints = edge_waypoints(from_id, to_id, source_side, target_side)
+                elif from_id in subgroup_meta and to_id in subgroup_meta:
+                    target_side = 'right' if subgroup_meta[from_id]['index'] <= subgroup_meta[to_id]['index'] else 'left'
+                    source_side = opposite_side(target_side)
+                    style_overrides.update(anchor_for_subgroup(from_id, target_side) or {})
                     style_overrides.update(entry_for_side(source_side) or {})
-            edge_key = (from_id, to_id, rel['type'], rel.get('label', ''))
+                    route_waypoints = edge_waypoints(from_id, to_id, target_side, source_side)
+            if from_id == to_id:
+                continue
+            rendered_label = self._edge_label(rel, elements_by_id) if render_edge_labels else ''
+            edge_key = (
+                from_id,
+                to_id,
+                rel['type'],
+                rendered_label,
+                tuple(sorted(style_overrides.items()))
+            )
             if edge_key in seen_edges:
                 continue
             seen_edges.add(edge_key)
             drawio_edges.append(DrawIOEdge(
                 from_id=from_id,
                 to_id=to_id,
-                label=self._edge_label(rel, elements_by_id),
+                label=rendered_label,
                 edge_type=rel['type'],
-                style_overrides=style_overrides or None
+                style_overrides=style_overrides or None,
+                waypoints=route_waypoints
             ))
 
         xml_output = exporter.export(
@@ -1459,10 +1722,11 @@ class DrawIOGenerator:
                             break
 
                 if pos:
-                    # Position annotation above the element
-                    ann_x = pos['x']
-                    ann_y = pos['y'] - 25  # Above the element
-                    ann_width = max(80, len(text) * 7)
+                    # Default is above the element, with optional offsets for edge-adjacent callouts.
+                    ann_x = pos['x'] + int(ann.get('offset_x', 0))
+                    ann_y = (pos['y'] - 25) + int(ann.get('offset_y', 0))
+                    ann_width = int(ann.get('width', max(80, len(text) * 7)))
+                    ann_height = int(ann.get('height', 20))
 
                     textbox = ET.Element('mxCell')
                     textbox.set('id', f'ann-{idx}')
@@ -1477,7 +1741,7 @@ class DrawIOGenerator:
                     geometry.set('x', str(int(ann_x)))
                     geometry.set('y', str(int(ann_y)))
                     geometry.set('width', str(int(ann_width)))
-                    geometry.set('height', '20')
+                    geometry.set('height', str(int(ann_height)))
                     geometry.set('as', 'geometry')
 
                     root_elem.append(textbox)
@@ -1499,35 +1763,69 @@ class DrawIOGenerator:
             if root_elem is None:
                 return xml_output
 
-            for idx, box in enumerate(text_boxes):
+            default_box_dimensions = {
+                'default': {'width': 150, 'height': 28},
+                'edge_label': {'width': 70, 'height': 20},
+                'note_header': {'width': 150, 'height': 28},
+                'note_line': {'width': 320, 'height': 24},
+                'title': {'width': 320, 'height': 48},
+            }
+
+            for idx, box in enumerate(self._expand_text_boxes(text_boxes)):
                 text = box.get('text', '')
                 if not text:
                     continue
                 style_kind = box.get('style_kind', 'default')
                 is_html = box.get('html', False)
-                box_key = f"{idx}|{box.get('x', 50)}|{box.get('y', 50)}|{box.get('width', 320)}|{box.get('height', 180)}|{style_kind}|{text}"
+                render_text = text
+                render_as_html = is_html
+                if not is_html and '\n' in text:
+                    escaped_lines = [
+                        line.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                        for line in text.splitlines()
+                    ]
+                    render_text = '<div>' + '<br/>'.join(escaped_lines) + '</div>'
+                    render_as_html = True
+                dims = default_box_dimensions.get(style_kind, default_box_dimensions['default'])
+                width = box.get('width', dims['width'])
+                height = box.get('height', dims['height'])
+                auto_sized_default = (
+                    style_kind == 'default' and
+                    'width' not in box and
+                    'height' not in box
+                )
+                offset_y = box.get('offset_y', 24 if auto_sized_default else 0)
+                x = box.get('x', 50)
+                y = box.get('y', 50) + offset_y
+                box_key = f"{idx}|{x}|{y}|{width}|{height}|{style_kind}|{text}"
                 box_id = hashlib.md5(box_key.encode('utf-8')).hexdigest()[:10]
 
                 cell = ET.Element('mxCell')
                 cell.set('id', f'textbox-{box_id}')
-                cell.set('value', text if is_html else text.replace('\n', '&#10;'))
+                cell.set('value', render_text)
                 cell.set('vertex', '1')
                 cell.set('parent', '1')
                 if style_kind == 'edge_label':
-                    cell.set('style', 'text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
+                    cell.set('style', 'text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
                                       'fontSize=10;fontStyle=1;fillColor=none;strokeColor=none;spacing=2;')
                 elif style_kind == 'title':
-                    cell.set('style', 'text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
+                    cell.set('style', f'text;html={"1" if render_as_html else "0"};align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
                                       'fontSize=24;fontStyle=1;fillColor=none;strokeColor=none;spacing=2;')
+                elif style_kind == 'note_header':
+                    cell.set('style', f'text;html={"1" if render_as_html else "0"};align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
+                                      'fontSize=12;fontStyle=1;fillColor=#FFF8E1;strokeColor=#D6B656;rounded=1;spacing=6;')
+                elif style_kind == 'note_line':
+                    cell.set('style', f'text;html={"1" if render_as_html else "0"};align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
+                                      'fontSize=11;fillColor=#FFF8E1;strokeColor=#D6B656;rounded=1;spacing=6;')
                 else:
-                    cell.set('style', 'text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;'
+                    cell.set('style', f'text;html={"1" if render_as_html else "0"};align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
                                       'fontSize=11;fillColor=#FFF8E1;strokeColor=#D6B656;rounded=1;spacing=6;')
 
                 geometry = ET.SubElement(cell, 'mxGeometry')
-                geometry.set('x', str(box.get('x', 50)))
-                geometry.set('y', str(box.get('y', 50)))
-                geometry.set('width', str(box.get('width', 320)))
-                geometry.set('height', str(box.get('height', 180)))
+                geometry.set('x', str(x))
+                geometry.set('y', str(y))
+                geometry.set('width', str(width))
+                geometry.set('height', str(height))
                 geometry.set('as', 'geometry')
                 root_elem.append(cell)
 

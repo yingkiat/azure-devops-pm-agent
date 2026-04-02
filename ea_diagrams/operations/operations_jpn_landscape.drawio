@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-01-01T00:00:00.000Z" version="24.0.0" type="device">
+  <diagram name="Operations JPN Landscape">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="diagram-d958b2b7d537" value="Operations - JPN" style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="396" y="80" width="880" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram-d958b2b7d537-grp-0" value="Production/QA" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-d958b2b7d537">
+          <mxGeometry x="24" y="54" width="193" height="542" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram-d958b2b7d537-grp-1" value="Warehouse" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-d958b2b7d537">
+          <mxGeometry x="237" y="54" width="193" height="542" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram-d958b2b7d537-grp-2" value="Planning" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-d958b2b7d537">
+          <mxGeometry x="450" y="54" width="193" height="542" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram-d958b2b7d537-grp-3" value="QARA" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-d958b2b7d537">
+          <mxGeometry x="663" y="54" width="193" height="542" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-left-0" value="Input Systems" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="46" y="219" width="250" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="id-0015d01da270" value="Cargo Master" vertex="1" parent="diagram-d958b2b7d537-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="122" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-021726ec4519" value="PSS 1.0" vertex="1" parent="diagram-d958b2b7d537-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
+          <mxGeometry x="36" y="206" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-1d3ac771d8b3" value="GSCM/OCTS" vertex="1" parent="diagram-d958b2b7d537-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="206" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-2e0b9d831422" value="SFDC" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="374" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-528df4932fd2" value="Okumarukun" vertex="1" parent="diagram-d958b2b7d537-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-5732a1cc4d7c" value="Education Designer" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="14" y="122" width="164" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-5f835087595c" value="Rimsys" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="206" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-6385d2992d54" value="DSX" vertex="1" parent="diagram-d958b2b7d537-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="38" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-64bdcb4d3b3a" value="VC Vendor Collaboration" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-6d9eb02243f7" value="W3 Sirius" vertex="1" parent="diagram-d958b2b7d537-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
+          <mxGeometry x="12" y="38" width="382" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-6e68a57a6540" value="Iwagaki Access" vertex="1" parent="diagram-d958b2b7d537-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="30" y="290" width="132" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-6f89b665c98f" value="Pro2SQL JPN" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-88e532c4c4b9" value="Quality Designer" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="22" y="38" width="148" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-965cd94cab5f" value="QAD SE 11" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="190" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-bb3759f4a808" value="Yusen" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="266" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-c21931642554" value="ETQ Reliance" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-c508ffe79f87" value="Microsoft Dynamics" vertex="1" parent="diagram-d958b2b7d537-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
+          <mxGeometry x="14" y="458" width="164" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-d0be297d0966" value="Kenpin Barcode" vertex="1" parent="diagram-d958b2b7d537-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="30" y="122" width="132" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-d0e83168e3ab" value="Informat" vertex="1" parent="diagram-d958b2b7d537-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="36" y="374" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-left-0_to_diagram-d958b2b7d537-grp-0_1b4559c18e" value="" edge="1" parent="1" source="ext-left-0" target="diagram-d958b2b7d537-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="390" />
+              <mxPoint x="396" y="390" />
+              <mxPoint x="396" y="405" />
+              <mxPoint x="396" y="405" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ext-left-0_to_diagram-d958b2b7d537-grp-1_f5f5e291b9" value="" edge="1" parent="1" source="ext-left-0" target="diagram-d958b2b7d537-grp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="390" />
+              <mxPoint x="609" y="390" />
+              <mxPoint x="609" y="405" />
+              <mxPoint x="609" y="405" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ext-left-0_to_diagram-d958b2b7d537-grp-2_8420ec3377" value="" edge="1" parent="1" source="ext-left-0" target="diagram-d958b2b7d537-grp-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="390" />
+              <mxPoint x="822" y="390" />
+              <mxPoint x="822" y="405" />
+              <mxPoint x="822" y="405" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      <mxCell id="textbox-e08e9e279f" value="Inbound source integration" vertex="1" parent="1" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontSize=11;fillColor=#FFF8E1;strokeColor=#D6B656;rounded=1;spacing=6;"><mxGeometry x="300" y="409" width="150" height="28" as="geometry" /></mxCell><mxCell id="narrative-323207" value="📊 Operations JPN Landscape&#10;&#10;💡 Operations - JPN should read as a central core organised by operational domain, with QAD SE 11, Pro2SQL JPN, Yusen, and VC Vendor Collaboration feeding selected operations applications from the left.&#10;&#10;Elements: 20 | Relationships: 20&#10;&#10;Lifecycle Status:&#10;  • Not specified: 18 systems&#10;  • Strategic: 2 systems&#10;&#10;Relationships:&#10;  • Composition: 15 connections&#10;  • Flow: 5 connections&#10;&#10;Color coding:&#10;  • Green = Strategic | Orange = Maintain | Red = Sunset | Blue = Standard" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontSize=10;fontFamily=Courier;fillColor=#F5F5F5;strokeColor=#999999;rounded=1;spacing=5;"><mxGeometry x="50" y="840" width="1350" height="276" as="geometry" /></mxCell></root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

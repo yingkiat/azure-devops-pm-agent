@@ -775,6 +775,8 @@ class ArchiExporter:
             'administrator_team': 'Administrator Team',
             'disaster_recovery_tier': 'Disaster Recovery Tier',
             'application_short_code': 'Application Short Code',
+            'roadmap_disposition': 'Roadmap Disposition',
+            'planning_horizon': 'Planning Horizon',
         }
 
         def canonical(col_name: str) -> str:

@@ -248,10 +248,20 @@ The system maintains a clean **input → process → output** flow:
 ea_inputs/*              (User describes systems)
   ↓ ea_discover_directory()
 archi_inputs/*           (Canonical model)
-  ↓ ea_generate_presentation_diagram()
+  ↓ python -m src.cli.main ea-view ea_inputs/views/<view>.yaml
 ea_diagrams/*.drawio     (Presentation diagrams)
   ↓ (refinement in draw.io)
 *.png/*.pdf              (Final deliverables)
+```
+
+**Draw.io generation from a YAML view spec:**
+```bash
+python -m src.cli.main ea-view ea_inputs/views/data/data_landscape.yaml
+```
+
+Use `--portal` if you also want to rebuild the portal after generating the diagram:
+```bash
+python -m src.cli.main ea-view ea_inputs/views/data/data_landscape.yaml --portal
 ```
 
 ### Prompt-Driven Intelligence

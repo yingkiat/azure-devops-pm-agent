@@ -11,6 +11,11 @@ story:
   tension: "As external integrations grow, the diagram must preserve the ERP ANZ boundary while still making each source-to-target integration explicit."
   insight: "A center-surround application cooperation view keeps the ERP core stable in the middle while allowing many external systems to grow around it."
 
+# === METADATA ===
+metadata:
+  domain: "ERP"
+  region: "ANZ"
+
 # === VIEW DEFINITION ===
 view:
   name: "ERP ANZ Landscape"
@@ -46,6 +51,7 @@ elements:
       override:
         Internal Group: "Integration"
         Role: "ERP Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Payments integration component inside ERP ANZ."
 
     - name: "Boomi"
@@ -64,6 +70,7 @@ elements:
       override:
         Internal Group: "Integration"
         Role: "ERP Integration"
+        Roadmap Disposition: "Tolerate"
       description: "EDI integration component inside ERP ANZ."
 
     - name: "Blackline Financial Close"
@@ -78,6 +85,7 @@ elements:
         Spoke Side: "top"
         External Group: "Commercial"
         Role: "Digital Commerce"
+        Roadmap Disposition: "Tolerate"
       description: "Shipment confirmation outbound from QAD EE 2019."
 
     - name: "Informatica PIM ANZ"
@@ -98,6 +106,7 @@ elements:
         Spoke Side: "bottom"
         External Group: "Logistics"
         Role: "Shipment Integration"
+        Roadmap Disposition: "Tolerate"
       description: "SO shipment data outbound from QAD EE 2019."
 
     - name: "SmartFreight"
@@ -119,6 +128,7 @@ elements:
         Spoke Side: "right"
         External Group: "Finance"
         Role: "Government eInvoicing"
+        Roadmap Disposition: "Tolerate"
       description: "Invoice outbound from QAD EE 2019."
 
     - name: "Concur Expense Management"
@@ -126,6 +136,7 @@ elements:
         Spoke Side: "bottom"
         External Group: "Finance"
         Role: "Staff Expenses"
+        Roadmap Disposition: "Tolerate"
       description: "Staff expenses outbound from QAD EE 2019."
 
     - name: "GSC SAP APO"
@@ -154,6 +165,7 @@ elements:
         Spoke Side: "left"
         External Group: "Manufacturing Operations"
         Role: "Operational Service"
+        Roadmap Disposition: "Tolerate"
       description: "Outbound from Pro2SQL ANZ."
 
     - name: "MedQuote"
@@ -161,6 +173,7 @@ elements:
         Spoke Side: "left"
         External Group: "Commercial"
         Role: "Quote Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Outbound from Pro2SQL ANZ."
 
     - name: "MedPack"
@@ -168,13 +181,15 @@ elements:
         Spoke Side: "left"
         External Group: "Manufacturing Operations"
         Role: "Pack Integration"
+        Roadmap Disposition: "Tolerate"
       description: "Outbound from Pro2SQL ANZ."
 
-    - name: "Pack Specification System (PSS)"
+    - name: "PSS 1.0"
       override:
         Spoke Side: "bottom"
         External Group: "Manufacturing Operations"
         Role: "Planning and Reporting"
+        Display Name: "PSS 1.0"
       description: "Outbound from Pro2SQL ANZ."
 
     - name: "Oracle EPM"
@@ -196,6 +211,7 @@ elements:
         Spoke Side: "left"
         External Group: "Reporting"
         Role: "Reporting"
+        Roadmap Disposition: "Tolerate"
       description: "Outbound from Pro2SQL ANZ."
 
 # === RELATIONSHIPS ===
@@ -341,9 +357,9 @@ relationships:
 
     - type: "Flow"
       source_name: "Pro2SQL ANZ"
-      target_name: "Pack Specification System (PSS)"
+      target_name: "PSS 1.0"
       label: "PSS"
-      description: "Outbound integration from Pro2SQL ANZ to Pack Specification System (PSS)."
+      description: "Outbound integration from Pro2SQL ANZ to PSS 1.0."
 
     - type: "Flow"
       source_name: "Pro2SQL ANZ"
@@ -416,9 +432,9 @@ layout:
   external_group_side_map:
     Commercial: "top"
     Planning: "top"
-    Finance: "right"
+    Finance: "left"
     Logistics: "right"
-    Manufacturing Operations: "left"
+    Manufacturing Operations: "right"
     Reporting: "left"
   hub_width: 560
   hub_height: 360
@@ -429,12 +445,16 @@ layout:
 
 # === ANNOTATIONS ===
 annotations:
-  - text: "Central ERP ANZ cooperation boundary"
-    near: "ERP ANZ"
   - text: "QAD-led outbound integrations"
     near: "QAD EE 2019"
+    offset_x: -20
+    offset_y: -110
+    width: 170
   - text: "Pro2SQL-led outbound integrations"
     near: "Pro2SQL ANZ"
+    offset_x: -10
+    offset_y: -110
+    width: 190
 
 # === OUTPUT ===
 output:

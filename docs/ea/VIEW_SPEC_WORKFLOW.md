@@ -106,6 +106,15 @@ Don't edit for views    Iterate freely            Regenerate anytime
 - Same element can appear in different horizons across different views
 - Changing the story shouldn't require changing the source of truth
 
+### 4. Source-First Fix Policy
+
+**Always fix regenerable issues at the source.**
+
+- If a diagram formatting issue comes from a view, fix the YAML spec first.
+- If the issue is systematic, fix the template, prompt, or generator guidance that produced it.
+- Do not rely on patching generated outputs such as SVG, draw.io exports, or built portal files as the default approach.
+- If a user asks for a recurring formatting preference, record it in the relevant source guidance so future views inherit it.
+
 #### The `override:` feature:
 
 When the story needs an element in a different group than the data suggests:
@@ -160,7 +169,13 @@ Write YAML with explicit element selection. Present summary:
 
 ### Phase 4: Generate & Review
 
+CLI:
+```bash
+python -m src.cli.main ea-view ea_inputs/views/my_view.yaml
 ```
+
+MCP tool:
+```text
 ea_generate_diagram("ea_inputs/views/my_view.yaml")
 ```
 

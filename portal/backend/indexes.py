@@ -202,10 +202,15 @@ class PortalIndexGenerator:
                 "name": diag.get("name", view_id),
                 "diagram_path": diag["diagram_file"],
                 "category": diag.get("category", ""),
+                "domain": diag.get("domain", ""),
+                "region": diag.get("region", ""),
                 "elements": diag.get("elements", []),
                 "metadata": {
                     "element_count": len(diag.get("elements", [])),
                     "created": diag.get("created", ""),
+                    "updated_at": diag.get("updated_at", ""),
+                    "domain": diag.get("domain", ""),
+                    "region": diag.get("region", ""),
                 },
             }
         return registry

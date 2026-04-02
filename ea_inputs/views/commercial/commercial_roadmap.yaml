@@ -11,6 +11,11 @@ story:
   tension: "Multiple systems = high maintenance cost, data silos, inconsistent customer experience"
   insight: "TO-BE (H3): Unified Dynamics CRM + integrated marketing/analytics portals + AI-powered automation"
 
+# === METADATA ===
+metadata:
+  domain: "commercial"
+  region: "APAC"
+
 # === VISUAL STRATEGY (MVP9) ===
 visual:
   emphasis:

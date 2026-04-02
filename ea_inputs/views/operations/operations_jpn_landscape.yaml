@@ -1,0 +1,353 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the Operations - JPN core, and which upstream ERP and logistics systems integrate with it?"
+  audience: "Enterprise Architecture, Operations leadership, ERP delivery"
+  decision: "Validate the JPN operations application boundary and the key inbound integrations from ERP and logistics sources."
+  key_message: "Operations - JPN should read as a central core organised by operational domain, with QAD SE 11, Pro2SQL JPN, Yusen, and VC Vendor Collaboration feeding selected operations applications from the left."
+
+# === STORY ===
+story:
+  setup: "The JPN operations estate spans production and QA, warehousing, planning, and quality and regulatory applications."
+  tension: "The view needs to show the internal operational groupings clearly while making the key inbound dependencies from ERP and logistics sources explicit."
+  insight: "A center-surround cooperation view keeps Operations - JPN visually coherent while making inbound source-to-operations integrations easy to read."
+
+# === METADATA ===
+metadata:
+  domain: "operations"
+  region: "JPN"
+
+# === VIEW DEFINITION ===
+view:
+  name: "Operations JPN Landscape"
+  documentation: |
+    Application cooperation view for the JPN operations domain.
+    Operations - JPN is the central collaboration boundary.
+    The internal estate is grouped into Production/QA, Warehouse, Planning, and QARA.
+    QAD SE 11, Pro2SQL JPN, Yusen, and VC Vendor Collaboration are shown on the left as upstream systems with direct inbound integrations.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Operations - JPN"
+      type: "ApplicationCollaboration"
+      synthetic: true
+      override:
+        Role: "Operations JPN Core"
+      description: "Central JPN operations collaboration boundary."
+
+    - name: "W3 Sirius"
+      override:
+        Internal Group: "Production/QA"
+        Span To Group: "Warehouse"
+        Role: "Production and Warehouse Operations"
+      description: "Primary JPN warehouse and operational execution system."
+
+    - name: "Kenpin Barcode"
+      override:
+        Internal Group: "Production/QA"
+        Role: "Barcode Tracking"
+      description: "Assembly inventory tracking system used in production operations."
+
+    - name: "PSS 1.0"
+      override:
+        Internal Group: "Production/QA"
+        Role: "Pack Specification"
+      description: "Pack specification application used by JPN operations."
+
+    - name: "Iwagaki Access"
+      override:
+        Internal Group: "Production/QA"
+        Role: "Production Access Tooling"
+      description: "Access-based tooling supporting manufacturing and planning processes."
+
+    - name: "Cargo Master"
+      override:
+        Internal Group: "Warehouse"
+        Role: "Warehouse Management"
+      description: "Warehouse management system for 3PL warehouse operations."
+
+    - name: "GSCM/OCTS"
+      override:
+        Internal Group: "Warehouse"
+        Role: "Inbound Shipment Tracking"
+      description: "Inbound shipment tracking application for warehouse operations."
+
+    - name: "Okumarukun"
+      override:
+        Internal Group: "Warehouse"
+        Role: "Delivery Tracking"
+      description: "Delivery tracking application for JPN warehouse flows."
+
+    - name: "Informat"
+      override:
+        Internal Group: "Warehouse"
+        Role: "Invoice Generation"
+      description: "Invoice generation application supporting warehouse operations."
+
+    - name: "DSX"
+      override:
+        Internal Group: "Planning"
+        Role: "Demand Planning"
+      description: "Planning application supporting JPN operations."
+
+    - name: "Quality Designer"
+      override:
+        Internal Group: "QARA"
+        Role: "Quality Management"
+      description: "Quality management application used in JPN operations."
+
+    - name: "Education Designer"
+      override:
+        Internal Group: "QARA"
+        Role: "Training and Compliance"
+      description: "Training and compliance application used in JPN operations."
+
+    - name: "Rimsys"
+      override:
+        Internal Group: "QARA"
+        Role: "Regulatory Information Management"
+      description: "Global regulatory information and product registration management application."
+
+    - name: "ETQ Reliance"
+      override:
+        Internal Group: "QARA"
+        Role: "Quality and Regulatory"
+      description: "Global quality management system for regulatory assurance."
+
+    - name: "SFDC"
+      override:
+        Internal Group: "QARA"
+        Role: "Legacy CRM"
+      description: "Legacy CRM application still used in the JPN quality and regulatory context."
+
+    - name: "Microsoft Dynamics"
+      override:
+        Internal Group: "QARA"
+        Role: "Target CRM"
+      description: "Target CRM application positioned alongside legacy SFDC."
+
+    - name: "QAD SE 11"
+      override:
+        Spoke Side: "left"
+        External Group: "Input Systems"
+        Role: "ERP Core"
+      description: "Upstream ERP system integrating into JPN operations."
+
+    - name: "Pro2SQL JPN"
+      override:
+        Spoke Side: "left"
+        External Group: "Input Systems"
+        Role: "Reporting and Replication"
+      description: "Upstream replicated ERP data service integrating into JPN operations."
+
+    - name: "Yusen"
+      override:
+        Spoke Side: "left"
+        External Group: "Input Systems"
+        Role: "Logistics Source"
+      description: "Upstream logistics service provider integrating into JPN operations."
+
+    - name: "VC Vendor Collaboration"
+      override:
+        Spoke Side: "left"
+        External Group: "Input Systems"
+        Role: "Vendor Collaboration"
+      description: "Upstream vendor collaboration portal integrating into JPN operations."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "W3 Sirius"
+      label: "contains"
+      description: "Operations - JPN contains W3 Sirius."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Kenpin Barcode"
+      label: "contains"
+      description: "Operations - JPN contains Kenpin Barcode."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "PSS 1.0"
+      label: "contains"
+      description: "Operations - JPN contains PSS 1.0."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Iwagaki Access"
+      label: "contains"
+      description: "Operations - JPN contains Iwagaki Access."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Cargo Master"
+      label: "contains"
+      description: "Operations - JPN contains Cargo Master."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "GSCM/OCTS"
+      label: "contains"
+      description: "Operations - JPN contains GSCM/OCTS."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Okumarukun"
+      label: "contains"
+      description: "Operations - JPN contains Okumarukun."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Informat"
+      label: "contains"
+      description: "Operations - JPN contains Informat."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "DSX"
+      label: "contains"
+      description: "Operations - JPN contains DSX."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Quality Designer"
+      label: "contains"
+      description: "Operations - JPN contains Quality Designer."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Education Designer"
+      label: "contains"
+      description: "Operations - JPN contains Education Designer."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Rimsys"
+      label: "contains"
+      description: "Operations - JPN contains Rimsys."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "ETQ Reliance"
+      label: "contains"
+      description: "Operations - JPN contains ETQ Reliance."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "SFDC"
+      label: "contains"
+      description: "Operations - JPN contains SFDC."
+
+    - type: "Composition"
+      source_name: "Operations - JPN"
+      target_name: "Microsoft Dynamics"
+      label: "contains"
+      description: "Operations - JPN contains Microsoft Dynamics."
+
+    - type: "Flow"
+      source_name: "QAD SE 11"
+      target_name: "W3 Sirius"
+      label: "integration"
+      description: "Inbound integration from QAD SE 11 to W3 Sirius."
+
+    - type: "Flow"
+      source_name: "Pro2SQL JPN"
+      target_name: "PSS 1.0"
+      label: "integration"
+      description: "Inbound integration from Pro2SQL JPN to PSS 1.0."
+
+    - type: "Flow"
+      source_name: "Yusen"
+      target_name: "Cargo Master"
+      label: "integration"
+      description: "Inbound integration from Yusen to Cargo Master."
+
+    - type: "Flow"
+      source_name: "VC Vendor Collaboration"
+      target_name: "DSX"
+      label: "integration"
+      description: "Inbound integration from VC Vendor Collaboration to DSX."
+
+    - type: "Flow"
+      source_name: "SFDC"
+      target_name: "Microsoft Dynamics"
+      label: "migration"
+      description: "Legacy-to-target transition from SFDC to Microsoft Dynamics."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Operations - JPN"
+      role: "Central operations collaboration boundary"
+      treatment: "prominent"
+    - element: "W3 Sirius"
+      role: "Primary inbound operational integration target"
+      treatment: "highlighted"
+    - element: "PSS 1.0"
+      role: "Primary Pro2SQL integration target"
+      treatment: "highlighted"
+    - element: "QAD SE 11"
+      role: "Upstream ERP source"
+      treatment: "normal"
+    - element: "Pro2SQL JPN"
+      role: "Upstream replicated ERP source"
+      treatment: "normal"
+    - element: "Yusen"
+      role: "Upstream logistics source"
+      treatment: "normal"
+    - element: "VC Vendor Collaboration"
+      role: "Upstream vendor collaboration source"
+      treatment: "normal"
+    - element: "Microsoft Dynamics"
+      role: "Target CRM beside legacy SFDC"
+      treatment: "highlighted"
+  grouping_rationale: "Operations - JPN should remain central, with internal applications grouped by operational function and upstream source systems kept outside the boundary on the left."
+  reading_order: "Start at the Operations - JPN core, then read across the production and QA, warehouse, planning, and QARA groups, with inbound source links read from left to right."
+  color_strategy: "The operations core, the main inbound integration targets, and the CRM target state are visually stronger than surrounding applications."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["Production/QA", "Warehouse", "Planning", "QARA"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Input Systems"]
+  external_group_side_map:
+    Input Systems: "left"
+  hub_width: 880
+  hub_height: 600
+  center_x: 820
+  center_y: 390
+  external_width: 220
+  external_offset: 100
+  external_spacing: 28
+  text_boxes:
+    - text: "Inbound source integration"
+      x: 300
+      y: 385
+
+# === ANNOTATIONS ===
+annotations: []
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

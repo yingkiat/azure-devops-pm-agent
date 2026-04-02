@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import re
 import html
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 
 class DrawioToSvg:
@@ -61,8 +61,10 @@ class DrawioToSvg:
         """Build SVG by faithfully translating mxGraphModel cells."""
         # First pass: build parent geometry map for coordinate resolution
         cell_geometry = {}
+        cells_by_id = {}
         for cell in cells:
             cell_id = cell.get("id")
+            cells_by_id[cell_id] = cell
             geometry = cell.find("mxGeometry")
             if geometry is not None:
                 cell_geometry[cell_id] = {
@@ -90,21 +92,24 @@ class DrawioToSvg:
                     x += parent_geom["x"]
                     y += parent_geom["y"]
                 # Find parent's parent
-                parent_cell = None
-                for c in cells:
-                    if c.get("id") == parent_id:
-                        parent_cell = c
-                        break
+                parent_cell = cells_by_id.get(parent_id)
                 if parent_cell is not None:
                     parent_id = parent_cell.get("parent")
                 else:
                     break
             return x, y, w, h
 
+        def get_bbox(cell_id: str) -> Tuple[float, float, float, float]:
+            cell = cells_by_id.get(cell_id)
+            if cell is None:
+                return 0, 0, 0, 0
+            return get_absolute_coords(cell)
+
         # Second pass: collect all cells with absolute coordinates
         backgrounds = []
         clickable_elements = []
         annotations = []
+        edges = []
 
         min_x, min_y = float('inf'), float('inf')
         max_x, max_y = 0, 0
@@ -126,13 +131,15 @@ class DrawioToSvg:
             # Get cell properties
             value = cell.get("value", "")
             style = cell.get("style", "")
+            is_swimlane = "swimlane" in style
+
+            is_edge = cell.get("edge") == "1"
+            if is_edge:
+                edges.append(cell)
+                continue
 
             # Skip if no dimensions
             if w <= 0 or h <= 0:
-                continue
-
-            # Skip edge rendering for now (complex paths)
-            if cell_id.startswith("edge-"):
                 continue
 
             # Track content bounds
@@ -141,15 +148,29 @@ class DrawioToSvg:
             max_x = max(max_x, x + w)
             max_y = max(max_y, y + h)
 
-            # Categorize cells by layer
-            # Note: diagram-* IDs are synthetic elements created during diagram generation
-            if cell_id.startswith("id-") or cell_id.startswith("elem-id-") or cell_id.startswith("diagram-"):
+            # Categorize cells by layer.
+            # Swimlanes are structural containers and must render as backgrounds even when
+            # their synthetic ids share the same prefix as clickable elements.
+            if is_swimlane:
+                backgrounds.append((cell_id, value, style, x, y, w, h))
+            # Note: diagram-* IDs are synthetic elements created during diagram generation.
+            elif cell_id.startswith("id-") or cell_id.startswith("elem-id-") or cell_id.startswith("diagram-"):
                 clickable_elements.append((cell_id, value, style, x, y, w, h))
             elif cell_id.startswith("ann-"):
                 annotations.append((cell_id, value, style, x, y, w, h))
             else:
                 # Backgrounds, containers, swimlanes
                 backgrounds.append((cell_id, value, style, x, y, w, h))
+
+        edge_render_data = []
+        for edge in edges:
+            edge_svg, edge_bounds = self._render_edge(edge, get_bbox)
+            if edge_svg:
+                edge_render_data.append((edge_svg, edge_bounds))
+                min_x = min(min_x, edge_bounds["min_x"])
+                min_y = min(min_y, edge_bounds["min_y"])
+                max_x = max(max_x, edge_bounds["max_x"])
+                max_y = max(max_y, edge_bounds["max_y"])
 
         # Calculate viewBox with padding
         padding = 20
@@ -171,10 +192,11 @@ class DrawioToSvg:
         svg.append('.element:hover { opacity: 0.85; }')
         svg.append('.element-highlighted rect { stroke: #FFC107 !important; stroke-width: 3 !important; }')
         svg.append('</style></defs>')
+        svg.append(self._svg_markers())
         svg.append(f'<title>{title}</title>')
         svg.append(f'<rect x="{vb_x:.0f}" y="{vb_y:.0f}" width="{vb_w:.0f}" height="{vb_h:.0f}" fill="white"/>')
 
-        # Render in layers: backgrounds first, then clickable elements on top, then annotations
+        # Render in layers: backgrounds first, then edges, then clickable elements, then annotations
         for cell_id, value, style, x, y, w, h in backgrounds:
             fill_color = self._extract_style_color(style, "fillColor")
             stroke_color = self._extract_style_color(style, "strokeColor") or "#CCCCCC"
@@ -193,15 +215,29 @@ class DrawioToSvg:
 
             if value:
                 if is_swimlane:
-                    label_x = x + 10
-                    label_y = y + 15
+                    start_size = float(self._extract_style_value(style, "startSize") or 30)
+                    align = (self._extract_style_value(style, "align") or "").lower()
+                    label_x = x + (w / 2 if align == "center" else 10)
+                    label_y = y + (start_size / 2)
+                    text_attrs = {
+                        "font-weight": font_style,
+                        "font-family": "Verdana",
+                    }
+                    if align == "center":
+                        text_attrs["text-anchor"] = "middle"
+                        text_attrs["dominant-baseline"] = "middle"
                 elif "text;" in style:
                     label_x = x + 5
                     label_y = y + h / 2
+                    text_attrs = {"font-weight": font_style, "font-family": "Verdana"}
                 else:
                     label_x = x + 10
                     label_y = y + h / 2
-                svg.append(self._render_multiline_text(value, label_x, label_y, font_size, **{"font-weight": font_style, "font-family": "Verdana"}))
+                    text_attrs = {"font-weight": font_style, "font-family": "Verdana"}
+                svg.append(self._render_multiline_text(value, label_x, label_y, font_size, **text_attrs))
+
+        for edge_svg, _edge_bounds in edge_render_data:
+            svg.extend(edge_svg)
 
         # Render clickable elements on top
         for cell_id, value, style, x, y, w, h in clickable_elements:
@@ -235,6 +271,158 @@ class DrawioToSvg:
 
         svg.append("</svg>")
         return "\n".join(svg)
+
+    @staticmethod
+    def _svg_markers() -> str:
+        return (
+            '<defs>'
+            '<marker id="arrow-classic" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">'
+            '<path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker>'
+            '<marker id="arrow-block" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">'
+            '<path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker>'
+            '<marker id="arrow-open" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">'
+            '<path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker>'
+            '<marker id="arrow-oval" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" markerUnits="strokeWidth">'
+            '<circle cx="5" cy="5" r="3" fill="context-stroke"/></marker>'
+            '<marker id="arrow-diamond-thin-filled" markerWidth="14" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="strokeWidth">'
+            '<path d="M 0 6 L 5 1 L 10 6 L 5 11 z" fill="context-stroke" stroke="context-stroke" stroke-width="1"/></marker>'
+            '<marker id="arrow-diamond-thin-open" markerWidth="14" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="strokeWidth">'
+            '<path d="M 0 6 L 5 1 L 10 6 L 5 11 z" fill="white" stroke="context-stroke" stroke-width="1"/></marker>'
+            '</defs>'
+        )
+
+    def _render_edge(self, cell, get_bbox) -> Tuple[List[str], Dict[str, float]]:
+        style = cell.get("style", "")
+        source_id = cell.get("source")
+        target_id = cell.get("target")
+        if not source_id or not target_id:
+            return [], {"min_x": float("inf"), "min_y": float("inf"), "max_x": 0, "max_y": 0}
+
+        src_x, src_y, src_w, src_h = get_bbox(source_id)
+        tgt_x, tgt_y, tgt_w, tgt_h = get_bbox(target_id)
+        if src_w <= 0 or src_h <= 0 or tgt_w <= 0 or tgt_h <= 0:
+            return [], {"min_x": float("inf"), "min_y": float("inf"), "max_x": 0, "max_y": 0}
+
+        start = self._anchor_point(src_x, src_y, src_w, src_h, style, "exit", (tgt_x + tgt_w / 2, tgt_y + tgt_h / 2))
+        end = self._anchor_point(tgt_x, tgt_y, tgt_w, tgt_h, style, "entry", (src_x + src_w / 2, src_y + src_h / 2))
+        points = self._edge_points(cell, start, end)
+        path_d = "M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in points)
+
+        stroke_color = self._extract_style_color(style, "strokeColor") or "#666666"
+        stroke_width = self._extract_style_value(style, "strokeWidth") or "1.5"
+        dashed = self._extract_style_value(style, "dashed") == "1"
+        dash_attr = ' stroke-dasharray="6 4"' if dashed else ""
+
+        end_arrow = self._marker_ref(
+            self._extract_style_value(style, "endArrow"),
+            self._extract_style_value(style, "endFill")
+        )
+        start_arrow = self._marker_ref(
+            self._extract_style_value(style, "startArrow"),
+            self._extract_style_value(style, "startFill")
+        )
+
+        marker_start = f' marker-start="url(#{start_arrow})"' if start_arrow else ""
+        marker_end = f' marker-end="url(#{end_arrow})"' if end_arrow else ""
+
+        svg = [
+            f'<path d="{path_d}" fill="none" stroke="{stroke_color}" stroke-width="{stroke_width}"{dash_attr}{marker_start}{marker_end}/>'
+        ]
+
+        value = cell.get("value", "")
+        if value:
+            label_x, label_y = self._edge_label_position(points)
+            label_text = self._normalize_html_text(value)
+            if label_text:
+                label_width = max(40, min(220, len(label_text) * 7))
+                svg.append(
+                    f'<rect x="{label_x - label_width/2:.1f}" y="{label_y - 10:.1f}" width="{label_width:.1f}" height="20" fill="white" stroke="none" opacity="0.9" rx="3"/>'
+                )
+                svg.append(
+                    self._render_multiline_text(
+                        label_text,
+                        label_x,
+                        label_y,
+                        self._extract_style_value(style, "fontSize") or "10",
+                        **{"text-anchor": "middle", "dominant-baseline": "middle", "font-family": "Verdana"}
+                    )
+                )
+
+        xs = [p[0] for p in points]
+        ys = [p[1] for p in points]
+        return svg, {
+            "min_x": min(xs),
+            "min_y": min(ys),
+            "max_x": max(xs),
+            "max_y": max(ys),
+        }
+
+    def _edge_points(self, cell, start: Tuple[float, float], end: Tuple[float, float]) -> List[Tuple[float, float]]:
+        """Use explicit draw.io waypoints when present, otherwise fall back to generic orthogonal routing."""
+        geometry = cell.find("mxGeometry")
+        if geometry is not None:
+            points_array = geometry.find("Array[@as='points']")
+            if points_array is not None:
+                waypoints = []
+                for point in points_array.findall("mxPoint"):
+                    try:
+                        waypoints.append((float(point.get("x", "0")), float(point.get("y", "0"))))
+                    except ValueError:
+                        continue
+                if waypoints:
+                    return [start, *waypoints, end]
+        return self._orthogonal_path(start, end)
+
+    @staticmethod
+    def _anchor_point(x: float, y: float, w: float, h: float, style: str, prefix: str, other_center: Tuple[float, float]) -> Tuple[float, float]:
+        px = DrawioToSvg._extract_style_value(style, f"{prefix}X")
+        py = DrawioToSvg._extract_style_value(style, f"{prefix}Y")
+        if px and py:
+            try:
+                return x + w * float(px), y + h * float(py)
+            except ValueError:
+                pass
+        ox, oy = other_center
+        cx, cy = x + w / 2, y + h / 2
+        dx, dy = ox - cx, oy - cy
+        if abs(dx) >= abs(dy):
+            return (x + w, cy) if dx >= 0 else (x, cy)
+        return (cx, y + h) if dy >= 0 else (cx, y)
+
+    @staticmethod
+    def _orthogonal_path(start: Tuple[float, float], end: Tuple[float, float]) -> List[Tuple[float, float]]:
+        sx, sy = start
+        ex, ey = end
+        if abs(sx - ex) < 1 or abs(sy - ey) < 1:
+            return [start, end]
+        mid_x = sx + (ex - sx) / 2
+        return [start, (mid_x, sy), (mid_x, ey), end]
+
+    @staticmethod
+    def _edge_label_position(points: List[Tuple[float, float]]) -> Tuple[float, float]:
+        if len(points) >= 4:
+            x1, y1 = points[1]
+            x2, y2 = points[2]
+            return (x1 + x2) / 2, (y1 + y2) / 2
+        x1, y1 = points[0]
+        x2, y2 = points[-1]
+        return (x1 + x2) / 2, (y1 + y2) / 2
+
+    @staticmethod
+    def _marker_ref(arrow: str, fill: str) -> str:
+        if not arrow or arrow == "none":
+            return ""
+        if arrow == "classic":
+            return "arrow-classic"
+        if arrow == "block":
+            return "arrow-block"
+        if arrow == "open":
+            return "arrow-open"
+        if arrow == "oval":
+            return "arrow-oval"
+        if arrow == "diamondThin":
+            return "arrow-diamond-thin-filled" if fill == "1" else "arrow-diamond-thin-open"
+        return ""
 
     @staticmethod
     def _extract_style_color(style: str, color_key: str) -> str:
@@ -280,6 +468,8 @@ class DrawioToSvg:
             if unescaped == normalized:
                 break
             normalized = unescaped
+
+        normalized = normalized.replace('\r\n', '<br/>').replace('\n', '<br/>').replace('\r', '<br/>')
 
         normalized = re.sub(r'</?(div|p|b|strong|u|em|span|font)[^>]*>', '', normalized, flags=re.IGNORECASE)
         normalized = re.sub(r'<li[^>]*>', '• ', normalized, flags=re.IGNORECASE)

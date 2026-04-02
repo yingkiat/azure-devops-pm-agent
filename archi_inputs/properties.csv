@@ -152,7 +152,7 @@ id-d15785b54b09,Application Name,APAC Buddy
 id-d15785b54b09,Application Type,SaaS
 id-d15785b54b09,Comments,Limited Use
 id-101c48872a1a,Region,ANZ
-id-101c48872a1a,Domain,Data
+id-101c48872a1a,Domain,Operations
 id-101c48872a1a,Sub-Domain,Warehouse Management
 id-101c48872a1a,Application Name,MIMS
 id-101c48872a1a,Application Type,SaaS
@@ -2442,3 +2442,149 @@ id-366dc6743d60,Vendor Support,Fuji Film
 id-366dc6743d60,Risk Level,Moderate
 id-366dc6743d60,Business Criticality,Tier 4 - Support Services
 id-366dc6743d60,Administrator Team,IT-APAC Tech Services
+id-c508ffe79f87,Roadmap Disposition,Invest
+id-c508ffe79f87,Planning Horizon,In Progress
+id-2e0b9d831422,Roadmap Disposition,Migrate
+id-2e0b9d831422,Planning Horizon,In Progress
+id-6915a1cce7a6,Roadmap Disposition,Migrate
+id-6915a1cce7a6,Planning Horizon,In Review
+id-d6786efb4355,Roadmap Disposition,Migrate
+id-d6786efb4355,Planning Horizon,In Review
+id-d15785b54b09,Roadmap Disposition,Invest
+id-d15785b54b09,Planning Horizon,In Progress
+id-c0f1d1806099,Roadmap Disposition,Tolerate
+id-c0f1d1806099,Planning Horizon,In Progress
+id-417c71677e2e,Roadmap Disposition,Invest
+id-417c71677e2e,Planning Horizon,In Progress
+id-18c3e14355e4,Roadmap Disposition,Invest
+id-18c3e14355e4,Planning Horizon,In Progress
+id-b4b0bccf96e6,Roadmap Disposition,Invest
+id-b4b0bccf96e6,Planning Horizon,In Progress
+id-f91e6b0dc180,Roadmap Disposition,Migrate
+id-f91e6b0dc180,Planning Horizon,In Progress
+id-d3bc96ff0a99,Roadmap Disposition,Tolerate
+id-d3bc96ff0a99,Planning Horizon,Baseline
+id-1b2283706bf4,Roadmap Disposition,Tolerate
+id-1b2283706bf4,Planning Horizon,In Review
+id-1b20812cd840,Roadmap Disposition,Migrate
+id-1b20812cd840,Planning Horizon,In Progress
+id-021f48755bef,Roadmap Disposition,Migrate
+id-021f48755bef,Planning Horizon,In Review
+id-ad73bc5bcf9e,Roadmap Disposition,Invest
+id-ad73bc5bcf9e,Planning Horizon,Baseline
+id-a3846d0a06ea,Roadmap Disposition,Tolerate
+id-a3846d0a06ea,Planning Horizon,In Review
+id-02cd579ffddf,Roadmap Disposition,Migrate
+id-02cd579ffddf,Planning Horizon,In Progress
+id-6f89b665c98f,Roadmap Disposition,Migrate
+id-6f89b665c98f,Planning Horizon,In Review
+id-965cd94cab5f,Roadmap Disposition,Tolerate
+id-965cd94cab5f,Planning Horizon,In Review
+id-a5b9ae2e6df9,Roadmap Disposition,Invest
+id-a5b9ae2e6df9,Planning Horizon,In Progress
+id-a771a5a37055,Roadmap Disposition,Migrate
+id-a771a5a37055,Planning Horizon,In Progress
+id-40e91ca61f1d,Roadmap Disposition,Tolerate
+id-40e91ca61f1d,Planning Horizon,In Review
+id-c9ce5933ada1,Roadmap Disposition,Migrate
+id-c9ce5933ada1,Planning Horizon,In Review
+id-ebdc1ea40a06,Roadmap Disposition,Migrate
+id-ebdc1ea40a06,Planning Horizon,In Review
+id-f3d98639d073,Roadmap Disposition,Invest
+id-f3d98639d073,Planning Horizon,Baseline
+id-1887171108f9,Roadmap Disposition,Tolerate
+id-1887171108f9,Planning Horizon,Baseline
+id-57662baf44e5,Roadmap Disposition,Tolerate
+id-57662baf44e5,Planning Horizon,In Review
+id-6385d2992d54,Roadmap Disposition,Migrate
+id-6385d2992d54,Planning Horizon,In Review
+id-59e3aeffe45f,Roadmap Disposition,Tolerate
+id-59e3aeffe45f,Planning Horizon,In Review
+id-16649a0bc025,Roadmap Disposition,Tolerate
+id-16649a0bc025,Planning Horizon,Baseline
+id-0edf7793fca7,Roadmap Disposition,Invest
+id-0edf7793fca7,Planning Horizon,Baseline
+id-98bafb85d403,Domain,Operations
+id-98bafb85d403,Region,ANZ
+id-98bafb85d403,Sub-Domain,Manufacturing
+id-98bafb85d403,It Owner,neomi.wang
+id-98bafb85d403,Application Name,ETO Consignment
+id-98bafb85d403,Description,Inhouse app to track sterilization process
+id-98bafb85d403,Tech Standard,Approved
+id-98bafb85d403,Hosting Type,OnPrem
+id-98bafb85d403,Vendor Support,Internal
+id-98bafb85d403,Risk Level,Moderate
+id-98bafb85d403,Business Criticality,Tier 2 - Business Critical
+id-98bafb85d403,Administrator Team,IT-APAC-Operations
+id-98bafb85d403,Roadmap Disposition,Tolerate
+id-98bafb85d403,Planning Horizon,Baseline
+id-c21931642554,Roadmap Disposition,Invest
+id-c21931642554,Planning Horizon,Baseline
+id-3bc1e5c38cf6,Roadmap Disposition,Invest
+id-3bc1e5c38cf6,Planning Horizon,Baseline
+id-cb7cb0b84df6,Roadmap Disposition,Tolerate
+id-cb7cb0b84df6,Planning Horizon,In Review
+id-41fcb87f8bec,Roadmap Disposition,Tolerate
+id-41fcb87f8bec,Planning Horizon,In Review
+id-844a55c65100,Roadmap Disposition,Migrate
+id-844a55c65100,Planning Horizon,In Review
+id-8ca460a30e41,Roadmap Disposition,Migrate
+id-8ca460a30e41,Planning Horizon,In Review
+id-101c48872a1a,Roadmap Disposition,Tolerate
+id-101c48872a1a,Planning Horizon,In Review
+id-021726ec4519,Roadmap Disposition,Migrate
+id-021726ec4519,Planning Horizon,In Progress
+id-5f835087595c,Roadmap Disposition,Invest
+id-5f835087595c,Planning Horizon,Baseline
+id-784902c1ffb1,Roadmap Disposition,Tolerate
+id-784902c1ffb1,Planning Horizon,In Review
+id-03195777091d,Roadmap Disposition,Migrate
+id-03195777091d,Planning Horizon,In Review
+id-64bdcb4d3b3a,Roadmap Disposition,Tolerate
+id-64bdcb4d3b3a,Planning Horizon,In Review
+id-3b16b5c4eb38,Roadmap Disposition,Invest
+id-3b16b5c4eb38,Planning Horizon,In Progress
+id-bb3759f4a808,Roadmap Disposition,Invest
+id-bb3759f4a808,Planning Horizon,Baseline
+id-0015d01da270,Roadmap Disposition,Tolerate
+id-0015d01da270,Planning Horizon,In Review
+id-5732a1cc4d7c,Roadmap Disposition,Tolerate
+id-5732a1cc4d7c,Planning Horizon,Baseline
+id-1d3ac771d8b3,Roadmap Disposition,Migrate
+id-1d3ac771d8b3,Planning Horizon,In Review
+id-ddf6f506feb2,Roadmap Disposition,Tolerate
+id-ddf6f506feb2,Planning Horizon,Baseline
+id-d0e83168e3ab,Roadmap Disposition,Tolerate
+id-d0e83168e3ab,Planning Horizon,In Review
+id-6e68a57a6540,Roadmap Disposition,Migrate
+id-6e68a57a6540,Planning Horizon,In Review
+id-b1a50a132d27,Roadmap Disposition,Tolerate
+id-b1a50a132d27,Planning Horizon,Baseline
+id-503abc05d38e,Roadmap Disposition,Tolerate
+id-503abc05d38e,Planning Horizon,Baseline
+id-d0be297d0966,Roadmap Disposition,Migrate
+id-d0be297d0966,Planning Horizon,In Review
+id-528df4932fd2,Roadmap Disposition,Tolerate
+id-528df4932fd2,Planning Horizon,In Review
+id-88e532c4c4b9,Roadmap Disposition,Invest
+id-88e532c4c4b9,Planning Horizon,Baseline
+id-6d9eb02243f7,Roadmap Disposition,Tolerate
+id-6d9eb02243f7,Planning Horizon,In Review
+id-4a23aa930a0a,Roadmap Disposition,Invest
+id-4a23aa930a0a,Planning Horizon,Baseline
+id-8fe7a99fc9f8,Roadmap Disposition,Invest
+id-8fe7a99fc9f8,Planning Horizon,Baseline
+id-79ee3acc4ce0,Roadmap Disposition,Invest
+id-79ee3acc4ce0,Planning Horizon,Baseline
+id-72e325d153b7,Roadmap Disposition,Invest
+id-72e325d153b7,Planning Horizon,Baseline
+id-d01c0e377c39,Roadmap Disposition,Invest
+id-d01c0e377c39,Planning Horizon,Baseline
+id-82b0ce3999fe,Roadmap Disposition,Invest
+id-82b0ce3999fe,Planning Horizon,Baseline
+id-02c12f4b9905,Roadmap Disposition,Invest
+id-02c12f4b9905,Planning Horizon,Baseline
+id-81f5a778caea,Roadmap Disposition,Invest
+id-81f5a778caea,Planning Horizon,Baseline
+id-9ea4ec271842,Roadmap Disposition,Invest
+id-9ea4ec271842,Planning Horizon,Baseline

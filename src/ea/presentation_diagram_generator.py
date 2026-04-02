@@ -167,9 +167,9 @@ class PresentationDiagramGenerator:
                 x = 80 + col * 280
                 y = container_y + 60 + row * 100
 
-                # Color: lifecycle first, then ArchiMate layer color
-                lifecycle = elem_props.get('Lifecycle Status', '')
-                color = get_element_color(elem, lifecycle)
+                # Color: roadmap disposition first, then lifecycle status, then ArchiMate layer color
+                status_value = elem_props.get('Roadmap Disposition', '') or elem_props.get('Lifecycle Status', '')
+                color = get_element_color(elem, status_value)
 
                 # Dynamic width based on name length (no truncation)
                 elem_width = calculate_element_width(elem['name'])

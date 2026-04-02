@@ -809,8 +809,9 @@ class DiagramGenerator:
         for parent in parents:
             parent_id = parent['id']
 
-            # Find children based on relationship direction (deduplicated)
-            children_ids = set()
+            # Find children based on relationship direction while preserving relationship order.
+            children_ids = []
+            seen_child_ids = set()
             if direction == 'inbound':
                 # Children point TO parent (e.g., App -Serving-> Capability)
                 # So parent is target, children are sources
@@ -819,7 +820,9 @@ class DiagramGenerator:
                         if not relationship_type or rel['type'] == relationship_type:
                             child_elem = self.element_by_id.get(rel['source'])
                             if child_elem and child_elem['type'] == child_type:
-                                children_ids.add(rel['source'])
+                                if rel['source'] not in seen_child_ids:
+                                    children_ids.append(rel['source'])
+                                    seen_child_ids.add(rel['source'])
             else:
                 # Parent points TO children (e.g., BusinessFunction -Composition-> Capability)
                 # So parent is source, children are targets
@@ -828,7 +831,9 @@ class DiagramGenerator:
                         if not relationship_type or rel['type'] == relationship_type:
                             child_elem = self.element_by_id.get(rel['target'])
                             if child_elem and child_elem['type'] == child_type:
-                                children_ids.add(rel['target'])
+                                if rel['target'] not in seen_child_ids:
+                                    children_ids.append(rel['target'])
+                                    seen_child_ids.add(rel['target'])
 
             # Get child element details
             children = []
@@ -874,12 +879,12 @@ class DiagramGenerator:
             # Determine color
             if color_by and color_by in props:
                 # Use specified property for coloring
-                lifecycle = props.get(color_by, '')
-                color = get_element_color(elem, lifecycle)
+                status_value = props.get(color_by, '')
+                color = get_element_color(elem, status_value)
             else:
-                # Default to lifecycle if available, else layer color
-                lifecycle = props.get('Lifecycle Status', '')
-                color = get_element_color(elem, lifecycle)
+                # Default to roadmap disposition, then lifecycle status, else layer color
+                status_value = props.get('Roadmap Disposition', '') or props.get('Lifecycle Status', '')
+                color = get_element_color(elem, status_value)
 
             # Calculate width
             width = calculate_element_width(elem['name'])

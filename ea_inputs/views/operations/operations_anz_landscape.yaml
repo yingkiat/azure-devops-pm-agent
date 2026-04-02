@@ -11,6 +11,11 @@ story:
   tension: "The view needs to show the internal operational groupings clearly without losing sight of the two key ERP-to-operations integration paths."
   insight: "A center-surround cooperation view keeps Operations - ANZ visually coherent while making the inbound ERP dependencies explicit."
 
+# === METADATA ===
+metadata:
+  domain: "operations"
+  region: "ANZ"
+
 # === VIEW DEFINITION ===
 view:
   name: "Operations ANZ Landscape"
@@ -108,6 +113,7 @@ elements:
       override:
         Internal Group: "Warehouse"
         Role: "Warehouse Management"
+        Roadmap Disposition: "Tolerate"
       description: "Warehouse management system for ANZ operations."
 
     - name: "DSX"
@@ -278,15 +284,13 @@ layout:
   external_width: 220
   external_offset: 100
   external_spacing: 28
+  text_boxes:
+    - text: "ERP source integration"
+      x: 300
+      y: 335
 
 # === ANNOTATIONS ===
-annotations:
-  - text: "Central Operations - ANZ cooperation boundary"
-    near: "Operations - ANZ"
-  - text: "Inbound from QAD EE 2019"
-    near: "Label Printing"
-  - text: "Inbound from Pro2SQL ANZ"
-    near: "PSS 1.0"
+annotations: []
 
 # === OUTPUT ===
 output:

@@ -11,6 +11,11 @@ story:
   tension: "The migration path must reduce fragmentation while sequencing the rollout in a lower-risk order."
   insight: "The two options share the same source estate and downstream service pattern, but differ in their target core and analytical database choices."
 
+# === METADATA ===
+metadata:
+  domain: "ERP"
+  region: "APAC"
+
 # === VIEW DEFINITION ===
 view:
   name: "QAD Migration Options"
@@ -158,6 +163,7 @@ elements:
         Stage: "Integration"
         Sequence: "1"
         Display Name: "Boomi"
+        Roadmap Disposition: "Invest"
       description: "Integration layer between target ERP and downstream platforms for option 2."
 
     - name: "PIM EU - Option 2"
@@ -378,12 +384,22 @@ layout:
       height: 34
       html: true
       text: "<div>$2m<br/>18m</div>"
-    - x: 1060
-      y: 120
-      width: 420
-      height: 220
-      html: true
-      text: "<div><b><u>Principles</u></b><br/><ul><li>Single APAC instance</li><li>AEM first to lower risk and increase learning</li><li>ANZ before JPN due to readiness</li><li>Use the cloud/SaaS version</li></ul></div>"
+    - kind: "stacked_lines"
+      x: 650
+      y: 290
+      header_width: 150
+      header_height: 28
+      header_text: "Principles"
+      line_x: 470
+      line_y: 326
+      line_width: 620
+      line_height: 24
+      line_gap: 6
+      lines:
+        - "Single APAC instance"
+        - "AEM first to lower risk and increase learning"
+        - "ANZ before JPN due to readiness"
+        - "Use the cloud/SaaS version"
     - x: 50
       y: 560
       width: 620
@@ -408,13 +424,6 @@ layout:
       height: 34
       html: true
       text: "<div>$2m<br/>18m</div>"
-    - x: 1060
-      y: 660
-      width: 420
-      height: 220
-      html: true
-      text: "<div><b><u>Principles</u></b><br/><ul><li>Single APAC instance</li><li>AEM first to lower risk and increase learning</li><li>ANZ before JPN due to readiness</li><li>Use the cloud/SaaS version</li></ul></div>"
-
 # === OUTPUT ===
 output:
   format: "drawio"

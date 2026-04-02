@@ -6,75 +6,69 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="diagram-e96ac39ac85e" value="Operations - ANZ" style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="380" y="130" width="760" height="420" as="geometry" />
+          <mxGeometry x="380" y="30" width="760" height="620" as="geometry" />
         </mxCell>
         <mxCell id="diagram-e96ac39ac85e-grp-0" value="Production/QA" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;" vertex="1" parent="diagram-e96ac39ac85e">
-          <mxGeometry x="24" y="54" width="163" height="342" as="geometry" />
+          <mxGeometry x="24" y="54" width="163" height="542" as="geometry" />
         </mxCell>
         <mxCell id="diagram-e96ac39ac85e-grp-1" value="Warehouse" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;" vertex="1" parent="diagram-e96ac39ac85e">
-          <mxGeometry x="207" y="54" width="163" height="342" as="geometry" />
+          <mxGeometry x="207" y="54" width="163" height="542" as="geometry" />
         </mxCell>
         <mxCell id="diagram-e96ac39ac85e-grp-2" value="Planning" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;" vertex="1" parent="diagram-e96ac39ac85e">
-          <mxGeometry x="390" y="54" width="163" height="342" as="geometry" />
+          <mxGeometry x="390" y="54" width="163" height="542" as="geometry" />
         </mxCell>
         <mxCell id="diagram-e96ac39ac85e-grp-3" value="QARA" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;" vertex="1" parent="diagram-e96ac39ac85e">
-          <mxGeometry x="573" y="54" width="163" height="342" as="geometry" />
+          <mxGeometry x="573" y="54" width="163" height="542" as="geometry" />
         </mxCell>
         <mxCell id="ext-left-0" value="ERP Sources" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="30" y="245" width="250" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-60b8500d6810" value="QAD WMS" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="21" y="122" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-021726ec4519" value="PSS 1.0" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
-          <mxGeometry x="21" y="206" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-021f48755bef" value="Pro2SQL ANZ" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-101c48872a1a" value="MIMS" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="diagram-60b8500d6810" value="QAD WMS" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="21" y="38" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-1b2283706bf4" value="QAD EE 2019" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-40e91ca61f1d" value="Batch Control" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="19" y="122" width="124" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-41fcb87f8bec" value="Label Printing Sino" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="12" y="290" width="139" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-57662baf44e5" value="Descartes" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-021726ec4519" value="PSS 1.0" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
           <mxGeometry x="21" y="290" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-59e3aeffe45f" value="eiFU" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-021f48755bef" value="Pro2SQL ANZ" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-101c48872a1a" value="MIMS" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="21" y="122" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-1b2283706bf4" value="QAD EE 2019" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-40e91ca61f1d" value="Batch Control" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="19" y="122" width="124" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-41fcb87f8bec" value="Label Printing Sino" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="12" y="206" width="139" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-57662baf44e5" value="Descartes" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+          <mxGeometry x="21" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="id-59e3aeffe45f" value="eiFU" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="21" y="458" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-5f835087595c" value="Rimsys" vertex="1" parent="diagram-e96ac39ac85e-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-5f835087595c" value="Rimsys" vertex="1" parent="diagram-e96ac39ac85e-grp-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="21" y="38" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-6385d2992d54" value="DSX" vertex="1" parent="diagram-e96ac39ac85e-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-6385d2992d54" value="DSX" vertex="1" parent="diagram-e96ac39ac85e-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="21" y="38" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-784902c1ffb1" value="Smartfreight" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-784902c1ffb1" value="Smartfreight" vertex="1" parent="diagram-e96ac39ac85e-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="21" y="206" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-98bafb85d403" value="ETO Consignment" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
+        <mxCell id="id-98bafb85d403" value="ETO Consignment" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
           <mxGeometry x="12" y="374" width="139" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="id-cb7cb0b84df6" value="Label Printing" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B5D4E8;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
+        <mxCell id="id-cb7cb0b84df6" value="Label Printing" vertex="1" parent="diagram-e96ac39ac85e-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
           <mxGeometry x="15" y="38" width="132" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-e96ac39ac85e-grp-0_to_diagram-e96ac39ac85e-grp-0_509610e93e" value="Serving" edge="1" parent="1" source="diagram-e96ac39ac85e-grp-0" target="diagram-e96ac39ac85e-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=0;endArrow=open;startArrow=none;">
+        <mxCell id="ext-left-0_to_diagram-e96ac39ac85e-grp-0_c40db45ebf" value="" edge="1" parent="1" source="ext-left-0" target="diagram-e96ac39ac85e-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;entryX=0;entryY=0.5;entryPerimeter=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="id-021f48755bef_to_diagram-e96ac39ac85e-grp-0_7db8c265b4" value="integration" edge="1" parent="1" source="id-021f48755bef" target="diagram-e96ac39ac85e-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;entryX=1;entryY=0.5;entryPerimeter=1;">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="id-1b2283706bf4_to_diagram-e96ac39ac85e-grp-0_92df897cd1" value="integration" edge="1" parent="1" source="id-1b2283706bf4" target="diagram-e96ac39ac85e-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;entryX=1;entryY=0.5;entryPerimeter=1;">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-      <mxCell id="ann-0" value="Central Operations - ANZ cooperation boundary" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="400" y="125" width="315" height="20" as="geometry" /></mxCell><mxCell id="ann-1" value="Inbound from QAD EE 2019" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="419" y="197" width="168" height="20" as="geometry" /></mxCell><mxCell id="ann-2" value="Inbound from Pro2SQL ANZ" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="425" y="365" width="168" height="20" as="geometry" /></mxCell><mxCell id="narrative-682726" value="📊 Operations ANZ Landscape&#10;&#10;💡 Operations - ANZ should read as a central core organised by operational domain, with QAD EE 2019 and Pro2SQL ANZ feeding selected production applications from the left.&#10;&#10;Elements: 15 | Relationships: 15&#10;&#10;Lifecycle Status:&#10;  • Not specified: 15 systems&#10;&#10;Relationships:&#10;  • Composition: 12 connections&#10;  • Flow: 2 connections&#10;  • Serving: 1 connections&#10;&#10;Color coding:&#10;  • Green = Strategic | Orange = Maintain | Red = Sunset | Blue = Standard" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontSize=10;fontFamily=Courier;fillColor=#F5F5F5;strokeColor=#999999;rounded=1;spacing=5;"><mxGeometry x="50" y="862" width="1350" height="276" as="geometry" /></mxCell></root>
+      <mxCell id="textbox-113fe0f8d1" value="ERP source integration" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontSize=11;fillColor=#FFF8E1;strokeColor=#D6B656;rounded=1;spacing=6;"><mxGeometry x="300" y="359" width="150" height="28" as="geometry" /></mxCell><mxCell id="narrative-655730" value="📊 Operations ANZ Landscape&#10;&#10;💡 Operations - ANZ should read as a central core organised by operational domain, with QAD EE 2019 and Pro2SQL ANZ feeding selected production applications from the left.&#10;&#10;Elements: 15 | Relationships: 15&#10;&#10;Lifecycle Status:&#10;  • Maintain: 1 systems&#10;  • Not specified: 14 systems&#10;&#10;Relationships:&#10;  • Composition: 12 connections&#10;  • Flow: 2 connections&#10;  • Serving: 1 connections&#10;&#10;Color coding:&#10;  • Green = Strategic | Orange = Maintain | Red = Sunset | Blue = Standard" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontSize=10;fontFamily=Courier;fillColor=#F5F5F5;strokeColor=#999999;rounded=1;spacing=5;"><mxGeometry x="50" y="790" width="1350" height="292" as="geometry" /></mxCell></root>
     </mxGraphModel>
   </diagram>
 </mxfile>

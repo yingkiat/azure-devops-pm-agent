@@ -1,11 +1,4 @@
 ID,Type,Name,Documentation,Element,x,y,w,h
-id-7c5bed8bc7cc,archimate-diagram-model,Capability Realization Map,"Shows capabilities with their supporting applications, grouped by domain",,,,,
-,,Operations,,id-8de362c986af,20,20,400,300
-,,,,id-7579b234fcf2,40,40,120,60
-,,,,id-68c77ead8205,310,40,120,60
-,,,,id-2a913e9c1616,580,40,120,60
-,,IT Operations,,id-e09f0be36e34,920,20,400,300
-,,,,id-37681a33f27b,40,40,120,60
 id-304abc8f21f9,archimate-diagram-model,CRM Consolidation Case,MVP9 test - shows CRM landscape with emphasis treatments,,,,,
 ,,H1,,id-31d6c26d1344,20,20,400,300
 ,,,,id-6e817ece7e8d,40,40,120,60
@@ -13,72 +6,143 @@ id-304abc8f21f9,archimate-diagram-model,CRM Consolidation Case,MVP9 test - shows
 ,,,,id-bec3c9e4f41a,40,40,120,60
 ,,,,id-59f1793eb4b4,,,,
 ,,,,id-987a4b2166a3,,,,
+id-1332e563ca5e,archimate-diagram-model,Data and Analytics Landscape,"Application cooperation view for the Data and Analytics domain.
+The central collaboration contains the major platform and service components grouped into
+Data Ingestion, Data Warehousing, Analytics, Automation, and DevOps.
+Source applications integrate inbound from the left, while Medlink is shown as a downstream consumer on the right.
+",,,,,
+,,,,id-aa8077adfc24,20,20,120,60
+,,,,id-c0f1d1806099,190,20,120,60
+,,,,id-f91e6b0dc180,360,20,120,60
+,,,,id-18c3e14355e4,530,20,120,60
+,,,,id-f9902b54b564,700,20,120,60
+,,,,id-6915a1cce7a6,870,20,120,60
+,,,,id-4884f092f359,,,,
+,,,,id-40a3e0ff4ac2,,,,
+,,,,id-ff74cf79a5d3,,,,
+,,,,id-ae14fdde92ad,,,,
+,,,,id-05dfdf705674,,,,
+,,,,id-215dce969ff2,,,,
+,,,,id-590f3b466d43,,,,
+,,,,id-fd68cddc1d53,,,,
+,,,,id-59f1793eb4b4,,,,
+,,,,id-987a4b2166a3,,,,
+,,,,id-29d79b2e4829,,,,
+id-ada9ebbae3be,archimate-diagram-model,ERP ANZ Landscape,"Application cooperation view for the ANZ ERP realm.
+ERP ANZ is the central collaboration/core.
+QAD EE 2019 and Pro2SQL ANZ are contained within that core.
+External systems sit around the core and connect only through explicit outbound flows.
+",,,,,
+,,,,id-a5b9ae2e6df9,20,20,120,60
+,,,,id-2757f9b2452f,190,20,120,60
+,,,,id-cb7cb0b84df6,360,20,120,60
+,,,,id-f91e6b0dc180,530,20,120,60
+,,,,id-021f48755bef,700,20,120,60
+,,,,id-f01423d8a34e,870,20,120,60
+,,,,id-15588b78f32b,1040,20,120,60
+,,,,id-f5c9616a90ed,1210,20,120,60
+,,,,id-c508ffe79f87,1380,20,120,60
+,,,,id-6385d2992d54,1550,20,120,60
+,,,,id-1b2283706bf4,1720,20,120,60
+,,,,id-03195777091d,1890,20,120,60
+,,,,id-784902c1ffb1,2060,20,120,60
+,,,,id-a3846d0a06ea,2230,20,120,60
+,,,,id-bb3759f4a808,2400,20,120,60
+,,,,id-1b20812cd840,2570,20,120,60
+,,,,id-ad73bc5bcf9e,2740,20,120,60
+,,,,id-14367eedc98c,2910,20,120,60
+,,,,id-46735043cd40,3080,20,120,60
+,,,,id-1cf63b7b7726,3250,20,120,60
+,,,,id-4884f092f359,,,,
+,,,,id-40a3e0ff4ac2,,,,
+,,,,id-ff74cf79a5d3,,,,
+,,,,id-ae14fdde92ad,,,,
+,,,,id-05dfdf705674,,,,
+,,,,id-215dce969ff2,,,,
+,,,,id-590f3b466d43,,,,
+,,,,id-fd68cddc1d53,,,,
+,,,,id-59f1793eb4b4,,,,
+,,,,id-987a4b2166a3,,,,
+,,,,id-29d79b2e4829,,,,
+id-8ae06080338b,archimate-diagram-model,ERP JPN Landscape,"Application cooperation view for the JPN ERP realm.
+ERP JPN is the central collaboration/core.
+QAD SE 11 and Pro2SQL JPN are contained within that core.
+External systems sit around the core and connect only through explicit outbound flows.
+",,,,,
+,,,,id-a5b9ae2e6df9,20,20,120,60
+,,,,id-021726ec4519,190,20,120,60
+,,,,id-f91e6b0dc180,360,20,120,60
+,,,,id-2e0b9d831422,530,20,120,60
+,,,,id-f01423d8a34e,700,20,120,60
+,,,,id-6d9eb02243f7,870,20,120,60
+,,,,id-965cd94cab5f,1040,20,120,60
+,,,,id-6b31a3831ed1,1210,20,120,60
+,,,,id-6385d2992d54,1380,20,120,60
+,,,,id-045a713928ad,1550,20,120,60
+,,,,id-02cd579ffddf,1720,20,120,60
+,,,,id-03195777091d,1890,20,120,60
+,,,,id-a3846d0a06ea,2060,20,120,60
+,,,,id-bb3759f4a808,2230,20,120,60
+,,,,id-46735043cd40,2400,20,120,60
+,,,,id-809fbf7c4841,2570,20,120,60
+,,,,id-6f89b665c98f,2740,20,120,60
+,,,,id-d0c5cbfb36b6,2910,20,120,60
+,,,,id-528df4932fd2,3080,20,120,60
+,,,,id-4884f092f359,,,,
+,,,,id-40a3e0ff4ac2,,,,
+,,,,id-ff74cf79a5d3,,,,
+,,,,id-ae14fdde92ad,,,,
+,,,,id-05dfdf705674,,,,
+,,,,id-215dce969ff2,,,,
+,,,,id-590f3b466d43,,,,
+,,,,id-fd68cddc1d53,,,,
+,,,,id-59f1793eb4b4,,,,
+,,,,id-987a4b2166a3,,,,
+,,,,id-29d79b2e4829,,,,
+id-127c084e22b4,archimate-diagram-model,QAD Migration Options,"Comparison view showing two stacked migration options from the three current QAD instances
+into alternative target cores, then through an analytical database and Boomi to shared
+downstream services.
+",,,,,
+,,,,id-f9902b54b564,20,20,120,60
+,,,,id-a5b9ae2e6df9,190,20,120,60
+,,,,id-f01423d8a34e,360,20,120,60
+,,,,id-05dfdf705674,,,,
+,,,,id-215dce969ff2,,,,
+,,,,id-590f3b466d43,,,,
+,,,,id-fd68cddc1d53,,,,
+,,,,id-59f1793eb4b4,,,,
+,,,,id-987a4b2166a3,,,,
+,,,,id-29d79b2e4829,,,,
 id-94b7749b3520,archimate-diagram-model,Infrastructure Cost Optimization Roadmap,"Infrastructure transformation roadmap focused on reducing Azure and DC overspend through serverless adoption, regional consolidation, and unified support services",,,,,
 ,,,,id-7ae3f9b3ce7b,,,,
 ,,,,id-64a12e8c0609,,,,
 ,,,,id-aded055d6223,,,,
-id-730c91b130d8,archimate-diagram-model,Operations Applications Landscape,Hierarchical landscape view of operations applications organized by region (rows) and sub-domain (columns),,,,,
-,,ANZ,,id-867859453640,20,20,780,300
-,,,,id-d6cdbb1d14ef,40,40,120,60
-,,,,id-8ca460a30e41,280,40,120,60
-,,,,id-cb7cb0b84df6,520,40,120,60
-,,,,id-40e91ca61f1d,760,40,120,60
-,,,,id-41fcb87f8bec,1000,40,120,60
-,,,,id-59e3aeffe45f,1240,40,120,60
-,,,,id-ebdc1ea40a06,40,140,120,60
-,,,,id-32cc2fd973f6,280,140,120,60
-,,,,id-72d65afe6f14,520,140,120,60
-,,,,id-844a55c65100,760,140,120,60
-,,,,id-1887171108f9,1000,140,120,60
-,,,,id-3bc1e5c38cf6,1240,140,120,60
-,,,,id-0edf7793fca7,40,240,120,60
-,,,,id-f3d98639d073,280,240,120,60
-,,,,id-a771a5a37055,520,240,120,60
-,,,,id-16649a0bc025,760,240,120,60
-,,,,id-c9ce5933ada1,1000,240,120,60
-,,,,id-b6c0f351c702,1240,240,120,60
-,,,,id-c21931642554,40,340,120,60
-,,,,id-57662baf44e5,280,340,120,60
-,,,,id-784902c1ffb1,520,340,120,60
-,,JPN,,id-fdc44092adea,840,20,780,300
-,,,,id-503abc05d38e,40,40,120,60
-,,,,id-b1a50a132d27,280,40,120,60
-,,,,id-ddf6f506feb2,520,40,120,60
-,,,,id-021726ec4519,760,40,120,60
-,,,,id-d0be297d0966,1000,40,120,60
-,,,,id-6e68a57a6540,1240,40,120,60
-,,,,id-0015d01da270,40,140,120,60
-,,,,id-d0e83168e3ab,280,140,120,60
-,,,,id-6d9eb02243f7,520,140,120,60
-,,,,id-528df4932fd2,760,140,120,60
-,,,,id-6385d2992d54,1000,140,120,60
-,,,,id-1d3ac771d8b3,1240,140,120,60
-,,,,id-5f835087595c,40,240,120,60
-,,,,id-5732a1cc4d7c,280,240,120,60
-,,,,id-88e532c4c4b9,520,240,120,60
-,,Other,,id-8a10b4f7e99f,840,370,780,300
-,,,,id-d0c5cbfb36b6,40,40,120,60
-,,,,id-c623bc8d5efd,280,40,120,60
-,,,,id-1b51411373e1,520,40,120,60
-,,,,id-506407f42be1,760,40,120,60
-,,,,id-d05cb7112389,1000,40,120,60
-id-1e7a8fa35d35,archimate-diagram-model,Operations Refresh Transformation Roadmap,"Single-view transformation story showing the journey from fragmented legacy
-operations systems to unified W3 Sirius and modernized PSS platforms.
-
-Timeline:
-- H1 (TODAY): Fragmented systems - W3 Sirius (ANZ only), Cargo Master (Japan),
-  Excel macros (GSCM/OCTS), COTS (Kenpin Barcode)
-- H2 (2025-2026): PSS 1.0 Upgrade (Priority 1), W3 Sirius DHR module, Japan expansion
-- H3 (TARGET): Unified W3 Sirius platform (ANZ + Japan), modern PSS, DHR manufacturing, legacy sunset
+id-817874b4c386,archimate-diagram-model,Operations ANZ Landscape,"Application cooperation view for the ANZ operations domain.
+Operations - ANZ is the central collaboration boundary.
+The internal estate is grouped into Production/QA, Warehouse, Planning, and QARA.
+QAD EE 2019 and Pro2SQL ANZ are shown on the left as upstream systems with direct inbound integrations.
 ",,,,,
-,,H1,,id-52849c205068,20,20,400,300
-,,,,id-03195777091d,40,40,120,60
-,,,,id-bb3759f4a808,200,40,120,60
-,,,,id-1d3ac771d8b3,360,40,120,60
-,,,,id-d0be297d0966,520,40,120,60
-,,,,id-6d9eb02243f7,40,140,120,60
-,,,,id-0015d01da270,200,140,120,60
-,,,,id-57662baf44e5,360,140,120,60
-,,,,id-784902c1ffb1,520,140,120,60
-,,H3,,id-5acb63862d67,920,20,400,300
-,,,,id-6e68a57a6540,40,40,120,60
+,,,,id-1b2283706bf4,20,20,120,60
+,,,,id-41fcb87f8bec,190,20,120,60
+,,,,id-cb7cb0b84df6,360,20,120,60
+,,,,id-021726ec4519,530,20,120,60
+,,,,id-784902c1ffb1,700,20,120,60
+,,,,id-57662baf44e5,870,20,120,60
+,,,,id-40e91ca61f1d,1040,20,120,60
+,,,,id-98bafb85d403,1210,20,120,60
+,,,,id-59e3aeffe45f,1380,20,120,60
+,,,,id-101c48872a1a,1550,20,120,60
+,,,,id-5f835087595c,1720,20,120,60
+,,,,id-021f48755bef,1890,20,120,60
+,,,,id-6385d2992d54,2060,20,120,60
+,,,,id-4884f092f359,,,,
+,,,,id-40a3e0ff4ac2,,,,
+,,,,id-ff74cf79a5d3,,,,
+,,,,id-ae14fdde92ad,,,,
+,,,,id-05dfdf705674,,,,
+,,,,id-215dce969ff2,,,,
+,,,,id-590f3b466d43,,,,
+,,,,id-fd68cddc1d53,,,,
+,,,,id-59f1793eb4b4,,,,
+,,,,id-987a4b2166a3,,,,
+,,,,id-29d79b2e4829,,,,

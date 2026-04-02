@@ -9,6 +9,7 @@ Complete reference for all EA-related CLI commands with practical examples and u
 | Command | Purpose | MVP | Status |
 |---------|---------|-----|--------|
 | `ea-discover` | Extract EA objects from natural language | MVP1/MVP2 | ✅ Production |
+| `ea-view` | Generate draw.io from a YAML view spec | MVP8/MVP9 | ✅ Production |
 | `ea-diagrams` | Generate visual diagrams with Gemini Flash 2.5 | MVP3 | ✅ Production |
 | `ea-artifacts` | Generate Mermaid-based diagrams (legacy) | MVP2 | ✅ Legacy Support |
 
@@ -122,6 +123,35 @@ python -m src.cli.main ea-discover "Enterprise data warehouse" --storage azure
 ---
 
 ## 🎨 MVP3: Diagram Generation Commands
+
+### **`ea-view` - Draw.io Generation from YAML View Specs**
+
+**Purpose**: Generate a `.drawio` diagram from a YAML view spec and optionally rebuild the portal.
+
+#### **Basic Syntax**
+```bash
+python -m src.cli.main ea-view <spec_path> [--portal]
+```
+
+#### **Parameters**
+- `<spec_path>`: Path to YAML view spec
+- `--portal / --no-portal`: Rebuild portal after generating the diagram
+
+#### **Examples**
+
+```bash
+# Generate a draw.io diagram from a YAML view spec
+python -m src.cli.main ea-view ea_inputs/views/data/data_landscape.yaml
+
+# Generate diagram and rebuild portal
+python -m src.cli.main ea-view ea_inputs/views/data/data_landscape.yaml --portal
+```
+
+#### **Output**
+```text
+Generating view from: ea_inputs/views/data/data_landscape.yaml
+Generated: ea_diagrams\data\data_landscape.drawio
+```
 
 ### **`ea-diagrams` - AI-Powered Visual Diagram Generation**
 

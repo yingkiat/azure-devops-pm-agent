@@ -13,6 +13,11 @@ story:
   tension: "Overspend on Azure (DEV/TEST always running) and local DCs; ad-hoc monitoring; fragmented support across regions"
   insight: "Serverless architecture + regional consolidation + unified support platform can deliver significant cost reduction while improving user experience"
 
+# === METADATA ===
+metadata:
+  domain: "infrastructure"
+  region: "APAC"
+
 # === VISUAL STRATEGY ===
 visual:
   emphasis:
