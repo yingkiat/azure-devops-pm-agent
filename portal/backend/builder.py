@@ -2147,17 +2147,18 @@ class PortalBuilder:
                 async initialize() {
                     try {
                         console.log('[EA Portal] Initializing...');
+                        const fetchJson = (path) => fetch(path, { cache: 'no-store' }).then(r => r.json());
                         console.log('[EA Portal] Fetching view registry...');
-                        this.views = await fetch('data/view_registry.json').then(r => r.json());
+                        this.views = await fetchJson('data/view_registry.json');
                         console.log('[EA Portal] Fetching element index...');
-                        this.elements = await fetch('data/element_index.json').then(r => r.json());
+                        this.elements = await fetchJson('data/element_index.json');
                         console.log('[EA Portal] Fetching relationships...');
-                        this.relationships = await fetch('data/relationship_graph.json').then(r => r.json());
+                        this.relationships = await fetchJson('data/relationship_graph.json');
 
                         // Load catalogue if available
                         try {
                             console.log('[EA Portal] Fetching catalogue...');
-                            const catalogueData = await fetch('data/catalogue.json').then(r => r.json());
+                            const catalogueData = await fetchJson('data/catalogue.json');
                             // Handle both new format (with metadata) and legacy format (array)
                             if (Array.isArray(catalogueData)) {
                                 this.catalogue = catalogueData;
@@ -2176,7 +2177,7 @@ class PortalBuilder:
 
                         // Load analytics if available
                         try {
-                            this.analyticsData = await fetch('data/analytics.json').then(r => r.json());
+                            this.analyticsData = await fetchJson('data/analytics.json');
                             this.selectedAnalyticsDomain = 'ALL';
                             console.log('[EA Portal] Loaded analytics data');
                         } catch (err) {
