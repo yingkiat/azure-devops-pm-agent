@@ -11,7 +11,7 @@ COPY ea_inputs/views/ ea_inputs/views/
 COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
 
 # Install dependencies for portal build
-RUN pip install pandas openpyxl --quiet
+RUN pip install pandas openpyxl PyYAML --quiet
 
 # Build the portal (generates static HTML)
 RUN python portal/build.py

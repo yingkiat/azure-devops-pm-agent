@@ -36,6 +36,8 @@ variables:
   # Production-specific resource names - UPDATE THESE TO MATCH YOUR PROD ENVIRONMENT
   - name: prodResourceGroup
     value: 'M3-RG-ALZ-DWHS-ALYTICS-P-1'  # Update with your production resource group
+  - name: prodSubscriptionId
+    value: '564d2420-5bbf-4c67-b7f5-13ff441af27a'
   - name: prodContainerAppName
     value: 'm3acaeaportalp1'  # EA Portal - separate from other deployments
   - name: prodACRRegistry
@@ -64,6 +66,7 @@ stages:
             --username "$(AZURE_CLIENT_ID)" \
             --password "$(AZURE_SECRET)" \
             --tenant "$(AZURE_TENANT_ID)"
+          az account set --subscription "$(prodSubscriptionId)"
           echo "✅ Authenticated successfully"
 
           REGISTRY_NAME="$(prodACRRegistry)"
@@ -112,6 +115,7 @@ stages:
                   --username "$(AZURE_CLIENT_ID)" \
                   --password "$(AZURE_SECRET)" \
                   --tenant "$(AZURE_TENANT_ID)"
+                az account set --subscription "$(prodSubscriptionId)"
                 echo "✅ Authenticated successfully"
 
                 echo "🚀 Starting Production Azure Container Apps deployment..."
@@ -161,6 +165,21 @@ stages:
                 # fi
 
                 # Update Container App (app is pre-created, always update)
+                echo "🔎 Verifying target Container App exists in the selected subscription..."
+                if ! az containerapp show \
+                  --name "${CONTAINER_APP_NAME}" \
+                  --resource-group "${RESOURCE_GROUP}" \
+                  >/tmp/containerapp-show.json 2>/tmp/containerapp-show.err; then
+                  echo "❌ Container App lookup failed for ${CONTAINER_APP_NAME} in ${RESOURCE_GROUP}"
+                  cat /tmp/containerapp-show.err || true
+                  echo "📋 Container Apps visible in resource group:"
+                  az containerapp list \
+                    --resource-group "${RESOURCE_GROUP}" \
+                    --query "[].name" -o table || true
+                  exit 1
+                fi
+                echo "✅ Container App found"
+
                 echo "🔄 Updating existing Container App..."
                 az containerapp update \
                   --name "${CONTAINER_APP_NAME}" \
@@ -184,6 +203,7 @@ stages:
                   --username "$(AZURE_CLIENT_ID)" \
                   --password "$(AZURE_SECRET)" \
                   --tenant "$(AZURE_TENANT_ID)"
+                az account set --subscription "$(prodSubscriptionId)"
                 echo "✅ Authenticated successfully"
 
                 echo "🧪 Verifying production deployment..."
