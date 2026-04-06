@@ -224,6 +224,7 @@ Elements are colored by:
 For current guidance on maintaining the generator without rewriting it, see:
 
 - [DRAWIO_GENERATOR_MAINTENANCE.md](DRAWIO_GENERATOR_MAINTENANCE.md)
+- [AZURE_DIAGRAM_MODE_PLANNING.md](AZURE_DIAGRAM_MODE_PLANNING.md)
 
 This note captures the agreed position that:
 
@@ -231,6 +232,9 @@ This note captures the agreed position that:
 - common diagramming rules are generic, not diagram-specific hacks
 - behavior-preserving incremental detangling is preferred over a rewrite
 - visual behavior changes and structural refactors should be committed separately
+
+The Azure planning note adds a separate `azure_diagram` mode for Azure-native solution diagrams
+that should be implemented beside the current EA-oriented generator rather than inside it.
 
 ## Example Outputs
 

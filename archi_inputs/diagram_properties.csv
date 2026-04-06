@@ -293,3 +293,42 @@ diagram-369ff6c2505e,Roadmap Disposition,Tolerate
 diagram-5754267c38d1,Roadmap Disposition,Tolerate
 diagram-2655dd91f4ba,Roadmap Disposition,Tolerate
 diagram-d958b2b7d537,Role,Operations JPN Core
+diagram-96b8270f4082,azure_service,container_apps
+diagram-96b8270f4082,container,PSS 2.0 Resource Group
+diagram-96b8270f4082,role,Application runtime
+diagram-338a0317347d,render_as,devops_pipeline
+diagram-338a0317347d,container,Delivery
+diagram-338a0317347d,role,Build and deployment pipeline
+diagram-18f228e2d669,azure_service,container_apps_environment
+diagram-18f228e2d669,container,PSS 2.0 Resource Group
+diagram-18f228e2d669,role,Managed application environment
+diagram-7817d2dbdacf,azure_service,azure_sql
+diagram-7817d2dbdacf,container,PSS 2.0 Resource Group
+diagram-7817d2dbdacf,role,Serverless operational database
+diagram-16ed63b86e5e,azure_service,container_registry
+diagram-16ed63b86e5e,container,Delivery
+diagram-16ed63b86e5e,role,Container image registry
+diagram-69e4f9faea00,azure_service,key_vault
+diagram-69e4f9faea00,container,Shared Platform Services
+diagram-69e4f9faea00,role,Secrets and certificates
+diagram-4c17623ddb90,azure_service,api_management
+diagram-4c17623ddb90,container,PSS 2.0 Resource Group
+diagram-4c17623ddb90,role,Ingress and API gateway
+diagram-526f9cb53df4,azure_service,log_analytics
+diagram-526f9cb53df4,container,Observability
+diagram-526f9cb53df4,role,Central log store
+diagram-275a49efe687,azure_service,virtual_network
+diagram-275a49efe687,container,Network Boundary
+diagram-275a49efe687,role,Network boundary
+diagram-034d5be9564c,azure_service,application_insights
+diagram-034d5be9564c,container,Observability
+diagram-034d5be9564c,role,Application telemetry
+diagram-88aeaad6cca9,render_as,user
+diagram-88aeaad6cca9,container,Users and Upstream Systems
+diagram-88aeaad6cca9,role,Internal users
+diagram-4df90909cc2d,azure_service,entra_id
+diagram-4df90909cc2d,container,Shared Platform Services
+diagram-4df90909cc2d,role,Authentication and identity
+diagram-6eaccdb15f5e,azure_service,private_endpoint
+diagram-6eaccdb15f5e,container,Network Boundary
+diagram-6eaccdb15f5e,role,Private access path

@@ -259,6 +259,13 @@ class DiagramGenerator:
         if not spec:
             return {'error': f'Failed to load spec: {spec_path}'}
 
+        if spec.get('type') == 'azure_diagram':
+            from .drawio_azure_generator import DrawIOAzureGenerator
+            return DrawIOAzureGenerator(
+                archi_dir=str(self.archi_dir),
+                views_dir=str(self.views_dir),
+            ).generate(spec_path)
+
         # Check if this is a freeform diagram
         is_freeform = spec.get('type') == 'freeform'
 

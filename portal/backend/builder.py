@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List
 import yaml
+import shutil
 
 try:
     import pandas as pd
@@ -56,6 +57,18 @@ class PortalBuilder:
             }
         except Exception:
             return {}
+
+    def _is_azure_diagram(self, relative_path: Path) -> bool:
+        """Return whether the matching YAML spec is an azure_diagram."""
+        spec_path = self.specs_dir / relative_path.with_suffix(".yaml")
+        if not spec_path.exists():
+            return False
+        try:
+            with open(spec_path, "r", encoding="utf-8") as f:
+                spec = yaml.safe_load(f) or {}
+            return spec.get("type") == "azure_diagram"
+        except Exception:
+            return False
 
     @staticmethod
     def _default_display_name(drawio_file: Path) -> str:
@@ -511,11 +524,31 @@ class PortalBuilder:
             # Use full relative path (without extension) as view_id for uniqueness
             view_id = relative_path.with_suffix("").as_posix().replace("/", "_")
 
-            # Preserve folder structure in output
-            svg_output = self.diagrams_output_dir / relative_path.with_suffix(".svg")
-            svg_output.parent.mkdir(parents=True, exist_ok=True)
+            is_azure_diagram = self._is_azure_diagram(relative_path)
 
-            result = converter.convert(str(drawio_file), str(svg_output))
+            # For azure_diagram views, require a sibling PNG and publish that directly.
+            if is_azure_diagram:
+                sibling_png = drawio_file.with_suffix(".png")
+                if not sibling_png.exists():
+                    print(f"      SKIP {view_id:45s} missing sibling PNG for azure_diagram")
+                    continue
+
+                png_output = self.diagrams_output_dir / relative_path.with_suffix(".png")
+                png_output.parent.mkdir(parents=True, exist_ok=True)
+
+                temp_svg_output = self.diagrams_output_dir / relative_path.with_suffix(".generated.svg")
+                result = converter.convert(str(drawio_file), str(temp_svg_output))
+                if result["success"]:
+                    shutil.copy2(str(sibling_png), str(png_output))
+                    if temp_svg_output.exists():
+                        temp_svg_output.unlink()
+                else:
+                    if temp_svg_output.exists():
+                        temp_svg_output.unlink()
+            else:
+                svg_output = self.diagrams_output_dir / relative_path.with_suffix(".svg")
+                svg_output.parent.mkdir(parents=True, exist_ok=True)
+                result = converter.convert(str(drawio_file), str(svg_output))
 
             if result["success"]:
                 element_ids = [e["id"] for e in result.get("elements", [])]
@@ -527,7 +560,11 @@ class PortalBuilder:
                     {
                         "view_id": view_id,
                         "name": display_name,
-                        "diagram_file": f"diagrams/{relative_path.with_suffix('.svg').as_posix()}",
+                        "diagram_file": (
+                            f"diagrams/{relative_path.with_suffix('.png').as_posix()}"
+                            if is_azure_diagram
+                            else f"diagrams/{relative_path.with_suffix('.svg').as_posix()}"
+                        ),
                         "category": category,
                         "domain": domain,
                         "region": region,
@@ -981,6 +1018,15 @@ class PortalBuilder:
             display: block;
             transform-origin: top left;
             transition: transform 0.2s ease;
+        }
+        .diagram-viewer img {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            display: block;
+            transform-origin: top left;
+            transition: transform 0.2s ease;
+            max-width: none;
         }
         .zoom-controls {
             position: absolute;
@@ -1861,7 +1907,8 @@ class PortalBuilder:
                 </div>
             </div>
             <div v-else class="diagram-viewer" @click="deselectElement()">
-                <div v-html="diagramHtml"></div>
+                <img v-if="diagramImagePath" :src="diagramImagePath" alt="Diagram" />
+                <div v-else v-html="diagramHtml"></div>
                 <div class="zoom-controls" v-if="currentView">
                     <button class="zoom-btn" @click="zoomOut" :disabled="zoomLevel <= 0.25" title="Zoom Out">−</button>
                     <button class="zoom-btn" @click="zoomReset" title="Reset Zoom">⊙</button>
@@ -1983,6 +2030,7 @@ class PortalBuilder:
                     selectedElement: null,
                     selectedCatalogueApp: null,
                     diagramHtml: '',
+                    diagramImagePath: '',
                     currentSvg: null,
                     viewMode: 'catalogue',
                     diagramMapSearch: '',
@@ -2441,8 +2489,16 @@ class PortalBuilder:
                     }
 
                     try {
-                        const response = await fetch(view.diagram_path);
-                        this.diagramHtml = await response.text();
+                        this.diagramHtml = '';
+                        this.diagramImagePath = '';
+                        this.currentSvg = null;
+
+                        if (view.diagram_path.toLowerCase().endsWith('.png')) {
+                            this.diagramImagePath = view.diagram_path;
+                        } else {
+                            const response = await fetch(view.diagram_path);
+                            this.diagramHtml = await response.text();
+                        }
 
                         this.$nextTick(() => {
                             const viewer = document.querySelector('.diagram-viewer');
@@ -2452,10 +2508,10 @@ class PortalBuilder:
                                     this.selectElement(el.dataset.elementId);
                                 });
                             });
-                            this.currentSvg = viewer.querySelector('svg');
+                            this.currentSvg = viewer.querySelector('svg') || viewer.querySelector('img');
 
                             // Remove fixed width/height attributes to allow proper zoom scaling
-                            if (this.currentSvg) {
+                            if (this.currentSvg && this.currentSvg.tagName && this.currentSvg.tagName.toLowerCase() === 'svg') {
                                 // Capture width/height before removing, in case we need to set viewBox
                                 const width = this.currentSvg.getAttribute('width') || 1000;
                                 const height = this.currentSvg.getAttribute('height') || 1000;
@@ -2470,6 +2526,10 @@ class PortalBuilder:
                                 this.currentSvg.removeAttribute('height');
 
                                 // Reset zoom to fit-to-width for new diagrams
+                                this.zoomLevel = 1;
+                                this.fitToWidth = false;
+                                this.applyZoom();
+                            } else if (this.currentSvg) {
                                 this.zoomLevel = 1;
                                 this.fitToWidth = false;
                                 this.applyZoom();

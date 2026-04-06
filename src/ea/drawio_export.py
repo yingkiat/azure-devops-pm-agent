@@ -176,6 +176,7 @@ class DrawIOElement:
     parent_id: Optional[str] = None
     color: str = DEFAULT_COLOR
     emphasis: str = "normal"  # MVP9: prominent, faded, highlighted, normal
+    style: Optional[str] = None
 
 
 @dataclass
@@ -325,6 +326,16 @@ class DrawIOExporter:
         cell.set('value', elem.name)
         cell.set('vertex', '1')
         cell.set('parent', elem.parent_id or '1')
+
+        if elem.style:
+            cell.set('style', elem.style)
+            geo = etree.SubElement(cell, 'mxGeometry')
+            geo.set('x', str(elem.x))
+            geo.set('y', str(elem.y))
+            geo.set('width', str(elem.width))
+            geo.set('height', str(elem.height))
+            geo.set('as', 'geometry')
+            return
 
         # Base style: rounded box with colors
         style_parts = [

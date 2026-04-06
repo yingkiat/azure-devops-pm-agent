@@ -1,0 +1,322 @@
+# === MODE ===
+type: "azure_diagram"
+
+# === INTENT ===
+intent:
+  question: "What is the standard Azure-native target architecture for PSS 2.0?"
+  audience: "Enterprise architects, solution architects, platform engineers, and delivery leads reviewing the PSS 2.0 target design"
+  decision: "Align on a standard Azure Container Apps pattern with serverless database and the supporting platform services expected for modernized internal business applications"
+  key_message: "PSS 2.0 should use a standard Azure pattern: Entra ID, API ingress, Container Apps, serverless database, Key Vault, observability, and DevOps-driven delivery"
+
+# === STORY ===
+story:
+  setup: "PSS 2.0 needs a target solution architecture that is simple, standard, and repeatable across future modernization initiatives."
+  tension: "The value is not in a bespoke architecture. The value is in establishing a clean Azure baseline that teams can recognize and reuse."
+  insight: "A focused Azure reference architecture centered on Container Apps and a serverless database makes the modernization standard explicit and reusable."
+
+# === METADATA ===
+metadata:
+  domain: "operations"
+  region: "ANZ"
+  workload: "PSS 2.0"
+  pattern: "solution_runtime"
+
+# === VIEW DEFINITION ===
+view:
+  name: "PSS 2.0 Azure Reference Architecture"
+  documentation: |
+    Azure-native target architecture for PSS 2.0.
+    This diagram is intended as the first reusable modernization template for application upgrades in an Azure-first environment.
+    It contrasts the legacy server-hosted pattern with the target Azure runtime pattern and makes the supporting platform services explicit.
+
+# === LAYOUT ===
+layout:
+  algorithm: "azure_reference"
+  pattern: "solution_runtime"
+  direction: "left_to_right"
+
+# === CONTAINERS ===
+containers:
+  - name: "Users and Upstream Systems"
+    kind: "external"
+
+  - name: "Azure Tenant"
+    kind: "tenant"
+
+  - name: "Shared Platform Services"
+    kind: "platform"
+
+  - name: "PSS 2.0 Subscription"
+    kind: "subscription"
+
+  - name: "PSS 2.0 Resource Group"
+    kind: "resource_group"
+
+  - name: "Network Boundary"
+    kind: "network"
+
+  - name: "Observability"
+    kind: "observability"
+
+  - name: "Delivery"
+    kind: "devops"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Corporate Users"
+      type: "Actor"
+      render_as: "user"
+      container: "Users and Upstream Systems"
+      role: "Internal users"
+      description: "Business and operations users accessing PSS 2.0."
+
+    - name: "QAD EE 2019"
+      type: "ApplicationComponent"
+      render_as: "external_system"
+      container: "Users and Upstream Systems"
+      role: "ERP source"
+      description: "Upstream ANZ ERP source system."
+
+    - name: "Pro2SQL ANZ"
+      type: "ApplicationComponent"
+      render_as: "external_system"
+      container: "Users and Upstream Systems"
+      role: "Replicated ERP data source"
+      description: "Replicated ERP data feed used in the ANZ operations landscape."
+
+    - name: "Microsoft Entra ID"
+      azure_service: "entra_id"
+      container: "Shared Platform Services"
+      role: "Authentication and identity"
+      description: "Enterprise identity provider for user authentication and token issuance."
+
+    - name: "Azure Key Vault"
+      azure_service: "key_vault"
+      container: "Shared Platform Services"
+      role: "Secrets and certificates"
+      description: "Centralized secret and certificate storage for the application runtime."
+
+    - name: "Azure Container Registry"
+      azure_service: "container_registry"
+      container: "Delivery"
+      role: "Container image registry"
+      description: "Stores versioned PSS 2.0 container images."
+
+    - name: "Azure DevOps Pipeline"
+      type: "ApplicationComponent"
+      render_as: "devops_pipeline"
+      container: "Delivery"
+      role: "Build and deployment pipeline"
+      description: "Builds, tests, and deploys the PSS 2.0 application to Azure."
+
+    - name: "Virtual Network"
+      azure_service: "virtual_network"
+      container: "Network Boundary"
+      role: "Network boundary"
+      description: "Logical network boundary for protected workload components."
+
+    - name: "Private Endpoint"
+      azure_service: "private_endpoint"
+      container: "Network Boundary"
+      role: "Private access path"
+      description: "Private connectivity to managed data services."
+
+    - name: "Azure API Management"
+      azure_service: "api_management"
+      container: "PSS 2.0 Resource Group"
+      role: "Ingress and API gateway"
+      description: "Managed gateway for inbound API traffic, routing, and policy enforcement."
+
+    - name: "Azure Container Apps Environment"
+      azure_service: "container_apps_environment"
+      container: "PSS 2.0 Resource Group"
+      role: "Managed application environment"
+      description: "Managed environment hosting PSS 2.0 container applications."
+
+    - name: "PSS 2.0 Runtime"
+      azure_service: "container_apps"
+      container: "PSS 2.0 Resource Group"
+      role: "Application runtime"
+      description: "Primary Azure-hosted runtime for the PSS 2.0 application."
+
+    - name: "Azure SQL Database"
+      azure_service: "azure_sql"
+      container: "PSS 2.0 Resource Group"
+      role: "Serverless operational database"
+      description: "Managed serverless relational data store for application data."
+
+    - name: "Azure Service Bus"
+      azure_service: "service_bus"
+      container: "PSS 2.0 Resource Group"
+      role: "Integration messaging"
+      description: "Standard asynchronous messaging layer for integrations and background processing."
+
+    - name: "Application Insights"
+      azure_service: "application_insights"
+      container: "Observability"
+      role: "Application telemetry"
+      description: "Application performance monitoring, traces, and diagnostics."
+
+    - name: "Log Analytics Workspace"
+      azure_service: "log_analytics"
+      container: "Observability"
+      role: "Central log store"
+      description: "Centralized operational logging and diagnostics workspace."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Flow"
+      source_name: "Corporate Users"
+      target_name: "Azure API Management"
+      label: "HTTPS"
+      description: "Internal users access PSS 2.0 through a managed API entry point."
+
+    - type: "Serving"
+      source_name: "Microsoft Entra ID"
+      target_name: "PSS 2.0 Runtime"
+      label: "OIDC / tokens"
+      description: "Application relies on Entra ID for identity and token validation."
+
+    - type: "Serving"
+      source_name: "Azure Key Vault"
+      target_name: "PSS 2.0 Runtime"
+      label: "Secrets"
+      description: "Application runtime retrieves secrets and certificates from Key Vault."
+
+    - type: "Serving"
+      source_name: "Azure Container Apps Environment"
+      target_name: "PSS 2.0 Runtime"
+      label: "Managed hosting"
+      description: "Container Apps environment provides the managed execution context."
+
+    - type: "Flow"
+      source_name: "Azure API Management"
+      target_name: "Azure Service Bus"
+      label: "Async handoff"
+      description: "Ingress can hand off asynchronous requests or integration events to the messaging layer."
+
+    - type: "Flow"
+      source_name: "Azure API Management"
+      target_name: "PSS 2.0 Runtime"
+      label: "API traffic"
+      description: "Inbound requests are routed to the application runtime."
+
+    - type: "Flow"
+      source_name: "PSS 2.0 Runtime"
+      target_name: "Azure SQL Database"
+      label: "Read / Write"
+      description: "Application stores and retrieves operational data from Azure SQL."
+
+    - type: "Flow"
+      source_name: "PSS 2.0 Runtime"
+      target_name: "Azure Service Bus"
+      label: "Events / messages"
+      description: "Application emits and consumes asynchronous integration messages."
+
+    - type: "Flow"
+      source_name: "QAD EE 2019"
+      target_name: "Azure Service Bus"
+      label: "ERP integration"
+      description: "ANZ ERP-originating integration events are exchanged through the messaging layer."
+
+    - type: "Flow"
+      source_name: "Pro2SQL ANZ"
+      target_name: "Azure Service Bus"
+      label: "Replicated data feed"
+      description: "Replicated ERP data is exchanged through decoupled integration."
+
+    - type: "Serving"
+      source_name: "Private Endpoint"
+      target_name: "Azure SQL Database"
+      label: "Private connectivity"
+      description: "Managed data services are accessed over private connectivity."
+
+    - type: "Serving"
+      source_name: "Virtual Network"
+      target_name: "Private Endpoint"
+      label: "Network boundary"
+      description: "Private endpoint is anchored within the workload network boundary."
+
+    - type: "Flow"
+      source_name: "PSS 2.0 Runtime"
+      target_name: "Application Insights"
+      label: "Telemetry"
+      description: "Application traces and performance telemetry are sent to Application Insights."
+
+    - type: "Flow"
+      source_name: "Application Insights"
+      target_name: "Log Analytics Workspace"
+      label: "Operational logs"
+      description: "Telemetry and log data are centralized in Log Analytics."
+
+    - type: "Flow"
+      source_name: "Azure DevOps Pipeline"
+      target_name: "Azure Container Registry"
+      label: "Build and push"
+      description: "Build pipeline publishes versioned images to the registry."
+
+    - type: "Flow"
+      source_name: "Azure Container Registry"
+      target_name: "PSS 2.0 Runtime"
+      label: "Deploy image"
+      description: "Application runtime pulls versioned images from the registry."
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "PSS 2.0 Runtime"
+      role: "Target Azure runtime"
+      treatment: "prominent"
+    - element: "Azure API Management"
+      role: "Controlled ingress layer"
+      treatment: "highlighted"
+    - element: "Azure SQL Database"
+      role: "Managed data platform"
+      treatment: "highlighted"
+    - element: "Azure Service Bus"
+      role: "Decoupled integration pattern"
+      treatment: "highlighted"
+    - element: "Azure Key Vault"
+      role: "Managed secret handling"
+      treatment: "normal"
+    - element: "Application Insights"
+      role: "Operational observability"
+      treatment: "normal"
+  grouping_rationale: "Organize the design into standard Azure zones: external access, shared platform services, workload resource group, observability, and delivery."
+  reading_order: "Read from left to right through user access, ingress, application runtime, data and integration services, then supporting platform, observability, and delivery services."
+  color_strategy: "Azure-native services should use Azure iconography and standard boundary containers, with the workload runtime and managed data layer emphasized as the primary modernization pattern."
+
+# === ANNOTATIONS ===
+annotations:
+  - text: "Standard managed application runtime"
+    near: "PSS 2.0 Runtime"
+    placement: "below"
+  - text: "Serverless database pattern"
+    near: "Azure SQL Database"
+    placement: "below"
+  - text: "Decouple integrations from point-to-point dependencies"
+    near: "Azure Service Bus"
+    placement: "below"
+  - text: "Centralized secrets instead of local config"
+    near: "Azure Key Vault"
+    placement: "below"
+  - text: "Built-in telemetry and centralized logs"
+    near: "Application Insights"
+    placement: "below"
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations:
+  - version: 1.0
+    date: "2026-04-06"
+    feedback: "Initial anchor spec for the new Azure diagram mode."
+    change: "Defined the PSS 2.0 target Azure reference architecture as the first concrete azure_diagram use case."
+  - version: 1.1
+    date: "2026-04-06"
+    feedback: "Correct the workload context from JPN to ANZ and align the upstream ERP sources."
+    change: "Updated region metadata to ANZ and replaced QAD SE 11 / Pro2SQL JPN with QAD EE 2019 / Pro2SQL ANZ."

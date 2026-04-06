@@ -246,6 +246,13 @@ class DrawIOGenerator:
         if not spec:
             return {'error': f'Failed to load spec: {spec_path}'}
 
+        if spec.get('type') == 'azure_diagram':
+            from .drawio_azure_generator import DrawIOAzureGenerator
+            return DrawIOAzureGenerator(
+                archi_dir=str(self.archi_dir),
+                views_dir=str(self.views_dir),
+            ).generate(spec_path)
+
         # Extract configuration
         view_config = spec.get('view', {})
         view_name = view_config.get('name', 'Diagram')
@@ -1711,6 +1718,10 @@ class DrawIOGenerator:
             for idx, ann in enumerate(annotations):
                 text = ann.get('text', '')
                 near = ann.get('near', '').lower()
+                placement = ann.get('placement', 'above')
+                offset_x = int(ann.get('offset_x', 10))
+                default_offset_y = 36 if placement == 'below' else 8
+                offset_y = int(ann.get('offset_y', default_offset_y))
 
                 # Find element position
                 pos = elem_positions.get(near)
@@ -1722,20 +1733,36 @@ class DrawIOGenerator:
                             break
 
                 if pos:
-                    # Default is above the element, with optional offsets for edge-adjacent callouts.
-                    ann_x = pos['x'] + int(ann.get('offset_x', 0))
-                    ann_y = (pos['y'] - 25) + int(ann.get('offset_y', 0))
-                    ann_width = int(ann.get('width', max(80, len(text) * 7)))
-                    ann_height = int(ann.get('height', 20))
+                    target_x = int(pos['x'])
+                    target_y = int(pos['y'])
+                    target_w = int(pos.get('width', 120))
+                    target_h = int(pos.get('height', 60))
+                    target_id = pos.get('id')
+
+                    ann_width = int(ann.get('width', max(135, min(240, len(text) * 7 + 22))))
+                    ann_height = int(ann.get('height', 26))
+
+                    if placement == 'right':
+                        ann_x = target_x + target_w + offset_x
+                        ann_y = target_y + (target_h // 2) - (ann_height // 2)
+                    elif placement == 'left':
+                        ann_x = target_x - ann_width - offset_x
+                        ann_y = target_y + (target_h // 2) - (ann_height // 2)
+                    elif placement == 'below':
+                        ann_x = target_x + (target_w // 2) - (ann_width // 2)
+                        ann_y = target_y + target_h + offset_y
+                    else:
+                        ann_x = target_x + (target_w // 2) - (ann_width // 2)
+                        ann_y = target_y - ann_height - offset_y
 
                     textbox = ET.Element('mxCell')
                     textbox.set('id', f'ann-{idx}')
                     textbox.set('value', text)
                     textbox.set('vertex', '1')
                     textbox.set('parent', '1')
-                    textbox.set('style', 'text;html=1;align=left;verticalAlign=middle;'
-                                        'fontSize=9;fontStyle=2;fillColor=#E8F5E9;'
-                                        'strokeColor=none;rounded=1;spacing=4;')
+                    textbox.set('style', 'rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;'
+                                        'fontSize=9;fillColor=#FFF8E1;strokeColor=#D4B106;'
+                                        'spacing=6;arcSize=10;')
 
                     geometry = ET.SubElement(textbox, 'mxGeometry')
                     geometry.set('x', str(int(ann_x)))
@@ -1745,6 +1772,22 @@ class DrawIOGenerator:
                     geometry.set('as', 'geometry')
 
                     root_elem.append(textbox)
+
+                    if target_id and ann.get('connector', False):
+                        connector = ET.Element('mxCell')
+                        connector.set('id', f'ann-edge-{idx}')
+                        connector.set('edge', '1')
+                        connector.set('parent', '1')
+                        connector.set('source', f'ann-{idx}')
+                        connector.set('target', target_id)
+                        connector.set('style', 'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;'
+                                               'jettySize=auto;html=1;strokeColor=#D4B106;dashed=1;'
+                                               'endArrow=open;startArrow=none;fontSize=8;')
+
+                        edge_geometry = ET.SubElement(connector, 'mxGeometry')
+                        edge_geometry.set('relative', '1')
+                        edge_geometry.set('as', 'geometry')
+                        root_elem.append(connector)
 
             xml_str = ET.tostring(root, encoding='unicode')
             return '<?xml version="1.0" encoding="UTF-8"?>\n' + xml_str
