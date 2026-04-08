@@ -196,7 +196,7 @@ elements:
         Role: "Specification Management"
       description: "Item/BOM outbound from Pro2SQL JPN."
 
-    - name: "MedQuote"
+    - name: "KMS"
       override:
         Spoke Side: "left"
         External Group: "Commercial"

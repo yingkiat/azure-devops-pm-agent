@@ -45,6 +45,12 @@
         <property propertyDefinitionRef="id-387066f5b865">
           <value>EDI Order Reception</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>Baseline</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-c508ffe79f87" xsi:type="ApplicationComponent">
@@ -118,7 +124,7 @@
           <value>ANZ</value>
         </property>
         <property propertyDefinitionRef="id-224338fd7930">
-          <value>Commercial</value>
+          <value>Tech Services</value>
         </property>
         <property propertyDefinitionRef="id-7e92a39e4667">
           <value>End User Computing</value>
@@ -172,7 +178,7 @@
           <value>Commercial</value>
         </property>
         <property propertyDefinitionRef="id-7e92a39e4667">
-          <value>End User Computing</value>
+          <value>Marketing</value>
         </property>
         <property propertyDefinitionRef="id-fd77680479f8">
           <value>jose.harima</value>
@@ -206,6 +212,12 @@
         </property>
         <property propertyDefinitionRef="id-387066f5b865">
           <value>Video marketing</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>Baseline</value>
         </property>
       </properties>
     </element>
@@ -258,6 +270,12 @@
         <property propertyDefinitionRef="id-387066f5b865">
           <value>Invoice and employee expense</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-bc99312013c7" xsi:type="ApplicationComponent">
@@ -302,6 +320,12 @@
         </property>
         <property propertyDefinitionRef="id-387066f5b865">
           <value>For expense reports</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -351,6 +375,12 @@
         <property propertyDefinitionRef="id-387066f5b865">
           <value>Custom app for JPN QAD</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Tolerate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>Baseline</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-b66789099bdb" xsi:type="ApplicationComponent">
@@ -395,6 +425,12 @@
         </property>
         <property propertyDefinitionRef="id-387066f5b865">
           <value>Web CMS</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -5246,6 +5282,12 @@ AUS00MAMP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-11e891b15fcb" xsi:type="ApplicationComponent">
@@ -5403,6 +5445,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-ace5b6c7e7f8" xsi:type="ApplicationComponent">
@@ -5480,6 +5528,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -7566,7 +7620,7 @@ AUS00RFWP1</value>
           <value>Commercial</value>
         </property>
         <property propertyDefinitionRef="id-5fb9f252392e">
-          <value>AEM</value>
+          <value>JPN</value>
         </property>
         <property propertyDefinitionRef="id-7e92a39e4667">
           <value>Marketing</value>
@@ -7597,6 +7651,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -7640,6 +7700,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-f32a97390abb" xsi:type="ApplicationComponent">
@@ -7681,6 +7747,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Tolerate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>Baseline</value>
         </property>
       </properties>
     </element>
@@ -7724,6 +7796,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-2ba56bc66693" xsi:type="ApplicationComponent">
@@ -7765,6 +7843,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -7808,6 +7892,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-a554d018ef72" xsi:type="ApplicationComponent">
@@ -7849,6 +7939,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -7892,6 +7988,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-1f12ee03b0e6" xsi:type="ApplicationComponent">
@@ -7933,6 +8035,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -8024,6 +8132,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Review</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-1cf63b7b7726" xsi:type="ApplicationComponent">
@@ -8069,6 +8183,12 @@ AUS00RFWP1</value>
         <property propertyDefinitionRef="id-9ffbe4ced25f">
           <value>Yes</value>
         </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
       </properties>
     </element>
     <element identifier="id-fbd944c5a851" xsi:type="ApplicationComponent">
@@ -8110,6 +8230,12 @@ AUS00RFWP1</value>
         </property>
         <property propertyDefinitionRef="id-71e9dbab11a8">
           <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Invest</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
         </property>
       </properties>
     </element>
@@ -9229,6 +9355,54 @@ AUS00RFWP1</value>
         </property>
       </properties>
     </element>
+    <element identifier="id-1a7c3aa492a3" xsi:type="ApplicationComponent">
+      <name>Magento JPN</name>
+      <documentation>CMS</documentation>
+      <properties>
+        <property propertyDefinitionRef="id-224338fd7930">
+          <value>Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-5fb9f252392e">
+          <value>JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-7e92a39e4667">
+          <value>Marketing</value>
+        </property>
+        <property propertyDefinitionRef="id-fd77680479f8">
+          <value>jose.harima</value>
+        </property>
+        <property propertyDefinitionRef="id-37c081ee57dd">
+          <value>Magento JPN</value>
+        </property>
+        <property propertyDefinitionRef="id-387066f5b865">
+          <value>CMS</value>
+        </property>
+        <property propertyDefinitionRef="id-3f7a60e17f42">
+          <value>Limited Use</value>
+        </property>
+        <property propertyDefinitionRef="id-85963f769af5">
+          <value>OnPrem</value>
+        </property>
+        <property propertyDefinitionRef="id-126194a04aeb">
+          <value>Magento</value>
+        </property>
+        <property propertyDefinitionRef="id-720b058aa353">
+          <value>Moderate</value>
+        </property>
+        <property propertyDefinitionRef="id-7e2fa9c8a8dd">
+          <value>Tier 3 - Business Operational</value>
+        </property>
+        <property propertyDefinitionRef="id-71e9dbab11a8">
+          <value>IT-APAC-Commercial</value>
+        </property>
+        <property propertyDefinitionRef="id-667e1655173d">
+          <value>Migrate</value>
+        </property>
+        <property propertyDefinitionRef="id-51d2716c5392">
+          <value>In Progress</value>
+        </property>
+      </properties>
+    </element>
   </elements>
   <relationships>
     <relationship identifier="id-900a0aab4cca" xsi:type="Serving" source="id-809fbf7c4841" target="id-14da17022bdc">
@@ -9871,21 +10045,42 @@ AUS00RFWP1</value>
   </propertyDefinitions>
   <views>
     <diagrams>
+      <view identifier="id-79251b188d8d" xsi:type="Diagram">
+        <name>Commercial ANZ Landscape</name>
+        <documentation>Application cooperation view for the ANZ commercial domain.
+Commercial ANZ is the central collaboration boundary.
+The internal estate is grouped into Customer Service, Sales, SPT, Marketing, and Finance.
+Microsoft Dynamics spans Customer Service, Sales, and SPT.
+Informatica PIM ANZ is shown on the left as an upstream integration into Magento ANZ, while QAD EE 2019 is shown on the right as a downstream ERP integration from Microsoft Dynamics.
+</documentation>
+        <node identifier="id-553c27743f92" elementRef="id-15588b78f32b" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-47f5dc07fab1" elementRef="id-1cf63b7b7726" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-b47c7edbdda6" elementRef="id-d11d37e2f121" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-72868e5525fd" elementRef="id-1b2283706bf4" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-2e9173678722" elementRef="id-1b20812cd840" xsi:type="Element" x="660" y="20" w="120" h="60" />
+        <node identifier="id-d37b05c59e4d" elementRef="id-46735043cd40" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-18d353c63792" elementRef="id-9009058c4cc7" xsi:type="Element" x="980" y="20" w="120" h="60" />
+        <node identifier="id-6bc2f6befcf2" elementRef="id-c508ffe79f87" xsi:type="Element" x="1140" y="20" w="120" h="60" />
+        <node identifier="id-e773995ea1fb" elementRef="id-892495dbc37d" xsi:type="Element" x="1300" y="20" w="120" h="60" />
+        <node identifier="id-7a04d5f70abb" elementRef="id-14367eedc98c" xsi:type="Element" x="1460" y="20" w="120" h="60" />
+        <node identifier="id-b0b9fb1fcaf5" elementRef="id-f32a97390abb" xsi:type="Element" x="1620" y="20" w="120" h="60" />
+        <node identifier="id-3b62ad4fcbca" elementRef="id-fbd944c5a851" xsi:type="Element" x="1780" y="20" w="120" h="60" />
+      </view>
       <view identifier="id-304abc8f21f9" xsi:type="Diagram">
         <name>CRM Consolidation Case</name>
         <documentation>MVP9 test - shows CRM landscape with emphasis treatments</documentation>
         <node identifier="grp-region-1" xsi:type="Container" x="20" y="20" w="800" h="300">
-          <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-c508ffe79f87" />
-          <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-6e817ece7e8d" />
-          <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-bec3c9e4f41a" />
+          <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-6e817ece7e8d" />
+          <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-bec3c9e4f41a" />
+          <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-c508ffe79f87" />
         </node>
-        <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-c508ffe79f87" />
-        <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-6e817ece7e8d" />
-        <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-bec3c9e4f41a" />
-        <connection identifier="conn-1" relationshipRef="id-59f1793eb4b4" xsi:type="Relationship" source="node-3" target="node-1" />
-        <connection identifier="conn-2" relationshipRef="id-987a4b2166a3" xsi:type="Relationship" source="node-3" target="node-2" />
-        <connection identifier="id-5f1022ee0b4c" relationshipRef="id-59f1793eb4b4" xsi:type="Relationship" source="node-3" target="node-1" />
-        <connection identifier="id-727fa24419c3" relationshipRef="id-987a4b2166a3" xsi:type="Relationship" source="node-3" target="node-2" />
+        <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-6e817ece7e8d" />
+        <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-bec3c9e4f41a" />
+        <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-c508ffe79f87" />
+        <connection identifier="conn-1" relationshipRef="id-59f1793eb4b4" xsi:type="Relationship" source="node-2" target="node-3" />
+        <connection identifier="conn-2" relationshipRef="id-987a4b2166a3" xsi:type="Relationship" source="node-2" target="node-1" />
+        <connection identifier="id-5f1022ee0b4c" relationshipRef="id-59f1793eb4b4" xsi:type="Relationship" source="node-2" target="node-3" />
+        <connection identifier="id-727fa24419c3" relationshipRef="id-987a4b2166a3" xsi:type="Relationship" source="node-2" target="node-1" />
       </view>
       <view identifier="id-1332e563ca5e" xsi:type="Diagram">
         <name>Data and Analytics Landscape</name>
@@ -9894,12 +10089,12 @@ The central collaboration contains the major platform and service components gro
 Data Ingestion, Data Warehousing, Analytics, Automation, and DevOps.
 Source applications integrate inbound from the left, while Medlink is shown as a downstream consumer on the right.
 </documentation>
-        <node identifier="id-049d78fb1ccf" elementRef="id-aa8077adfc24" xsi:type="Element" x="20" y="20" w="120" h="60" />
-        <node identifier="id-f784a3cec3e5" elementRef="id-c0f1d1806099" xsi:type="Element" x="180" y="20" w="120" h="60" />
-        <node identifier="id-842541856123" elementRef="id-f91e6b0dc180" xsi:type="Element" x="340" y="20" w="120" h="60" />
-        <node identifier="id-4c7d8609c242" elementRef="id-18c3e14355e4" xsi:type="Element" x="500" y="20" w="120" h="60" />
-        <node identifier="id-532d70d438f2" elementRef="id-f9902b54b564" xsi:type="Element" x="660" y="20" w="120" h="60" />
-        <node identifier="id-b0755434a79b" elementRef="id-6915a1cce7a6" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-4c7d8609c242" elementRef="id-18c3e14355e4" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-049d78fb1ccf" elementRef="id-aa8077adfc24" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-b0755434a79b" elementRef="id-6915a1cce7a6" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-842541856123" elementRef="id-f91e6b0dc180" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-f784a3cec3e5" elementRef="id-c0f1d1806099" xsi:type="Element" x="660" y="20" w="120" h="60" />
+        <node identifier="id-532d70d438f2" elementRef="id-f9902b54b564" xsi:type="Element" x="820" y="20" w="120" h="60" />
       </view>
       <view identifier="id-ada9ebbae3be" xsi:type="Diagram">
         <name>ERP ANZ Landscape</name>
@@ -9908,26 +10103,26 @@ ERP ANZ is the central collaboration/core.
 QAD EE 2019 and Pro2SQL ANZ are contained within that core.
 External systems sit around the core and connect only through explicit outbound flows.
 </documentation>
-        <node identifier="id-74e621ad7845" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="20" y="20" w="120" h="60" />
-        <node identifier="id-2fb8d5718cd8" elementRef="id-2757f9b2452f" xsi:type="Element" x="180" y="20" w="120" h="60" />
-        <node identifier="id-b83f387e8e95" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="340" y="20" w="120" h="60" />
-        <node identifier="id-96288b4d231f" elementRef="id-f91e6b0dc180" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-d59c3b17a615" elementRef="id-bb3759f4a808" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-9d42d65cd0aa" elementRef="id-f01423d8a34e" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-14511a5b5209" elementRef="id-1b20812cd840" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-d506b7d7a1a2" elementRef="id-46735043cd40" xsi:type="Element" x="500" y="20" w="120" h="60" />
         <node identifier="id-efaee7c72d7e" elementRef="id-021f48755bef" xsi:type="Element" x="660" y="20" w="120" h="60" />
-        <node identifier="id-9d42d65cd0aa" elementRef="id-f01423d8a34e" xsi:type="Element" x="820" y="20" w="120" h="60" />
-        <node identifier="id-6a05266b4308" elementRef="id-15588b78f32b" xsi:type="Element" x="980" y="20" w="120" h="60" />
-        <node identifier="id-ef0a53b0c845" elementRef="id-f5c9616a90ed" xsi:type="Element" x="1140" y="20" w="120" h="60" />
-        <node identifier="id-a70bf499c3a1" elementRef="id-c508ffe79f87" xsi:type="Element" x="1300" y="20" w="120" h="60" />
-        <node identifier="id-a9a6ac1c9e2a" elementRef="id-6385d2992d54" xsi:type="Element" x="1460" y="20" w="120" h="60" />
-        <node identifier="id-235ce75c92a2" elementRef="id-1b2283706bf4" xsi:type="Element" x="1620" y="20" w="120" h="60" />
-        <node identifier="id-ec890bbe2b80" elementRef="id-03195777091d" xsi:type="Element" x="1780" y="20" w="120" h="60" />
-        <node identifier="id-1d9e16b016f4" elementRef="id-784902c1ffb1" xsi:type="Element" x="1940" y="20" w="120" h="60" />
-        <node identifier="id-bce55e944194" elementRef="id-a3846d0a06ea" xsi:type="Element" x="2100" y="20" w="120" h="60" />
-        <node identifier="id-d59c3b17a615" elementRef="id-bb3759f4a808" xsi:type="Element" x="2260" y="20" w="120" h="60" />
-        <node identifier="id-14511a5b5209" elementRef="id-1b20812cd840" xsi:type="Element" x="2420" y="20" w="120" h="60" />
-        <node identifier="id-c5640ac49384" elementRef="id-ad73bc5bcf9e" xsi:type="Element" x="2580" y="20" w="120" h="60" />
+        <node identifier="id-ec890bbe2b80" elementRef="id-03195777091d" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-bce55e944194" elementRef="id-a3846d0a06ea" xsi:type="Element" x="980" y="20" w="120" h="60" />
+        <node identifier="id-a9a6ac1c9e2a" elementRef="id-6385d2992d54" xsi:type="Element" x="1140" y="20" w="120" h="60" />
+        <node identifier="id-74e621ad7845" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="1300" y="20" w="120" h="60" />
+        <node identifier="id-7c6f0690ef01" elementRef="id-021726ec4519" xsi:type="Element" x="1460" y="20" w="120" h="60" />
+        <node identifier="id-a70bf499c3a1" elementRef="id-c508ffe79f87" xsi:type="Element" x="1620" y="20" w="120" h="60" />
+        <node identifier="id-2fb8d5718cd8" elementRef="id-2757f9b2452f" xsi:type="Element" x="1780" y="20" w="120" h="60" />
+        <node identifier="id-04f96e737aab" elementRef="id-1cf63b7b7726" xsi:type="Element" x="1940" y="20" w="120" h="60" />
+        <node identifier="id-6a05266b4308" elementRef="id-15588b78f32b" xsi:type="Element" x="2100" y="20" w="120" h="60" />
+        <node identifier="id-1d9e16b016f4" elementRef="id-784902c1ffb1" xsi:type="Element" x="2260" y="20" w="120" h="60" />
+        <node identifier="id-235ce75c92a2" elementRef="id-1b2283706bf4" xsi:type="Element" x="2420" y="20" w="120" h="60" />
+        <node identifier="id-96288b4d231f" elementRef="id-f91e6b0dc180" xsi:type="Element" x="2580" y="20" w="120" h="60" />
         <node identifier="id-cd5a24932791" elementRef="id-14367eedc98c" xsi:type="Element" x="2740" y="20" w="120" h="60" />
-        <node identifier="id-d506b7d7a1a2" elementRef="id-46735043cd40" xsi:type="Element" x="2900" y="20" w="120" h="60" />
-        <node identifier="id-04f96e737aab" elementRef="id-1cf63b7b7726" xsi:type="Element" x="3060" y="20" w="120" h="60" />
+        <node identifier="id-c5640ac49384" elementRef="id-ad73bc5bcf9e" xsi:type="Element" x="2900" y="20" w="120" h="60" />
+        <node identifier="id-b83f387e8e95" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="3060" y="20" w="120" h="60" />
       </view>
       <view identifier="id-8ae06080338b" xsi:type="Diagram">
         <name>ERP JPN Landscape</name>
@@ -9936,25 +10131,25 @@ ERP JPN is the central collaboration/core.
 QAD SE 11 and Pro2SQL JPN are contained within that core.
 External systems sit around the core and connect only through explicit outbound flows.
 </documentation>
-        <node identifier="id-798511755ca6" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="20" y="20" w="120" h="60" />
-        <node identifier="id-3abb457ef962" elementRef="id-021726ec4519" xsi:type="Element" x="180" y="20" w="120" h="60" />
-        <node identifier="id-efa81aa6f114" elementRef="id-f91e6b0dc180" xsi:type="Element" x="340" y="20" w="120" h="60" />
-        <node identifier="id-f643208280ba" elementRef="id-2e0b9d831422" xsi:type="Element" x="500" y="20" w="120" h="60" />
-        <node identifier="id-1231a4e0f652" elementRef="id-f01423d8a34e" xsi:type="Element" x="660" y="20" w="120" h="60" />
-        <node identifier="id-db55ededf10a" elementRef="id-6d9eb02243f7" xsi:type="Element" x="820" y="20" w="120" h="60" />
-        <node identifier="id-aad665bc7583" elementRef="id-965cd94cab5f" xsi:type="Element" x="980" y="20" w="120" h="60" />
-        <node identifier="id-ce46a8c9b546" elementRef="id-6b31a3831ed1" xsi:type="Element" x="1140" y="20" w="120" h="60" />
+        <node identifier="id-b0de2f1d0937" elementRef="id-045a713928ad" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-51824d7f3a69" elementRef="id-bb3759f4a808" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-1231a4e0f652" elementRef="id-f01423d8a34e" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-2a29ae2c77cc" elementRef="id-4a4df63c87b4" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-f643208280ba" elementRef="id-2e0b9d831422" xsi:type="Element" x="660" y="20" w="120" h="60" />
+        <node identifier="id-763a5b451c13" elementRef="id-528df4932fd2" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-bec504cc4412" elementRef="id-03195777091d" xsi:type="Element" x="980" y="20" w="120" h="60" />
+        <node identifier="id-6d37c9e7b7d3" elementRef="id-a3846d0a06ea" xsi:type="Element" x="1140" y="20" w="120" h="60" />
         <node identifier="id-fedd89c66b13" elementRef="id-6385d2992d54" xsi:type="Element" x="1300" y="20" w="120" h="60" />
-        <node identifier="id-b0de2f1d0937" elementRef="id-045a713928ad" xsi:type="Element" x="1460" y="20" w="120" h="60" />
-        <node identifier="id-ede617d8d99b" elementRef="id-02cd579ffddf" xsi:type="Element" x="1620" y="20" w="120" h="60" />
-        <node identifier="id-bec504cc4412" elementRef="id-03195777091d" xsi:type="Element" x="1780" y="20" w="120" h="60" />
-        <node identifier="id-6d37c9e7b7d3" elementRef="id-a3846d0a06ea" xsi:type="Element" x="1940" y="20" w="120" h="60" />
-        <node identifier="id-51824d7f3a69" elementRef="id-bb3759f4a808" xsi:type="Element" x="2100" y="20" w="120" h="60" />
-        <node identifier="id-4d0cf7d8cc09" elementRef="id-46735043cd40" xsi:type="Element" x="2260" y="20" w="120" h="60" />
+        <node identifier="id-798511755ca6" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="1460" y="20" w="120" h="60" />
+        <node identifier="id-3abb457ef962" elementRef="id-021726ec4519" xsi:type="Element" x="1620" y="20" w="120" h="60" />
+        <node identifier="id-745bb230cb5a" elementRef="id-d0c5cbfb36b6" xsi:type="Element" x="1780" y="20" w="120" h="60" />
+        <node identifier="id-ce46a8c9b546" elementRef="id-6b31a3831ed1" xsi:type="Element" x="1940" y="20" w="120" h="60" />
+        <node identifier="id-db55ededf10a" elementRef="id-6d9eb02243f7" xsi:type="Element" x="2100" y="20" w="120" h="60" />
+        <node identifier="id-383628b2a4ae" elementRef="id-6f89b665c98f" xsi:type="Element" x="2260" y="20" w="120" h="60" />
         <node identifier="id-e0db78299652" elementRef="id-809fbf7c4841" xsi:type="Element" x="2420" y="20" w="120" h="60" />
-        <node identifier="id-383628b2a4ae" elementRef="id-6f89b665c98f" xsi:type="Element" x="2580" y="20" w="120" h="60" />
-        <node identifier="id-745bb230cb5a" elementRef="id-d0c5cbfb36b6" xsi:type="Element" x="2740" y="20" w="120" h="60" />
-        <node identifier="id-763a5b451c13" elementRef="id-528df4932fd2" xsi:type="Element" x="2900" y="20" w="120" h="60" />
+        <node identifier="id-aad665bc7583" elementRef="id-965cd94cab5f" xsi:type="Element" x="2580" y="20" w="120" h="60" />
+        <node identifier="id-efa81aa6f114" elementRef="id-f91e6b0dc180" xsi:type="Element" x="2740" y="20" w="120" h="60" />
+        <node identifier="id-ede617d8d99b" elementRef="id-02cd579ffddf" xsi:type="Element" x="2900" y="20" w="120" h="60" />
       </view>
       <view identifier="id-127c084e22b4" xsi:type="Diagram">
         <name>QAD Migration Options</name>
@@ -9962,57 +10157,13 @@ External systems sit around the core and connect only through explicit outbound 
 into alternative target cores, then through an analytical database and Boomi to shared
 downstream services.
 </documentation>
-        <node identifier="id-3bbeaf057d43" elementRef="id-f9902b54b564" xsi:type="Element" x="20" y="20" w="120" h="60" />
-        <node identifier="id-df841a28a081" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="170" y="20" w="120" h="60" />
-        <node identifier="id-e11d7097c76a" elementRef="id-f01423d8a34e" xsi:type="Element" x="320" y="20" w="120" h="60" />
+        <node identifier="id-e11d7097c76a" elementRef="id-f01423d8a34e" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-3bbeaf057d43" elementRef="id-f9902b54b564" xsi:type="Element" x="170" y="20" w="120" h="60" />
+        <node identifier="id-df841a28a081" elementRef="id-a5b9ae2e6df9" xsi:type="Element" x="320" y="20" w="120" h="60" />
       </view>
       <view identifier="id-94b7749b3520" xsi:type="Diagram">
         <name>Infrastructure Cost Optimization Roadmap</name>
         <documentation>Infrastructure transformation roadmap focused on reducing Azure and DC overspend through serverless adoption, regional consolidation, and unified support services</documentation>
-        <node identifier="grp-region-1" xsi:type="Container" x="20" y="20" w="800" h="1100">
-          <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-2e07d3fd1017" />
-          <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-5dc64d476bac" />
-          <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-a40f6332543f" />
-          <node identifier="node-4" xsi:type="Element" x="20" y="320" w="120" h="60" elementRef="id-a13ced76fc15" />
-          <node identifier="node-5" xsi:type="Element" x="20" y="420" w="120" h="60" elementRef="id-9e153c80c54b" />
-          <node identifier="node-6" xsi:type="Element" x="20" y="520" w="120" h="60" elementRef="id-4b71fa266842" />
-          <node identifier="node-7" xsi:type="Element" x="20" y="620" w="120" h="60" elementRef="id-f3f80cc58be7" />
-          <node identifier="node-8" xsi:type="Element" x="20" y="720" w="120" h="60" elementRef="id-d1c7ae5a85d5" />
-          <node identifier="node-9" xsi:type="Element" x="20" y="820" w="120" h="60" elementRef="id-2499dffce847" />
-          <node identifier="node-10" xsi:type="Element" x="20" y="920" w="120" h="60" elementRef="id-98f9272950bb" />
-        </node>
-        <node identifier="node-1" xsi:type="Element" x="20" y="20" w="120" h="60" elementRef="id-2e07d3fd1017" />
-        <node identifier="node-2" xsi:type="Element" x="20" y="120" w="120" h="60" elementRef="id-5dc64d476bac" />
-        <node identifier="node-3" xsi:type="Element" x="20" y="220" w="120" h="60" elementRef="id-a40f6332543f" />
-        <node identifier="node-4" xsi:type="Element" x="20" y="320" w="120" h="60" elementRef="id-a13ced76fc15" />
-        <node identifier="node-5" xsi:type="Element" x="20" y="420" w="120" h="60" elementRef="id-9e153c80c54b" />
-        <node identifier="node-6" xsi:type="Element" x="20" y="520" w="120" h="60" elementRef="id-4b71fa266842" />
-        <node identifier="node-7" xsi:type="Element" x="20" y="620" w="120" h="60" elementRef="id-f3f80cc58be7" />
-        <node identifier="node-8" xsi:type="Element" x="20" y="720" w="120" h="60" elementRef="id-d1c7ae5a85d5" />
-        <node identifier="node-9" xsi:type="Element" x="20" y="820" w="120" h="60" elementRef="id-2499dffce847" />
-        <node identifier="node-10" xsi:type="Element" x="20" y="920" w="120" h="60" elementRef="id-98f9272950bb" />
-        <node identifier="grp-region-2" xsi:type="Container" x="870" y="20" w="800" h="1100">
-          <node identifier="node-11" xsi:type="Element" x="870" y="20" w="120" h="60" elementRef="id-1c9f3d0f93e9" />
-          <node identifier="node-12" xsi:type="Element" x="870" y="120" w="120" h="60" elementRef="id-0b87b0eb6e93" />
-          <node identifier="node-13" xsi:type="Element" x="870" y="220" w="120" h="60" elementRef="id-f20af2181f88" />
-          <node identifier="node-14" xsi:type="Element" x="870" y="320" w="120" h="60" elementRef="id-e1f2c021c9e1" />
-          <node identifier="node-15" xsi:type="Element" x="870" y="420" w="120" h="60" elementRef="id-ff0009c8c2fa" />
-          <node identifier="node-16" xsi:type="Element" x="870" y="520" w="120" h="60" elementRef="id-d418bd3e7f43" />
-          <node identifier="node-17" xsi:type="Element" x="870" y="620" w="120" h="60" elementRef="id-e8e08f6d295a" />
-        </node>
-        <node identifier="node-11" xsi:type="Element" x="870" y="20" w="120" h="60" elementRef="id-1c9f3d0f93e9" />
-        <node identifier="node-12" xsi:type="Element" x="870" y="120" w="120" h="60" elementRef="id-0b87b0eb6e93" />
-        <node identifier="node-13" xsi:type="Element" x="870" y="220" w="120" h="60" elementRef="id-f20af2181f88" />
-        <node identifier="node-14" xsi:type="Element" x="870" y="320" w="120" h="60" elementRef="id-e1f2c021c9e1" />
-        <node identifier="node-15" xsi:type="Element" x="870" y="420" w="120" h="60" elementRef="id-ff0009c8c2fa" />
-        <node identifier="node-16" xsi:type="Element" x="870" y="520" w="120" h="60" elementRef="id-d418bd3e7f43" />
-        <node identifier="node-17" xsi:type="Element" x="870" y="620" w="120" h="60" elementRef="id-e8e08f6d295a" />
-        <connection identifier="conn-1" relationshipRef="id-7ae3f9b3ce7b" xsi:type="Relationship" source="node-16" target="node-12" />
-        <connection identifier="conn-2" relationshipRef="id-64a12e8c0609" xsi:type="Relationship" source="node-10" target="node-9" />
-        <connection identifier="conn-3" relationshipRef="id-aded055d6223" xsi:type="Relationship" source="node-11" target="node-16" />
-        <connection identifier="id-ce7f834f5bea" relationshipRef="id-7ae3f9b3ce7b" xsi:type="Relationship" source="node-16" target="node-12" />
-        <connection identifier="id-09e15103587a" relationshipRef="id-64a12e8c0609" xsi:type="Relationship" source="node-10" target="node-9" />
-        <connection identifier="id-6e1171e0312c" relationshipRef="id-aded055d6223" xsi:type="Relationship" source="node-11" target="node-16" />
       </view>
       <view identifier="id-817874b4c386" xsi:type="Diagram">
         <name>Operations ANZ Landscape</name>
@@ -10021,19 +10172,56 @@ Operations - ANZ is the central collaboration boundary.
 The internal estate is grouped into Production/QA, Warehouse, Planning, and QARA.
 QAD EE 2019 and Pro2SQL ANZ are shown on the left as upstream systems with direct inbound integrations.
 </documentation>
-        <node identifier="id-f4c6d12aa07c" elementRef="id-1b2283706bf4" xsi:type="Element" x="20" y="20" w="120" h="60" />
-        <node identifier="id-2b172fe0642c" elementRef="id-41fcb87f8bec" xsi:type="Element" x="180" y="20" w="120" h="60" />
-        <node identifier="id-ac42a2bc2904" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="340" y="20" w="120" h="60" />
-        <node identifier="id-183b84755f7f" elementRef="id-021726ec4519" xsi:type="Element" x="500" y="20" w="120" h="60" />
-        <node identifier="id-191f1184a487" elementRef="id-784902c1ffb1" xsi:type="Element" x="660" y="20" w="120" h="60" />
-        <node identifier="id-f1e4439b81ff" elementRef="id-57662baf44e5" xsi:type="Element" x="820" y="20" w="120" h="60" />
-        <node identifier="id-23d7128a94f9" elementRef="id-40e91ca61f1d" xsi:type="Element" x="980" y="20" w="120" h="60" />
-        <node identifier="id-587cdc12512d" elementRef="id-98bafb85d403" xsi:type="Element" x="1140" y="20" w="120" h="60" />
-        <node identifier="id-b2987aa218c5" elementRef="id-59e3aeffe45f" xsi:type="Element" x="1300" y="20" w="120" h="60" />
-        <node identifier="id-3de5a4d3a054" elementRef="id-101c48872a1a" xsi:type="Element" x="1460" y="20" w="120" h="60" />
-        <node identifier="id-e6c65e998d81" elementRef="id-5f835087595c" xsi:type="Element" x="1620" y="20" w="120" h="60" />
-        <node identifier="id-e454f68631fa" elementRef="id-021f48755bef" xsi:type="Element" x="1780" y="20" w="120" h="60" />
-        <node identifier="id-ef47cbc01983" elementRef="id-6385d2992d54" xsi:type="Element" x="1940" y="20" w="120" h="60" />
+        <node identifier="id-3de5a4d3a054" elementRef="id-101c48872a1a" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-587cdc12512d" elementRef="id-98bafb85d403" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-23d7128a94f9" elementRef="id-40e91ca61f1d" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-f1e4439b81ff" elementRef="id-57662baf44e5" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-b2987aa218c5" elementRef="id-59e3aeffe45f" xsi:type="Element" x="660" y="20" w="120" h="60" />
+        <node identifier="id-f4c6d12aa07c" elementRef="id-1b2283706bf4" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-ef47cbc01983" elementRef="id-6385d2992d54" xsi:type="Element" x="980" y="20" w="120" h="60" />
+        <node identifier="id-e6c65e998d81" elementRef="id-5f835087595c" xsi:type="Element" x="1140" y="20" w="120" h="60" />
+        <node identifier="id-191f1184a487" elementRef="id-784902c1ffb1" xsi:type="Element" x="1300" y="20" w="120" h="60" />
+        <node identifier="id-183b84755f7f" elementRef="id-021726ec4519" xsi:type="Element" x="1460" y="20" w="120" h="60" />
+        <node identifier="id-e454f68631fa" elementRef="id-021f48755bef" xsi:type="Element" x="1620" y="20" w="120" h="60" />
+        <node identifier="id-2b172fe0642c" elementRef="id-41fcb87f8bec" xsi:type="Element" x="1780" y="20" w="120" h="60" />
+        <node identifier="id-ac42a2bc2904" elementRef="id-cb7cb0b84df6" xsi:type="Element" x="1940" y="20" w="120" h="60" />
+      </view>
+      <view identifier="id-5e078086d2fe" xsi:type="Diagram">
+        <name>Operations JPN Landscape</name>
+        <documentation>Application cooperation view for the JPN operations domain.
+Operations - JPN is the central collaboration boundary.
+The internal estate is grouped into Production/QA, Warehouse, Planning, and QARA.
+QAD SE 11, Pro2SQL JPN, Yusen, and VC Vendor Collaboration are shown on the left as upstream systems with direct inbound integrations.
+</documentation>
+        <node identifier="id-93758521e405" elementRef="id-0015d01da270" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-1062026775ec" elementRef="id-d0e83168e3ab" xsi:type="Element" x="180" y="20" w="120" h="60" />
+        <node identifier="id-37edd2d0a737" elementRef="id-5f835087595c" xsi:type="Element" x="340" y="20" w="120" h="60" />
+        <node identifier="id-4c459ad22172" elementRef="id-bb3759f4a808" xsi:type="Element" x="500" y="20" w="120" h="60" />
+        <node identifier="id-381771b7f4cc" elementRef="id-64bdcb4d3b3a" xsi:type="Element" x="660" y="20" w="120" h="60" />
+        <node identifier="id-8da30dc53e9d" elementRef="id-2e0b9d831422" xsi:type="Element" x="820" y="20" w="120" h="60" />
+        <node identifier="id-a23d419080a6" elementRef="id-528df4932fd2" xsi:type="Element" x="980" y="20" w="120" h="60" />
+        <node identifier="id-1c2879c13c43" elementRef="id-d0be297d0966" xsi:type="Element" x="1140" y="20" w="120" h="60" />
+        <node identifier="id-86c21e6baa67" elementRef="id-c21931642554" xsi:type="Element" x="1300" y="20" w="120" h="60" />
+        <node identifier="id-aa62c0a66614" elementRef="id-6385d2992d54" xsi:type="Element" x="1460" y="20" w="120" h="60" />
+        <node identifier="id-a7ea305fe6ea" elementRef="id-021726ec4519" xsi:type="Element" x="1620" y="20" w="120" h="60" />
+        <node identifier="id-ab7d40d2454d" elementRef="id-c508ffe79f87" xsi:type="Element" x="1780" y="20" w="120" h="60" />
+        <node identifier="id-a078c5c78acf" elementRef="id-6e68a57a6540" xsi:type="Element" x="1940" y="20" w="120" h="60" />
+        <node identifier="id-3d7b71677a82" elementRef="id-88e532c4c4b9" xsi:type="Element" x="2100" y="20" w="120" h="60" />
+        <node identifier="id-17fd2f236c78" elementRef="id-5732a1cc4d7c" xsi:type="Element" x="2260" y="20" w="120" h="60" />
+        <node identifier="id-431e344cd469" elementRef="id-6d9eb02243f7" xsi:type="Element" x="2420" y="20" w="120" h="60" />
+        <node identifier="id-42f903a07f8a" elementRef="id-6f89b665c98f" xsi:type="Element" x="2580" y="20" w="120" h="60" />
+        <node identifier="id-fa929134fc1d" elementRef="id-965cd94cab5f" xsi:type="Element" x="2740" y="20" w="120" h="60" />
+        <node identifier="id-86e13a334e22" elementRef="id-1d3ac771d8b3" xsi:type="Element" x="2900" y="20" w="120" h="60" />
+      </view>
+      <view identifier="id-ee870cb25979" xsi:type="Diagram">
+        <name>PSS 2.0 Azure Reference Architecture</name>
+        <documentation>Azure-native target architecture for PSS 2.0.
+This diagram is intended as the first reusable modernization template for application upgrades in an Azure-first environment.
+It contrasts the legacy server-hosted pattern with the target Azure runtime pattern and makes the supporting platform services explicit.
+</documentation>
+        <node identifier="id-03395eb4d15a" elementRef="id-1b2283706bf4" xsi:type="Element" x="20" y="20" w="120" h="60" />
+        <node identifier="id-119fdcd72950" elementRef="id-2eb1505929b6" xsi:type="Element" x="20" y="160" w="120" h="60" />
+        <node identifier="id-360ae056561d" elementRef="id-021f48755bef" xsi:type="Element" x="180" y="20" w="120" h="60" />
       </view>
     </diagrams>
   </views>

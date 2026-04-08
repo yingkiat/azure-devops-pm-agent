@@ -3,9 +3,10 @@
 import json
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 import yaml
 import shutil
+import subprocess
 
 try:
     import pandas as pd
@@ -21,6 +22,7 @@ class PortalBuilder:
     """Build static portal files from diagrams and ArchiMate model."""
 
     REGION_ORDER = ["JPN", "ANZ", "AEM", "APAC"]
+    PREVIEW_WINDOW_SIZE = "2200,1600"
 
     def __init__(
         self,
@@ -39,6 +41,7 @@ class PortalBuilder:
         self.catalogue_file = Path(catalogue_file)
         self.data_dir = self.output_dir / "data"
         self.diagrams_output_dir = self.output_dir / "diagrams"
+        self.preview_browser = self._find_preview_browser()
 
     def _load_diagram_metadata(self, relative_path: Path) -> Dict[str, str]:
         """Load explicit diagram metadata from matching YAML spec when available."""
@@ -69,6 +72,78 @@ class PortalBuilder:
             return spec.get("type") == "azure_diagram"
         except Exception:
             return False
+
+    def _find_preview_browser(self) -> Optional[Path]:
+        """Locate a Chromium-compatible browser for SVG to PNG preview rendering."""
+        candidates = [
+            Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
+            Path(r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"),
+            Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe"),
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        return None
+
+    def _render_svg_preview_png(self, svg_path: Path, png_path: Path) -> bool:
+        """Render a PNG preview from an SVG using headless Chromium when available."""
+        if not self.preview_browser:
+            return False
+
+        png_path.parent.mkdir(parents=True, exist_ok=True)
+        svg_uri = svg_path.resolve().as_uri()
+        profile_dir = self.output_dir / ".preview-browser-profile"
+        profile_dir.mkdir(parents=True, exist_ok=True)
+        commands = [
+            [
+                str(self.preview_browser),
+                "--headless=new",
+                "--disable-gpu",
+                "--no-sandbox",
+                "--no-first-run",
+                "--disable-crash-reporter",
+                "--hide-scrollbars",
+                "--allow-file-access-from-files",
+                "--run-all-compositor-stages-before-draw",
+                "--virtual-time-budget=3000",
+                f"--user-data-dir={profile_dir}",
+                f"--window-size={self.PREVIEW_WINDOW_SIZE}",
+                f"--screenshot={png_path}",
+                svg_uri,
+            ],
+            [
+                str(self.preview_browser),
+                "--headless",
+                "--disable-gpu",
+                "--no-sandbox",
+                "--no-first-run",
+                "--disable-crash-reporter",
+                "--hide-scrollbars",
+                "--allow-file-access-from-files",
+                "--run-all-compositor-stages-before-draw",
+                "--virtual-time-budget=3000",
+                f"--user-data-dir={profile_dir}",
+                f"--window-size={self.PREVIEW_WINDOW_SIZE}",
+                f"--screenshot={png_path}",
+                svg_uri,
+            ],
+        ]
+
+        for command in commands:
+            try:
+                result = subprocess.run(
+                    command,
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                    check=False,
+                )
+                if result.returncode == 0 and png_path.exists():
+                    return True
+            except Exception:
+                continue
+
+        return False
 
     @staticmethod
     def _default_display_name(drawio_file: Path) -> str:
@@ -545,10 +620,20 @@ class PortalBuilder:
                 else:
                     if temp_svg_output.exists():
                         temp_svg_output.unlink()
+                diagram_file = f"diagrams/{relative_path.with_suffix('.png').as_posix()}"
+                preview_file = diagram_file
             else:
                 svg_output = self.diagrams_output_dir / relative_path.with_suffix(".svg")
                 svg_output.parent.mkdir(parents=True, exist_ok=True)
                 result = converter.convert(str(drawio_file), str(svg_output))
+                diagram_file = f"diagrams/{relative_path.with_suffix('.svg').as_posix()}"
+
+                png_output = self.diagrams_output_dir / relative_path.with_suffix(".png")
+                if result["success"] and self._render_svg_preview_png(svg_output, png_output):
+                    preview_file = f"diagrams/{relative_path.with_suffix('.png').as_posix()}"
+                else:
+                    preview_file = diagram_file
+                    print(f"      WARN {view_id:45s} PNG preview generation unavailable, falling back to SVG preview")
 
             if result["success"]:
                 element_ids = [e["id"] for e in result.get("elements", [])]
@@ -560,11 +645,8 @@ class PortalBuilder:
                     {
                         "view_id": view_id,
                         "name": display_name,
-                        "diagram_file": (
-                            f"diagrams/{relative_path.with_suffix('.png').as_posix()}"
-                            if is_azure_diagram
-                            else f"diagrams/{relative_path.with_suffix('.svg').as_posix()}"
-                        ),
+                        "diagram_file": diagram_file,
+                        "preview_file": preview_file,
                         "category": category,
                         "domain": domain,
                         "region": region,
@@ -1027,6 +1109,41 @@ class PortalBuilder:
             transform-origin: top left;
             transition: transform 0.2s ease;
             max-width: none;
+        }
+        .diagram-stage {
+            position: relative;
+            min-height: 100%;
+        }
+        .diagram-preview {
+            position: relative;
+            z-index: 1;
+        }
+        .diagram-interactive {
+            position: relative;
+            z-index: 2;
+        }
+        .diagram-loading-overlay {
+            position: absolute;
+            inset: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(249, 250, 252, 0.78);
+            backdrop-filter: blur(2px);
+            border-radius: 12px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .diagram-loading-pill {
+            background: rgba(15, 23, 42, 0.88);
+            color: white;
+            padding: 0.7rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
         }
         .zoom-controls {
             position: absolute;
@@ -1907,8 +2024,13 @@ class PortalBuilder:
                 </div>
             </div>
             <div v-else class="diagram-viewer" @click="deselectElement()">
-                <img v-if="diagramImagePath" :src="diagramImagePath" alt="Diagram" />
-                <div v-else v-html="diagramHtml"></div>
+                <div class="diagram-stage">
+                    <img v-if="diagramPreviewPath && !diagramHtml" class="diagram-preview" :src="diagramPreviewPath" alt="Diagram preview" />
+                    <div v-if="diagramHtml" class="diagram-interactive" v-html="diagramHtml"></div>
+                    <div v-if="diagramLoading" class="diagram-loading-overlay">
+                        <div class="diagram-loading-pill">Loading Interactive Diagram</div>
+                    </div>
+                </div>
                 <div class="zoom-controls" v-if="currentView">
                     <button class="zoom-btn" @click="zoomOut" :disabled="zoomLevel <= 0.25" title="Zoom Out">−</button>
                     <button class="zoom-btn" @click="zoomReset" title="Reset Zoom">⊙</button>
@@ -2031,6 +2153,10 @@ class PortalBuilder:
                     selectedCatalogueApp: null,
                     diagramHtml: '',
                     diagramImagePath: '',
+                    diagramPreviewPath: '',
+                    diagramLoading: false,
+                    diagramSvgCache: {},
+                    diagramRequestToken: 0,
                     currentSvg: null,
                     viewMode: 'catalogue',
                     diagramMapSearch: '',
@@ -2475,6 +2601,41 @@ class PortalBuilder:
                     this.drilldownApps = [];
                     this.drilldownTitle = '';
                 },
+                wireDiagramInteractions() {
+                    const viewer = document.querySelector('.diagram-viewer');
+                    if (!viewer) return;
+
+                    viewer.querySelectorAll('[data-element-id]').forEach(el => {
+                        el.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            this.selectElement(el.dataset.elementId);
+                        });
+                    });
+
+                    this.currentSvg = viewer.querySelector('.diagram-interactive svg')
+                        || viewer.querySelector('.diagram-preview')
+                        || viewer.querySelector('img');
+
+                    if (this.currentSvg && this.currentSvg.tagName && this.currentSvg.tagName.toLowerCase() === 'svg') {
+                        const width = this.currentSvg.getAttribute('width') || 1000;
+                        const height = this.currentSvg.getAttribute('height') || 1000;
+
+                        if (!this.currentSvg.hasAttribute('viewBox')) {
+                            this.currentSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+                        }
+
+                        this.currentSvg.removeAttribute('width');
+                        this.currentSvg.removeAttribute('height');
+                    }
+
+                    this.zoomLevel = 1;
+                    this.fitToWidth = false;
+                    this.applyZoom();
+
+                    if (this.selectedElement && this.diagramHtml) {
+                        this.selectElement(this.selectedElement);
+                    }
+                },
                 async loadView(viewId, keepElement = null) {
                     const view = this.views[viewId];
                     if (!view) return;
@@ -2489,54 +2650,43 @@ class PortalBuilder:
                     }
 
                     try {
+                        const requestToken = ++this.diagramRequestToken;
+                        this.diagramLoading = true;
                         this.diagramHtml = '';
                         this.diagramImagePath = '';
+                        this.diagramPreviewPath = view.preview_path || view.diagram_path;
                         this.currentSvg = null;
 
                         if (view.diagram_path.toLowerCase().endsWith('.png')) {
                             this.diagramImagePath = view.diagram_path;
-                        } else {
-                            const response = await fetch(view.diagram_path);
-                            this.diagramHtml = await response.text();
-                        }
-
-                        this.$nextTick(() => {
-                            const viewer = document.querySelector('.diagram-viewer');
-                            viewer.querySelectorAll('[data-element-id]').forEach(el => {
-                                el.addEventListener('click', (e) => {
-                                    e.stopPropagation();
-                                    this.selectElement(el.dataset.elementId);
-                                });
+                            this.diagramPreviewPath = view.preview_path || view.diagram_path;
+                            this.diagramLoading = false;
+                            this.$nextTick(() => {
+                                this.wireDiagramInteractions();
                             });
-                            this.currentSvg = viewer.querySelector('svg') || viewer.querySelector('img');
+                        } else {
+                            this.$nextTick(() => {
+                                this.wireDiagramInteractions();
+                            });
 
-                            // Remove fixed width/height attributes to allow proper zoom scaling
-                            if (this.currentSvg && this.currentSvg.tagName && this.currentSvg.tagName.toLowerCase() === 'svg') {
-                                // Capture width/height before removing, in case we need to set viewBox
-                                const width = this.currentSvg.getAttribute('width') || 1000;
-                                const height = this.currentSvg.getAttribute('height') || 1000;
-
-                                // Ensure viewBox exists for proper scaling
-                                if (!this.currentSvg.hasAttribute('viewBox')) {
-                                    this.currentSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-                                }
-
-                                // Remove fixed dimensions
-                                this.currentSvg.removeAttribute('width');
-                                this.currentSvg.removeAttribute('height');
-
-                                // Reset zoom to fit-to-width for new diagrams
-                                this.zoomLevel = 1;
-                                this.fitToWidth = false;
-                                this.applyZoom();
-                            } else if (this.currentSvg) {
-                                this.zoomLevel = 1;
-                                this.fitToWidth = false;
-                                this.applyZoom();
+                            let svgText = this.diagramSvgCache[view.diagram_path];
+                            if (!svgText) {
+                                const response = await fetch(view.diagram_path, { cache: 'force-cache' });
+                                svgText = await response.text();
+                                this.diagramSvgCache[view.diagram_path] = svgText;
                             }
-                        });
+
+                            if (requestToken !== this.diagramRequestToken) return;
+
+                            this.diagramHtml = svgText;
+                            this.diagramLoading = false;
+                            this.$nextTick(() => {
+                                this.wireDiagramInteractions();
+                            });
+                        }
                     } catch (err) {
                         console.error('Error loading diagram:', err);
+                        this.diagramLoading = false;
                     }
                 },
                 async navigateToView(viewId, elementId) {

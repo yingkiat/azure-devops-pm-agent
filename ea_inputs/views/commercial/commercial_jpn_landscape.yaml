@@ -1,0 +1,296 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the Commercial JPN core, and how does it integrate with upstream and downstream enterprise systems?"
+  audience: "Enterprise Architecture, Commercial leadership, ERP delivery"
+  decision: "Validate the JPN commercial application boundary and the key bidirectional ERP and quality integrations."
+  key_message: "Commercial JPN should read as a central business application core, with Microsoft Dynamics spanning customer service, sales, and SPT, fed by QAD SE 11 on the left and integrating back to QAD SE 11 on the right, while downstream reporting flows into Microsoft Fabric."
+
+# === STORY ===
+story:
+  setup: "The JPN commercial estate spans customer service, sales, SPT, marketing, and finance applications."
+  tension: "The view needs to show Microsoft Dynamics as a cross-cutting platform while also making QAD SE 11 visible as both an inbound and outbound enterprise integration, with reporting data flowing downstream into Microsoft Fabric."
+  insight: "A hub-and-spoke landscape with a spanning node, mirrored ERP touchpoints, and a dedicated data warehouse spoke makes the internal commercial structure clear without hiding the operational and reporting dependencies."
+
+# === METADATA ===
+metadata:
+  domain: "commercial"
+  region: "JPN"
+
+# === VIEW DEFINITION ===
+view:
+  name: "Commercial JPN Landscape"
+  documentation: |
+    Application cooperation view for the JPN commercial domain.
+    Commercial JPN is the central collaboration boundary.
+    The internal estate is grouped into Customer Service, Sales, SPT, Marketing, and Finance.
+    Microsoft Dynamics spans Customer Service, Sales, and SPT.
+    QAD SE 11 is shown on the left as an upstream ERP source into Microsoft Dynamics and SFDC, and on the right as a downstream ERP target from Microsoft Dynamics and Finance.
+    SFDC and KMS also integrate downstream into Microsoft Fabric for reporting.
+    SFDC also integrates upstream into Quality Designer.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Commercial JPN"
+      type: "ApplicationCollaboration"
+      synthetic: true
+      override:
+        Role: "Commercial JPN Core"
+      description: "Central JPN commercial collaboration boundary."
+
+    - name: "Microsoft Dynamics"
+      override:
+        Internal Group: "Customer Service"
+        Span To Group: "SPT"
+        Role: "CRM Platform"
+      description: "Cross-cutting commercial platform spanning customer service, sales, and SPT."
+
+    - name: "MD-NET"
+      override:
+        Internal Group: "Customer Service"
+        Role: "EDI Network"
+      description: "Customer service EDI platform within the JPN commercial landscape."
+
+    - name: "EmpowerOR"
+      override:
+        Internal Group: "Sales"
+        Role: "Order Capture"
+      description: "Sales application supporting hospital and order workflows."
+
+    - name: "SFDC"
+      override:
+        Internal Group: "Sales"
+        Role: "Sales CRM"
+      description: "Salesforce CRM used by the JPN sales function."
+
+    - name: "KMS"
+      override:
+        Internal Group: "SPT"
+        Role: "Kit Management"
+      description: "SPT kit management system."
+
+    - name: "Magento JPN"
+      override:
+        Internal Group: "Marketing"
+        Role: "Digital Catalogue"
+      description: "JPN commerce and catalogue platform."
+
+    - name: "Japan CMS Website Local Vendor"
+      override:
+        Internal Group: "Marketing"
+        Role: "Website CMS"
+      description: "Locally managed JPN website CMS platform."
+
+    - name: "JSNavi"
+      override:
+        Internal Group: "Finance"
+        Role: "Expense Reporting"
+      description: "Expense reporting application used by the JPN commercial function."
+
+    - name: "X-Point"
+      override:
+        Internal Group: "Finance"
+        Role: "Finance Integration"
+      description: "Finance support application for the JPN commercial estate."
+
+    - name: "QAD SE 11​"
+      type: "ApplicationComponent"
+      synthetic: true
+      override:
+        Spoke Side: "left"
+        External Group: "Upstream ERP"
+        Role: "ERP Source"
+        Roadmap Disposition: "Tolerate"
+      description: "Upstream ERP source into Microsoft Dynamics and SFDC."
+
+    - name: "QAD SE 11"
+      override:
+        Spoke Side: "right"
+        External Group: "Downstream ERP"
+        Role: "ERP Target"
+      description: "Downstream ERP target integrated from Microsoft Dynamics."
+
+    - name: "Quality Designer"
+      override:
+        Spoke Side: "right"
+        External Group: "Quality"
+        Role: "Quality Management"
+      description: "Quality management platform receiving data from SFDC."
+
+    - name: "Microsoft Fabric"
+      override:
+        Spoke Side: "right"
+        External Group: "Data Warehouse"
+        Role: "Reporting Platform"
+      description: "Enterprise data warehouse platform receiving downstream commercial reporting data."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "Microsoft Dynamics"
+      label: "contains"
+      description: "Commercial JPN contains Microsoft Dynamics."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "MD-NET"
+      label: "contains"
+      description: "Commercial JPN contains MD-NET."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "EmpowerOR"
+      label: "contains"
+      description: "Commercial JPN contains EmpowerOR."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "SFDC"
+      label: "contains"
+      description: "Commercial JPN contains SFDC."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "KMS"
+      label: "contains"
+      description: "Commercial JPN contains KMS."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "Magento JPN"
+      label: "contains"
+      description: "Commercial JPN contains Magento JPN."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "Japan CMS Website Local Vendor"
+      label: "contains"
+      description: "Commercial JPN contains Japan CMS Website Local Vendor."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "JSNavi"
+      label: "contains"
+      description: "Commercial JPN contains JSNavi."
+
+    - type: "Composition"
+      source_name: "Commercial JPN"
+      target_name: "X-Point"
+      label: "contains"
+      description: "Commercial JPN contains X-Point."
+
+    - type: "Flow"
+      source_name: "QAD SE 11​"
+      target_name: "Microsoft Dynamics"
+      label: "integration"
+      description: "Upstream ERP data flows from QAD SE 11 into Microsoft Dynamics."
+
+    - type: "Flow"
+      source_name: "QAD SE 11​"
+      target_name: "SFDC"
+      label: "integration"
+      description: "Upstream ERP data flows from QAD SE 11 into SFDC."
+
+    - type: "Flow"
+      source_name: "Microsoft Dynamics"
+      target_name: "QAD SE 11"
+      label: "integration"
+      description: "Commercial data flows from Microsoft Dynamics into QAD SE 11."
+
+    - type: "Flow"
+      source_name: "X-Point"
+      target_name: "QAD SE 11"
+      label: "integration"
+      description: "Finance data flows from X-Point into QAD SE 11."
+
+    - type: "Flow"
+      source_name: "SFDC"
+      target_name: "Quality Designer"
+      label: "integration"
+      description: "Upstream commercial data flows from SFDC into Quality Designer."
+
+    - type: "Flow"
+      source_name: "SFDC"
+      target_name: "Microsoft Fabric"
+      label: "reporting"
+      description: "Sales reporting data flows from SFDC into Microsoft Fabric."
+
+    - type: "Flow"
+      source_name: "KMS"
+      target_name: "Microsoft Fabric"
+      label: "reporting"
+      description: "SPT reporting data flows from KMS into Microsoft Fabric."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Commercial JPN"
+      role: "Central commercial collaboration boundary"
+      treatment: "prominent"
+    - element: "Microsoft Dynamics"
+      role: "Cross-cutting CRM platform spanning three commercial subgroups"
+      treatment: "highlighted"
+    - element: "SFDC"
+      role: "Key sales platform with ERP and quality integrations"
+      treatment: "highlighted"
+    - element: "QAD SE 11"
+      role: "ERP source and target across the landscape"
+      treatment: "normal"
+    - element: "Microsoft Fabric"
+      role: "Downstream data warehouse for reporting"
+      treatment: "normal"
+    - element: "Quality Designer"
+      role: "Downstream quality management integration target"
+      treatment: "normal"
+  grouping_rationale: "Commercial JPN remains central, with Customer Service, Sales, and SPT aligned under the Microsoft Dynamics span, followed by Marketing and Finance, and reporting integrations separated from operational and quality destinations."
+  reading_order: "Start with the Commercial JPN core, read left to right across Customer Service, Sales, and SPT, then continue to Marketing and Finance, with ERP, data warehouse, and quality integrations read across the left and right edges."
+  color_strategy: "The commercial core, Microsoft Dynamics, and SFDC are visually stronger than surrounding business applications and external integration endpoints, while Microsoft Fabric reads as a downstream reporting destination."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["Customer Service", "Sales", "SPT", "Marketing", "Finance"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Upstream ERP", "Downstream ERP", "Data Warehouse", "Quality"]
+  external_group_side_map:
+    Upstream ERP: "left"
+    Downstream ERP: "right"
+    Data Warehouse: "right"
+    Quality: "right"
+  hub_width: 1040
+  hub_height: 380
+  center_x: 820
+  center_y: 340
+  core_group_spacing: 18
+  core_child_top: 38
+  core_child_height: 60
+  core_child_spacing: 22
+  external_width: 220
+  external_offset: 90
+  external_spacing: 28
+
+# === ANNOTATIONS ===
+annotations: []
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

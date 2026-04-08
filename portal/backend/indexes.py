@@ -201,6 +201,7 @@ class PortalIndexGenerator:
                 "id": view_id,
                 "name": diag.get("name", view_id),
                 "diagram_path": diag["diagram_file"],
+                "preview_path": diag.get("preview_file", diag["diagram_file"]),
                 "category": diag.get("category", ""),
                 "domain": diag.get("domain", ""),
                 "region": diag.get("region", ""),

@@ -1,0 +1,279 @@
+# === INTENT ===
+intent:
+  question: "What sits inside the Commercial ANZ core, and how does it integrate with upstream product data and downstream ERP and reporting platforms?"
+  audience: "Enterprise Architecture, Commercial leadership, ERP delivery"
+  decision: "Validate the ANZ commercial application boundary and the primary cross-domain integrations."
+  key_message: "Commercial ANZ should read as a central business application core, with Microsoft Dynamics spanning customer service, sales, and SPT, fed by Informatica PIM ANZ, integrating out to QAD EE 2019, and sending SPT reporting downstream into Microsoft Fabric."
+
+# === STORY ===
+story:
+  setup: "The ANZ commercial estate spans customer service, sales, marketing, finance, and SPT-specific applications."
+  tension: "The view needs to show Microsoft Dynamics as a cross-cutting commercial platform while still preserving clear subgroup boundaries for the wider commercial stack and making reporting dependencies visible."
+  insight: "A hub-and-spoke landscape with a spanning node makes the internal commercial structure readable and highlights the key upstream, downstream ERP, and downstream reporting integrations."
+
+# === METADATA ===
+metadata:
+  domain: "commercial"
+  region: "ANZ"
+
+# === VIEW DEFINITION ===
+view:
+  name: "Commercial ANZ Landscape"
+  documentation: |
+    Application cooperation view for the ANZ commercial domain.
+    Commercial ANZ is the central collaboration boundary.
+    The internal estate is grouped into Customer Service, Sales, SPT, Marketing, and Finance.
+    Microsoft Dynamics spans Customer Service, Sales, and SPT.
+    Informatica PIM ANZ is shown on the left as an upstream integration into Magento ANZ, while QAD EE 2019 is shown on the right as a downstream ERP integration from Microsoft Dynamics and Finance.
+    Microsoft Fabric is shown as a downstream data warehouse receiving reporting data from the SPT subgroup.
+  viewpoint: "application_cooperation"
+
+# === ELEMENTS ===
+elements:
+  include:
+    - name: "Commercial ANZ"
+      type: "ApplicationCollaboration"
+      synthetic: true
+      override:
+        Role: "Commercial ANZ Core"
+      description: "Central ANZ commercial collaboration boundary."
+
+    - name: "Microsoft Dynamics"
+      override:
+        Internal Group: "Customer Service"
+        Span To Group: "SPT"
+        Role: "CRM Platform"
+      description: "Cross-cutting commercial platform spanning customer service, sales, and SPT."
+
+    - name: "Customer Master (CMP)"
+      override:
+        Internal Group: "Sales"
+        Display Name: "CMP"
+        Role: "Customer Master"
+      description: "Customer master data management application."
+
+    - name: "CNS"
+      override:
+        Internal Group: "Sales"
+        Role: "Customer Portal"
+      description: "Sales-facing customer portal application."
+
+    - name: "Magento ANZ"
+      override:
+        Internal Group: "Marketing"
+        Role: "Digital Catalogue"
+      description: "ANZ commerce and catalogue platform."
+
+    - name: "Vimeo"
+      override:
+        Internal Group: "Marketing"
+        Role: "Video Marketing"
+      description: "Video marketing platform supporting ANZ commercial activity."
+
+    - name: "Concur Expense Management"
+      override:
+        Internal Group: "Finance"
+        Role: "Expense Management"
+      description: "Commercial finance expense management platform."
+
+    - name: "MedOps"
+      override:
+        Internal Group: "SPT"
+        Role: "Operations Support"
+      description: "SPT operations support application."
+
+    - name: "MedPack"
+      override:
+        Internal Group: "SPT"
+        Role: "Pack Management"
+      description: "SPT pack and BOM viewing application."
+
+    - name: "MedQuote"
+      override:
+        Internal Group: "SPT"
+        Role: "Quote Management"
+      description: "SPT quote creation application."
+
+    - name: "MedReports"
+      override:
+        Internal Group: "SPT"
+        Role: "Reporting"
+      description: "SPT reporting application."
+
+    - name: "Informatica PIM ANZ"
+      override:
+        Spoke Side: "left"
+        External Group: "Upstream Product Data"
+        Role: "Product Information Management"
+      description: "Upstream product information source feeding Magento ANZ."
+
+    - name: "QAD EE 2019"
+      override:
+        Spoke Side: "right"
+        External Group: "Downstream ERP"
+        Role: "ERP Core"
+      description: "Downstream ERP platform integrated from Microsoft Dynamics."
+
+    - name: "Microsoft Fabric"
+      override:
+        Spoke Side: "right"
+        External Group: "Data Warehouse"
+        Role: "Reporting Platform"
+      description: "Enterprise data warehouse platform receiving downstream reporting data from SPT."
+
+# === RELATIONSHIPS ===
+relationships:
+  include:
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "Microsoft Dynamics"
+      label: "contains"
+      description: "Commercial ANZ contains Microsoft Dynamics."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "Customer Master (CMP)"
+      label: "contains"
+      description: "Commercial ANZ contains Customer Master (CMP)."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "CNS"
+      label: "contains"
+      description: "Commercial ANZ contains CNS."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "Magento ANZ"
+      label: "contains"
+      description: "Commercial ANZ contains Magento ANZ."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "Vimeo"
+      label: "contains"
+      description: "Commercial ANZ contains Vimeo."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "Concur Expense Management"
+      label: "contains"
+      description: "Commercial ANZ contains Concur Expense Management."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "MedOps"
+      label: "contains"
+      description: "Commercial ANZ contains MedOps."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "MedPack"
+      label: "contains"
+      description: "Commercial ANZ contains MedPack."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "MedQuote"
+      label: "contains"
+      description: "Commercial ANZ contains MedQuote."
+
+    - type: "Composition"
+      source_name: "Commercial ANZ"
+      target_name: "MedReports"
+      label: "contains"
+      description: "Commercial ANZ contains MedReports."
+
+    - type: "Flow"
+      source_name: "Informatica PIM ANZ"
+      target_name: "Magento ANZ"
+      label: "product data"
+      description: "Upstream product information flows from Informatica PIM ANZ into Magento ANZ."
+
+    - type: "Flow"
+      source_name: "Microsoft Dynamics"
+      target_name: "QAD EE 2019"
+      label: "integration"
+      description: "Commercial data flows from Microsoft Dynamics into QAD EE 2019."
+
+    - type: "Flow"
+      source_name: "Concur Expense Management"
+      target_name: "QAD EE 2019"
+      label: "integration"
+      description: "Finance data flows from Concur Expense Management into QAD EE 2019."
+
+    - type: "Flow"
+      source_name: "MedReports"
+      target_name: "Microsoft Fabric"
+      label: "reporting"
+      description: "SPT reporting data flows from MedReports into Microsoft Fabric."
+
+# === STRUCTURE ===
+structure:
+  parent:
+    type: "ApplicationCollaboration"
+  children:
+    type: "ApplicationComponent"
+    via: "Composition"
+    direction: "outbound"
+  layout: "column"
+
+# === VISUAL STRATEGY ===
+visual:
+  emphasis:
+    - element: "Commercial ANZ"
+      role: "Central commercial collaboration boundary"
+      treatment: "prominent"
+    - element: "Microsoft Dynamics"
+      role: "Cross-cutting CRM platform spanning three commercial subgroups"
+      treatment: "highlighted"
+    - element: "Magento ANZ"
+      role: "Marketing platform receiving upstream product data"
+      treatment: "highlighted"
+    - element: "QAD EE 2019"
+      role: "Downstream ERP integration target"
+      treatment: "normal"
+    - element: "Microsoft Fabric"
+      role: "Downstream data warehouse for SPT reporting"
+      treatment: "normal"
+    - element: "Informatica PIM ANZ"
+      role: "Upstream product information source"
+      treatment: "normal"
+  grouping_rationale: "Commercial ANZ remains central, with the three Microsoft Dynamics-aligned groups placed first and side by side, followed by Marketing and Finance, and with reporting integrations separated from operational ERP dependencies."
+  reading_order: "Start with the Commercial ANZ core, read left to right across Customer Service, Sales, and SPT, then continue to Marketing and Finance, with the external integrations read from left to right."
+  color_strategy: "The commercial core and Microsoft Dynamics are visually stronger than surrounding business applications and external integration endpoints, while Microsoft Fabric reads as a downstream reporting destination."
+
+# === LAYOUT ===
+layout:
+  algorithm: "hub_spoke"
+  core_group_by: "Internal Group"
+  core_group_order: ["Customer Service", "Sales", "SPT", "Marketing", "Finance"]
+  standardize_edges_to_group: true
+  spoke_side_property: "Spoke Side"
+  external_group_by: "External Group"
+  external_group_order: ["Upstream Product Data", "Downstream ERP", "Data Warehouse"]
+  external_group_side_map:
+    Upstream Product Data: "left"
+    Downstream ERP: "right"
+    Data Warehouse: "right"
+  hub_width: 1040
+  hub_height: 360
+  center_x: 820
+  center_y: 320
+  core_group_spacing: 18
+  core_child_top: 38
+  core_child_height: 60
+  core_child_spacing: 22
+  external_width: 220
+  external_offset: 90
+  external_spacing: 28
+
+# === ANNOTATIONS ===
+annotations: []
+
+# === OUTPUT ===
+output:
+  format: "drawio"
+
+# === ITERATIONS ===
+iterations: []

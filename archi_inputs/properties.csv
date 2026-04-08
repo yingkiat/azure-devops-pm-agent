@@ -25,7 +25,7 @@ id-c508ffe79f87,Disaster Recovery Tier,Tier 3
 id-c508ffe79f87,Application Short Code,MSDY
 id-bcd853b64ad0,Technology Stack,SaaS
 id-bcd853b64ad0,Region,ANZ
-id-bcd853b64ad0,Domain,Commercial
+id-bcd853b64ad0,Domain,Tech Services
 id-bcd853b64ad0,Sub-Domain,End User Computing
 id-bcd853b64ad0,It Owner,ryan.clarke
 id-bcd853b64ad0,Tech Standard,Approved
@@ -39,7 +39,7 @@ id-bcd853b64ad0,Application Short Code,CCUS
 id-892495dbc37d,Technology Stack,SaaS
 id-892495dbc37d,Region,APAC
 id-892495dbc37d,Domain,Commercial
-id-892495dbc37d,Sub-Domain,End User Computing
+id-892495dbc37d,Sub-Domain,Marketing
 id-892495dbc37d,It Owner,jose.harima
 id-892495dbc37d,Tech Standard,Approved
 id-892495dbc37d,Hosting Type,SaaS
@@ -1994,7 +1994,7 @@ id-d01c0e377c39,Administrator Team,IT-PMO
 id-d01c0e377c39,Disaster Recovery Tier,Tier 2
 id-d01c0e377c39,Application Short Code,JIRA
 id-3d05a1b61d88,Domain,Commercial
-id-3d05a1b61d88,Region,AEM
+id-3d05a1b61d88,Region,JPN
 id-3d05a1b61d88,Sub-Domain,Marketing
 id-3d05a1b61d88,It Owner,jose.harima
 id-3d05a1b61d88,Application Name,Magento AEM
@@ -2588,3 +2588,59 @@ id-81f5a778caea,Roadmap Disposition,Invest
 id-81f5a778caea,Planning Horizon,Baseline
 id-9ea4ec271842,Roadmap Disposition,Invest
 id-9ea4ec271842,Planning Horizon,Baseline
+id-3d05a1b61d88,Roadmap Disposition,Migrate
+id-3d05a1b61d88,Planning Horizon,In Progress
+id-f32a97390abb,Roadmap Disposition,Tolerate
+id-f32a97390abb,Planning Horizon,Baseline
+id-b479659d19ce,Roadmap Disposition,Migrate
+id-b479659d19ce,Planning Horizon,In Progress
+id-2ba56bc66693,Roadmap Disposition,Migrate
+id-2ba56bc66693,Planning Horizon,In Progress
+id-9009058c4cc7,Roadmap Disposition,Migrate
+id-9009058c4cc7,Planning Horizon,In Progress
+id-801b2d439190,Roadmap Disposition,Migrate
+id-801b2d439190,Planning Horizon,In Progress
+id-15588b78f32b,Roadmap Disposition,Invest
+id-15588b78f32b,Planning Horizon,In Progress
+id-d11d37e2f121,Roadmap Disposition,Invest
+id-d11d37e2f121,Planning Horizon,In Progress
+id-1cf63b7b7726,Roadmap Disposition,Invest
+id-1cf63b7b7726,Planning Horizon,In Progress
+id-46735043cd40,Roadmap Disposition,Invest
+id-46735043cd40,Planning Horizon,In Progress
+id-ace5b6c7e7f8,Roadmap Disposition,Invest
+id-ace5b6c7e7f8,Planning Horizon,In Progress
+id-fbd944c5a851,Roadmap Disposition,Invest
+id-fbd944c5a851,Planning Horizon,In Progress
+id-1f12ee03b0e6,Roadmap Disposition,Migrate
+id-1f12ee03b0e6,Planning Horizon,In Progress
+id-14367eedc98c,Roadmap Disposition,Invest
+id-14367eedc98c,Planning Horizon,In Progress
+id-892495dbc37d,Roadmap Disposition,Invest
+id-892495dbc37d,Planning Horizon,Baseline
+id-a554d018ef72,Roadmap Disposition,Invest
+id-a554d018ef72,Planning Horizon,In Progress
+id-b66789099bdb,Roadmap Disposition,Migrate
+id-b66789099bdb,Planning Horizon,In Progress
+id-bc99312013c7,Roadmap Disposition,Migrate
+id-bc99312013c7,Planning Horizon,In Progress
+id-4a4df63c87b4,Roadmap Disposition,Migrate
+id-4a4df63c87b4,Planning Horizon,In Review
+id-809fbf7c4841,Roadmap Disposition,Invest
+id-809fbf7c4841,Planning Horizon,Baseline
+id-045a713928ad,Roadmap Disposition,Tolerate
+id-045a713928ad,Planning Horizon,Baseline
+id-1a7c3aa492a3,Domain,Commercial
+id-1a7c3aa492a3,Region,JPN
+id-1a7c3aa492a3,Sub-Domain,Marketing
+id-1a7c3aa492a3,It Owner,jose.harima
+id-1a7c3aa492a3,Application Name,Magento JPN
+id-1a7c3aa492a3,Description,CMS
+id-1a7c3aa492a3,Tech Standard,Limited Use
+id-1a7c3aa492a3,Hosting Type,OnPrem
+id-1a7c3aa492a3,Vendor Support,Magento
+id-1a7c3aa492a3,Risk Level,Moderate
+id-1a7c3aa492a3,Business Criticality,Tier 3 - Business Operational
+id-1a7c3aa492a3,Administrator Team,IT-APAC-Commercial
+id-1a7c3aa492a3,Roadmap Disposition,Migrate
+id-1a7c3aa492a3,Planning Horizon,In Progress

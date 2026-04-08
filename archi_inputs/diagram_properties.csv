@@ -332,3 +332,13 @@ diagram-4df90909cc2d,role,Authentication and identity
 diagram-6eaccdb15f5e,azure_service,private_endpoint
 diagram-6eaccdb15f5e,container,Network Boundary
 diagram-6eaccdb15f5e,role,Private access path
+diagram-fafc93deab3c,Role,Commercial ANZ Core
+diagram-8395fff7c6a2,Role,Commercial JPN Core
+diagram-8193717b894b,Display Name,QAD SE 11
+diagram-8193717b894b,Spoke Side,left
+diagram-8193717b894b,External Group,Upstream ERP
+diagram-8193717b894b,Role,ERP Source
+diagram-96a858a97bb7,Spoke Side,left
+diagram-96a858a97bb7,External Group,Upstream ERP
+diagram-96a858a97bb7,Role,ERP Source
+diagram-96a858a97bb7,Roadmap Disposition,Tolerate

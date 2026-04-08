@@ -106,3 +106,7 @@ diagram-96b8270f4082,ApplicationComponent,PSS 2.0 Runtime,Diagram element (not i
 diagram-7817d2dbdacf,ApplicationComponent,Azure SQL Database,Diagram element (not in official EA model)
 diagram-034d5be9564c,ApplicationComponent,Application Insights,Diagram element (not in official EA model)
 diagram-526f9cb53df4,ApplicationComponent,Log Analytics Workspace,Diagram element (not in official EA model)
+diagram-fafc93deab3c,ApplicationCollaboration,Commercial ANZ,Diagram element (not in official EA model)
+diagram-8395fff7c6a2,ApplicationCollaboration,Commercial JPN,Diagram element (not in official EA model)
+diagram-8193717b894b,ApplicationComponent,QAD SE 11 Upstream,Diagram element (not in official EA model)
+diagram-96a858a97bb7,ApplicationComponent,QAD SE 11​,Diagram element (not in official EA model)
