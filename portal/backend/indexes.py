@@ -205,6 +205,9 @@ class PortalIndexGenerator:
                 "category": diag.get("category", ""),
                 "domain": diag.get("domain", ""),
                 "region": diag.get("region", ""),
+                "project": diag.get("project", ""),
+                "project_key": diag.get("project_key", ""),
+                "view_kind": diag.get("view_kind", ""),
                 "elements": diag.get("elements", []),
                 "metadata": {
                     "element_count": len(diag.get("elements", [])),
@@ -212,6 +215,9 @@ class PortalIndexGenerator:
                     "updated_at": diag.get("updated_at", ""),
                     "domain": diag.get("domain", ""),
                     "region": diag.get("region", ""),
+                    "project": diag.get("project", ""),
+                    "project_key": diag.get("project_key", ""),
+                    "view_kind": diag.get("view_kind", ""),
                 },
             }
         return registry

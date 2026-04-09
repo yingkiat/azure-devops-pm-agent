@@ -15,10 +15,13 @@ story:
 metadata:
   domain: "ERP"
   region: "APAC"
+  project_key: "qad_migration"
+  project: "QAD Migration"
+  view_kind: "project"
 
 # === VIEW DEFINITION ===
 view:
-  name: "QAD Migration Options"
+  name: "QAD Migration - Options"
   documentation: |
     Comparison view showing two stacked migration options from the three current QAD instances
     into alternative target cores, then through an analytical database and Boomi to shared
@@ -146,21 +149,12 @@ elements:
         Sequence: "1"
       description: "Target SAP S/4HANA core."
 
-    - name: "SAP HANA"
-      type: "ApplicationComponent"
-      synthetic: true
-      override:
-        Section: "Option 2"
-        Stage: "Analytical Database"
-        Sequence: "1"
-      description: "Analytical database layer for option 2."
-
     - name: "Boomi - Option 2"
       type: "ApplicationComponent"
       synthetic: true
       override:
         Section: "Option 2"
-        Stage: "Integration"
+        Stage: "Analytical Database"
         Sequence: "1"
         Display Name: "Boomi"
         Roadmap Disposition: "Invest"
@@ -283,15 +277,9 @@ relationships:
 
     - type: "Flow"
       source_name: "SAP S/4HANA"
-      target_name: "SAP HANA"
-      label: ""
-      description: "Target ERP flows into SAP HANA."
-
-    - type: "Flow"
-      source_name: "SAP HANA"
       target_name: "Boomi - Option 2"
       label: ""
-      description: "SAP HANA flows into Boomi integration."
+      description: "Target ERP flows into Boomi integration."
 
     - type: "Flow"
       source_name: "Boomi - Option 2"
@@ -332,9 +320,6 @@ visual:
     - element: "SAP S/4HANA"
       role: "Option 2 target core"
       treatment: "prominent"
-    - element: "SAP HANA"
-      role: "Option 2 analytical database"
-      treatment: "highlighted"
     - element: "Boomi - Option 2"
       role: "Option 2 integration hub"
       treatment: "highlighted"

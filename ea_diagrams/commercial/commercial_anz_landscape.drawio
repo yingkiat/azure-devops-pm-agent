@@ -22,15 +22,14 @@
         <mxCell id="id-f32a97390abb" parent="diagram-fafc93deab3c-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="CNS" vertex="1">
           <mxGeometry height="60" width="120" x="32" y="202" as="geometry" />
         </mxCell>
-        <mxCell id="ext-left-0_to_diagram-fafc93deab3c-grp-3_cada2cd153" edge="1" parent="diagram-fafc93deab3c-grp-1" source="ext-left-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;entryPerimeter=1;exitDx=0;exitDy=0;" value="">
+        <mxCell id="ext-left-0_to_diagram-fafc93deab3c-grp-3_cada2cd153" edge="1" parent="1" source="ext-left-0" target="diagram-fafc93deab3c-grp-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-316" y="190" />
-              <mxPoint x="380" y="190" />
-              <mxPoint x="380" y="202" />
+              <mxPoint x="314" y="320" />
+              <mxPoint x="986" y="320" />
+              <mxPoint x="986" y="335" />
+              <mxPoint x="986" y="335" />
             </Array>
-            <mxPoint x="-316" y="187.00000000000023" as="sourcePoint" />
-            <mxPoint x="404" y="202.00000000000023" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="diagram-fafc93deab3c-grp-2" parent="diagram-fafc93deab3c" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" value="SPT" vertex="1">

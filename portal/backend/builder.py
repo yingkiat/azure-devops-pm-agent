@@ -57,6 +57,9 @@ class PortalBuilder:
                 "name": view_meta.get("name") or "",
                 "domain": metadata.get("domain") or view_meta.get("domain") or "",
                 "region": metadata.get("region") or view_meta.get("region") or "",
+                "project": metadata.get("project") or view_meta.get("project") or "",
+                "project_key": metadata.get("project_key") or view_meta.get("project_key") or "",
+                "view_kind": metadata.get("view_kind") or view_meta.get("view_kind") or "",
             }
         except Exception:
             return {}
@@ -650,6 +653,9 @@ class PortalBuilder:
                         "category": category,
                         "domain": domain,
                         "region": region,
+                        "project": explicit_meta.get("project") or "",
+                        "project_key": explicit_meta.get("project_key") or "",
+                        "view_kind": explicit_meta.get("view_kind") or "",
                         "elements": element_ids,
                         "element_count": len(element_ids),
                         "created": datetime.now().isoformat(),
@@ -1525,6 +1531,109 @@ class PortalBuilder:
             position: relative;
             height: 220px;
         }
+        .analytics-story-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .analytics-roadmap-shell {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.15rem 1.2rem;
+        }
+        .analytics-roadmap-kicker {
+            font-size: 0.72rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+        }
+        .analytics-roadmap-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2933;
+            margin-bottom: 0.85rem;
+        }
+        .analytics-roadmap-matrix {
+            display: grid;
+            grid-template-columns: 160px repeat(3, minmax(0, 1fr));
+            gap: 0.55rem;
+        }
+        .analytics-roadmap-header,
+        .analytics-roadmap-row-label,
+        .analytics-roadmap-cell {
+            border-radius: 12px;
+            border: 1px solid #dbe3ef;
+        }
+        .analytics-roadmap-header,
+        .analytics-roadmap-row-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            color: #334155;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem 0.7rem;
+        }
+        .analytics-roadmap-row-label {
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 0.95rem;
+        }
+        .analytics-roadmap-cell {
+            min-height: 108px;
+            padding: 0.8rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        .analytics-roadmap-cell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: rgba(37, 99, 235, 0.22);
+        }
+        .analytics-roadmap-cell.is-empty {
+            cursor: default;
+            opacity: 0.6;
+        }
+        .analytics-roadmap-cell.is-empty:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #dbe3ef;
+        }
+        .analytics-roadmap-cell.invest {
+            background: linear-gradient(180deg, rgba(129, 199, 132, 0.26) 0%, rgba(240, 253, 244, 0.96) 100%);
+        }
+        .analytics-roadmap-cell.migrate {
+            background: linear-gradient(180deg, rgba(229, 115, 115, 0.28) 0%, rgba(254, 242, 242, 0.98) 100%);
+        }
+        .analytics-roadmap-cell.tolerate {
+            background: linear-gradient(180deg, rgba(255, 213, 79, 0.28) 0%, rgba(255, 251, 235, 0.98) 100%);
+        }
+        .analytics-roadmap-count {
+            font-size: 1.7rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #0f172a;
+        }
+        .analytics-roadmap-share {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .analytics-roadmap-caption {
+            font-size: 0.72rem;
+            color: #475569;
+            line-height: 1.35;
+            margin-top: 0.18rem;
+        }
         .diagram-map-view {
             padding: 1.5rem;
             overflow: auto;
@@ -1710,6 +1819,9 @@ class PortalBuilder:
 
         @media (max-width: 1024px) {
             .sidebar-right { width: 100%; z-index: 100; }
+            .analytics-roadmap-matrix {
+                grid-template-columns: 130px repeat(3, minmax(0, 1fr));
+            }
             .diagram-map-toolbar {
                 flex-direction: column;
                 align-items: stretch;
@@ -1807,15 +1919,15 @@ class PortalBuilder:
                 </div>
             </div>
             <div class="header" v-else-if="viewMode === 'analytics'">
-                <div class="page-hero analytics-hero">
-                    <div class="page-hero-copy">
-                        <div class="page-hero-kicker">Insights</div>
-                        <h2>Portfolio Analytics</h2>
-                        <div class="page-hero-subtitle">Track mix, lifecycle, standards and domain-level portfolio signals.</div>
+                    <div class="page-hero analytics-hero">
+                        <div class="page-hero-copy">
+                            <div class="page-hero-kicker">Insights</div>
+                            <h2>Portfolio Analytics</h2>
+                        <div class="page-hero-subtitle">Track roadmap intent, current plans, and where active portfolio change is concentrated.</div>
+                        </div>
+                        <div class="page-hero-badge">📈</div>
                     </div>
-                    <div class="page-hero-badge">📈</div>
                 </div>
-            </div>
             <div class="header" v-else-if="viewMode === 'diagram-map'">
                 <div class="page-hero library-hero">
                     <div class="page-hero-copy">
@@ -1834,6 +1946,7 @@ class PortalBuilder:
                         <div class="diagram-meta-row">
                             <div class="diagram-meta-chip" v-if="currentViewData.domain">Domain: {{ formatDomainLabel(currentViewData.domain) }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.region">Region: {{ currentViewData.region }}</div>
+                            <div class="diagram-meta-chip" v-if="currentViewData.project">Project: {{ currentViewData.project }}</div>
                             <div class="diagram-meta-chip">{{ currentViewData.metadata.element_count }} elements</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.category">Category: {{ currentViewData.category }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.metadata.updated_at">Updated: {{ formatTimestamp(currentViewData.metadata.updated_at) }}</div>
@@ -1912,14 +2025,14 @@ class PortalBuilder:
                             <div class="analytics-stat-label">SaaS</div>
                             <div class="analytics-stat-sub">{{ filteredAnalyticsData.summary.saas_count }} apps</div>
                         </div>
-<div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
+                        <div class="analytics-stat-card" style="border-top-color:#ffc107;" @click="showDrilldown('Tech Standard Approved', cardApps('tech_approved'))">
                             <div class="analytics-stat-value" style="color:#ffc107;">{{ filteredAnalyticsData.summary.tech_standard_approved }}</div>
                             <div class="analytics-stat-label">Tech Std Approved</div>
                             <div class="analytics-stat-sub">of {{ filteredAnalyticsData.summary.total_apps }} apps</div>
                         </div>
                     </div>
 
-                    <!-- Charts Row 1: App Type + Criticality -->
+                    <!-- Charts Row 1: Familiar estate context -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">Application Type Breakdown</div>
@@ -1931,9 +2044,9 @@ class PortalBuilder:
                         </div>
                     </div>
 
-                    <!-- Charts Row 2: Domain + Region -->
+                    <!-- Charts Row 2: Familiar estate context -->
                     <div class="analytics-chart-row">
-                        <div class="analytics-chart-card" style="flex:2;">
+                        <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Applications by Domain' : 'Applications by Sub-Domain' }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartDomain"></canvas></div>
                         </div>
@@ -1943,8 +2056,74 @@ class PortalBuilder:
                         </div>
                     </div>
 
-                    <!-- Charts Row 3: Legacy by Domain -->
+                    <!-- Charts Row 3: Roadmap execution cards -->
+                    <div class="analytics-stat-row">
+                        <div class="analytics-stat-card" style="border-top-color:#2563eb;" @click="showDrilldown('In Progress', cardApps('in_progress'))">
+                            <div class="analytics-stat-value" style="color:#2563eb;">{{ filteredAnalyticsData.summary.in_progress_count }}</div>
+                            <div class="analytics-stat-label">In Progress</div>
+                            <div class="analytics-stat-sub">{{ filteredAnalyticsData.summary.in_progress_pct }}% of scope</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#dc3545;" @click="showDrilldown('Migrate + In Progress', cardApps('migrate_in_progress'))">
+                            <div class="analytics-stat-value" style="color:#dc3545;">{{ filteredAnalyticsData.summary.migrate_in_progress_count }}</div>
+                            <div class="analytics-stat-label">Migrate + In Progress</div>
+                            <div class="analytics-stat-sub">apps in active transition</div>
+                        </div>
+                        <div class="analytics-stat-card" style="border-top-color:#16a34a;" @click="showDrilldown('Invest + In Progress', cardApps('invest_in_progress'))">
+                            <div class="analytics-stat-value" style="color:#16a34a;">{{ filteredAnalyticsData.summary.invest_in_progress_count }}</div>
+                            <div class="analytics-stat-label">Invest + In Progress</div>
+                            <div class="analytics-stat-sub">apps actively being scaled</div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-story-grid">
+                        <div class="analytics-roadmap-shell">
+                            <div class="analytics-roadmap-kicker">Roadmap Control Tower</div>
+                            <div class="analytics-roadmap-title">Disposition by Planning Horizon</div>
+                            <div class="analytics-roadmap-matrix">
+                                <div class="analytics-roadmap-header"></div>
+                                <div v-for="col in filteredAnalyticsData.roadmap_matrix.columns" :key="`col-${col}`" class="analytics-roadmap-header">{{ col }}</div>
+                                <template v-for="row in filteredAnalyticsData.roadmap_matrix.rows" :key="`row-${row}`">
+                                    <div class="analytics-roadmap-row-label">{{ row }}</div>
+                                    <div
+                                        v-for="col in filteredAnalyticsData.roadmap_matrix.columns"
+                                        :key="`${row}-${col}`"
+                                        class="analytics-roadmap-cell"
+                                        :class="[roadmapDispositionClass(row), { 'is-empty': !roadmapMatrixCell(row, col).count }]"
+                                        @click="showRoadmapMatrixDrilldown(row, col)"
+                                    >
+                                        <div class="analytics-roadmap-count">{{ roadmapMatrixCell(row, col).count }}</div>
+                                        <div>
+                                            <div class="analytics-roadmap-share">{{ roadmapMatrixCell(row, col).pct }}% of scoped apps</div>
+                                            <div class="analytics-roadmap-caption">{{ roadmapMatrixCell(row, col).caption }}</div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 4: Roadmap execution context -->
                     <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Planning Horizon</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartPlanningHorizon"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Roadmap Disposition</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartRoadmapDisposition"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 5: Roadmap execution context -->
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'In Progress by Domain' : 'In Progress by Sub-Domain' }}</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartInProgressDomain"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Migrate + In Progress by Domain' : 'Migrate + In Progress by Sub-Domain' }}</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartMigrateInProgress"></canvas></div>
+                        </div>
                         <div class="analytics-chart-card" style="flex:1;">
                             <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Legacy Applications by Domain' : 'Legacy Applications by Sub-Domain' }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
@@ -2001,7 +2180,9 @@ class PortalBuilder:
                                     <div v-else class="diagram-map-cards">
                                         <div v-for="view in diagramMapCellViews(region, domain)" :key="view.id" class="diagram-map-card" @click="loadView(view.id)">
                                             <div class="diagram-map-card-name">{{ view.name }}</div>
-                                            <div class="diagram-map-card-meta">{{ view.metadata.element_count }} elements</div>
+                                            <div class="diagram-map-card-meta">
+                                                <span v-if="view.project">{{ view.project }} · </span>{{ view.metadata.element_count }} elements
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2296,6 +2477,26 @@ class PortalBuilder:
                     const legacyApps = records.filter(r => r.tech_standard === 'Legacy').map(r => r.name);
                     const saasApps = records.filter(r => r.hosting_type === 'SaaS').map(r => r.name);
                     const approvedApps = records.filter(r => r.catalogue_tech_standard === 'Approved').map(r => r.name);
+                    const inProgressApps = records.filter(r => r.planning_horizon === 'In Progress').map(r => r.name);
+                    const inReviewApps = records.filter(r => r.planning_horizon === 'In Review').map(r => r.name);
+                    const migrateInProgressApps = records.filter(r => r.roadmap_disposition === 'Migrate' && r.planning_horizon === 'In Progress').map(r => r.name);
+                    const investInProgressApps = records.filter(r => r.roadmap_disposition === 'Invest' && r.planning_horizon === 'In Progress').map(r => r.name);
+                    const roadmapRows = ['Invest', 'Migrate', 'Tolerate'];
+                    const roadmapColumns = ['Baseline', 'In Progress', 'In Review'];
+                    const roadmapMatrix = {};
+                    for (const row of roadmapRows) {
+                        roadmapMatrix[row] = {};
+                        for (const col of roadmapColumns) {
+                            const apps = records
+                                .filter(r => r.roadmap_disposition === row && r.planning_horizon === col)
+                                .map(r => r.name);
+                            roadmapMatrix[row][col] = {
+                                count: apps.length,
+                                pct: total ? Math.round((apps.length / total) * 1000) / 10 : 0,
+                                apps
+                            };
+                        }
+                    }
                     return {
                         summary: {
                             total_apps: total,
@@ -2303,17 +2504,33 @@ class PortalBuilder:
                             legacy_pct: total ? Math.round((legacyApps.length / total) * 1000) / 10 : 0,
                             saas_count: saasApps.length,
                             saas_pct: total ? Math.round((saasApps.length / total) * 1000) / 10 : 0,
-                            tech_standard_approved: approvedApps.length
+                            tech_standard_approved: approvedApps.length,
+                            in_progress_count: inProgressApps.length,
+                            in_progress_pct: total ? Math.round((inProgressApps.length / total) * 1000) / 10 : 0,
+                            in_review_count: inReviewApps.length,
+                            migrate_in_progress_count: migrateInProgressApps.length,
+                            invest_in_progress_count: investInProgressApps.length
                         },
                         application_type: countBy('hosting_type'),
                         criticality: countBy('business_criticality'),
                         domain: countBy('domain'),
                         sub_domain: countBy('sub_domain'),
                         region: countBy('region'),
+                        planning_horizon: countBy('planning_horizon'),
+                        roadmap_disposition: countBy('roadmap_disposition'),
+                        in_progress_by_domain: countBy('domain', { filter: (rec) => rec.planning_horizon === 'In Progress' }),
+                        in_progress_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.planning_horizon === 'In Progress' }),
+                        migrate_in_progress_by_domain: countBy('domain', { filter: (rec) => rec.roadmap_disposition === 'Migrate' && rec.planning_horizon === 'In Progress' }),
+                        migrate_in_progress_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.roadmap_disposition === 'Migrate' && rec.planning_horizon === 'In Progress' }),
                         legacy_by_domain: countBy('domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
                         legacy_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
                         lifecycle_status: countBy('lifecycle_status'),
-                        tech_standard: countBy('tech_standard')
+                        tech_standard: countBy('tech_standard'),
+                        roadmap_matrix: {
+                            rows: roadmapRows,
+                            columns: roadmapColumns,
+                            cells: roadmapMatrix
+                        }
                     };
                 }
             },
@@ -2461,7 +2678,64 @@ class PortalBuilder:
                             plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
                     });
 
+                    make('chartPlanningHorizon', {
+                        type: 'bar',
+                        data: {
+                            labels: dashboard.planning_horizon.labels,
+                            datasets: [{ label: 'Apps', data: dashboard.planning_horizon.values,
+                                backgroundColor: ['#94a3b8', '#2563eb', '#f59e0b'],
+                                borderRadius: 4 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('planning_horizon'),
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
 
+                    make('chartRoadmapDisposition', {
+                        type: 'doughnut',
+                        data: {
+                            labels: dashboard.roadmap_disposition.labels,
+                            datasets: [{ data: dashboard.roadmap_disposition.values,
+                                backgroundColor: dashboard.roadmap_disposition.labels.map(l => ({
+                                    'Invest': '#81C784',
+                                    'Migrate': '#E57373',
+                                    'Tolerate': '#FFD54F'
+                                }[l] || '#aaa')),
+                                borderWidth: 2 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('roadmap_disposition'),
+                            plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+                    });
+
+                    const inProgressBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'in_progress_by_domain' : 'in_progress_by_sub_domain';
+                    make('chartInProgressDomain', {
+                        type: 'bar',
+                        data: {
+                            labels: dashboard[inProgressBreakdownKey].labels,
+                            datasets: [{ label: 'Apps', data: dashboard[inProgressBreakdownKey].values,
+                                backgroundColor: '#2563eb', borderRadius: 4 }]
+                        },
+                        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor(inProgressBreakdownKey),
+                            plugins: { legend: { display: false } },
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+
+                    const migrateInProgressBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'migrate_in_progress_by_domain' : 'migrate_in_progress_by_sub_domain';
+                    make('chartMigrateInProgress', {
+                        type: 'bar',
+                        data: {
+                            labels: dashboard[migrateInProgressBreakdownKey].labels,
+                            datasets: [{ label: 'Apps', data: dashboard[migrateInProgressBreakdownKey].values,
+                                backgroundColor: '#dc3545', borderRadius: 4 }]
+                        },
+                        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor(migrateInProgressBreakdownKey),
+                            plugins: { legend: { display: false } },
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
 
                     // Legacy by Domain — horizontal bar
                     const legacyBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'legacy_by_domain' : 'legacy_by_sub_domain';
@@ -2569,16 +2843,45 @@ class PortalBuilder:
                     const at = d.application_type?.apps || {};
                     const lc = d.lifecycle_status?.apps || {};
                     const ts = d.tech_standard?.apps || {};
+                    const ph = d.planning_horizon?.apps || {};
+                    const rd = d.roadmap_disposition?.apps || {};
                     switch (key) {
                         case 'total':        return this.filteredAnalyticsRecords.map(r => r.name);
                         case 'legacy':       return ts['Legacy'] || [];
                         case 'saas':         return at['SaaS'] || [];
                         case 'custom':       return [...(at['Home-grown'] || []), ...(at['COTS'] || []), ...(at['Excel'] || [])];
                         case 'tech_approved': return ts['Approved'] || [];
+                        case 'in_progress':  return ph['In Progress'] || [];
+                        case 'in_review':    return ph['In Review'] || [];
+                        case 'invest_in_progress':
+                            return this.filteredAnalyticsRecords.filter(r => r.roadmap_disposition === 'Invest' && r.planning_horizon === 'In Progress').map(r => r.name);
+                        case 'migrate_in_progress':
+                            return this.filteredAnalyticsRecords.filter(r => r.roadmap_disposition === 'Migrate' && r.planning_horizon === 'In Progress').map(r => r.name);
                         case 'strategic':    return lc['Strategic'] || [];
                         case 'sunset':       return lc['Sunset'] || [];
                         default:             return [];
                     }
+                },
+                roadmapDispositionClass(disposition) {
+                    return String(disposition || '').toLowerCase();
+                },
+                roadmapMatrixCell(disposition, horizon) {
+                    const cell = this.filteredAnalyticsData?.roadmap_matrix?.cells?.[disposition]?.[horizon];
+                    if (!cell) return { count: 0, pct: 0, apps: [], caption: 'No applications' };
+                    const verbMap = {
+                        'Invest': 'being accelerated',
+                        'Migrate': 'being transitioned',
+                        'Tolerate': 'being carried forward'
+                    };
+                    return {
+                        ...cell,
+                        caption: cell.count ? `${cell.count} apps ${verbMap[disposition] || 'in this state'}` : 'No applications'
+                    };
+                },
+                showRoadmapMatrixDrilldown(disposition, horizon) {
+                    const cell = this.roadmapMatrixCell(disposition, horizon);
+                    if (!cell.count) return;
+                    this.showDrilldown(`${disposition} + ${horizon}`, cell.apps);
                 },
                 showDrilldown(title, appNames) {
                     const nameCol = this.catalogueNameColumn;

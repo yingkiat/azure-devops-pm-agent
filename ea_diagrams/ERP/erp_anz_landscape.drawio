@@ -1,203 +1,202 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="app.diagrams.net" modified="2025-01-01T00:00:00.000Z" version="24.0.0" type="device">
-  <diagram name="ERP ANZ Landscape">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="ERP ANZ Landscape" id="0">
+    <mxGraphModel dx="1943" dy="1143" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="diagram-a7ab1b9c9e13" value="ERP ANZ" style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;align=center;" vertex="1" parent="1">
-          <mxGeometry x="494" y="244" width="560" height="452" as="geometry" />
+        <mxCell id="diagram-a7ab1b9c9e13" parent="1" style="swimlane;startSize=42;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;strokeWidth=2;align=center;" value="ERP ANZ" vertex="1">
+          <mxGeometry height="368" width="560" x="436" y="244" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0" value="QAD" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-a7ab1b9c9e13">
-          <mxGeometry x="24" y="54" width="157" height="374" as="geometry" />
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0" parent="diagram-a7ab1b9c9e13" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" value="QAD" vertex="1">
+          <mxGeometry height="290" width="157" x="24" y="54" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-1" value="Services" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-a7ab1b9c9e13">
-          <mxGeometry x="201" y="54" width="157" height="374" as="geometry" />
+        <mxCell id="id-1b2283706bf4" parent="diagram-a7ab1b9c9e13-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;" value="QAD EE 2019" vertex="1">
+          <mxGeometry height="60" width="120" x="18" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-2" value="Integration" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" vertex="1" parent="diagram-a7ab1b9c9e13">
-          <mxGeometry x="378" y="54" width="157" height="374" as="geometry" />
+        <mxCell id="diagram-a7ab1b9c9e13-grp-1" parent="diagram-a7ab1b9c9e13" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" value="Services" vertex="1">
+          <mxGeometry height="290" width="157" x="201" y="54" as="geometry" />
         </mxCell>
-        <mxCell id="ext-left-0" value="Finance" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="154" y="230" width="250" height="266" as="geometry" />
+        <mxCell id="id-021f48755bef" parent="diagram-a7ab1b9c9e13-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;" value="Pro2SQL ANZ" vertex="1">
+          <mxGeometry height="60" width="120" x="18" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="ext-left-1" value="Reporting" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="154" y="520" width="250" height="190" as="geometry" />
+        <mxCell id="diagram-a7ab1b9c9e13-grp-2" parent="diagram-a7ab1b9c9e13" style="swimlane;startSize=28;fillColor=#F8FBFF;strokeColor=#90CAF9;fontStyle=1;align=center;" value="Integration" vertex="1">
+          <mxGeometry height="290" width="157" x="378" y="54" as="geometry" />
         </mxCell>
-        <mxCell id="ext-right-0" value="Logistics" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1144" y="154" width="250" height="266" as="geometry" />
+        <mxCell id="diagram-4d2e27158ca5" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="EDI" vertex="1">
+          <mxGeometry height="60" width="120" x="18" y="206" as="geometry" />
         </mxCell>
-        <mxCell id="ext-right-1" value="Manufacturing Operations" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1144" y="444" width="250" height="342" as="geometry" />
+        <mxCell id="id-1b20812cd840" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Informatica PIM ANZ" vertex="1">
+          <mxGeometry height="60" width="133" x="12" y="122" as="geometry" />
         </mxCell>
-        <mxCell id="ext-top-0" value="Commercial" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="40" y="40" width="722" height="114" as="geometry" />
+        <mxCell id="id-a5b9ae2e6df9" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Boomi" vertex="1">
+          <mxGeometry height="60" width="120" x="18" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="ext-top-1" value="Planning" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="786" y="40" width="722" height="114" as="geometry" />
+        <mxCell id="ext-left-0" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Finance" vertex="1">
+          <mxGeometry height="266" width="250" x="96" y="188" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-4d2e27158ca5" value="EDI" vertex="1" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="18" y="290" width="120" height="60" as="geometry" />
+        <mxCell id="id-14367eedc98c" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Concur Expense Management" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-592eac202131" value="eInvoice Govt Portal (India, China)" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="190" width="220" height="60" as="geometry" />
+        <mxCell id="id-a3846d0a06ea" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Oracle EPM" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="114" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-6e50f09e49bc" value="Bank Payments System" vertex="1" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="12" y="38" width="133" height="60" as="geometry" />
+        <mxCell id="id-ad73bc5bcf9e" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Blackline" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="diagram-ea4940c3975f" value="GSC Reporting" vertex="1" parent="ext-left-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
+        <mxCell id="ext-left-1" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Reporting" vertex="1">
+          <mxGeometry height="190" width="250" x="96" y="478" as="geometry" />
         </mxCell>
-        <mxCell id="id-021726ec4519" value="PSS 1.0" vertex="1" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="266" width="220" height="60" as="geometry" />
+        <mxCell id="diagram-ea4940c3975f" parent="ext-left-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="GSC Reporting" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-021f48755bef" value="Pro2SQL ANZ" vertex="1" parent="diagram-a7ab1b9c9e13-grp-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#1976D2;opacity=100;shadow=1;">
-          <mxGeometry x="18" y="38" width="120" height="60" as="geometry" />
+        <mxCell id="id-f91e6b0dc180" parent="ext-left-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Tableau" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="114" as="geometry" />
         </mxCell>
-        <mxCell id="id-03195777091d" value="GSC SAP APO" vertex="1" parent="ext-top-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="251" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="ext-right-0" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Logistics" vertex="1">
+          <mxGeometry height="266" width="250" x="1086" y="112" as="geometry" />
         </mxCell>
-        <mxCell id="id-14367eedc98c" value="Concur Expense Management" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-784902c1ffb1" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Smartfreight" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-15588b78f32b" value="Magento ANZ" vertex="1" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-9b54b92dbc43" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="OnDemand" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="114" as="geometry" />
         </mxCell>
-        <mxCell id="id-1b20812cd840" value="Informatica PIM ANZ" vertex="1" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="12" y="206" width="133" height="60" as="geometry" />
+        <mxCell id="id-bb3759f4a808" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Yusen" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="id-1b2283706bf4" value="QAD EE 2019" vertex="1" parent="diagram-a7ab1b9c9e13-grp-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;fontSize=11;fontFamily=Verdana;aspect=fixed;strokeWidth=3;strokeColor=#2E7D32;opacity=100;fontStyle=1;">
-          <mxGeometry x="18" y="38" width="120" height="60" as="geometry" />
+        <mxCell id="ext-right-1" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Manufacturing Operations" vertex="1">
+          <mxGeometry height="342" width="250" x="1086" y="402" as="geometry" />
         </mxCell>
-        <mxCell id="id-1cf63b7b7726" value="MedPack" vertex="1" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="190" width="220" height="60" as="geometry" />
+        <mxCell id="id-021726ec4519" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="PSS 1.0" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-2757f9b2452f" value="Batch Control System" vertex="1" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-1cf63b7b7726" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="MedPack" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="266" as="geometry" />
         </mxCell>
-        <mxCell id="id-46735043cd40" value="MedQuote" vertex="1" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="251" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-2757f9b2452f" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Batch Control System" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="114" as="geometry" />
         </mxCell>
-        <mxCell id="id-6385d2992d54" value="DSX" vertex="1" parent="ext-top-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-cb7cb0b84df6" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Label Printing" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="id-784902c1ffb1" value="Smartfreight" vertex="1" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="ext-top-0" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Commercial" vertex="1">
+          <mxGeometry height="114" width="722" x="100" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="id-9b54b92dbc43" value="OnDemand" vertex="1" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="190" width="220" height="60" as="geometry" />
+        <mxCell id="id-15588b78f32b" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Magento ANZ" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-a3846d0a06ea" value="Oracle EPM" vertex="1" parent="ext-top-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="487" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-46735043cd40" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="MedQuote" vertex="1">
+          <mxGeometry height="60" width="220" x="487" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-a5b9ae2e6df9" value="Boomi" vertex="1" parent="diagram-a7ab1b9c9e13-grp-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="18" y="122" width="120" height="60" as="geometry" />
+        <mxCell id="id-c508ffe79f87" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="Microsoft Dynamics" vertex="1">
+          <mxGeometry height="60" width="220" x="251" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-ad73bc5bcf9e" value="Blackline Financial Close" vertex="1" parent="ext-left-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
+        <mxCell id="ext-top-1" parent="1" style="swimlane;startSize=28;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontStyle=1;align=center;" value="Planning" vertex="1">
+          <mxGeometry height="114" width="486" x="846" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="id-bb3759f4a808" value="Yusen" vertex="1" parent="ext-right-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
+        <mxCell id="id-03195777091d" parent="ext-top-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="GSC SAP APO" vertex="1">
+          <mxGeometry height="60" width="220" x="251" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-c508ffe79f87" value="Microsoft Dynamics" vertex="1" parent="ext-top-0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81C784;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="487" y="38" width="220" height="60" as="geometry" />
+        <mxCell id="id-6385d2992d54" parent="ext-top-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;" value="DSX" vertex="1">
+          <mxGeometry height="60" width="220" x="15" y="38" as="geometry" />
         </mxCell>
-        <mxCell id="id-cb7cb0b84df6" value="Label Printing" vertex="1" parent="ext-right-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD54F;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="114" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="id-f91e6b0dc180" value="Tableau" vertex="1" parent="ext-left-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E57373;strokeColor=#666666;fontSize=11;fontFamily=Verdana;aspect=fixed;">
-          <mxGeometry x="15" y="38" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_diagram-a7ab1b9c9e13-grp-2_a5812daeee" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" target="diagram-a7ab1b9c9e13-grp-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_diagram-a7ab1b9c9e13-grp-2_fbad6769c5" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" target="diagram-a7ab1b9c9e13-grp-2" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="699" y="485" />
-              <mxPoint x="848" y="485" />
-              <mxPoint x="848" y="485" />
-              <mxPoint x="848" y="485" />
+              <mxPoint x="641" y="443" />
+              <mxPoint x="790" y="443" />
+              <mxPoint x="790" y="443" />
+              <mxPoint x="790" y="443" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-left-0_0241c620c2" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" target="ext-left-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-left-0_c2f61dd4cb" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" target="ext-left-0" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="494" y="485" />
-              <mxPoint x="428" y="485" />
-              <mxPoint x="428" y="363" />
-              <mxPoint x="428" y="363" />
+              <mxPoint x="436" y="443" />
+              <mxPoint x="370" y="443" />
+              <mxPoint x="370" y="321" />
+              <mxPoint x="370" y="321" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-right-0_c469572853" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" target="ext-right-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-right-0_7feef2d43f" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" target="ext-right-0" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="699" y="485" />
-              <mxPoint x="1120" y="485" />
-              <mxPoint x="1120" y="287" />
-              <mxPoint x="1120" y="287" />
+              <mxPoint x="641" y="443" />
+              <mxPoint x="1062" y="443" />
+              <mxPoint x="1062" y="245" />
+              <mxPoint x="1062" y="245" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-top-0_e7e0abc77c" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" target="ext-top-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-top-0_ef8ff736ec" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" target="ext-top-0" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="596" y="274" />
-              <mxPoint x="596" y="178" />
-              <mxPoint x="401" y="178" />
-              <mxPoint x="401" y="178" />
+              <mxPoint x="538" y="274" />
+              <mxPoint x="538" y="178" />
+              <mxPoint x="461" y="178" />
+              <mxPoint x="461" y="178" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-top-1_81fe88e66b" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" target="ext-top-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-0_to_ext-top-1_bbc9c406c1" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" target="ext-top-1" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="596" y="274" />
-              <mxPoint x="596" y="178" />
-              <mxPoint x="1147" y="178" />
-              <mxPoint x="1147" y="178" />
+              <mxPoint x="538" y="274" />
+              <mxPoint x="538" y="178" />
+              <mxPoint x="1089" y="178" />
+              <mxPoint x="1089" y="178" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-left-1_34b59e9e79" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" target="ext-left-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-left-0_8fdb34efd7" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" target="ext-left-0" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="671" y="485" />
-              <mxPoint x="428" y="485" />
-              <mxPoint x="428" y="615" />
-              <mxPoint x="428" y="615" />
+              <mxPoint x="613" y="443" />
+              <mxPoint x="370" y="443" />
+              <mxPoint x="370" y="321" />
+              <mxPoint x="370" y="321" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-right-1_d787a6d3aa" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" target="ext-right-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-left-1_36fd626f4d" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" target="ext-left-1" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="876" y="485" />
-              <mxPoint x="1120" y="485" />
-              <mxPoint x="1120" y="615" />
-              <mxPoint x="1120" y="615" />
+              <mxPoint x="613" y="443" />
+              <mxPoint x="370" y="443" />
+              <mxPoint x="370" y="573" />
+              <mxPoint x="370" y="573" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-top-0_fd207273db" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" target="ext-top-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-right-1_e5e3d4d9d5" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" target="ext-right-1" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="773" y="274" />
-              <mxPoint x="773" y="178" />
-              <mxPoint x="401" y="178" />
-              <mxPoint x="401" y="178" />
+              <mxPoint x="818" y="443" />
+              <mxPoint x="1062" y="443" />
+              <mxPoint x="1062" y="573" />
+              <mxPoint x="1062" y="573" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-top-1_33ac62ccde" value="" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" target="ext-top-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;">
+        <mxCell id="diagram-a7ab1b9c9e13-grp-1_to_ext-top-0_272891cc74" edge="1" parent="1" source="diagram-a7ab1b9c9e13-grp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;fontSize=10;dashed=1;endArrow=classic;startArrow=none;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" target="ext-top-0" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="773" y="274" />
-              <mxPoint x="773" y="178" />
-              <mxPoint x="1147" y="178" />
-              <mxPoint x="1147" y="178" />
+              <mxPoint x="715" y="274" />
+              <mxPoint x="715" y="178" />
+              <mxPoint x="461" y="178" />
+              <mxPoint x="461" y="178" />
             </Array>
           </mxGeometry>
         </mxCell>
-      <mxCell id="ann-0" value="QAD-led outbound integrations" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="516" y="201" width="170" height="20" as="geometry" /></mxCell><mxCell id="ann-1" value="Pro2SQL-led outbound integrations" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontStyle=2;fillColor=#E8F5E9;strokeColor=none;rounded=1;spacing=4;"><mxGeometry x="703" y="201" width="190" height="20" as="geometry" /></mxCell><mxCell id="narrative-224841" value="📊 ERP ANZ Landscape&#10;&#10;💡 ERP ANZ should read as a central core containing QAD EE 2019 and Pro2SQL ANZ, with external systems arranged around it&#10;&#10;Elements: 25 | Relationships: 26&#10;&#10;Lifecycle Status:&#10;  • Not specified: 23 systems&#10;  • Strategic: 2 systems&#10;&#10;Relationships:&#10;  • Composition: 6 connections&#10;  • Flow: 20 connections&#10;&#10;Color coding:&#10;  • Green = Strategic | Orange = Maintain | Red = Sunset | Blue = Standard" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontSize=10;fontFamily=Courier;fillColor=#F5F5F5;strokeColor=#999999;rounded=1;spacing=5;"><mxGeometry x="50" y="930" width="1350" height="276" as="geometry" /></mxCell></root>
+        <mxCell id="ann-0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;fontSize=9;fillColor=#FFF8E1;strokeColor=#D4B106;spacing=6;arcSize=10;" value="QAD-led outbound integrations" vertex="1">
+          <mxGeometry height="26" width="170" x="453" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="ann-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;fontSize=9;fillColor=#FFF8E1;strokeColor=#D4B106;spacing=6;arcSize=10;" value="Pro2SQL-led outbound integrations" vertex="1">
+          <mxGeometry height="26" width="190" x="620" y="420" as="geometry" />
+        </mxCell>
+      </root>
     </mxGraphModel>
   </diagram>
 </mxfile>

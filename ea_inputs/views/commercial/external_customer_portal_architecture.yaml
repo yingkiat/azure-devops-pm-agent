@@ -15,10 +15,17 @@ story:
 metadata:
   domain: "commercial"
   region: "ANZ"
+  project_key: "external_customer_portal"
+  project: "External Customer Portal"
+  view_kind: "project"
 
 # === DIAGRAM TYPE ===
 type: "freeform"
 viewpoint: "Application Cooperation"
+
+# === VIEW DEFINITION ===
+view:
+  name: "External Customer Portal - Architecture"
 
 # === ELEMENTS ===
 elements:

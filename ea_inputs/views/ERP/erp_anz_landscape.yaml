@@ -47,13 +47,6 @@ elements:
         Role: "ERP Core"
       description: "ANZ ERP reporting/data component."
 
-    - name: "Bank Payments System"
-      override:
-        Internal Group: "Integration"
-        Role: "ERP Integration"
-        Roadmap Disposition: "Tolerate"
-      description: "Payments integration component inside ERP ANZ."
-
     - name: "Boomi"
       override:
         Internal Group: "Integration"
@@ -78,6 +71,7 @@ elements:
         Spoke Side: "right"
         External Group: "Finance"
         Role: "Finance Integration"
+        Display Name: "Blackline"
       description: "Journal entry integration from QAD EE 2019."
 
     - name: "Magento ANZ"
@@ -122,14 +116,6 @@ elements:
         External Group: "Commercial"
         Role: "CRM Integration"
       description: "ERP data outbound from QAD EE 2019."
-
-    - name: "eInvoice Govt Portal (India, China)"
-      override:
-        Spoke Side: "right"
-        External Group: "Finance"
-        Role: "Government eInvoicing"
-        Roadmap Disposition: "Tolerate"
-      description: "Invoice outbound from QAD EE 2019."
 
     - name: "Concur Expense Management"
       override:
@@ -194,9 +180,9 @@ elements:
 
     - name: "Oracle EPM"
       override:
-        Spoke Side: "top"
-        External Group: "Planning"
-        Role: "Planning and Reporting"
+        Spoke Side: "left"
+        External Group: "Finance"
+        Role: "Financial Planning"
       description: "Outbound from Pro2SQL ANZ."
 
     - name: "Tableau"
@@ -228,12 +214,6 @@ relationships:
       target_name: "Pro2SQL ANZ"
       label: "contains"
       description: "ERP ANZ contains Pro2SQL ANZ."
-
-    - type: "Composition"
-      source_name: "ERP ANZ"
-      target_name: "Bank Payments System"
-      label: "contains"
-      description: "ERP ANZ contains Bank Payments System."
 
     - type: "Composition"
       source_name: "ERP ANZ"
@@ -300,18 +280,6 @@ relationships:
       target_name: "Blackline Financial Close"
       label: "Journal Entry"
       description: "Journal entry outbound from QAD EE 2019 to Blackline."
-
-    - type: "Flow"
-      source_name: "QAD EE 2019"
-      target_name: "eInvoice Govt Portal (India, China)"
-      label: "Invoice"
-      description: "Invoice outbound from QAD EE 2019 to eInvoice government portals."
-
-    - type: "Flow"
-      source_name: "QAD EE 2019"
-      target_name: "Bank Payments System"
-      label: "Supplier Payments"
-      description: "Supplier payments outbound from QAD EE 2019 to Bank Payments System."
 
     - type: "Flow"
       source_name: "QAD EE 2019"
@@ -401,9 +369,6 @@ visual:
     - element: "Pro2SQL ANZ"
       role: "Supporting ANZ ERP component inside the core"
       treatment: "highlighted"
-    - element: "Bank Payments System"
-      role: "Internal payments integration component"
-      treatment: "normal"
     - element: "Boomi"
       role: "Internal integration middleware"
       treatment: "normal"

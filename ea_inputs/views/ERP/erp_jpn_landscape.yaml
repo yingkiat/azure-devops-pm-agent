@@ -47,13 +47,6 @@ elements:
         Role: "ERP Core"
       description: "JPN ERP reporting/data component."
 
-    - name: "Bank Payments System"
-      override:
-        Internal Group: "Integration"
-        Role: "ERP Integration"
-        Roadmap Disposition: "Tolerate"
-      description: "Payments integration component inside ERP JPN."
-
     - name: "Boomi"
       override:
         Internal Group: "Integration"
@@ -221,12 +214,6 @@ relationships:
 
     - type: "Composition"
       source_name: "ERP JPN"
-      target_name: "Bank Payments System"
-      label: "contains"
-      description: "ERP JPN contains Bank Payments System."
-
-    - type: "Composition"
-      source_name: "ERP JPN"
       target_name: "Boomi"
       label: "contains"
       description: "ERP JPN contains Boomi."
@@ -379,9 +366,6 @@ visual:
     - element: "Pro2SQL JPN"
       role: "Supporting JPN ERP component inside the core"
       treatment: "highlighted"
-    - element: "Bank Payments System"
-      role: "Internal payments integration component"
-      treatment: "normal"
     - element: "Boomi"
       role: "Internal integration middleware"
       treatment: "normal"

@@ -20,10 +20,13 @@ metadata:
   region: "ANZ"
   workload: "PSS 2.0"
   pattern: "solution_runtime"
+  project_key: "pss2"
+  project: "PSS 2.0"
+  view_kind: "project"
 
 # === VIEW DEFINITION ===
 view:
-  name: "PSS 2.0 Azure Reference Architecture"
+  name: "PSS 2.0 - Azure Reference Architecture"
   documentation: |
     Azure-native target architecture for PSS 2.0.
     This diagram is intended as the first reusable modernization template for application upgrades in an Azure-first environment.

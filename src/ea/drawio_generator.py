@@ -954,7 +954,7 @@ class DrawIOGenerator:
 
                 drawio_elem = DrawIOElement(
                     id=elem['id'],
-                    name=elem['name'],
+                    name=elem.get('display_name', elem['name']),
                     x=x,
                     y=y,
                     width=elem.get('width', 180),
@@ -1147,7 +1147,7 @@ class DrawIOGenerator:
                     child_x = int((span_width - child_width) / 2)
                 drawio_elements.append(DrawIOElement(
                     id=child['id'],
-                    name=child['name'],
+                    name=child.get('display_name', child['name']),
                     x=child_x,
                     y=child_y,
                     width=child_width,
@@ -1237,7 +1237,7 @@ class DrawIOGenerator:
                         external_side_by_id[elem['id']] = side
                         drawio_elements.append(DrawIOElement(
                             id=elem['id'],
-                            name=elem['name'],
+                            name=elem.get('display_name', elem['name']),
                             x=15,
                             y=inner_y,
                             width=ext_w,
@@ -1278,7 +1278,7 @@ class DrawIOGenerator:
                         external_side_by_id[elem['id']] = side
                         drawio_elements.append(DrawIOElement(
                             id=elem['id'],
-                            name=elem['name'],
+                            name=elem.get('display_name', elem['name']),
                             x=inner_x,
                             y=38,
                             width=ext_w,
@@ -1976,7 +1976,7 @@ class DrawIOGenerator:
             if elem:
                 drawio_elements.append(DrawIOElement(
                     id=elem['id'],
-                    name=elem['name'],
+                    name=elem.get('display_name', elem['name']),
                     x=pos.x,
                     y=pos.y,
                     width=pos.w,

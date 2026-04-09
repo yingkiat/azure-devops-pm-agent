@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Commercial JPN Landscape" id="h5tfNk1IHM_A12__jzSf">
-    <mxGraphModel dx="1727" dy="1016" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
+    <mxGraphModel dx="1554" dy="914" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -87,8 +87,8 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="814" y="355" />
-              <mxPoint x="814" y="420" />
-              <mxPoint x="1486" y="420" />
+              <mxPoint x="814" y="410" />
+              <mxPoint x="1486" y="410" />
               <mxPoint x="1486" y="340" />
             </Array>
           </mxGeometry>
@@ -97,8 +97,8 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="814" y="355" />
-              <mxPoint x="814" y="400" />
-              <mxPoint x="1486" y="400" />
+              <mxPoint x="814" y="410" />
+              <mxPoint x="1486" y="410" />
               <mxPoint x="1486" y="482" />
             </Array>
           </mxGeometry>
