@@ -95,6 +95,7 @@ elements:
       override:
         Internal Group: "QARA"
         Role: "Quality Management"
+        Roadmap Disposition: "Tolerate"
       description: "Quality management application used in JPN operations."
 
     - name: "Education Designer"
@@ -114,18 +115,6 @@ elements:
         Internal Group: "QARA"
         Role: "Quality and Regulatory"
       description: "Global quality management system for regulatory assurance."
-
-    - name: "SFDC"
-      override:
-        Internal Group: "QARA"
-        Role: "Legacy CRM"
-      description: "Legacy CRM application still used in the JPN quality and regulatory context."
-
-    - name: "Microsoft Dynamics"
-      override:
-        Internal Group: "QARA"
-        Role: "Target CRM"
-      description: "Target CRM application positioned alongside legacy SFDC."
 
     - name: "QAD SE 11"
       override:
@@ -236,18 +225,6 @@ relationships:
       label: "contains"
       description: "Operations - JPN contains ETQ Reliance."
 
-    - type: "Composition"
-      source_name: "Operations - JPN"
-      target_name: "SFDC"
-      label: "contains"
-      description: "Operations - JPN contains SFDC."
-
-    - type: "Composition"
-      source_name: "Operations - JPN"
-      target_name: "Microsoft Dynamics"
-      label: "contains"
-      description: "Operations - JPN contains Microsoft Dynamics."
-
     - type: "Flow"
       source_name: "QAD SE 11"
       target_name: "W3 Sirius"
@@ -271,12 +248,6 @@ relationships:
       target_name: "DSX"
       label: "integration"
       description: "Inbound integration from VC Vendor Collaboration to DSX."
-
-    - type: "Flow"
-      source_name: "SFDC"
-      target_name: "Microsoft Dynamics"
-      label: "migration"
-      description: "Legacy-to-target transition from SFDC to Microsoft Dynamics."
 
 # === STRUCTURE ===
 structure:
@@ -312,12 +283,9 @@ visual:
     - element: "VC Vendor Collaboration"
       role: "Upstream vendor collaboration source"
       treatment: "normal"
-    - element: "Microsoft Dynamics"
-      role: "Target CRM beside legacy SFDC"
-      treatment: "highlighted"
   grouping_rationale: "Operations - JPN should remain central, with internal applications grouped by operational function and upstream source systems kept outside the boundary on the left."
   reading_order: "Start at the Operations - JPN core, then read across the production and QA, warehouse, planning, and QARA groups, with inbound source links read from left to right."
-  color_strategy: "The operations core, the main inbound integration targets, and the CRM target state are visually stronger than surrounding applications."
+  color_strategy: "The operations core and the main inbound integration targets are visually stronger than surrounding applications."
 
 # === LAYOUT ===
 layout:

@@ -131,6 +131,14 @@ elements:
         Role: "Quality and Regulatory"
       description: "Quality assurance and regulatory application."
 
+    - name: "ETQ Reliance"
+      type: "ApplicationComponent"
+      override:
+        Internal Group: "QARA"
+        Role: "Quality and Regulatory"
+        Roadmap Disposition: "Invest"
+      description: "Global quality management system for regulatory assurance."
+
     - name: "QAD EE 2019"
       type: "ApplicationComponent"
       override:
@@ -221,6 +229,12 @@ relationships:
       target_name: "Rimsys"
       label: "contains"
       description: "Operations - ANZ contains Rimsys."
+
+    - type: "Composition"
+      source_name: "Operations - ANZ"
+      target_name: "ETQ Reliance"
+      label: "contains"
+      description: "Operations - ANZ contains ETQ Reliance."
 
     - type: "Flow"
       source_name: "QAD EE 2019"
