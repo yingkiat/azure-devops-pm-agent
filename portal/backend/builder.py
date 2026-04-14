@@ -2535,6 +2535,57 @@ class PortalBuilder:
                 }
             },
             methods: {
+                sanitizeTrackingValue(value, maxLength = 160) {
+                    if (value === undefined || value === null) return '';
+                    const normalized = String(value).replace(/\s+/g, ' ').trim();
+                    return normalized.slice(0, maxLength);
+                },
+                buildTrackingUrl(eventName, details = {}) {
+                    const params = new URLSearchParams();
+                    params.set('event', this.sanitizeTrackingValue(eventName, 80));
+                    params.set('client_ts', new Date().toISOString());
+                    params.set('session_id', this.sessionId || '');
+                    params.set('view_mode', this.sanitizeTrackingValue(this.viewMode || '', 40));
+                    params.set('current_view', this.sanitizeTrackingValue(this.currentView || '', 120));
+
+                    Object.entries(details).forEach(([key, value]) => {
+                        const sanitized = this.sanitizeTrackingValue(value);
+                        if (sanitized) {
+                            params.set(key, sanitized);
+                        }
+                    });
+
+                    return `/__track?${params.toString()}`;
+                },
+                trackEvent(eventName, details = {}) {
+                    try {
+                        const url = this.buildTrackingUrl(eventName, details);
+                        fetch(url, {
+                            method: 'GET',
+                            cache: 'no-store',
+                            credentials: 'include',
+                            keepalive: true
+                        }).catch(() => {});
+                    } catch (_) {
+                        // Tracking must never break the portal experience.
+                    }
+                },
+                handleWindowError(event) {
+                    this.trackEvent('frontend_error', {
+                        message: event?.message || 'Unknown frontend error',
+                        source: event?.filename || '',
+                        line: event?.lineno || '',
+                        column: event?.colno || ''
+                    });
+                },
+                handleUnhandledRejection(event) {
+                    const reason = event?.reason;
+                    this.trackEvent('frontend_rejection', {
+                        message: typeof reason === 'string'
+                            ? reason
+                            : (reason?.message || 'Unhandled promise rejection')
+                    });
+                },
                 async initialize() {
                     try {
                         console.log('[EA Portal] Initializing...');
@@ -2586,9 +2637,17 @@ class PortalBuilder:
                             console.log('[EA Portal] Setting viewMode to diagram-map');
                             this.viewMode = 'diagram-map';
                         }
+                        this.trackEvent('portal_initialized', {
+                            total_views: Object.keys(this.views).length,
+                            total_elements: Object.keys(this.elements).length,
+                            total_apps: this.totalApps
+                        });
                         console.log('[EA Portal] Initialization complete');
                     } catch (err) {
                         console.error('[EA Portal] Initialization failed:', err);
+                        this.trackEvent('portal_initialize_failed', {
+                            message: err?.message || 'Initialization failed'
+                        });
                     }
                 },
                 showCatalogue() {
@@ -2597,6 +2656,7 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.trackEvent('show_catalogue');
                 },
                 showAnalytics() {
                     this.viewMode = 'analytics';
@@ -2604,6 +2664,9 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.trackEvent('show_analytics', {
+                        selected_domain: this.selectedAnalyticsDomain
+                    });
                     this.$nextTick(() => { this.initAnalyticsCharts(); });
                 },
                 showDiagramMap() {
@@ -2612,6 +2675,10 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.trackEvent('show_diagram_map', {
+                        selected_domain: this.selectedMapDomain,
+                        selected_region: this.selectedMapRegion
+                    });
                 },
                 formatDomainLabel(domain) {
                     if (!domain) return 'General';
@@ -2818,6 +2885,10 @@ class PortalBuilder:
                     );
 
                     this.selectedCatalogueApp = app;
+                    this.trackEvent('select_catalogue_app', {
+                        app_name: appName,
+                        name_column: nameColumn
+                    });
 
                     if (matchingElement) {
                         console.log(`Found matching element: ${matchingElement.id}`);
@@ -2888,11 +2959,18 @@ class PortalBuilder:
                     const nameSet = new Set(appNames);
                     this.drilldownTitle = title;
                     this.drilldownApps = this.catalogue.filter(app => nameSet.has(String(app[nameCol] || '').trim()));
+                    this.trackEvent('show_drilldown', {
+                        title,
+                        result_count: this.drilldownApps.length
+                    });
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = true;
                 },
                 selectDrilldownApp(app) {
+                    this.trackEvent('select_drilldown_app', {
+                        app_name: app[this.catalogueNameColumn] || ''
+                    });
                     this.drilldownApps = [];
                     this.drilldownTitle = '';
                     this.selectCatalogueApp(app);
@@ -2964,6 +3042,13 @@ class PortalBuilder:
                             this.diagramImagePath = view.diagram_path;
                             this.diagramPreviewPath = view.preview_path || view.diagram_path;
                             this.diagramLoading = false;
+                            this.trackEvent('open_view', {
+                                view_id: viewId,
+                                view_name: view.name || '',
+                                domain: view.domain || '',
+                                region: view.region || '',
+                                diagram_path: view.diagram_path
+                            });
                             this.$nextTick(() => {
                                 this.wireDiagramInteractions();
                             });
@@ -2983,17 +3068,33 @@ class PortalBuilder:
 
                             this.diagramHtml = svgText;
                             this.diagramLoading = false;
+                            this.trackEvent('open_view', {
+                                view_id: viewId,
+                                view_name: view.name || '',
+                                domain: view.domain || '',
+                                region: view.region || '',
+                                diagram_path: view.diagram_path
+                            });
                             this.$nextTick(() => {
                                 this.wireDiagramInteractions();
                             });
                         }
                     } catch (err) {
                         console.error('Error loading diagram:', err);
+                        this.trackEvent('open_view_failed', {
+                            view_id: viewId,
+                            view_name: view?.name || '',
+                            message: err?.message || 'Error loading diagram'
+                        });
                         this.diagramLoading = false;
                     }
                 },
                 async navigateToView(viewId, elementId) {
                     // Navigate to a different view while keeping an element selected
+                    this.trackEvent('navigate_to_view', {
+                        target_view_id: viewId,
+                        element_id: elementId
+                    });
                     await this.loadView(viewId, true);  // Pass true to keep the element
                     this.selectElement(elementId);
                 },
@@ -3001,6 +3102,11 @@ class PortalBuilder:
                     if (!this.elements[elementId]) return;
                     this.selectedElement = elementId;
                     this.sidebarRightOpen = true;
+                    this.trackEvent('select_element', {
+                        element_id: elementId,
+                        element_name: this.elements[elementId].name || '',
+                        element_type: this.elements[elementId].type || ''
+                    });
 
                     this.$nextTick(() => {
                         if (this.currentSvg) {
@@ -3132,7 +3238,31 @@ class PortalBuilder:
                 }
             },
             mounted() {
+                this.sessionId = (() => {
+                    try {
+                        const key = 'ea_portal_session_id';
+                        const existing = window.sessionStorage.getItem(key);
+                        if (existing) return existing;
+                        const generated = `sess-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+                        window.sessionStorage.setItem(key, generated);
+                        return generated;
+                    } catch (_) {
+                        return `sess-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+                    }
+                })();
+                this._windowErrorHandler = (event) => this.handleWindowError(event);
+                this._unhandledRejectionHandler = (event) => this.handleUnhandledRejection(event);
+                window.addEventListener('error', this._windowErrorHandler);
+                window.addEventListener('unhandledrejection', this._unhandledRejectionHandler);
                 this.initialize();
+            },
+            beforeUnmount() {
+                if (this._windowErrorHandler) {
+                    window.removeEventListener('error', this._windowErrorHandler);
+                }
+                if (this._unhandledRejectionHandler) {
+                    window.removeEventListener('unhandledrejection', this._unhandledRejectionHandler);
+                }
             }
         }).mount('#app');
     </script>
