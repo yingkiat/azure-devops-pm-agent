@@ -817,6 +817,7 @@ class PortalBuilder:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EA Portal</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230052CC'/%3E%3Cpath d='M18 18h28v8H27v7h17v8H27v13h-9z' fill='white'/%3E%3C/svg%3E">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
     <style>
@@ -980,6 +981,13 @@ class PortalBuilder:
         .page-hero-copy {
             min-width: 0;
         }
+        .page-hero-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.7rem;
+            flex-shrink: 0;
+        }
         .page-hero-kicker {
             font-size: 0.7rem;
             font-weight: 800;
@@ -1022,6 +1030,37 @@ class PortalBuilder:
         }
         .page-hero.library-hero .page-hero-kicker { color: #c2410c; }
         .page-hero.library-hero .page-hero-badge { background: #ffedd5; color: #c2410c; }
+        .page-share-link {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .page-share-link-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #475569;
+        }
+        .page-share-link-value {
+            max-width: min(100%, 720px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0.55rem 0.8rem;
+            border-radius: 0.8rem;
+            border: 1px solid #dbe7f0;
+            background: rgba(255,255,255,0.96);
+            color: #0f172a;
+            font-size: 0.82rem;
+            text-decoration: none;
+        }
+        .page-share-link-value:hover {
+            border-color: __PRIMARY__;
+            color: __PRIMARY__;
+        }
         .diagram-hero {
             display: flex;
             align-items: flex-start;
@@ -1067,12 +1106,53 @@ class PortalBuilder:
             font-weight: 700;
             letter-spacing: 0.03em;
         }
+        .diagram-share-link {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .diagram-share-link-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #0f766e;
+        }
+        .diagram-share-link-value {
+            max-width: min(100%, 720px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0.55rem 0.8rem;
+            border-radius: 0.8rem;
+            border: 1px solid #dbe7f0;
+            background: rgba(255,255,255,0.96);
+            color: #0f172a;
+            font-size: 0.82rem;
+            text-decoration: none;
+        }
+        .diagram-share-link-value:hover {
+            border-color: __PRIMARY__;
+            color: __PRIMARY__;
+        }
         .diagram-hero-actions {
             flex-shrink: 0;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.7rem;
         }
-        .diagram-back-button {
+        .diagram-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 0.6rem;
+        }
+        .diagram-back-button,
+        .page-share-button,
+        .diagram-share-button {
             border: 1px solid #cbd5e1;
             background: white;
             color: #0f172a;
@@ -1085,11 +1165,18 @@ class PortalBuilder:
             letter-spacing: 0.05em;
             transition: all 0.2s;
         }
-        .diagram-back-button:hover {
+        .diagram-back-button:hover,
+        .page-share-button:hover,
+        .diagram-share-button:hover {
             border-color: __PRIMARY__;
             color: __PRIMARY__;
             box-shadow: 0 8px 18px rgba(0,0,0,0.08);
             transform: translateY(-1px);
+        }
+        .share-status {
+            font-size: 0.75rem;
+            color: #0f766e;
+            font-weight: 700;
         }
 
         .diagram-viewer {
@@ -1816,7 +1903,6 @@ class PortalBuilder:
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         @media (max-width: 1024px) {
             .sidebar-right { width: 100%; z-index: 100; }
             .analytics-roadmap-matrix {
@@ -1914,8 +2000,16 @@ class PortalBuilder:
                         <div class="page-hero-kicker">Catalogue</div>
                         <h2>Application Catalogue</h2>
                         <div class="page-hero-subtitle">Browse the application inventory and inspect individual records.</div>
+                        <div class="page-share-link" v-if="catalogueShareUrl">
+                            <div class="page-share-link-label">Shareable Link</div>
+                            <a class="page-share-link-value" :href="catalogueShareUrl">{{ catalogueShareUrl }}</a>
+                        </div>
                     </div>
-                    <div class="page-hero-badge">📚</div>
+                    <div class="page-hero-actions">
+                        <div class="page-hero-badge">📚</div>
+                        <button class="page-share-button" @click="copyPageShareLink('catalogue')">Copy Share Link</button>
+                        <div class="share-status" v-if="shareStatus">{{ shareStatus }}</div>
+                    </div>
                 </div>
             </div>
             <div class="header" v-else-if="viewMode === 'analytics'">
@@ -1924,8 +2018,16 @@ class PortalBuilder:
                             <div class="page-hero-kicker">Insights</div>
                             <h2>Portfolio Analytics</h2>
                         <div class="page-hero-subtitle">Track roadmap intent, current plans, and where active portfolio change is concentrated.</div>
+                        <div class="page-share-link" v-if="analyticsShareUrl">
+                            <div class="page-share-link-label">Shareable Link</div>
+                            <a class="page-share-link-value" :href="analyticsShareUrl">{{ analyticsShareUrl }}</a>
                         </div>
-                        <div class="page-hero-badge">📈</div>
+                        </div>
+                        <div class="page-hero-actions">
+                            <div class="page-hero-badge">📈</div>
+                            <button class="page-share-button" @click="copyPageShareLink('analytics')">Copy Share Link</button>
+                            <div class="share-status" v-if="shareStatus">{{ shareStatus }}</div>
+                        </div>
                     </div>
                 </div>
             <div class="header" v-else-if="viewMode === 'diagram-map'">
@@ -1934,8 +2036,16 @@ class PortalBuilder:
                         <div class="page-hero-kicker">Library</div>
                         <h2>Architecture Library</h2>
                         <div class="page-hero-subtitle">Navigate architecture views by region and domain from one place.</div>
+                        <div class="page-share-link" v-if="libraryShareUrl">
+                            <div class="page-share-link-label">Shareable Link</div>
+                            <a class="page-share-link-value" :href="libraryShareUrl">{{ libraryShareUrl }}</a>
+                        </div>
                     </div>
-                    <div class="page-hero-badge">🗂️</div>
+                    <div class="page-hero-actions">
+                        <div class="page-hero-badge">🗂️</div>
+                        <button class="page-share-button" @click="copyPageShareLink('library')">Copy Share Link</button>
+                        <div class="share-status" v-if="shareStatus">{{ shareStatus }}</div>
+                    </div>
                 </div>
             </div>
             <div class="header" v-else-if="currentViewData">
@@ -1951,9 +2061,17 @@ class PortalBuilder:
                             <div class="diagram-meta-chip" v-if="currentViewData.category">Category: {{ currentViewData.category }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.metadata.updated_at">Updated: {{ formatTimestamp(currentViewData.metadata.updated_at) }}</div>
                         </div>
+                        <div class="diagram-share-link" v-if="currentViewShareUrl">
+                            <div class="diagram-share-link-label">Shareable Link</div>
+                            <a class="diagram-share-link-value" :href="currentViewShareUrl">{{ currentViewShareUrl }}</a>
+                        </div>
                     </div>
                     <div class="diagram-hero-actions">
-                        <button class="diagram-back-button" @click="showDiagramMap()">Back to Architecture Library</button>
+                        <div class="diagram-action-row">
+                            <button class="diagram-share-button" @click="copyViewShareLink(currentViewData.id)">Copy Share Link</button>
+                            <button class="diagram-back-button" @click="showDiagramMap()">Back to Architecture Library</button>
+                        </div>
+                        <div class="share-status" v-if="shareStatus">{{ shareStatus }}</div>
                     </div>
                 </div>
             </div>
@@ -2343,6 +2461,8 @@ class PortalBuilder:
                     diagramMapSearch: '',
                     selectedMapDomain: 'ALL',
                     selectedMapRegion: 'ALL',
+                    shareStatus: '',
+                    shareStatusTimer: null,
                     sidebarRightOpen: false,
                     zoomLevel: 1,
                     fitToWidth: false,
@@ -2361,6 +2481,19 @@ class PortalBuilder:
                 totalElements() { return Object.keys(this.elements).length; },
                 currentViewData() {
                     return this.currentView ? this.views[this.currentView] || null : null;
+                },
+                catalogueShareUrl() {
+                    return this.buildPageShareUrl('catalogue');
+                },
+                analyticsShareUrl() {
+                    return this.buildPageShareUrl('analytics');
+                },
+                libraryShareUrl() {
+                    return this.buildPageShareUrl('library');
+                },
+                currentViewShareUrl() {
+                    if (!this.currentViewData) return '';
+                    return this.buildViewShareUrl(this.currentViewData.id);
                 },
                 catalogueColumns() {
                     if (this.catalogue.length === 0) return [];
@@ -2541,6 +2674,18 @@ class PortalBuilder:
                     return normalized.slice(0, maxLength);
                 },
                 buildTrackingUrl(eventName, details = {}) {
+                    if (typeof window !== 'undefined') {
+                        const hostname = String(window.location.hostname || '').toLowerCase();
+                        const protocol = String(window.location.protocol || '').toLowerCase();
+                        if (
+                            protocol === 'file:' ||
+                            hostname === 'localhost' ||
+                            hostname === '127.0.0.1' ||
+                            hostname === '::1'
+                        ) {
+                            return '';
+                        }
+                    }
                     const params = new URLSearchParams();
                     params.set('event', this.sanitizeTrackingValue(eventName, 80));
                     params.set('client_ts', new Date().toISOString());
@@ -2560,6 +2705,7 @@ class PortalBuilder:
                 trackEvent(eventName, details = {}) {
                     try {
                         const url = this.buildTrackingUrl(eventName, details);
+                        if (!url) return;
                         fetch(url, {
                             method: 'GET',
                             cache: 'no-store',
@@ -2637,6 +2783,7 @@ class PortalBuilder:
                             console.log('[EA Portal] Setting viewMode to diagram-map');
                             this.viewMode = 'diagram-map';
                         }
+                        await this.applyInitialRoute();
                         this.trackEvent('portal_initialized', {
                             total_views: Object.keys(this.views).length,
                             total_elements: Object.keys(this.elements).length,
@@ -2656,6 +2803,7 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.updateBrowserUrl();
                     this.trackEvent('show_catalogue');
                 },
                 showAnalytics() {
@@ -2664,6 +2812,7 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.updateBrowserUrl();
                     this.trackEvent('show_analytics', {
                         selected_domain: this.selectedAnalyticsDomain
                     });
@@ -2675,10 +2824,114 @@ class PortalBuilder:
                     this.selectedElement = null;
                     this.selectedCatalogueApp = null;
                     this.sidebarRightOpen = false;
+                    this.updateBrowserUrl();
                     this.trackEvent('show_diagram_map', {
                         selected_domain: this.selectedMapDomain,
                         selected_region: this.selectedMapRegion
                     });
+                },
+                buildPageShareUrl(page) {
+                    if (!page || typeof window === 'undefined') return '';
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('view');
+                    url.searchParams.set('page', page);
+                    return url.toString();
+                },
+                buildViewShareUrl(viewId) {
+                    if (!viewId || typeof window === 'undefined') return '';
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('page');
+                    url.searchParams.set('view', viewId);
+                    return url.toString();
+                },
+                updateBrowserUrl() {
+                    if (typeof window === 'undefined' || !window.history?.replaceState) return;
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('page');
+                    url.searchParams.delete('view');
+                    if (this.viewMode === 'diagram' && this.currentView) {
+                        url.searchParams.set('view', this.currentView);
+                    } else {
+                        const pageMode = {
+                            'catalogue': 'catalogue',
+                            'analytics': 'analytics',
+                            'diagram-map': 'library'
+                        }[this.viewMode];
+                        if (pageMode) {
+                            url.searchParams.set('page', pageMode);
+                        }
+                    }
+                    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+                },
+                async applyInitialRoute() {
+                    if (typeof window === 'undefined') return;
+                    const url = new URL(window.location.href);
+                    const requestedView = url.searchParams.get('view');
+                    if (requestedView && this.views[requestedView]) {
+                        await this.loadView(requestedView, null, false);
+                        return;
+                    }
+                    const requestedPage = url.searchParams.get('page');
+                    if (requestedPage === 'analytics' && this.analyticsData) {
+                        this.viewMode = 'analytics';
+                        this.$nextTick(() => { this.initAnalyticsCharts(); });
+                    } else if (requestedPage === 'library' && Object.keys(this.views).length > 0) {
+                        this.viewMode = 'diagram-map';
+                    } else if (requestedPage === 'catalogue' && this.catalogue.length > 0) {
+                        this.viewMode = 'catalogue';
+                    }
+                    this.updateBrowserUrl();
+                },
+                setShareStatus(message) {
+                    this.shareStatus = message;
+                    if (this.shareStatusTimer) {
+                        window.clearTimeout(this.shareStatusTimer);
+                    }
+                    if (!message) return;
+                    this.shareStatusTimer = window.setTimeout(() => {
+                        this.shareStatus = '';
+                        this.shareStatusTimer = null;
+                    }, 2500);
+                },
+                async copyPageShareLink(page) {
+                    const shareUrl = this.buildPageShareUrl(page);
+                    if (!shareUrl) return;
+                    try {
+                        if (navigator.clipboard?.writeText) {
+                            await navigator.clipboard.writeText(shareUrl);
+                        } else {
+                            window.prompt('Copy share link:', shareUrl);
+                        }
+                        this.setShareStatus('Share link copied.');
+                        this.trackEvent('copy_page_share_link', {
+                            page,
+                            share_url: shareUrl
+                        });
+                    } catch (err) {
+                        console.error('Error copying share link:', err);
+                        window.prompt('Copy share link:', shareUrl);
+                        this.setShareStatus('Share link ready to copy.');
+                    }
+                },
+                async copyViewShareLink(viewId) {
+                    const shareUrl = this.buildViewShareUrl(viewId);
+                    if (!shareUrl) return;
+                    try {
+                        if (navigator.clipboard?.writeText) {
+                            await navigator.clipboard.writeText(shareUrl);
+                        } else {
+                            window.prompt('Copy share link:', shareUrl);
+                        }
+                        this.setShareStatus('Share link copied.');
+                        this.trackEvent('copy_view_share_link', {
+                            view_id: viewId,
+                            share_url: shareUrl
+                        });
+                    } catch (err) {
+                        console.error('Error copying share link:', err);
+                        window.prompt('Copy share link:', shareUrl);
+                        this.setShareStatus('Share link ready to copy.');
+                    }
                 },
                 formatDomainLabel(domain) {
                     if (!domain) return 'General';
@@ -3017,7 +3270,7 @@ class PortalBuilder:
                         this.selectElement(this.selectedElement);
                     }
                 },
-                async loadView(viewId, keepElement = null) {
+                async loadView(viewId, keepElement = null, updateUrl = true) {
                     const view = this.views[viewId];
                     if (!view) return;
 
@@ -3042,6 +3295,7 @@ class PortalBuilder:
                             this.diagramImagePath = view.diagram_path;
                             this.diagramPreviewPath = view.preview_path || view.diagram_path;
                             this.diagramLoading = false;
+                            if (updateUrl) this.updateBrowserUrl();
                             this.trackEvent('open_view', {
                                 view_id: viewId,
                                 view_name: view.name || '',
@@ -3068,6 +3322,7 @@ class PortalBuilder:
 
                             this.diagramHtml = svgText;
                             this.diagramLoading = false;
+                            if (updateUrl) this.updateBrowserUrl();
                             this.trackEvent('open_view', {
                                 view_id: viewId,
                                 view_name: view.name || '',
@@ -3257,6 +3512,9 @@ class PortalBuilder:
                 this.initialize();
             },
             beforeUnmount() {
+                if (this.shareStatusTimer) {
+                    window.clearTimeout(this.shareStatusTimer);
+                }
                 if (this._windowErrorHandler) {
                     window.removeEventListener('error', this._windowErrorHandler);
                 }
