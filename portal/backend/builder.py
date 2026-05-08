@@ -27,7 +27,7 @@ class PortalBuilder:
         "EMEA Catalogue": "EMEA",
         "CANADA Catalogue": "CANADA",
     }
-    CATALOGUE_SYSTEM_COLUMNS = ["territory", "source_sheet", "model_backed", "model_element_id"]
+    CATALOGUE_SYSTEM_COLUMNS = ["territory", "source_sheet"]
     PREVIEW_WINDOW_SIZE = "2200,1600"
 
     def __init__(
@@ -776,8 +776,6 @@ class PortalBuilder:
                     cleaned_record = {
                         "territory": territory,
                         "source_sheet": sheet_name,
-                        "model_backed": territory == "APAC",
-                        "model_element_id": None,
                     }
                     for key, value in record.items():
                         key_str = str(key).strip()
@@ -3414,7 +3412,8 @@ class PortalBuilder:
                     const appName = app[nameColumn];
                     console.log(`Looking for element matching: ${appName} (from column: ${nameColumn})`);
 
-                    const matchingElement = app.model_backed ? Object.values(this.elements).find(el =>
+                    const isModelBackedCatalogueRow = String(app.territory || '').trim() === 'APAC';
+                    const matchingElement = isModelBackedCatalogueRow ? Object.values(this.elements).find(el =>
                         el.name === appName || el.name.includes(appName) || appName.includes(el.name)
                     ) : null;
 
