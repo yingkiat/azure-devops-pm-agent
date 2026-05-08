@@ -225,6 +225,7 @@ For current guidance on maintaining the generator without rewriting it, see:
 
 - [DRAWIO_GENERATOR_MAINTENANCE.md](DRAWIO_GENERATOR_MAINTENANCE.md)
 - [AZURE_DIAGRAM_MODE_PLANNING.md](AZURE_DIAGRAM_MODE_PLANNING.md)
+- [EA_PORTAL_TERRITORY_EXPANSION_PLAN.md](EA_PORTAL_TERRITORY_EXPANSION_PLAN.md)
 
 This note captures the agreed position that:
 

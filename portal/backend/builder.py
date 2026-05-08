@@ -22,6 +22,12 @@ class PortalBuilder:
     """Build static portal files from diagrams and ArchiMate model."""
 
     REGION_ORDER = ["JPN", "ANZ", "AEM", "APAC"]
+    CATALOGUE_SHEET_TERRITORIES = {
+        "Catalogue": "APAC",
+        "EMEA Catalogue": "EMEA",
+        "CANADA Catalogue": "CANADA",
+    }
+    CATALOGUE_SYSTEM_COLUMNS = ["territory", "source_sheet", "model_backed", "model_element_id"]
     PREVIEW_WINDOW_SIZE = "2200,1600"
 
     def __init__(
@@ -251,17 +257,20 @@ class PortalBuilder:
             print(f"      WARN Skipped (missing catalogue or elements data)\n")
         else:
             cat_count    = analytics_result["catalogue_count"]
+            model_count  = analytics_result["model_backed_count"]
             matched      = analytics_result["matched_count"]
             unmatched    = analytics_result["unmatched"]
             coverage     = analytics_result["property_coverage"]
             domain_sum   = analytics_result["domain_sum"]
             region_sum   = analytics_result["region_sum"]
-            match_pct    = round(matched / cat_count * 100, 1) if cat_count else 0
+            match_pct    = round(matched / model_count * 100, 1) if model_count else 0
 
             print(f"      OK Analytics data written")
             print(f"\n      --- Analytics Validation ---")
             match_flag = "OK" if match_pct >= 95 else "FAIL"
-            print(f"      Element match rate: {matched}/{cat_count} ({match_pct}%)  {match_flag}")
+            print(f"      Model-backed match rate: {matched}/{model_count} ({match_pct}%)  {match_flag}")
+            if analytics_result.get("territory_counts"):
+                print(f"      Territory rows: {analytics_result['territory_counts']}")
             if unmatched:
                 print(f"      Unmatched ({len(unmatched)}): {', '.join(unmatched[:5])}" +
                       (f" ... +{len(unmatched)-5} more" if len(unmatched) > 5 else ""))
@@ -287,9 +296,9 @@ class PortalBuilder:
             print(f"        Region totals:         {reg_flag}")
             print()
 
-            if match_pct < 95:
+            if model_count and match_pct < 95:
                 errors.append(
-                    f"Analytics match rate too low: {matched}/{cat_count} ({match_pct}%). "
+                    f"Analytics model-backed match rate too low: {matched}/{model_count} ({match_pct}%). "
                     "Run ea_import_catalogue to sync all apps."
                 )
 
@@ -314,11 +323,9 @@ class PortalBuilder:
         """Compute portfolio analytics scoped to the application catalogue.
 
         Strategy:
-        - Scope = catalogue apps (99 rows) — domain/region/tech_standard come from here
-          since the catalogue has complete coverage for those fields.
-        - Rich attributes (Application Type, Planning Horizon, Lifecycle Status, Criticality) only
-          exist in properties.csv, so we match catalogue app names to ArchiMate element IDs
-          and pull those properties from there.
+        - Scope = normalized portal catalogue rows across explicitly mapped territory sheets.
+        - APAC rows are model-backed and may be enriched from properties.csv.
+        - Non-APAC rows stay catalogue-backed only and must not mutate archi_inputs.
         """
         import csv
 
@@ -362,8 +369,19 @@ class PortalBuilder:
         def clean(val):
             return str(val or "").strip()
 
-        # Catalogue app names (our universe)
-        catalogue_names = {clean(app.get(col_name, "")) for app in catalogue if col_name}
+        def app_value(app, *candidates):
+            wanted = {c.lower().strip() for c in candidates}
+            for key, value in app.items():
+                if str(key).lower().strip() in wanted:
+                    return value
+            return ""
+
+        # Only model-backed rows should be matched to ArchiMate elements.
+        model_backed_catalogue = [
+            app for app in catalogue
+            if app.get("model_backed") is True or clean(app.get("territory", "")).upper() == "APAC"
+        ]
+        catalogue_names = {clean(app.get(col_name, "")) for app in model_backed_catalogue if col_name}
         catalogue_names.discard("")
         catalogue_names_lower = {n.lower(): n for n in catalogue_names}
 
@@ -432,26 +450,44 @@ class PortalBuilder:
                     result.setdefault(val, []).append(name)
             return result
 
-        # Build per-application analytics records so the UI can filter client-side by domain
+        # Build per-application analytics records so the UI can filter client-side.
         records = []
         for app in catalogue:
             name = clean(app.get(col_name, "")) if col_name else ""
             if not name:
                 continue
-            elem_id = name_to_id.get(name) or name_to_id.get(catalogue_names_lower.get(name.lower(), ""))
+            is_model_backed = app.get("model_backed") is True or clean(app.get("territory", "")).upper() == "APAC"
+            elem_id = ""
+            if is_model_backed:
+                elem_id = clean(app.get("model_element_id", "")) or name_to_id.get(name) or name_to_id.get(catalogue_names_lower.get(name.lower(), ""))
             props = matched_props.get(elem_id, {}) if elem_id else {}
+            catalogue_tech_standard = clean(app.get(col_tech, "")) if col_tech else ""
+            hosting_type = clean(props.get("Hosting Type", "")) or clean(app_value(app, "hosting_type", "hosting type"))
+            tech_standard_value = clean(props.get("Tech Standard", "")) or catalogue_tech_standard
+            roadmap_disposition_value = clean(props.get("Roadmap Disposition", "")) or clean(app_value(app, "roadmap_disposition", "roadmap disposition"))
+            planning_horizon_value = (
+                clean(props.get("Planning Horizon", ""))
+                or clean(props.get("Horizon", ""))
+                or clean(app_value(app, "planning_horizon", "planning horizon"))
+            )
             records.append({
                 "name": name,
+                "territory": clean(app.get("territory", "")) or "APAC",
+                "source_sheet": clean(app.get("source_sheet", "")),
+                "model_backed": bool(is_model_backed and elem_id),
+                "model_element_id": elem_id,
                 "domain": clean(app.get(col_domain, "")) if col_domain else "",
                 "sub_domain": clean(app.get(col_sub_domain, "")) if col_sub_domain else "",
                 "region": clean(app.get(col_region, "")) if col_region else "",
-                "catalogue_tech_standard": clean(app.get(col_tech, "")) if col_tech else "",
+                "catalogue_tech_standard": catalogue_tech_standard,
                 "business_criticality": clean(app.get(col_biz_crit, "")) if col_biz_crit else "",
-                "hosting_type": clean(props.get("Hosting Type", "")),
-                "tech_standard": clean(props.get("Tech Standard", "")),
+                "risk_level": clean(app_value(app, "risk_level", "risk level")),
+                "sensitive_data": clean(app_value(app, "sensitive_data", "sensitive data")),
+                "hosting_type": hosting_type,
+                "tech_standard": tech_standard_value,
                 "lifecycle_status": clean(props.get("Lifecycle Status", "")),
-                "roadmap_disposition": clean(props.get("Roadmap Disposition", "")),
-                "planning_horizon": clean(props.get("Planning Horizon", "")) or clean(props.get("Horizon", "")),
+                "roadmap_disposition": roadmap_disposition_value,
+                "planning_horizon": planning_horizon_value,
             })
 
         # Rich attributes from properties.csv (scoped to catalogue-matched elements)
@@ -518,6 +554,7 @@ class PortalBuilder:
         saas   = app_type.get("SaaS", 0)
         legacy = tech_std_props.get("Legacy", 0)
         custom = app_type.get("Home-grown", 0) + app_type.get("COTS", 0) + app_type.get("Excel", 0)
+        territory = count_col(find_col("territory"))
 
         analytics = {
             "summary": {
@@ -538,11 +575,13 @@ class PortalBuilder:
             "lifecycle_status": {"labels": list(lifecycle.keys()), "values": list(lifecycle.values()), "apps": apps_by_prop("Lifecycle Status")},
             "domain": {"labels": list(domain.keys()), "values": list(domain.values()), "apps": apps_by_col(col_domain)},
             "region": {"labels": list(region.keys()), "values": list(region.values()), "apps": apps_by_col(col_region)},
+            "territory": {"labels": list(territory.keys()), "values": list(territory.values()), "apps": apps_by_col(find_col("territory"))},
             "criticality": {"labels": list(criticality.keys()), "values": list(criticality.values()), "apps": apps_by_col(col_biz_crit)},
             "legacy_by_sub_domain": {"labels": list(legacy_by_sub_domain.keys()), "values": list(legacy_by_sub_domain.values()), "apps": legacy_sub_domain_apps},
             "tech_standard": {"labels": list(tech_std.keys()), "values": list(tech_std.values()), "apps": apps_by_col(col_tech)},
             "filters": {
-                "domains": ["ALL"] + sorted([k for k in domain.keys() if k and k.lower() not in _skip])
+                "domains": ["ALL"] + sorted([k for k in domain.keys() if k and k.lower() not in _skip]),
+                "territories": ["ALL"] + sorted([k for k in territory.keys() if k and k.lower() not in _skip])
             },
             "records": records,
         }
@@ -561,8 +600,10 @@ class PortalBuilder:
         return {
             "success": True,
             "catalogue_count": len(catalogue),
+            "model_backed_count": len(model_backed_catalogue),
             "matched_count": len(matched_ids),
             "unmatched": unmatched_names,
+            "territory_counts": territory,
             "property_coverage": property_coverage,
             "domain_sum": sum(domain.values()),
             "region_sum": sum(region.values()),
@@ -575,6 +616,7 @@ class PortalBuilder:
                 "Tech Standard":              sum(tech_std.values()),
                 "Domain Breakdown":           sum(domain.values()),
                 "Region Breakdown":           sum(region.values()),
+                "Territory Breakdown":        sum(territory.values()),
             },
         }
 
@@ -670,7 +712,7 @@ class PortalBuilder:
 
     def _convert_catalogue(self) -> int:
         """
-        Convert Excel application catalogue to JSON.
+        Convert Excel application catalogue sheets to normalized JSON.
 
         Returns:
             Number of applications converted (0 if catalogue not found or pandas not available)
@@ -684,57 +726,134 @@ class PortalBuilder:
             return 0
 
         try:
-            # Read Excel file with groupings (row 0) and column names (row 1)
-            df_all = pd.read_excel(str(self.catalogue_file), header=None)
+            workbook = pd.ExcelFile(str(self.catalogue_file))
+            sheet_map = {
+                sheet: territory
+                for sheet, territory in self.CATALOGUE_SHEET_TERRITORIES.items()
+                if sheet in workbook.sheet_names
+            }
+            if not sheet_map:
+                print(f"      WARN No mapped catalogue sheets found in {self.catalogue_file}")
+                return 0
 
-            # Extract groupings from row 0 and column names from row 1
-            groupings = {}
-            if len(df_all) > 0:
-                # Forward-fill NaN values in grouping row (row 0) to handle merged cells
-                grouping_row = df_all.iloc[0].copy()
-                grouping_row = grouping_row.ffill()
-
-                for col_idx, col_name in enumerate(df_all.iloc[1]):
-                    if pd.notna(col_name):
-                        col_name_str = str(col_name)
-                        grouping_value = grouping_row.iloc[col_idx] if col_idx < len(grouping_row) else None
-                        groupings[col_name_str] = str(grouping_value) if pd.notna(grouping_value) else None
-
-            # Read data with row 1 as headers (skip row 0)
-            df = pd.read_excel(str(self.catalogue_file), header=1)
-
-            # Convert to records and clean NaN values
             catalogue = []
-            for record in df.to_dict('records'):
-                # Replace NaN with None, convert to proper types
-                cleaned_record = {}
-                for key, value in record.items():
-                    if pd.isna(value):
-                        cleaned_record[key] = None
-                    elif isinstance(value, (pd.Timestamp, datetime)):
-                        cleaned_record[key] = value.isoformat()
-                    else:
-                        cleaned_record[key] = value
-                if cleaned_record.get("it_owner"):
-                    v = str(cleaned_record["it_owner"])
-                    first, _ = v.split(".", 1) if "." in v else (v, "")
-                    cleaned_record["it_owner"] = first[:3] + ("*.***" if "." in v else "***")
-                catalogue.append(cleaned_record)
+            groupings_by_sheet = {}
+            columns_by_sheet = {}
+            warnings = []
+
+            for sheet_name, territory in sheet_map.items():
+                df_all = pd.read_excel(workbook, sheet_name=sheet_name, header=None)
+                if len(df_all) < 2:
+                    warnings.append(f"{sheet_name}: missing expected grouping/header rows")
+                    continue
+
+                groupings = {col: None for col in self.CATALOGUE_SYSTEM_COLUMNS}
+
+                # Extract groupings from row 0 and column names from row 1.
+                grouping_row = df_all.iloc[0].copy().ffill()
+                seen_columns = {}
+                for col_idx, col_name in enumerate(df_all.iloc[1]):
+                    if pd.isna(col_name):
+                        continue
+                    col_name_str = str(col_name).strip()
+                    if not col_name_str:
+                        continue
+                    # Keep duplicated Excel headers addressable in JSON.
+                    seen_columns[col_name_str] = seen_columns.get(col_name_str, 0) + 1
+                    if seen_columns[col_name_str] > 1:
+                        col_name_str = f"{col_name_str}_{seen_columns[col_name_str]}"
+                    grouping_value = grouping_row.iloc[col_idx] if col_idx < len(grouping_row) else None
+                    groupings[col_name_str] = str(grouping_value).strip() if pd.notna(grouping_value) else None
+
+                df = pd.read_excel(workbook, sheet_name=sheet_name, header=1)
+                required = {"name", "domain", "region"}
+                missing = sorted(required - {str(c).strip() for c in df.columns})
+                if missing:
+                    warnings.append(f"{sheet_name}: missing required columns {', '.join(missing)}")
+
+                sheet_count = 0
+                for record in df.to_dict('records'):
+                    cleaned_record = {
+                        "territory": territory,
+                        "source_sheet": sheet_name,
+                        "model_backed": territory == "APAC",
+                        "model_element_id": None,
+                    }
+                    for key, value in record.items():
+                        key_str = str(key).strip()
+                        if not key_str or key_str.startswith("Unnamed:"):
+                            continue
+                        if pd.isna(value):
+                            cleaned_record[key_str] = None
+                        elif isinstance(value, (pd.Timestamp, datetime)):
+                            cleaned_record[key_str] = value.isoformat()
+                        else:
+                            cleaned_record[key_str] = value
+
+                    name = cleaned_record.get("name")
+                    if name is None or not str(name).strip():
+                        continue
+
+                    if cleaned_record.get("it_owner"):
+                        v = str(cleaned_record["it_owner"])
+                        first, _ = v.split(".", 1) if "." in v else (v, "")
+                        cleaned_record["it_owner"] = first[:3] + ("*.***" if "." in v else "***")
+
+                    catalogue.append(cleaned_record)
+                    sheet_count += 1
+
+                groupings_by_sheet[sheet_name] = groupings
+                columns_by_sheet[sheet_name] = self.CATALOGUE_SYSTEM_COLUMNS + [
+                    str(c).strip()
+                    for c in df.columns
+                    if str(c).strip() and not str(c).strip().startswith("Unnamed:")
+                ]
+                print(f"      OK {sheet_name}: {sheet_count} {territory} applications")
 
             # Save to JSON with metadata
             self.data_dir.mkdir(parents=True, exist_ok=True)
             catalogue_json = self.data_dir / "catalogue.json"
 
+            all_columns = []
+            for col in self.CATALOGUE_SYSTEM_COLUMNS:
+                if col not in all_columns:
+                    all_columns.append(col)
+            for cols in columns_by_sheet.values():
+                for col in cols:
+                    if col not in all_columns:
+                        all_columns.append(col)
+
+            groupings = {}
+            for col in all_columns:
+                grouping = None
+                for sheet_groupings in groupings_by_sheet.values():
+                    grouping = sheet_groupings.get(col)
+                    if grouping:
+                        break
+                groupings[col] = grouping
+
             output_data = {
                 "metadata": {
                     "groupings": groupings,
-                    "columns": list(df.columns)
+                    "columns": all_columns,
+                    "sheets": {
+                        sheet: {
+                            "territory": sheet_map[sheet],
+                            "columns": columns_by_sheet.get(sheet, []),
+                            "groupings": groupings_by_sheet.get(sheet, {}),
+                        }
+                        for sheet in sheet_map
+                    },
+                    "warnings": warnings,
                 },
                 "data": catalogue
             }
 
             with open(catalogue_json, 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+            for warning in warnings:
+                print(f"      WARN {warning}")
 
             return len(catalogue)
 
@@ -959,13 +1078,49 @@ class PortalBuilder:
             flex-direction: column;
             min-width: 0;
             min-height: 0;
+            position: relative;
         }
 
         .header {
-            padding: 1.5rem 2rem;
+            padding: 4.25rem 2rem 1.5rem;
             border-bottom: 1px solid #e0e0e0;
             background: #fff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .global-scope-control {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.5rem 0.65rem;
+            border: 1px solid #d9e2ec;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.96);
+            box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .global-scope-control label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #52616f;
+        }
+        .global-scope-control select {
+            min-width: 10rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.42rem 0.55rem;
+            background: #fff;
+            color: #1f2933;
+            font-weight: 650;
+        }
+        .global-scope-meta {
+            font-size: 0.76rem;
+            color: #6b7785;
+            white-space: nowrap;
         }
         .header h2 { margin: 0; font-size: 1.5rem; color: #333; }
         .page-hero {
@@ -1905,6 +2060,21 @@ class PortalBuilder:
         }
         @media (max-width: 1024px) {
             .sidebar-right { width: 100%; z-index: 100; }
+            .header {
+                padding-top: 5rem;
+            }
+            .global-scope-control {
+                left: 1rem;
+                right: 1rem;
+                justify-content: space-between;
+            }
+            .global-scope-control select {
+                min-width: 0;
+                flex: 1;
+            }
+            .global-scope-meta {
+                display: none;
+            }
             .analytics-roadmap-matrix {
                 grid-template-columns: 130px repeat(3, minmax(0, 1fr));
             }
@@ -1943,7 +2113,7 @@ class PortalBuilder:
                         <div class="view-item-row">
                             <div class="view-item-copy">
                                 <div class="view-item-name">Application Catalogue</div>
-                                <div class="view-item-count">{{ totalApps }} applications</div>
+                                <div class="view-item-count">{{ allCatalogueApps }} applications</div>
                             </div>
                         </div>
                     </div>
@@ -1994,11 +2164,18 @@ class PortalBuilder:
         </div>
 
         <div class="main">
+            <div class="global-scope-control" v-if="availableTerritories.length > 1">
+                <label for="global-territory-filter">Scope</label>
+                <select id="global-territory-filter" v-model="selectedTerritory" @change="handleTerritoryChange()">
+                    <option v-for="territory in availableTerritories" :key="territory" :value="territory">{{ territory === 'ALL' ? 'All International' : territory }}</option>
+                </select>
+                <div class="global-scope-meta">{{ scopedCatalogue.length }} apps</div>
+            </div>
             <div class="header" v-if="viewMode === 'catalogue'">
                 <div class="page-hero catalogue-hero">
                     <div class="page-hero-copy">
                         <div class="page-hero-kicker">Catalogue</div>
-                        <h2>Application Catalogue</h2>
+                        <h2>{{ territoryLabel }} Application Catalogue</h2>
                         <div class="page-hero-subtitle">Browse the application inventory and inspect individual records.</div>
                         <div class="page-share-link" v-if="catalogueShareUrl">
                             <div class="page-share-link-label">Shareable Link</div>
@@ -2016,8 +2193,8 @@ class PortalBuilder:
                     <div class="page-hero analytics-hero">
                         <div class="page-hero-copy">
                             <div class="page-hero-kicker">Insights</div>
-                            <h2>Portfolio Analytics</h2>
-                        <div class="page-hero-subtitle">Track roadmap intent, current plans, and where active portfolio change is concentrated.</div>
+                            <h2>{{ territoryLabel }} Portfolio Analytics</h2>
+                        <div class="page-hero-subtitle">Track portfolio shape, standards, risk, and active change by territory scope.</div>
                         <div class="page-share-link" v-if="analyticsShareUrl">
                             <div class="page-share-link-label">Shareable Link</div>
                             <a class="page-share-link-value" :href="analyticsShareUrl">{{ analyticsShareUrl }}</a>
@@ -2125,7 +2302,7 @@ class PortalBuilder:
                         <select id="analytics-domain-filter" v-model="selectedAnalyticsDomain" @change="refreshAnalyticsCharts()">
                             <option v-for="domain in availableAnalyticsDomains" :key="domain" :value="domain">{{ domain }}</option>
                         </select>
-                        <div class="analytics-filter-meta">{{ filteredAnalyticsData.summary.total_apps }} applications in scope</div>
+                        <div class="analytics-filter-meta">{{ filteredAnalyticsData.summary.total_apps }} applications in scope · {{ analyticsDataBasis }}</div>
                     </div>
                     <!-- Stat Cards -->
                     <div class="analytics-stat-row">
@@ -2162,10 +2339,21 @@ class PortalBuilder:
                         </div>
                     </div>
 
+                    <div class="analytics-chart-row">
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Risk Level</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartRiskLevel"></canvas></div>
+                        </div>
+                        <div class="analytics-chart-card" style="flex:1;">
+                            <div class="analytics-chart-title">Sensitive Data</div>
+                            <div class="analytics-chart-wrap"><canvas id="chartSensitiveData"></canvas></div>
+                        </div>
+                    </div>
+
                     <!-- Charts Row 2: Familiar estate context -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Applications by Domain' : 'Applications by Sub-Domain' }}</div>
+                            <div class="analytics-chart-title">{{ selectedTerritory === 'ALL' ? 'Applications by Territory' : (selectedAnalyticsDomain === 'ALL' ? 'Applications by Domain' : 'Applications by Sub-Domain') }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartDomain"></canvas></div>
                         </div>
                         <div class="analytics-chart-card" style="flex:1;">
@@ -2235,15 +2423,15 @@ class PortalBuilder:
                     <!-- Charts Row 5: Roadmap execution context -->
                     <div class="analytics-chart-row">
                         <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'In Progress by Domain' : 'In Progress by Sub-Domain' }}</div>
+                            <div class="analytics-chart-title">{{ selectedTerritory === 'ALL' ? 'In Progress by Territory' : (selectedAnalyticsDomain === 'ALL' ? 'In Progress by Domain' : 'In Progress by Sub-Domain') }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartInProgressDomain"></canvas></div>
                         </div>
                         <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Migrate + In Progress by Domain' : 'Migrate + In Progress by Sub-Domain' }}</div>
+                            <div class="analytics-chart-title">{{ selectedTerritory === 'ALL' ? 'Migrate + In Progress by Territory' : (selectedAnalyticsDomain === 'ALL' ? 'Migrate + In Progress by Domain' : 'Migrate + In Progress by Sub-Domain') }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartMigrateInProgress"></canvas></div>
                         </div>
                         <div class="analytics-chart-card" style="flex:1;">
-                            <div class="analytics-chart-title">{{ selectedAnalyticsDomain === 'ALL' ? 'Legacy Applications by Domain' : 'Legacy Applications by Sub-Domain' }}</div>
+                            <div class="analytics-chart-title">{{ selectedTerritory === 'ALL' ? 'Legacy Applications by Territory' : (selectedAnalyticsDomain === 'ALL' ? 'Legacy Applications by Domain' : 'Legacy Applications by Sub-Domain') }}</div>
                             <div class="analytics-chart-wrap"><canvas id="chartLegacyDomain"></canvas></div>
                         </div>
                     </div>
@@ -2467,6 +2655,7 @@ class PortalBuilder:
                     zoomLevel: 1,
                     fitToWidth: false,
                     analyticsData: null,
+                    selectedTerritory: 'APAC',
                     selectedAnalyticsDomain: 'ALL',
                     analyticsCharts: {},
                     sortColumn: null,
@@ -2476,7 +2665,8 @@ class PortalBuilder:
                 };
             },
             computed: {
-                totalApps() { return this.catalogue.length; },
+                totalApps() { return this.scopedCatalogue.length; },
+                allCatalogueApps() { return this.catalogue.length; },
                 totalViews() { return Object.keys(this.views).length; },
                 totalElements() { return Object.keys(this.elements).length; },
                 currentViewData() {
@@ -2495,9 +2685,43 @@ class PortalBuilder:
                     if (!this.currentViewData) return '';
                     return this.buildViewShareUrl(this.currentViewData.id);
                 },
+                availableTerritories() {
+                    const found = new Set();
+                    (this.catalogue || []).forEach(app => {
+                        const territory = String(app.territory || '').trim();
+                        if (territory) found.add(territory);
+                    });
+                    (this.analyticsData?.records || []).forEach(rec => {
+                        const territory = String(rec.territory || '').trim();
+                        if (territory) found.add(territory);
+                    });
+                    const preferred = ['APAC', 'EMEA', 'CANADA'];
+                    const ordered = preferred.filter(t => found.has(t));
+                    const remainder = Array.from(found).filter(t => !preferred.includes(t)).sort();
+                    return ['ALL', ...ordered, ...remainder];
+                },
+                scopedCatalogue() {
+                    if (this.selectedTerritory === 'ALL') return this.catalogue;
+                    return this.catalogue.filter(app => String(app.territory || '').trim() === this.selectedTerritory);
+                },
+                territoryLabel() {
+                    return this.selectedTerritory === 'ALL' ? 'All International' : this.selectedTerritory;
+                },
+                analyticsDataBasis() {
+                    if (this.selectedTerritory === 'APAC') return 'APAC: model-backed + catalogue-backed';
+                    if (this.selectedTerritory === 'ALL') return 'All International: mixed catalogue-backed portfolio view';
+                    return `${this.selectedTerritory}: catalogue-backed only`;
+                },
                 catalogueColumns() {
-                    if (this.catalogue.length === 0) return [];
-                    return Object.keys(this.catalogue[0]);
+                    if (this.catalogueMetadata?.columns?.length) return this.catalogueMetadata.columns;
+                    if (this.scopedCatalogue.length === 0) return [];
+                    const cols = [];
+                    this.scopedCatalogue.forEach(app => {
+                        Object.keys(app).forEach(col => {
+                            if (!cols.includes(col)) cols.push(col);
+                        });
+                    });
+                    return cols;
                 },
                 catalogueNameColumn() {
                     // Find the column that contains the application name
@@ -2509,7 +2733,7 @@ class PortalBuilder:
                     return nameCol || this.catalogueColumns[0];
                 },
                 filteredCatalogue() {
-                    let result = this.catalogue;
+                    let result = this.scopedCatalogue;
                     if (this.catalogueSearch) {
                         const search = this.catalogueSearch.toLowerCase();
                         result = result.filter(app =>
@@ -2564,10 +2788,8 @@ class PortalBuilder:
                     return sorted;
                 },
                 availableAnalyticsDomains() {
-                    const domains = this.analyticsData?.filters?.domains;
-                    if (Array.isArray(domains) && domains.length) return domains;
                     const found = new Set(['ALL']);
-                    (this.analyticsData?.records || []).forEach(r => {
+                    this.territoryAnalyticsRecords.forEach(r => {
                         const d = String(r.domain || '').trim();
                         if (d) found.add(d);
                     });
@@ -2578,9 +2800,14 @@ class PortalBuilder:
                     });
                 },
                 filteredAnalyticsRecords() {
-                    const records = this.analyticsData?.records || [];
+                    const records = this.territoryAnalyticsRecords;
                     if (this.selectedAnalyticsDomain === 'ALL') return records;
                     return records.filter(r => String(r.domain || '').trim() === this.selectedAnalyticsDomain);
+                },
+                territoryAnalyticsRecords() {
+                    const records = this.analyticsData?.records || [];
+                    if (this.selectedTerritory === 'ALL') return records;
+                    return records.filter(r => String(r.territory || '').trim() === this.selectedTerritory);
                 },
                 filteredAnalyticsData() {
                     const records = this.filteredAnalyticsRecords;
@@ -2649,14 +2876,20 @@ class PortalBuilder:
                         domain: countBy('domain'),
                         sub_domain: countBy('sub_domain'),
                         region: countBy('region'),
+                        territory: countBy('territory'),
+                        risk_level: countBy('risk_level'),
+                        sensitive_data: countBy('sensitive_data'),
                         planning_horizon: countBy('planning_horizon'),
                         roadmap_disposition: countBy('roadmap_disposition'),
                         in_progress_by_domain: countBy('domain', { filter: (rec) => rec.planning_horizon === 'In Progress' }),
                         in_progress_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.planning_horizon === 'In Progress' }),
                         migrate_in_progress_by_domain: countBy('domain', { filter: (rec) => rec.roadmap_disposition === 'Migrate' && rec.planning_horizon === 'In Progress' }),
                         migrate_in_progress_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.roadmap_disposition === 'Migrate' && rec.planning_horizon === 'In Progress' }),
+                        in_progress_by_territory: countBy('territory', { filter: (rec) => rec.planning_horizon === 'In Progress' }),
+                        migrate_in_progress_by_territory: countBy('territory', { filter: (rec) => rec.roadmap_disposition === 'Migrate' && rec.planning_horizon === 'In Progress' }),
                         legacy_by_domain: countBy('domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
                         legacy_by_sub_domain: countBy('sub_domain', { filter: (rec) => rec.tech_standard === 'Legacy' }),
+                        legacy_by_territory: countBy('territory', { filter: (rec) => rec.tech_standard === 'Legacy' }),
                         lifecycle_status: countBy('lifecycle_status'),
                         tech_standard: countBy('tech_standard'),
                         roadmap_matrix: {
@@ -2766,6 +2999,9 @@ class PortalBuilder:
                         // Load analytics if available
                         try {
                             this.analyticsData = await fetchJson('data/analytics.json');
+                            if (!this.availableTerritories.includes(this.selectedTerritory)) {
+                                this.selectedTerritory = this.availableTerritories.includes('APAC') ? 'APAC' : (this.availableTerritories[1] || 'ALL');
+                            }
                             this.selectedAnalyticsDomain = 'ALL';
                             console.log('[EA Portal] Loaded analytics data');
                         } catch (err) {
@@ -2949,6 +3185,19 @@ class PortalBuilder:
                 diagramCountForRegion(region) {
                     return this.filteredDiagramMapViews.filter(view => view.region === region).length;
                 },
+                handleTerritoryChange() {
+                    this.selectedAnalyticsDomain = 'ALL';
+                    this.sortColumn = null;
+                    this.drilldownApps = [];
+                    this.drilldownTitle = '';
+                    this.selectedCatalogueApp = null;
+                    this.selectedElement = null;
+                    this.sidebarRightOpen = false;
+                    this.refreshAnalyticsCharts();
+                    this.trackEvent('change_territory_scope', {
+                        territory: this.selectedTerritory
+                    });
+                },
                 refreshAnalyticsCharts() {
                     if (this.viewMode === 'analytics') {
                         this.$nextTick(() => { this.initAnalyticsCharts(); });
@@ -3029,7 +3278,7 @@ class PortalBuilder:
                             plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
                     });
 
-                    const inProgressBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'in_progress_by_domain' : 'in_progress_by_sub_domain';
+                    const inProgressBreakdownKey = this.selectedTerritory === 'ALL' ? 'in_progress_by_territory' : (this.selectedAnalyticsDomain === 'ALL' ? 'in_progress_by_domain' : 'in_progress_by_sub_domain');
                     make('chartInProgressDomain', {
                         type: 'bar',
                         data: {
@@ -3043,7 +3292,7 @@ class PortalBuilder:
                             scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
 
-                    const migrateInProgressBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'migrate_in_progress_by_domain' : 'migrate_in_progress_by_sub_domain';
+                    const migrateInProgressBreakdownKey = this.selectedTerritory === 'ALL' ? 'migrate_in_progress_by_territory' : (this.selectedAnalyticsDomain === 'ALL' ? 'migrate_in_progress_by_domain' : 'migrate_in_progress_by_sub_domain');
                     make('chartMigrateInProgress', {
                         type: 'bar',
                         data: {
@@ -3058,7 +3307,7 @@ class PortalBuilder:
                     });
 
                     // Legacy by Domain — horizontal bar
-                    const legacyBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'legacy_by_domain' : 'legacy_by_sub_domain';
+                    const legacyBreakdownKey = this.selectedTerritory === 'ALL' ? 'legacy_by_territory' : (this.selectedAnalyticsDomain === 'ALL' ? 'legacy_by_domain' : 'legacy_by_sub_domain');
                     make('chartLegacyDomain', {
                         type: 'bar',
                         data: {
@@ -3092,8 +3341,40 @@ class PortalBuilder:
                             plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
                     });
 
+                    const riskColors = {
+                        'High': '#dc3545',
+                        'Moderate': '#F39200',
+                        'Low': '#28a745'
+                    };
+                    make('chartRiskLevel', {
+                        type: 'doughnut',
+                        data: {
+                            labels: dashboard.risk_level.labels,
+                            datasets: [{ data: dashboard.risk_level.values,
+                                backgroundColor: dashboard.risk_level.labels.map(l => riskColors[l] || '#aaa'),
+                                borderWidth: 2 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('risk_level'),
+                            plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+                    });
+
+                    make('chartSensitiveData', {
+                        type: 'bar',
+                        data: {
+                            labels: dashboard.sensitive_data.labels,
+                            datasets: [{ label: 'Apps', data: dashboard.sensitive_data.values,
+                                backgroundColor: dashboard.sensitive_data.labels.map((_, i) => paletteBar[i % paletteBar.length]),
+                                borderRadius: 4 }]
+                        },
+                        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                            onHover: hoverCursor, onClick: clickFor('sensitive_data'),
+                            plugins: { legend: { display: false } },
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+
                     // Domain — horizontal bar
-                    const domainBreakdownKey = this.selectedAnalyticsDomain === 'ALL' ? 'domain' : 'sub_domain';
+                    const domainBreakdownKey = this.selectedTerritory === 'ALL' ? 'territory' : (this.selectedAnalyticsDomain === 'ALL' ? 'domain' : 'sub_domain');
                     make('chartDomain', {
                         type: 'bar',
                         data: {
@@ -3133,9 +3414,9 @@ class PortalBuilder:
                     const appName = app[nameColumn];
                     console.log(`Looking for element matching: ${appName} (from column: ${nameColumn})`);
 
-                    const matchingElement = Object.values(this.elements).find(el =>
+                    const matchingElement = app.model_backed ? Object.values(this.elements).find(el =>
                         el.name === appName || el.name.includes(appName) || appName.includes(el.name)
-                    );
+                    ) : null;
 
                     this.selectedCatalogueApp = app;
                     this.trackEvent('select_catalogue_app', {
@@ -3211,7 +3492,7 @@ class PortalBuilder:
                     const nameCol = this.catalogueNameColumn;
                     const nameSet = new Set(appNames);
                     this.drilldownTitle = title;
-                    this.drilldownApps = this.catalogue.filter(app => nameSet.has(String(app[nameCol] || '').trim()));
+                    this.drilldownApps = this.scopedCatalogue.filter(app => nameSet.has(String(app[nameCol] || '').trim()));
                     this.trackEvent('show_drilldown', {
                         title,
                         result_count: this.drilldownApps.length
