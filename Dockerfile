@@ -9,6 +9,7 @@ COPY ea_diagrams/ ea_diagrams/
 COPY archi_inputs/ archi_inputs/
 COPY ea_inputs/views/ ea_inputs/views/
 COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
+COPY ea_inputs/04_projects/ ea_inputs/04_projects/
 
 # Install dependencies for portal build
 RUN pip install pandas openpyxl PyYAML --quiet
