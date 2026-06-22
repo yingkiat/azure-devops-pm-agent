@@ -82,6 +82,115 @@ class PortalBuilder:
         except Exception:
             return False
 
+    def _collect_json_inventory_views(self) -> List[Dict]:
+        """Collect interactive JSON inventory views from specs with type: json_inventory.
+
+        These views use an iframe-based visualizer instead of a static diagram.
+        The YAML spec provides all metadata; the inventory field points to the JSON data.
+        """
+        views = []
+        viewer_template = Path("portal/assets/infra-portal.html")
+        if not viewer_template.exists():
+            print("      WARN infra-portal.html template not found at portal/assets/infra-portal.html")
+            return views
+
+        for spec_path in sorted(self.specs_dir.glob("**/*.yaml")):
+            try:
+                with open(spec_path, "r", encoding="utf-8") as f:
+                    spec = yaml.safe_load(f) or {}
+            except Exception:
+                continue
+
+            if spec.get("type") != "json_inventory":
+                continue
+
+            inventory_rel = spec.get("inventory", "")
+            if not inventory_rel:
+                print(f"      WARN {spec_path.name}: json_inventory spec missing 'inventory' field")
+                continue
+
+            inventory_path = Path("ea_inputs") / inventory_rel
+            if not inventory_path.exists():
+                print(f"      WARN {spec_path.name}: inventory file not found: {inventory_path}")
+                continue
+
+            metadata = spec.get("metadata", {}) or {}
+            view_meta = spec.get("view", {}) or {}
+            project_key = metadata.get("project_key") or view_meta.get("project_key") or spec_path.stem
+            domain = metadata.get("domain") or view_meta.get("domain") or ""
+            region = metadata.get("region") or view_meta.get("region") or ""
+            project = metadata.get("project") or view_meta.get("project") or ""
+            view_kind = metadata.get("view_kind") or view_meta.get("view_kind") or "project"
+            display_name = view_meta.get("name") or spec_path.stem.replace("_", " ").title()
+
+            try:
+                relative_path = spec_path.relative_to(self.specs_dir)
+            except ValueError:
+                relative_path = Path(spec_path.name)
+            view_id = relative_path.with_suffix("").as_posix().replace("/", "_")
+
+            out_dir = self.output_dir / "projects" / project_key
+            out_dir.mkdir(parents=True, exist_ok=True)
+
+            shutil.copy2(str(inventory_path), str(out_dir / inventory_path.name))
+            self._write_json_inventory_viewer(viewer_template, inventory_path, out_dir / "index.html")
+
+            iframe_src = f"projects/{project_key}/?inventory={inventory_path.name}&embed=diagram"
+
+            views.append({
+                "view_id": view_id,
+                "name": display_name,
+                "diagram_file": "",
+                "preview_file": "",
+                "category": relative_path.parent.as_posix() if relative_path.parent != Path(".") else "",
+                "domain": domain,
+                "region": region,
+                "project": project,
+                "project_key": project_key,
+                "view_kind": view_kind,
+                "view_type": "json_inventory",
+                "iframe_src": iframe_src,
+                "elements": [],
+                "element_count": 0,
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(inventory_path.stat().st_mtime).isoformat(),
+            })
+            print(f"      OK {view_id:45s} ({inventory_path.name})")
+
+        return views
+
+    def _write_json_inventory_viewer(self, viewer_template: Path, inventory_path: Path, output_path: Path) -> None:
+        """Write a project visualizer page with inventory JSON embedded for file:// use."""
+        template_html = viewer_template.read_text(encoding="utf-8")
+        with open(inventory_path, "r", encoding="utf-8") as f:
+            inventory_data = json.load(f)
+
+        inventory_json = json.dumps(inventory_data, ensure_ascii=True).replace("</", "<\\/")
+        embedded_script = (
+            "  <script>\n"
+            f"    window.INFRA_INVENTORY_DATA = {inventory_json};\n"
+            "  </script>\n\n"
+        )
+        marker = "  <script>\n    let artifacts = [];"
+        if marker not in template_html:
+            print(f"      WARN {viewer_template}: embed marker not found; writing template without embedded data")
+            output_path.write_text(template_html, encoding="utf-8")
+            return
+
+        output_path.write_text(template_html.replace(marker, embedded_script + marker, 1), encoding="utf-8")
+
+    def _is_json_inventory(self, relative_path: Path) -> bool:
+        """Return whether the matching YAML spec is a json_inventory view."""
+        spec_path = self.specs_dir / relative_path.with_suffix(".yaml")
+        if not spec_path.exists():
+            return False
+        try:
+            with open(spec_path, "r", encoding="utf-8") as f:
+                spec = yaml.safe_load(f) or {}
+            return spec.get("type") == "json_inventory"
+        except Exception:
+            return False
+
     def _find_preview_browser(self) -> Optional[Path]:
         """Locate a Chromium-compatible browser for SVG to PNG preview rendering."""
         candidates = [
@@ -221,6 +330,15 @@ class PortalBuilder:
         print("[3/5] Converting diagrams to SVG...")
         diagrams_info = self._convert_diagrams_to_svg()
         print(f"      OK Converted {len(diagrams_info)} diagrams\n")
+
+        # Step 3.5: Collect JSON inventory views (interactive project portals)
+        print("[3.5/6] Collecting JSON inventory views...")
+        json_inventory_views = self._collect_json_inventory_views()
+        diagrams_info.extend(json_inventory_views)
+        if json_inventory_views:
+            print(f"      OK Found {len(json_inventory_views)} JSON inventory view(s)\n")
+        else:
+            print(f"      -- No json_inventory specs found\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")
@@ -645,6 +763,12 @@ class PortalBuilder:
             view_id = relative_path.with_suffix("").as_posix().replace("/", "_")
 
             is_azure_diagram = self._is_azure_diagram(relative_path)
+            is_json_inventory = self._is_json_inventory(relative_path)
+
+            # json_inventory views are handled separately; skip the drawio file.
+            if is_json_inventory:
+                print(f"      SKIP {view_id:45s} json_inventory view (handled separately)")
+                continue
 
             # For azure_diagram views, require a sibling PNG and publish that directly.
             if is_azure_diagram:
@@ -1367,6 +1491,14 @@ class PortalBuilder:
         .diagram-interactive {
             position: relative;
             z-index: 2;
+        }
+        .infra-iframe {
+            display: block;
+            width: 100%;
+            height: 85vh;
+            min-height: 700px;
+            border: none;
+            border-radius: 4px;
         }
         .diagram-loading-overlay {
             position: absolute;
@@ -2260,7 +2392,7 @@ class PortalBuilder:
                         <table>
                             <thead>
                                 <tr v-if="getGroupedHeaders().length > 0">
-                                    <th v-for="group in getGroupedHeaders()" :key="`group-${group.grouping}`"
+                                    <th v-for="group in getGroupedHeaders()" :key="`group-${group.index}-${group.grouping || 'ungrouped'}`"
                                         :colspan="group.colspan"
                                         :style="{ backgroundColor: getGroupingColor(group.grouping) }">
                                         {{ group.grouping || '' }}
@@ -2510,8 +2642,9 @@ class PortalBuilder:
             </div>
             <div v-else class="diagram-viewer" @click="deselectElement()">
                 <div class="diagram-stage">
-                    <img v-if="diagramPreviewPath && !diagramHtml" class="diagram-preview" :src="diagramPreviewPath" alt="Diagram preview" />
-                    <div v-if="diagramHtml" class="diagram-interactive" v-html="diagramHtml"></div>
+                    <iframe v-if="infraIframeSrc" :src="infraIframeSrc" class="infra-iframe" title="Infrastructure Visualizer" allowfullscreen></iframe>
+                    <img v-if="diagramPreviewPath && !diagramHtml && !infraIframeSrc" class="diagram-preview" :src="diagramPreviewPath" alt="Diagram preview" />
+                    <div v-if="diagramHtml && !infraIframeSrc" class="diagram-interactive" v-html="diagramHtml"></div>
                     <div v-if="diagramLoading" class="diagram-loading-overlay">
                         <div class="diagram-loading-pill">Loading Interactive Diagram</div>
                     </div>
@@ -2639,6 +2772,7 @@ class PortalBuilder:
                     diagramHtml: '',
                     diagramImagePath: '',
                     diagramPreviewPath: '',
+                    infraIframeSrc: '',
                     diagramLoading: false,
                     diagramSvgCache: {},
                     diagramRequestToken: 0,
@@ -3569,7 +3703,23 @@ class PortalBuilder:
                         this.diagramHtml = '';
                         this.diagramImagePath = '';
                         this.diagramPreviewPath = view.preview_path || view.diagram_path;
+                        this.infraIframeSrc = '';
                         this.currentSvg = null;
+
+                        if (view.view_type === 'json_inventory') {
+                            this.infraIframeSrc = view.iframe_src || '';
+                            this.diagramPreviewPath = '';
+                            this.diagramLoading = false;
+                            if (updateUrl) this.updateBrowserUrl();
+                            this.trackEvent('open_view', {
+                                view_id: viewId,
+                                view_name: view.name || '',
+                                domain: view.domain || '',
+                                region: view.region || '',
+                                view_type: 'json_inventory'
+                            });
+                            return;
+                        }
 
                         if (view.diagram_path.toLowerCase().endsWith('.png')) {
                             this.diagramImagePath = view.diagram_path;
@@ -3669,17 +3819,19 @@ class PortalBuilder:
                     }
 
                     const grouped = [];
-                    let currentGroup = null;
+                    const sentinel = Symbol('start');
+                    let currentGroup = sentinel;
                     let currentColspan = 0;
 
                     for (const col of this.catalogueColumns) {
-                        const grouping = this.catalogueMetadata.groupings[col];
+                        const grouping = this.catalogueMetadata.groupings[col] || null;
 
                         if (grouping === currentGroup) {
                             currentColspan++;
                         } else {
-                            if (currentGroup !== null) {
+                            if (currentGroup !== sentinel) {
                                 grouped.push({
+                                    index: grouped.length,
                                     grouping: currentGroup,
                                     colspan: currentColspan
                                 });
@@ -3690,8 +3842,9 @@ class PortalBuilder:
                     }
 
                     // Add the last group
-                    if (currentGroup !== null) {
+                    if (currentGroup !== sentinel) {
                         grouped.push({
+                            index: grouped.length,
                             grouping: currentGroup,
                             colspan: currentColspan
                         });

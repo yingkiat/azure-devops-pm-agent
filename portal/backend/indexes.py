@@ -208,6 +208,8 @@ class PortalIndexGenerator:
                 "project": diag.get("project", ""),
                 "project_key": diag.get("project_key", ""),
                 "view_kind": diag.get("view_kind", ""),
+                "view_type": diag.get("view_type", "diagram"),
+                "iframe_src": diag.get("iframe_src", ""),
                 "elements": diag.get("elements", []),
                 "metadata": {
                     "element_count": len(diag.get("elements", [])),

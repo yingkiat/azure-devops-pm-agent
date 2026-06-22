@@ -1,5 +1,6 @@
 # === MODE ===
-type: "azure_diagram"
+type: "json_inventory"
+inventory: "04_projects/PSS2/infra-inventory.dev.json"
 
 # === INTENT ===
 intent:
