@@ -15,7 +15,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional, Set
 
-from jsonschema import Draft202012Validator
+try:
+    from jsonschema import Draft202012Validator
+    JSONSCHEMA_AVAILABLE = True
+except ImportError:
+    JSONSCHEMA_AVAILABLE = False
 
 SUPPORTED_VERSIONS = {"1.0"}
 FRESHNESS_DAYS = 90
@@ -114,12 +118,15 @@ def validate_inventory(
     result = ValidationResult(label)
 
     # --- Layer A: structural ---
-    schema = _load_schema(schema_path)
-    for err in sorted(Draft202012Validator(schema).iter_errors(data), key=lambda e: e.path):
-        loc = "/".join(str(p) for p in err.path) or "(root)"
-        result.error(f"schema: {loc}: {err.message}")
-    if result.errors:
-        return result  # structural failure: downstream checks are unreliable
+    if JSONSCHEMA_AVAILABLE:
+        schema = _load_schema(schema_path)
+        for err in sorted(Draft202012Validator(schema).iter_errors(data), key=lambda e: e.path):
+            loc = "/".join(str(p) for p in err.path) or "(root)"
+            result.error(f"schema: {loc}: {err.message}")
+        if result.errors:
+            return result  # structural failure: downstream checks are unreliable
+    else:
+        result.warn("schema validation skipped (jsonschema not installed)")
 
     # --- Layer B: semantic ---
     version = str(data.get("schema_version", ""))

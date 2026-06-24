@@ -12,7 +12,7 @@ COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
 COPY ea_inputs/04_projects/ ea_inputs/04_projects/
 
 # Install dependencies for portal build
-RUN pip install pandas openpyxl PyYAML --quiet
+RUN pip install pandas openpyxl PyYAML jsonschema --quiet
 
 # Build the portal (generates static HTML)
 RUN python portal/build.py
