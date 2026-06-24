@@ -20,6 +20,8 @@ MVP9 additions:
 import json
 import yaml
 import csv
+import html
+import re
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import hashlib
@@ -45,6 +47,25 @@ class DrawIOGenerator:
     CANVAS_WIDTH = 2000
     CANVAS_HEIGHT = 1500
     CANVAS_MARGIN = 50
+
+    APP_INVENTORY_KIND_TYPE = {
+        "external": "BusinessActor",
+        "frontend": "ApplicationInterface",
+        "api": "ApplicationService",
+        "secret_store": "TechnologyService",
+        "data_store": "DataObject",
+        "storage": "Artifact",
+        "other": "ApplicationComponent",
+    }
+    APP_INVENTORY_KIND_COLOR = {
+        "external": "#F5F5F5",
+        "frontend": "#B5D4E8",
+        "api": "#C9E7CB",
+        "secret_store": "#FFE0B2",
+        "data_store": "#F2D1C9",
+        "storage": "#D7CCC8",
+        "other": "#B3B3B3",
+    }
 
     def __init__(self, archi_dir: str = "archi_inputs", views_dir: str = "ea_inputs/views"):
         self.archi_dir = Path(archi_dir)
@@ -253,6 +274,9 @@ class DrawIOGenerator:
                 views_dir=str(self.views_dir),
             ).generate(spec_path)
 
+        if spec.get('type') == 'app_inventory':
+            return self._generate_app_inventory_from_spec(spec_path, spec)
+
         # Extract configuration
         view_config = spec.get('view', {})
         view_name = view_config.get('name', 'Diagram')
@@ -359,6 +383,319 @@ class DrawIOGenerator:
         except Exception as e:
             print(f"Error loading spec: {e}")
             return None
+
+    def _generate_app_inventory_from_spec(self, spec_path: str, spec: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate draw.io output for a YAML spec with type: app_inventory."""
+        inventory_ref = spec.get('inventory')
+        if not inventory_ref:
+            return {'error': "app_inventory spec requires an 'inventory' path"}
+
+        inventory_path = self._resolve_app_inventory_path(inventory_ref)
+        if not inventory_path.exists():
+            return {'error': f'Inventory file not found: {inventory_path}'}
+
+        inventory = json.loads(inventory_path.read_text(encoding='utf-8'))
+        view_name = spec.get('view', {}).get('name') or self._app_inventory_view_name(inventory)
+        drawio_xml = self.generate_app_inventory_drawio(inventory, view_name=view_name)
+        output_path = self._write_output(spec_path, drawio_xml, 'drawio')
+
+        app_map = inventory.get('application_map', {}) or {}
+        return {
+            'view_name': view_name,
+            'element_count': len(app_map.get('nodes', [])),
+            'relationship_count': len(app_map.get('edges', [])),
+            'output_files': [str(output_path)],
+        }
+
+    def generate_app_inventory_drawio(self, inventory: Dict[str, Any], view_name: Optional[str] = None) -> str:
+        """Generate roadmap-style draw.io XML from an app-inventory JSON document."""
+        app_map = inventory.get('application_map', {}) or {}
+        nodes = app_map.get('nodes', []) or []
+        edges = app_map.get('edges', []) or []
+        view_name = view_name or self._app_inventory_view_name(inventory)
+
+        groups = self._app_inventory_groups(app_map, nodes)
+        elements, id_map = self._build_app_inventory_elements(
+            nodes,
+            groups,
+            components=inventory.get('components', []) or [],
+            build_outputs=inventory.get('build_outputs', []) or [],
+        )
+        relations = self._build_app_inventory_relations(edges, id_map)
+
+        layout = {
+            'stage_property': 'Stage',
+            'stage_order': [group['label'] for group in groups],
+            'order_property': 'Sequence',
+            'stage_width': int(app_map.get('stage_width', 270)),
+            'stage_gap': 45,
+            'node_gap': 28,
+            'start_x': 60,
+            'start_y': 90,
+            'edge_label_mode': 'near_source',
+            'include_narrative': False,
+            'text_boxes': [{
+                'x': 60,
+                'y': 24,
+                'width': 900,
+                'height': 38,
+                'style_kind': 'title',
+                'text': view_name,
+            }],
+        }
+
+        return self._generate_drawio_flow_left_right(view_name, elements, relations, layout)
+
+    def _app_inventory_groups(self, app_map: Dict[str, Any], nodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Return explicit app architecture groups in display order."""
+        configured_groups = app_map.get('groups') or []
+        groups = []
+        seen_ids = set()
+        for index, group in enumerate(configured_groups):
+            group_id = str(group.get('id') or group.get('name') or group.get('label') or f'group-{index + 1}')
+            if group_id in seen_ids:
+                continue
+            seen_ids.add(group_id)
+            groups.append({
+                'id': group_id,
+                'label': str(group.get('label') or group.get('name') or group_id),
+                'order': group.get('order', index + 1),
+            })
+
+        explicit_node_groups = []
+        for node in nodes:
+            group_id = self._app_inventory_node_group_id(node)
+            if group_id and group_id not in seen_ids and group_id not in explicit_node_groups:
+                explicit_node_groups.append(group_id)
+
+        for group_id in explicit_node_groups:
+            groups.append({
+                'id': group_id,
+                'label': group_id,
+                'order': len(groups) + 1,
+            })
+
+        if not groups:
+            groups.append({'id': 'ungrouped', 'label': 'Ungrouped', 'order': 1})
+
+        return sorted(groups, key=lambda g: (self._safe_int(g.get('order'), 9999), g['label'].lower()))
+
+    def _build_app_inventory_elements(
+        self,
+        nodes: List[Dict[str, Any]],
+        groups: List[Dict[str, Any]],
+        components: List[Dict[str, Any]],
+        build_outputs: List[Dict[str, Any]],
+    ) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
+        id_map: Dict[str, str] = {}
+        used_ids = set()
+        elements: List[Dict[str, Any]] = []
+        group_label_by_id = {group['id']: group['label'] for group in groups}
+        component_by_id = {str(component.get('id')): component for component in components if component.get('id')}
+        build_outputs_by_component: Dict[str, List[Dict[str, Any]]] = {}
+        for output in build_outputs:
+            component_id = str(output.get('component') or '')
+            if component_id:
+                build_outputs_by_component.setdefault(component_id, []).append(output)
+
+        for index, node in enumerate(nodes):
+            source_id = str(node.get('id') or f'node-{index + 1}')
+            elem_id = self._safe_app_inventory_id(source_id, used_ids)
+            id_map[source_id] = elem_id
+
+            kind = str(node.get('kind') or 'other')
+            group_id = self._app_inventory_node_group_id(node) or 'ungrouped'
+            stage = group_label_by_id.get(group_id, group_id)
+            label = self._app_inventory_node_label(node)
+            has_detail = bool(node.get('summary') or node.get('metrics'))
+            component_id = str(node.get('component') or '')
+            component = component_by_id.get(component_id, {})
+            metadata = self._app_inventory_node_metadata(
+                node=node,
+                component=component,
+                build_outputs=build_outputs_by_component.get(component_id, []),
+                element_id=elem_id,
+                group_label=stage,
+                source_id=source_id,
+            )
+
+            elements.append({
+                'id': elem_id,
+                'type': self.APP_INVENTORY_KIND_TYPE.get(kind, self.APP_INVENTORY_KIND_TYPE['other']),
+                'name': label,
+                'display_name': label,
+                'documentation': node.get('summary', ''),
+                'layer': 'Application',
+                'color': self.APP_INVENTORY_KIND_COLOR.get(kind, self.APP_INVENTORY_KIND_COLOR['other']),
+                'width': 220,
+                'height': 76 if has_detail else 60,
+                'properties': {
+                    'Stage': stage,
+                    'Sequence': str(index + 1),
+                    'Kind': kind,
+                    'Source ID': source_id,
+                    'Summary': str(node.get('summary') or ''),
+                    'Metrics': self._app_inventory_metrics_line(node.get('metrics')),
+                },
+                'emphasis': 'normal',
+                'emphasis_role': '',
+                'metadata': metadata,
+            })
+
+        return elements, id_map
+
+    @staticmethod
+    def _app_inventory_node_group_id(node: Dict[str, Any]) -> str:
+        return str(
+            node.get('group')
+            or node.get('group_id')
+            or node.get('architecture_group')
+            or node.get('architectureGroup')
+            or ''
+        )
+
+    def _app_inventory_node_metadata(
+        self,
+        node: Dict[str, Any],
+        component: Dict[str, Any],
+        build_outputs: List[Dict[str, Any]],
+        element_id: str,
+        group_label: str,
+        source_id: str,
+    ) -> Dict[str, Any]:
+        properties = {
+            'Source ID': source_id,
+            'Architecture Group': group_label,
+        }
+        self._copy_metadata_value(properties, 'Kind', node.get('kind'))
+        self._copy_metadata_value(properties, 'Summary', node.get('summary'))
+        self._copy_metadata_value(properties, 'Component', node.get('component'))
+        self._copy_metadata_value(properties, 'Infra Refs', node.get('infra_refs') or node.get('infra_ref'))
+
+        for key, value in (node.get('metrics') or {}).items():
+            self._copy_metadata_value(properties, f'Metric: {str(key).replace("_", " ").title()}', value)
+
+        if component:
+            self._copy_metadata_value(properties, 'Component Name', component.get('name'))
+            self._copy_metadata_value(properties, 'Component Type', component.get('type'))
+            self._copy_metadata_value(properties, 'Component Path', component.get('path'))
+            self._copy_metadata_value(properties, 'Depends On', component.get('dependsOn'))
+            self._copy_metadata_value(properties, 'Uses Infra', component.get('uses_infra'))
+            self._copy_metadata_value(properties, 'Component Summary', component.get('summary'))
+
+        for idx, output in enumerate(build_outputs, start=1):
+            prefix = f'Build Output {idx}'
+            self._copy_metadata_value(properties, f'{prefix} Kind', output.get('kind'))
+            self._copy_metadata_value(properties, f'{prefix} Image', output.get('image'))
+            self._copy_metadata_value(properties, f'{prefix} Package', output.get('package'))
+            self._copy_metadata_value(properties, f'{prefix} Runtime', output.get('runtime'))
+            self._copy_metadata_value(properties, f'{prefix} Base Image', output.get('base_image'))
+            self._copy_metadata_value(properties, f'{prefix} Build Base Image', output.get('build_base_image'))
+
+        for key, value in (node.get('metadata') or {}).items():
+            self._copy_metadata_value(properties, key, value)
+
+        return {
+            'id': element_id,
+            'name': str(node.get('label') or node.get('id') or 'Component'),
+            'type': self.APP_INVENTORY_KIND_TYPE.get(str(node.get('kind') or 'other'), self.APP_INVENTORY_KIND_TYPE['other']),
+            'documentation': str(node.get('summary') or component.get('summary') or ''),
+            'properties': properties,
+        }
+
+    @staticmethod
+    def _copy_metadata_value(properties: Dict[str, str], key: str, value: Any) -> None:
+        if value in (None, ''):
+            return
+        if isinstance(value, (list, dict)):
+            properties[key] = json.dumps(value, ensure_ascii=True, sort_keys=True)
+        else:
+            properties[key] = str(value)
+
+    @staticmethod
+    def _safe_int(value: Any, default: int) -> int:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
+
+    def _build_app_inventory_relations(self, edges: List[Dict[str, Any]], id_map: Dict[str, str]) -> List[Dict[str, Any]]:
+        relations: List[Dict[str, Any]] = []
+        for index, edge in enumerate(edges):
+            source = id_map.get(str(edge.get('from') or ''))
+            target = id_map.get(str(edge.get('to') or ''))
+            if not source or not target:
+                continue
+
+            relations.append({
+                'id': f'app-rel-{index + 1}',
+                'type': 'Flow',
+                'source': source,
+                'target': target,
+                'label': str(edge.get('label') or ''),
+                'documentation': self._app_inventory_metrics_line(edge.get('metrics')),
+            })
+        return relations
+
+    @staticmethod
+    def _resolve_app_inventory_path(inventory_ref: str) -> Path:
+        path = Path(inventory_ref)
+        if path.exists():
+            return path
+        return Path('ea_inputs') / inventory_ref
+
+    @staticmethod
+    def _app_inventory_view_name(inventory: Dict[str, Any]) -> str:
+        app_name = inventory.get('application') or inventory.get('project') or 'Application'
+        env = inventory.get('environment')
+        suffix = f' ({env})' if env else ''
+        return f'{app_name} - Application Architecture{suffix}'
+
+    @staticmethod
+    def _safe_app_inventory_id(source_id: str, used_ids: set) -> str:
+        candidate = re.sub(r'[^A-Za-z0-9_.-]+', '-', source_id).strip('-._')
+        if not candidate or not re.match(r'^[A-Za-z]', candidate):
+            candidate = f'app-{candidate or "node"}'
+        candidate = f'diagram-{candidate}'
+
+        base = candidate
+        if candidate in used_ids:
+            digest = hashlib.md5(source_id.encode('utf-8')).hexdigest()[:8]
+            candidate = f'{base}-{digest}'
+            counter = 2
+            while candidate in used_ids:
+                candidate = f'{base}-{digest}-{counter}'
+                counter += 1
+
+        used_ids.add(candidate)
+        return candidate
+
+    @classmethod
+    def _app_inventory_node_label(cls, node: Dict[str, Any]) -> str:
+        title = html.escape(str(node.get('label') or node.get('id') or 'Component'))
+        detail_lines = []
+        summary = str(node.get('summary') or '').strip()
+        metrics = cls._app_inventory_metrics_line(node.get('metrics'))
+        if summary:
+            detail_lines.append(html.escape(summary))
+        if metrics:
+            detail_lines.append(html.escape(metrics))
+
+        if not detail_lines:
+            return title
+
+        detail = '<br/>'.join(detail_lines)
+        return f'<b>{title}</b><br/><font style="font-size:10px">{detail}</font>'
+
+    @staticmethod
+    def _app_inventory_metrics_line(metrics: Optional[Dict[str, Any]]) -> str:
+        if not metrics:
+            return ''
+        parts = []
+        for key, value in list(metrics.items())[:3]:
+            label = str(key).replace('_', ' ')
+            parts.append(f'{label}: {value}')
+        return ' | '.join(parts)
 
     # Element selection delegated to ElementSelector (shared with archi_generator)
 
@@ -1600,9 +1937,19 @@ class DrawIOGenerator:
                 stage_elems = stages[stage]
                 if order_prop:
                     stage_elems = sorted(stage_elems, key=sort_key)
+                node_heights = []
+                for elem in stage_elems:
+                    try:
+                        node_heights.append(int(elem.get('height', 60)))
+                    except (TypeError, ValueError):
+                        node_heights.append(60)
                 container_x = start_x + idx * (stage_width + stage_gap)
                 container_y = section_y
-                container_height = 70 + len(stage_elems) * 80 + max(0, len(stage_elems) - 1) * node_gap
+                container_height = (
+                    70
+                    + sum(height + 20 for height in node_heights)
+                    + max(0, len(stage_elems) - 1) * node_gap
+                )
 
                 container_id = f"stage-{section_index}-{idx}"
                 containers.append(DrawIOContainer(
@@ -1618,6 +1965,10 @@ class DrawIOGenerator:
                 inner_y = 42
                 for elem in stage_elems:
                     node_width = min(elem.get('width', 180), stage_width - 30)
+                    try:
+                        node_height = int(elem.get('height', 60))
+                    except (TypeError, ValueError):
+                        node_height = 60
                     node_x = int((stage_width - node_width) / 2)
                     drawio_elements.append(DrawIOElement(
                         id=elem['id'],
@@ -1625,18 +1976,20 @@ class DrawIOGenerator:
                         x=node_x,
                         y=inner_y,
                         width=node_width,
-                        height=60,
+                        height=node_height,
                         elem_type=elem['type'],
                         parent_id=container_id,
                         color=elem.get('color', '#B5D4E8'),
-                        emphasis=elem.get('emphasis', 'normal')
+                        emphasis=elem.get('emphasis', 'normal'),
+                        metadata=elem.get('metadata'),
                     ))
                     elem_positions[elem['id']] = {
                         'x': container_x + node_x,
                         'y': container_y + inner_y,
-                        'width': node_width
+                        'width': node_width,
+                        'height': node_height,
                     }
-                    inner_y += 60 + node_gap
+                    inner_y += node_height + node_gap
 
                 max_container_bottom = max(max_container_bottom, container_y + container_height)
 
@@ -1646,6 +1999,26 @@ class DrawIOGenerator:
         drawio_edges = []
         edge_label_boxes = []
         seen_edges = set()
+        drawable_relations = [
+            rel for rel in relations
+            if rel.get('source') in elements_by_id and rel.get('target') in elements_by_id
+        ]
+        outgoing_relations: Dict[str, List[Dict[str, Any]]] = {}
+        incoming_relations: Dict[str, List[Dict[str, Any]]] = {}
+        for rel in drawable_relations:
+            outgoing_relations.setdefault(rel.get('source'), []).append(rel)
+            incoming_relations.setdefault(rel.get('target'), []).append(rel)
+        source_label_counts: Dict[str, int] = {}
+
+        def edge_anchor_fraction(rel_list: List[Dict[str, Any]], rel: Dict[str, Any]) -> float:
+            try:
+                idx = rel_list.index(rel)
+            except ValueError:
+                idx = 0
+            if len(rel_list) <= 1:
+                return 0.5
+            return round((idx + 1) / (len(rel_list) + 1), 2)
+
         for rel in relations:
             source_id = rel.get('source')
             target_id = rel.get('target')
@@ -1660,26 +2033,32 @@ class DrawIOGenerator:
                     continue
                 seen_edges.add(edge_key)
                 label = self._edge_label(rel, elements_by_id)
-                if label and edge_label_mode == 'near_source':
+                if edge_label_mode == 'none':
+                    label = ''
+                elif label and edge_label_mode == 'near_source':
                     source_pos = elem_positions.get(source_id)
                     if source_pos:
+                        label_index = source_label_counts.get(source_id, 0)
+                        source_label_counts[source_id] = label_index + 1
                         edge_label_boxes.append({
                             'x': source_pos['x'] + source_pos['width'] + 8,
-                            'y': source_pos['y'] + 20,
+                            'y': source_pos['y'] + 10 + (label_index * 22),
                             'width': max(70, len(label) * 7),
                             'height': 20,
                             'text': label,
                             'style_kind': 'edge_label'
                         })
                     label = ''
+                exit_y = edge_anchor_fraction(outgoing_relations.get(source_id, []), rel)
+                entry_y = edge_anchor_fraction(incoming_relations.get(target_id, []), rel)
                 drawio_edges.append(DrawIOEdge(
                     from_id=source_id,
                     to_id=target_id,
                     label=label,
                     edge_type=rel.get('type', 'Flow'),
                     style_overrides={
-                        'exitX': '1', 'exitY': '0.5', 'exitPerimeter': '1',
-                        'entryX': '0', 'entryY': '0.5', 'entryPerimeter': '1'
+                        'exitX': '1', 'exitY': str(exit_y), 'exitPerimeter': '1',
+                        'entryX': '0', 'entryY': str(entry_y), 'entryPerimeter': '1'
                     }
                 ))
 

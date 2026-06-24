@@ -11,7 +11,8 @@ MVP9 additions:
 
 from dataclasses import dataclass
 import hashlib
-from typing import List, Dict, Optional, Tuple
+import json
+from typing import Any, List, Dict, Optional, Tuple
 from lxml import etree
 
 
@@ -177,6 +178,7 @@ class DrawIOElement:
     color: str = DEFAULT_COLOR
     emphasis: str = "normal"  # MVP9: prominent, faded, highlighted, normal
     style: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
 
 
 @dataclass
@@ -326,6 +328,14 @@ class DrawIOExporter:
         cell.set('value', elem.name)
         cell.set('vertex', '1')
         cell.set('parent', elem.parent_id or '1')
+        if elem.metadata:
+            cell.set('data-name', str(elem.metadata.get('name', elem.name)))
+            cell.set('data-type', str(elem.metadata.get('type', elem.elem_type)))
+            cell.set('data-documentation', str(elem.metadata.get('documentation', '')))
+            cell.set(
+                'data-properties',
+                json.dumps(elem.metadata.get('properties', {}), ensure_ascii=True, sort_keys=True)
+            )
 
         if elem.style:
             cell.set('style', elem.style)

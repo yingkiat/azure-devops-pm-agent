@@ -102,10 +102,15 @@ class PortalIndexGenerator:
         """Generate element index with appearances in views (deduplicated)."""
         appearances = defaultdict(dict)  # Use dict to auto-deduplicate by view_id
         referenced_elements = set()  # Track all elements referenced in views
+        diagram_element_metadata = {}
 
         for view in diagram_data.get("views", []):
             view_id = view.get("view_id")
             view_name = view.get("name", view_id)
+            for elem in view.get("element_metadata", []):
+                elem_id = elem.get("id")
+                if elem_id:
+                    diagram_element_metadata[elem_id] = elem
             for elem_id in view.get("elements", []):
                 referenced_elements.add(elem_id)
                 # Track appearance regardless of whether element exists in self.elements
@@ -137,14 +142,18 @@ class PortalIndexGenerator:
         # These are elements generated during diagram creation (diagram-specific or manual)
         for elem_id in referenced_elements:
             if elem_id not in index:
+                metadata = diagram_element_metadata.get(elem_id, {})
+                properties = {}
+                properties.update(metadata.get("properties", {}) or {})
+                properties.update(self.properties.get(elem_id, {}))
                 # Create stub entry for diagram-only element
                 index[elem_id] = {
                     "id": elem_id,
-                    "name": f"Diagram Element {elem_id}",
-                    "type": "DiagramComponent",
-                    "properties": _mask_properties(self.properties.get(elem_id, {})),
+                    "name": metadata.get("name") or f"Diagram Element {elem_id}",
+                    "type": metadata.get("type") or "DiagramComponent",
+                    "properties": _mask_properties(properties),
                     "appears_in": appearances_list.get(elem_id, []),
-                    "documentation": "Diagram-specific element",
+                    "documentation": metadata.get("documentation") or "Diagram-specific element",
                 }
 
         return index

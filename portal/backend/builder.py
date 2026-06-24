@@ -216,9 +216,12 @@ class PortalBuilder:
             svg_path = out_dir / f"{stem}.svg"
             drawio_path.write_text(build_drawio(inventory), encoding="utf-8")
 
-            if not converter.convert(str(drawio_path), str(svg_path)).get("success"):
+            result = converter.convert(str(drawio_path), str(svg_path))
+            if not result.get("success"):
                 print(f"      WARN {inv_path.name}: drawio -> svg conversion failed")
                 continue
+            element_records = result.get("elements", [])
+            element_ids = [e["id"] for e in element_records]
 
             app_name = inventory.get("application", "") or meta.get("project", "")
             views.append({
@@ -235,8 +238,9 @@ class PortalBuilder:
                 "view_type": "diagram",
                 "artifact_label": "Application Architecture",
                 "environment": env,
-                "elements": [],
-                "element_count": 0,
+                "elements": element_ids,
+                "element_metadata": element_records,
+                "element_count": len(element_ids),
                 "created": datetime.now().isoformat(),
                 "updated_at": datetime.fromtimestamp(inv_path.stat().st_mtime).isoformat(),
             })
@@ -450,6 +454,7 @@ class PortalBuilder:
                         "view_id": d["view_id"],
                         "name": d["name"],
                         "elements": d["elements"],
+                        "element_metadata": d.get("element_metadata", []),
                     }
                     for d in diagrams_info
                 ]
@@ -865,10 +870,18 @@ class PortalBuilder:
 
             is_azure_diagram = self._is_azure_diagram(relative_path)
             is_json_inventory = self._is_json_inventory(relative_path)
+            is_generated_app_architecture = (
+                len(relative_path.parts) >= 3
+                and relative_path.parts[0] == "projects"
+                and relative_path.name.startswith("app-architecture")
+            )
 
             # json_inventory views are handled separately; skip the drawio file.
             if is_json_inventory:
                 print(f"      SKIP {view_id:45s} json_inventory view (handled separately)")
+                continue
+            if is_generated_app_architecture:
+                print(f"      SKIP {view_id:45s} app_inventory view (handled separately)")
                 continue
 
             # For azure_diagram views, require a sibling PNG and publish that directly.
@@ -906,7 +919,8 @@ class PortalBuilder:
                     print(f"      WARN {view_id:45s} PNG preview generation unavailable, falling back to SVG preview")
 
             if result["success"]:
-                element_ids = [e["id"] for e in result.get("elements", [])]
+                element_records = result.get("elements", [])
+                element_ids = [e["id"] for e in element_records]
 
                 # Prefer explicit view name from spec; fall back to filename formatting.
                 display_name = explicit_meta.get("name") or self._default_display_name(drawio_file)
@@ -924,6 +938,7 @@ class PortalBuilder:
                         "project_key": explicit_meta.get("project_key") or "",
                         "view_kind": explicit_meta.get("view_kind") or "",
                         "elements": element_ids,
+                        "element_metadata": element_records,
                         "element_count": len(element_ids),
                         "created": datetime.now().isoformat(),
                         "updated_at": datetime.fromtimestamp(drawio_file.stat().st_mtime).isoformat(),

@@ -39,10 +39,33 @@
     }
   ],
   "application_map": {
+    "groups": [
+      {
+        "id": "frontend",
+        "label": "Frontend",
+        "order": 1
+      },
+      {
+        "id": "backend",
+        "label": "Backend",
+        "order": 2
+      },
+      {
+        "id": "platform",
+        "label": "Platform & Operations",
+        "order": 3
+      },
+      {
+        "id": "data",
+        "label": "Data",
+        "order": 4
+      }
+    ],
     "nodes": [
       {
         "id": "react-fe",
         "label": "React Frontend",
+        "group": "frontend",
         "kind": "frontend",
         "summary": "PSS Web UI",
         "metrics": {
@@ -59,6 +82,7 @@
       {
         "id": "azure-functions",
         "label": "Azure Function API",
+        "group": "backend",
         "kind": "api",
         "summary": "HTTP-triggered backend functions",
         "metrics": {
@@ -74,6 +98,7 @@
       {
         "id": "keyvault",
         "label": "Key Vault",
+        "group": "platform",
         "kind": "secret_store",
         "infra_ref": "keyvault",
         "metrics": {
@@ -83,12 +108,14 @@
       {
         "id": "sql-db",
         "label": "Azure SQL Database",
+        "group": "data",
         "kind": "data_store",
         "infra_ref": "sql-db"
       },
       {
         "id": "storage",
         "label": "Azure Storage",
+        "group": "data",
         "kind": "storage",
         "infra_ref": "storage"
       }

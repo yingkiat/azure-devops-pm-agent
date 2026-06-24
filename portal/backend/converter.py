@@ -3,6 +3,7 @@
 import xml.etree.ElementTree as ET
 import re
 import html
+import json
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -155,7 +156,10 @@ class DrawioToSvg:
                 backgrounds.append((cell_id, value, style, x, y, w, h))
             # Note: diagram-* IDs are synthetic elements created during diagram generation.
             elif cell_id.startswith("id-") or cell_id.startswith("elem-id-") or cell_id.startswith("diagram-"):
-                clickable_elements.append((cell_id, value, style, x, y, w, h))
+                clickable_elements.append((
+                    cell_id, value, style, x, y, w, h,
+                    self._extract_element_metadata(cell, cell_id, value)
+                ))
             elif cell_id.startswith("ann-"):
                 annotations.append((cell_id, value, style, x, y, w, h))
             else:
@@ -240,9 +244,9 @@ class DrawioToSvg:
             svg.extend(edge_svg)
 
         # Render clickable elements on top
-        for cell_id, value, style, x, y, w, h in clickable_elements:
+        for cell_id, value, style, x, y, w, h, metadata in clickable_elements:
             if value:
-                self.elements_found.append({"id": cell_id, "name": value})
+                self.elements_found.append(metadata)
 
             fill_color = self._extract_style_color(style, "fillColor") or "#B5D4E8"
             stroke_color = self._extract_style_color(style, "strokeColor") or "#666666"
@@ -271,6 +275,26 @@ class DrawioToSvg:
 
         svg.append("</svg>")
         return "\n".join(svg)
+
+    @staticmethod
+    def _extract_element_metadata(cell, cell_id: str, value: str) -> Dict:
+        properties = {}
+        raw_properties = cell.get("data-properties", "")
+        if raw_properties:
+            try:
+                parsed = json.loads(raw_properties)
+                if isinstance(parsed, dict):
+                    properties = parsed
+            except Exception:
+                properties = {}
+
+        return {
+            "id": cell_id,
+            "name": cell.get("data-name") or value,
+            "type": cell.get("data-type") or "DiagramComponent",
+            "documentation": cell.get("data-documentation") or "",
+            "properties": properties,
+        }
 
     @staticmethod
     def _svg_markers() -> str:
