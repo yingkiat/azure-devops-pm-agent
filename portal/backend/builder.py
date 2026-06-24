@@ -16,6 +16,7 @@ except ImportError:
 
 from .converter import DrawioToSvg
 from .indexes import PortalIndexGenerator
+from .inventory_validator import validate_file, load_catalogue_names
 
 
 class PortalBuilder:
@@ -82,6 +83,12 @@ class PortalBuilder:
         except Exception:
             return False
 
+    def _inventory_catalogue_names(self):
+        """Cached Application Catalogue names for the inventory join check."""
+        if not hasattr(self, "_catalogue_names_cache"):
+            self._catalogue_names_cache = load_catalogue_names()
+        return self._catalogue_names_cache
+
     def _collect_json_inventory_views(self) -> List[Dict]:
         """Collect interactive JSON inventory views from specs with type: json_inventory.
 
@@ -114,6 +121,12 @@ class PortalBuilder:
                 print(f"      WARN {spec_path.name}: inventory file not found: {inventory_path}")
                 continue
 
+            validation = validate_file(inventory_path, catalogue_names=self._inventory_catalogue_names())
+            print(validation.report())
+            if not validation.ok:
+                print(f"      SKIP {spec_path.name}: inventory failed validation; view not rendered")
+                continue
+
             metadata = spec.get("metadata", {}) or {}
             view_meta = spec.get("view", {}) or {}
             project_key = metadata.get("project_key") or view_meta.get("project_key") or spec_path.stem
@@ -137,6 +150,11 @@ class PortalBuilder:
 
             iframe_src = f"projects/{project_key}/?inventory={inventory_path.name}&embed=diagram"
 
+            try:
+                inv_env = json.loads(inventory_path.read_text(encoding="utf-8")).get("environment", "")
+            except Exception:
+                inv_env = ""
+
             views.append({
                 "view_id": view_id,
                 "name": display_name,
@@ -149,6 +167,8 @@ class PortalBuilder:
                 "project_key": project_key,
                 "view_kind": view_kind,
                 "view_type": "json_inventory",
+                "artifact_label": metadata.get("artifact_label") or "Infrastructure",
+                "environment": inv_env,
                 "iframe_src": iframe_src,
                 "elements": [],
                 "element_count": 0,
@@ -156,6 +176,71 @@ class PortalBuilder:
                 "updated_at": datetime.fromtimestamp(inventory_path.stat().st_mtime).isoformat(),
             })
             print(f"      OK {view_id:45s} ({inventory_path.name})")
+
+        return views
+
+    def _collect_project_app_diagrams(self, project_meta: Dict[str, Dict]) -> List[Dict]:
+        """Generate standalone application-architecture diagrams from app-inventory files.
+
+        Technical-plane artifacts (not ArchiMate): each app-inventory's application_map
+        graph is rendered drawio -> SVG and registered as a project view. Domain/category/
+        project are inherited from the matching infra view via project_meta (by project_key).
+        """
+        from .app_diagram import build_drawio
+
+        views: List[Dict] = []
+        projects_dir = Path("ea_inputs/04_projects")
+        if not projects_dir.exists():
+            return views
+
+        converter = DrawioToSvg()
+        for inv_path in sorted(projects_dir.glob("*/app-inventory*.json")):
+            try:
+                inventory = json.loads(inv_path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                print(f"      WARN {inv_path.name}: cannot parse ({exc})")
+                continue
+
+            if not (inventory.get("application_map") or {}).get("nodes"):
+                print(f"      SKIP {inv_path.name}: no application_map nodes")
+                continue
+
+            project_key = str(inventory.get("project") or inv_path.parent.name).lower()
+            meta = project_meta.get(project_key, {})
+            env = inventory.get("environment", "")
+
+            out_dir = self.diagrams_output_dir / "projects" / project_key
+            out_dir.mkdir(parents=True, exist_ok=True)
+            stem = f"app-architecture{('.' + env) if env else ''}"
+            drawio_path = out_dir / f"{stem}.drawio"
+            svg_path = out_dir / f"{stem}.svg"
+            drawio_path.write_text(build_drawio(inventory), encoding="utf-8")
+
+            if not converter.convert(str(drawio_path), str(svg_path)).get("success"):
+                print(f"      WARN {inv_path.name}: drawio -> svg conversion failed")
+                continue
+
+            app_name = inventory.get("application", "") or meta.get("project", "")
+            views.append({
+                "view_id": f"project_{project_key}_app_architecture",
+                "name": f"{app_name} - Application Architecture".strip(" -"),
+                "diagram_file": f"diagrams/projects/{project_key}/{stem}.svg",
+                "preview_file": f"diagrams/projects/{project_key}/{stem}.svg",
+                "category": meta.get("category") or meta.get("domain") or "operations",
+                "domain": meta.get("domain", ""),
+                "region": meta.get("region", ""),
+                "project": meta.get("project") or app_name,
+                "project_key": project_key,
+                "view_kind": "project",
+                "view_type": "diagram",
+                "artifact_label": "Application Architecture",
+                "environment": env,
+                "elements": [],
+                "element_count": 0,
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(inv_path.stat().st_mtime).isoformat(),
+            })
+            print(f"      OK project_{project_key}_app_architecture ({inv_path.name})")
 
         return views
 
@@ -339,6 +424,22 @@ class PortalBuilder:
             print(f"      OK Found {len(json_inventory_views)} JSON inventory view(s)\n")
         else:
             print(f"      -- No json_inventory specs found\n")
+
+        # Project-scoped application architecture diagrams (technical plane, not ArchiMate).
+        project_meta = {}
+        for v in json_inventory_views:
+            pk = v.get("project_key")
+            if pk and pk not in project_meta:
+                project_meta[pk] = {
+                    "domain": v.get("domain", ""),
+                    "category": v.get("category", ""),
+                    "region": v.get("region", ""),
+                    "project": v.get("project", ""),
+                }
+        app_diagram_views = self._collect_project_app_diagrams(project_meta)
+        diagrams_info.extend(app_diagram_views)
+        if app_diagram_views:
+            print(f"      OK Generated {len(app_diagram_views)} application architecture diagram(s)\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")
@@ -1192,6 +1293,49 @@ class PortalBuilder:
         }
         .library-children .view-item {
             margin-bottom: 0.35rem;
+        }
+        .project-folder {
+            margin-bottom: 0.35rem;
+        }
+        .project-folder-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            padding: 0.3rem 0.4rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            opacity: 0.92;
+            user-select: none;
+        }
+        .project-folder-title:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        .project-folder-chevron {
+            font-size: 0.7rem;
+            width: 0.8rem;
+            opacity: 0.8;
+        }
+        .project-folder-name {
+            flex: 1;
+        }
+        .project-folder-count {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            background: rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0.05rem 0.45rem;
+        }
+        .project-folder-children {
+            margin-left: 0.7rem;
+            padding-left: 0.7rem;
+            border-left: 1px solid rgba(255,255,255,0.12);
+            margin-top: 0.25rem;
+        }
+        .project-artifact-item .view-item-count {
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .main {
@@ -2273,21 +2417,34 @@ class PortalBuilder:
                     </div>
                 </div>
 
-                <!-- Diagram categories -->
-                <template v-for="(views, category) in viewsByCategory" :key="category">
-                    <div class="view-category" v-if="views.length > 0">
-                        <div class="view-subcategory-title library-subcategory-title">{{ category.charAt(0).toUpperCase() + category.slice(1) }}</div>
+                <!-- Diagram categories (regular ArchiMate views + nested project folders) -->
+                <template v-for="group in architectureTree" :key="group.category">
+                    <div class="view-category">
+                        <div class="view-subcategory-title library-subcategory-title">{{ group.category.charAt(0).toUpperCase() + group.category.slice(1) }}</div>
                         <div class="library-children">
-                            <div v-for="view in views" :key="view.id" class="view-item" :class="{ active: currentView === view.id }" @click="loadView(view.id)">
+                            <div v-for="view in group.views" :key="view.id" class="view-item" :class="{ active: currentView === view.id }" @click="loadView(view.id)">
                                 <div class="view-item-name">{{ view.name }}</div>
                                 <div class="view-item-count">{{ view.metadata.element_count }} elements</div>
+                            </div>
+                            <div v-for="proj in group.projects" :key="proj.key" class="project-folder">
+                                <div class="project-folder-title" @click="toggleProject(proj.key)">
+                                    <span class="project-folder-chevron">{{ expandedProjects[proj.key] ? '▾' : '▸' }}</span>
+                                    <span class="project-folder-name">{{ proj.name }}</span>
+                                    <span class="project-folder-count">{{ proj.artifacts.length }}</span>
+                                </div>
+                                <div class="project-folder-children" v-show="expandedProjects[proj.key]">
+                                    <div v-for="art in proj.artifacts" :key="art.id" class="view-item project-artifact-item" :class="{ active: currentView === art.id }" @click="loadView(art.id)">
+                                        <div class="view-item-name">{{ art.artifact_label || art.name }}</div>
+                                        <div class="view-item-count" v-if="art.environment">{{ art.environment }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </template>
 
                 <!-- Empty state -->
-                <div v-if="totalApps === 0 && Object.keys(viewsByCategory).length === 0" style="padding: 1rem; opacity: 0.7;">
+                <div v-if="totalApps === 0 && architectureTree.length === 0" style="padding: 1rem; opacity: 0.7;">
                     Loading...
                 </div>
             </div>
@@ -2364,7 +2521,8 @@ class PortalBuilder:
                             <div class="diagram-meta-chip" v-if="currentViewData.domain">Domain: {{ formatDomainLabel(currentViewData.domain) }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.region">Region: {{ currentViewData.region }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.project">Project: {{ currentViewData.project }}</div>
-                            <div class="diagram-meta-chip">{{ currentViewData.metadata.element_count }} elements</div>
+                            <div class="diagram-meta-chip" v-if="currentViewData.environment">Environment: {{ currentViewData.environment }}</div>
+                            <div class="diagram-meta-chip" v-if="currentViewData.view_kind !== 'project' && currentViewData.metadata.element_count">{{ currentViewData.metadata.element_count }} elements</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.category">Category: {{ currentViewData.category }}</div>
                             <div class="diagram-meta-chip" v-if="currentViewData.metadata.updated_at">Updated: {{ formatTimestamp(currentViewData.metadata.updated_at) }}</div>
                         </div>
@@ -2793,7 +2951,8 @@ class PortalBuilder:
                     sortColumn: null,
                     sortDir: 1,
                     drilldownTitle: '',
-                    drilldownApps: []
+                    drilldownApps: [],
+                    expandedProjects: {}
                 };
             },
             computed: {
@@ -2919,6 +3078,47 @@ class PortalBuilder:
                     keys.forEach(k => { sorted[k] = byCategory[k]; });
                     return sorted;
                 },
+                architectureTree() {
+                    // Group views by category; project-kind views nest into project folders.
+                    const cats = {};
+                    Object.values(this.views).forEach(view => {
+                        const cat = view.category || 'General';
+                        if (!cats[cat]) cats[cat] = { category: cat, views: [], projects: {} };
+                        if (view.view_kind === 'project' && view.project_key) {
+                            const pk = view.project_key;
+                            if (!cats[cat].projects[pk]) {
+                                cats[cat].projects[pk] = { key: pk, name: view.project || pk, artifacts: [] };
+                            }
+                            cats[cat].projects[pk].artifacts.push(view);
+                        } else {
+                            cats[cat].views.push(view);
+                        }
+                    });
+                    const keys = Object.keys(cats).sort((a, b) => {
+                        if (a === 'General') return 1;
+                        if (b === 'General') return -1;
+                        return a.localeCompare(b);
+                    });
+                    return keys.map(k => {
+                        const flatViews = cats[k].views.slice();
+                        const projects = [];
+                        Object.values(cats[k].projects).forEach(p => {
+                            const artifacts = p.artifacts.slice().sort((a, b) =>
+                                String(a.artifact_label || a.name).localeCompare(String(b.artifact_label || b.name)));
+                            // Only collapse into a folder when a project has multiple artifacts.
+                            if (artifacts.length >= 2) {
+                                projects.push({ ...p, artifacts });
+                            } else {
+                                flatViews.push(...artifacts);
+                            }
+                        });
+                        return {
+                            category: cats[k].category,
+                            views: flatViews,
+                            projects: projects.sort((a, b) => a.name.localeCompare(b.name))
+                        };
+                    }).filter(g => g.views.length > 0 || g.projects.length > 0);
+                },
                 availableAnalyticsDomains() {
                     const found = new Set(['ALL']);
                     this.territoryAnalyticsRecords.forEach(r => {
@@ -3033,6 +3233,9 @@ class PortalBuilder:
                 }
             },
             methods: {
+                toggleProject(key) {
+                    this.expandedProjects = { ...this.expandedProjects, [key]: !this.expandedProjects[key] };
+                },
                 sanitizeTrackingValue(value, maxLength = 160) {
                     if (value === undefined || value === null) return '';
                     const normalized = String(value).replace(/\s+/g, ' ').trim();
@@ -3103,6 +3306,13 @@ class PortalBuilder:
                         const fetchJson = (path) => fetch(path, { cache: 'no-store' }).then(r => r.json());
                         console.log('[EA Portal] Fetching view registry...');
                         this.views = await fetchJson('data/view_registry.json');
+                        if (new URLSearchParams(window.location.search).has('expandProjects')) {
+                            const keys = {};
+                            Object.values(this.views).forEach(v => {
+                                if (v.view_kind === 'project' && v.project_key) keys[v.project_key] = true;
+                            });
+                            this.expandedProjects = keys;
+                        }
                         console.log('[EA Portal] Fetching element index...');
                         this.elements = await fetchJson('data/element_index.json');
                         console.log('[EA Portal] Fetching relationships...');

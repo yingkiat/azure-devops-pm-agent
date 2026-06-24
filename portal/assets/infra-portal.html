@@ -893,6 +893,8 @@
     let artifacts = [];
     let stages = [];
     let layerHierarchy = [];
+    let deployments = [];
+    let deploymentByTarget = new Map();
     const state = {
       selectedId: null,
       search: "",
@@ -920,6 +922,8 @@
       artifacts = data.artifacts;
       stages = data.stages;
       layerHierarchy = data.layerHierarchy;
+      deployments = Array.isArray(data.deployments) ? data.deployments : [];
+      deploymentByTarget = new Map(deployments.map(d => [d.target, d]));
       byId = new Map(artifacts.map(item => [item.id, item]));
       state.selectedId = state.selectedId && byId.has(state.selectedId) ? state.selectedId : artifacts[0]?.id;
 
@@ -1097,6 +1101,21 @@
       const dependencies = item.dependsOn.map(id => byId.get(id)).filter(Boolean);
       const consumers = artifacts.filter(candidate => candidate.dependsOn.includes(item.id));
       const list = [...dependencies, ...consumers];
+      const dep = deploymentByTarget.get(item.id);
+      const depRow = (label, value) => value ? `<div><dt>${label}</dt><dd>${escapeHtml(String(value))}</dd></div>` : "";
+      const deploymentHtml = dep ? `
+        <strong>Deployed application</strong>
+        <dl class="kv">
+          ${depRow("Component", dep.component)}
+          ${depRow("Image", dep.image)}
+          ${depRow("Image digest", dep.image_digest)}
+          ${depRow("Package", dep.package)}
+          ${depRow("Base image", dep.base_image)}
+          ${depRow("Runtime", dep.runtime)}
+          ${depRow("App repo", dep.app_repo)}
+          ${depRow("App commit", dep.app_commit)}
+          ${depRow("Built at", dep.built_at)}
+        </dl>` : "";
       document.getElementById("details").innerHTML = `
         <div class="details-header">
           <div>
@@ -1110,6 +1129,7 @@
           <div><dt>Ownership</dt><dd>${escapeHtml(item.ownership === "repo" ? "Managed by this repo" : "External dependency")}</dd></div>
           <div><dt>Details</dt><dd>${item.details.map(escapeHtml).join("<br>")}</dd></div>
         </dl>
+        ${deploymentHtml}
         <strong>Related objects</strong>
         <ul class="relation-list">
           ${list.length ? list.map(related => `<li><button type="button" data-id="${escapeHtml(related.id)}">${escapeHtml(related.name)}<br><span class="type">${escapeHtml(related.type)}</span></button></li>`).join("") : "<li>No direct relationships listed.</li>"}

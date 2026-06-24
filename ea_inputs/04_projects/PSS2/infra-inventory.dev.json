@@ -1,7 +1,12 @@
 {
   "schema_version": "1.0",
+  "application": "PSS 2.0",
   "project": "PSS2",
   "environment": "dev",
+  "generated_at": "2026-06-24T02:56:06Z",
+  "source_repo": "test_app_services",
+  "source_commit": "local",
+  "pipeline_run": "local",
   "subscription": {
     "name": "M3-ALZ-OPS-D-1",
     "id": "65e068d2-1cd5-40b5-9c26-234fbddddde4",
@@ -11,7 +16,8 @@
   "pipeline": {
     "environment": "dev",
     "layer": "workload-pss2-app",
-    "network_mode": "managed"
+    "network_mode": "managed",
+    "service_connection": "SP-Dev-IT-APAC-Operations"
   },
   "artifacts": [
     {
@@ -22,7 +28,10 @@
       "pillar": "network",
       "group": "-",
       "ownership": "repo",
-      "details": ["Created only when network mode is managed.", "Contains VNet, subnets, NSG, route table, and spoke-side peering."],
+      "details": [
+        "Created only when network mode is managed.",
+        "Contains VNet, subnets, NSG, route table, and spoke-side peering."
+      ],
       "dependsOn": []
     },
     {
@@ -33,7 +42,9 @@
       "pillar": "platform",
       "group": "-",
       "ownership": "repo",
-      "details": ["Contains shared platform resources for the workload."],
+      "details": [
+        "Contains shared platform resources for the workload."
+      ],
       "dependsOn": []
     },
     {
@@ -44,7 +55,9 @@
       "pillar": "workload",
       "group": "-",
       "ownership": "repo",
-      "details": ["Contains the PSS2 workload resources."],
+      "details": [
+        "Contains the PSS2 workload resources."
+      ],
       "dependsOn": []
     },
     {
@@ -55,8 +68,13 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["Address space: 10.246.250.0/24", "Custom DNS: 10.246.240.11, 10.246.240.12, 10.242.16.14"],
-      "dependsOn": ["rg-network"]
+      "details": [
+        "Address space: 10.246.250.0/24",
+        "Custom DNS: 10.246.240.11, 10.246.240.12, 10.242.16.14"
+      ],
+      "dependsOn": [
+        "rg-network"
+      ]
     },
     {
       "id": "subnet-appservice",
@@ -66,8 +84,13 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["CIDR: 10.246.250.0/26", "Delegated to Microsoft.Web/serverFarms for App Service VNet integration."],
-      "dependsOn": ["vnet"]
+      "details": [
+        "CIDR: 10.246.250.0/26",
+        "Delegated to Microsoft.Web/serverFarms for App Service VNet integration."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
     },
     {
       "id": "subnet-private-endpoints",
@@ -77,8 +100,13 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["CIDR: 10.246.250.64/27", "Reserved for future private endpoints."],
-      "dependsOn": ["vnet"]
+      "details": [
+        "CIDR: 10.246.250.64/27",
+        "Reserved for future private endpoints."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
     },
     {
       "id": "subnet-apps",
@@ -88,8 +116,13 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["CIDR: 10.246.250.96/27", "Generic app subnet."],
-      "dependsOn": ["vnet"]
+      "details": [
+        "CIDR: 10.246.250.96/27",
+        "Generic app subnet."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
     },
     {
       "id": "nsg",
@@ -99,8 +132,15 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["Associated to all three subnets.", "Custom outbound service-tag allows are ARM-ServiceTag, AFF-ServiceTag, and AAD-ServiceTag."],
-      "dependsOn": ["subnet-appservice", "subnet-private-endpoints", "subnet-apps"]
+      "details": [
+        "Associated to all three subnets.",
+        "Custom outbound service-tag allows are ARM-ServiceTag, AFF-ServiceTag, and AAD-ServiceTag."
+      ],
+      "dependsOn": [
+        "subnet-appservice",
+        "subnet-private-endpoints",
+        "subnet-apps"
+      ]
     },
     {
       "id": "route-table",
@@ -110,8 +150,16 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["Next hop virtual appliance: 10.246.254.46", "Routes: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and 0.0.0.0/0.", "Associated to all three subnets."],
-      "dependsOn": ["subnet-appservice", "subnet-private-endpoints", "subnet-apps"]
+      "details": [
+        "Next hop virtual appliance: 10.246.254.46",
+        "Routes: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and 0.0.0.0/0.",
+        "Associated to all three subnets."
+      ],
+      "dependsOn": [
+        "subnet-appservice",
+        "subnet-private-endpoints",
+        "subnet-apps"
+      ]
     },
     {
       "id": "spoke-peering",
@@ -121,8 +169,16 @@
       "pillar": "network",
       "group": "M3-RG-ALZ-OPS-NETWORK-D-1",
       "ownership": "repo",
-      "details": ["Local spoke-side peering to M3-VNET-DISTP01.", "Remote VNet ID: /subscriptions/7a0135eb-d280-47ee-8a4d-26cd025832bf/resourceGroups/M3-PLZ-DistroHub-P/providers/Microsoft.Network/virtualNetworks/M3-VNET-DISTP01", "Allow virtual network access: true.", "Allow forwarded traffic: true."],
-      "dependsOn": ["vnet", "hub-vnet"]
+      "details": [
+        "Local spoke-side peering to M3-VNET-DISTP01.",
+        "Remote VNet ID: /subscriptions/7a0135eb-d280-47ee-8a4d-26cd025832bf/resourceGroups/M3-PLZ-DistroHub-P/providers/Microsoft.Network/virtualNetworks/M3-VNET-DISTP01",
+        "Allow virtual network access: true.",
+        "Allow forwarded traffic: true."
+      ],
+      "dependsOn": [
+        "vnet",
+        "hub-vnet"
+      ]
     },
     {
       "id": "hub-vnet",
@@ -132,7 +188,10 @@
       "pillar": "external",
       "group": "M3-PLZ-DistroHub-P",
       "ownership": "external",
-      "details": ["Hub VNet in subscription M3-PLZ-DistroHub-P.", "Reciprocal hub-side peering is not created by this repo."],
+      "details": [
+        "Hub VNet is owned outside this repo.",
+        "Reciprocal hub-side peering is not created by this repo."
+      ],
       "dependsOn": []
     },
     {
@@ -143,8 +202,14 @@
       "pillar": "platform",
       "group": "M3-RG-ALZ-OPS-PLATFORM-D-1",
       "ownership": "repo",
-      "details": ["SKU: Basic", "Admin user disabled.", "AppBuild pushes latest and BuildId image tags."],
-      "dependsOn": ["rg-platform"]
+      "details": [
+        "SKU: Basic",
+        "Admin user disabled.",
+        "AppBuild pushes BuildId image tags."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
     },
     {
       "id": "law",
@@ -154,8 +219,13 @@
       "pillar": "platform",
       "group": "M3-RG-ALZ-OPS-PLATFORM-D-1",
       "ownership": "repo",
-      "details": ["SKU: PerGB2018", "Default retention from platform variable."],
-      "dependsOn": ["rg-platform"]
+      "details": [
+        "SKU: PerGB2018",
+        "Default retention from platform variable."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
     },
     {
       "id": "appi",
@@ -165,8 +235,13 @@
       "pillar": "platform",
       "group": "M3-RG-ALZ-OPS-PLATFORM-D-1",
       "ownership": "repo",
-      "details": ["Application type: web", "Workspace-based Application Insights connected to Log Analytics."],
-      "dependsOn": ["law"]
+      "details": [
+        "Application type: web",
+        "Workspace-based Application Insights connected to Log Analytics."
+      ],
+      "dependsOn": [
+        "law"
+      ]
     },
     {
       "id": "plan",
@@ -176,8 +251,13 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Dev SKU from tfvars: B1", "Shared by the Linux Web App and Linux Function App."],
-      "dependsOn": ["rg-app"]
+      "details": [
+        "SKU from tfvars: B1",
+        "Shared by the Linux Web App and Linux Function App."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ]
     },
     {
       "id": "webapp",
@@ -187,8 +267,17 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Container image: pss2-api:latest", "ACR URL: https://m3acropsd1.azurecr.io", "System-assigned managed identity enabled.", "Not yet VNet integrated."],
-      "dependsOn": ["plan", "acr", "appi"]
+      "details": [
+        "Container image identity is captured in deployments[].",
+        "ACR URL: https://m3acropsd1.azurecr.io",
+        "System-assigned managed identity enabled.",
+        "Not yet VNet integrated."
+      ],
+      "dependsOn": [
+        "plan",
+        "acr",
+        "appi"
+      ]
     },
     {
       "id": "function",
@@ -198,8 +287,17 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Runtime: .NET isolated 6.0", "Uses the App Service Plan.", "Reads Key Vault URI through app settings."],
-      "dependsOn": ["plan", "storage", "keyvault", "appi"]
+      "details": [
+        "Runtime: .NET isolated 6.0",
+        "Uses the App Service Plan.",
+        "Reads Key Vault URI through app settings."
+      ],
+      "dependsOn": [
+        "plan",
+        "storage",
+        "keyvault",
+        "appi"
+      ]
     },
     {
       "id": "storage",
@@ -209,8 +307,14 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["StorageV2, Standard LRS.", "HTTPS only, minimum TLS 1.2.", "Creates blob container pssimages and file share pssreports."],
-      "dependsOn": ["rg-app"]
+      "details": [
+        "StorageV2, Standard LRS.",
+        "HTTPS only, minimum TLS 1.2.",
+        "Creates blob container pssimages and file share pssreports."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ]
     },
     {
       "id": "keyvault",
@@ -220,8 +324,15 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Standard SKU.", "Stores SQL and storage connection secrets.", "Function App receives Get/List secret permissions."],
-      "dependsOn": ["rg-app", "function"]
+      "details": [
+        "Standard SKU.",
+        "Stores SQL and storage connection secrets.",
+        "Function App receives Get/List secret permissions."
+      ],
+      "dependsOn": [
+        "rg-app",
+        "function"
+      ]
     },
     {
       "id": "sql-server",
@@ -231,8 +342,15 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Public network access currently enabled.", "TLS 1.2 minimum.", "Firewall rule AllowAzureServices is enabled."],
-      "dependsOn": ["rg-app", "keyvault"]
+      "details": [
+        "Public network access currently enabled.",
+        "TLS 1.2 minimum.",
+        "Firewall rule AllowAzureServices is enabled."
+      ],
+      "dependsOn": [
+        "rg-app",
+        "keyvault"
+      ]
     },
     {
       "id": "sql-db",
@@ -242,25 +360,77 @@
       "pillar": "workload",
       "group": "M3-RG-ALZ-OPS-PSS2-D-1",
       "ownership": "repo",
-      "details": ["Dev SKU from tfvars: Basic", "SQL connection string is stored in Key Vault."],
-      "dependsOn": ["sql-server", "keyvault"]
+      "details": [
+        "SKU from tfvars: Basic",
+        "SQL connection string is stored in Key Vault."
+      ],
+      "dependsOn": [
+        "sql-server",
+        "keyvault"
+      ]
+    }
+  ],
+  "deployments": [
+    {
+      "target": "webapp",
+      "component": "react-fe",
+      "image": null,
+      "image_digest": null,
+      "base_image": "nginx:alpine",
+      "runtime": "nginx/static frontend",
+      "app_repo": "test_app_services",
+      "app_commit": "local",
+      "built_at": "2026-06-24T02:56:06Z"
+    },
+    {
+      "target": "function",
+      "component": "azure-functions",
+      "package": null,
+      "runtime": ".NET isolated 6.0",
+      "app_repo": "test_app_services",
+      "app_commit": "local",
+      "built_at": "2026-06-24T02:56:06Z"
     }
   ],
   "stages": [
-    { "name": "Generate", "text": "Runs generate_tf_config.py for dev and publishes generated backend/tfvars artifacts." },
-    { "name": "FoundationDeploy", "text": "Applies 01-foundation and creates network, platform, and app resource groups." },
-    { "name": "NetworkDeploy", "text": "Runs when network_mode is managed. Applies VNet, subnets, NSG, route table, and spoke peering." },
-    { "name": "PlatformDeploy", "text": "Applies ACR, Log Analytics, and Application Insights." },
-    { "name": "Plan / Apply", "text": "Plans and applies the selected workload layer using the reviewed plan artifact." },
-    { "name": "AppBuild", "text": "Builds/pushes the container image, restarts the Web App, and zip deploys the Function App." }
+    {
+      "name": "Generate",
+      "text": "Runs generate_tf_config.py for dev and publishes generated backend/tfvars artifacts."
+    },
+    {
+      "name": "FoundationDeploy",
+      "text": "Applies 01-foundation and creates network, platform, and app resource groups."
+    },
+    {
+      "name": "NetworkDeploy",
+      "text": "Runs because network_mode is managed. Applies VNet, subnets, NSG, route table, and spoke peering."
+    },
+    {
+      "name": "PlatformDeploy",
+      "text": "Applies ACR, Log Analytics, and Application Insights."
+    },
+    {
+      "name": "Plan / Apply",
+      "text": "Plans and applies the selected workload layer using the reviewed plan artifact."
+    },
+    {
+      "name": "AppBuild",
+      "text": "Builds/pushes the container image, restarts the Web App, and zip deploys the Function App."
+    }
   ],
   "layerHierarchy": [
     {
       "title": "01 Foundation",
       "children": [
-        { "id": "rg-network" },
-        { "id": "rg-platform" },
-        { "id": "rg-app" }
+        {
+          "id": "rg-network"
+        },
+        {
+          "id": "rg-platform"
+        },
+        {
+          "id": "rg-app"
+        }
       ]
     },
     {
@@ -274,9 +444,15 @@
               "type": "Contained in VNet",
               "pillar": "network",
               "children": [
-                { "id": "subnet-appservice" },
-                { "id": "subnet-private-endpoints" },
-                { "id": "subnet-apps" }
+                {
+                  "id": "subnet-appservice"
+                },
+                {
+                  "id": "subnet-private-endpoints"
+                },
+                {
+                  "id": "subnet-apps"
+                }
               ]
             },
             {
@@ -284,8 +460,12 @@
               "type": "Associated to all subnets",
               "pillar": "network",
               "children": [
-                { "id": "nsg" },
-                { "id": "route-table" }
+                {
+                  "id": "nsg"
+                },
+                {
+                  "id": "route-table"
+                }
               ]
             },
             {
@@ -293,8 +473,12 @@
               "type": "Spoke-side plus external hub",
               "pillar": "network",
               "children": [
-                { "id": "spoke-peering" },
-                { "id": "hub-vnet" }
+                {
+                  "id": "spoke-peering"
+                },
+                {
+                  "id": "hub-vnet"
+                }
               ]
             }
           ]
@@ -304,24 +488,54 @@
     {
       "title": "03 Platform",
       "children": [
-        { "id": "acr" },
-        { "id": "law", "children": [{ "id": "appi" }] }
+        {
+          "id": "acr"
+        },
+        {
+          "id": "law",
+          "children": [
+            {
+              "id": "appi"
+            }
+          ]
+        }
       ]
     },
     {
       "title": "04 Workload",
       "children": [
-        { "id": "plan", "children": [{ "id": "webapp" }, { "id": "function" }] },
-        { "id": "storage" },
-        { "id": "keyvault" },
-        { "id": "sql-server", "children": [{ "id": "sql-db" }] }
+        {
+          "id": "plan",
+          "children": [
+            {
+              "id": "webapp"
+            },
+            {
+              "id": "function"
+            }
+          ]
+        },
+        {
+          "id": "storage"
+        },
+        {
+          "id": "keyvault"
+        },
+        {
+          "id": "sql-server",
+          "children": [
+            {
+              "id": "sql-db"
+            }
+          ]
+        }
       ]
     }
   ],
   "boundaryNotes": [
     {
       "title": "Hub side remains external",
-      "text": "The repo creates only the spoke-side peering. The reciprocal peering from M3-VNET-DISTP01 back to M3-VNET-OPS-D-1 is owned by the hub/network team."
+      "text": "The repo creates only the spoke-side peering. The reciprocal hub-side peering is owned by the hub/network team."
     },
     {
       "title": "Private DNS is not created",

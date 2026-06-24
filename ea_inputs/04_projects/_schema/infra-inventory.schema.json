@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://m3.internal/ea/infra-inventory.schema.json",
+  "title": "EA Infrastructure Inventory",
+  "description": "Contract for project infra-inventory.<env>.json files folded into the EA master repo. The EA repo owns this schema; the project repo emits against it.",
+  "type": "object",
+  "required": ["schema_version", "project", "environment", "artifacts"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "description": "Contract version. Bump on any breaking shape change.",
+      "type": "string"
+    },
+    "application": {
+      "description": "Strategic join key. MUST match the Application Catalogue `name` verbatim.",
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "description": "Technical identity (folder / grouping key).",
+      "type": "string",
+      "minLength": 1
+    },
+    "environment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "description": "Pipeline run timestamp (UTC ISO-8601).",
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_repo": {
+      "description": "The infra repo that produced this inventory.",
+      "type": "string"
+    },
+    "source_commit": {
+      "description": "The infra repo commit SHA at deploy time (Build.SourceVersion).",
+      "type": "string"
+    },
+    "pipeline_run": {
+      "type": "string"
+    },
+    "subscription": { "type": "object" },
+    "pipeline": { "type": "object" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "ownership"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "minLength": 1 },
+          "layer": { "type": "string" },
+          "pillar": { "type": "string" },
+          "group": { "type": "string" },
+          "ownership": { "enum": ["repo", "external"] },
+          "details": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "deployments": {
+      "description": "Build/release provenance: what code/image is running on each infra resource.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target", "component"],
+        "additionalProperties": true,
+        "properties": {
+          "target": {
+            "description": "References an infra artifacts[].id.",
+            "type": "string",
+            "minLength": 1
+          },
+          "component": {
+            "description": "References an app-inventory components[].id / build_outputs[].component.",
+            "type": "string",
+            "minLength": 1
+          },
+          "image": { "type": ["string", "null"] },
+          "image_digest": {
+            "description": "Immutable sha256 digest of the running image (null until built).",
+            "type": ["string", "null"]
+          },
+          "base_image": { "type": "string" },
+          "runtime": { "type": "string" },
+          "app_repo": { "type": "string" },
+          "app_commit": {
+            "description": "Application code commit SHA (distinct from source_commit).",
+            "type": "string"
+          },
+          "built_at": { "type": "string" },
+          "package": { "type": ["string", "null"] },
+          "db_migration": { "type": "string" }
+        }
+      }
+    },
+    "stages": { "type": "array" },
+    "layerHierarchy": { "type": "array" },
+    "boundaryNotes": { "type": "array" }
+  }
+}

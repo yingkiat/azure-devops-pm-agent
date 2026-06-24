@@ -209,6 +209,8 @@ class PortalIndexGenerator:
                 "project_key": diag.get("project_key", ""),
                 "view_kind": diag.get("view_kind", ""),
                 "view_type": diag.get("view_type", "diagram"),
+                "artifact_label": diag.get("artifact_label", ""),
+                "environment": diag.get("environment", ""),
                 "iframe_src": diag.get("iframe_src", ""),
                 "elements": diag.get("elements", []),
                 "metadata": {
