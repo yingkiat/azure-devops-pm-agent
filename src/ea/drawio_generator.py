@@ -26,8 +26,6 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import hashlib
 
-from utils.openai_client import chat
-
 from .drawio_export import (
     DrawIOExporter, DrawIOElement, DrawIOContainer, DrawIOEdge,
     get_element_color, calculate_element_width, get_relationship_style,
@@ -1199,6 +1197,8 @@ class DrawIOGenerator:
 
     def _generate_drawio_ai(self, layout_data: Dict[str, Any], element_count: int = 10) -> str:
         """Generate draw.io XML using AI with dynamic token allocation."""
+        from utils.openai_client import chat
+
         if not self.drawio_prompt_file.exists():
             raise FileNotFoundError(f"Prompt not found: {self.drawio_prompt_file}")
 

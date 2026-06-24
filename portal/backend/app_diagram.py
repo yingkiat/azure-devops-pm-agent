@@ -12,7 +12,12 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from src.ea.drawio_generator import DrawIOGenerator
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SRC_ROOT = REPO_ROOT / "src"
+if SRC_ROOT.exists() and str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from ea.drawio_generator import DrawIOGenerator
 
 
 def build_drawio(inventory: dict) -> str:

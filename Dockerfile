@@ -2,8 +2,10 @@
 FROM python:3.11-slim AS builder
 
 WORKDIR /app
+ENV PYTHONPATH=/app/src:/app
 
 # Copy source files needed for build
+COPY src/ src/
 COPY portal/ portal/
 COPY ea_diagrams/ ea_diagrams/
 COPY archi_inputs/ archi_inputs/
@@ -12,7 +14,7 @@ COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
 COPY ea_inputs/04_projects/ ea_inputs/04_projects/
 
 # Install dependencies for portal build
-RUN pip install pandas openpyxl PyYAML jsonschema --quiet
+RUN pip install pandas openpyxl PyYAML jsonschema lxml --quiet
 
 # Build the portal (generates static HTML)
 RUN python portal/build.py
