@@ -3,7 +3,7 @@
   "application": "PSS 2.0",
   "project": "PSS2",
   "environment": "dev",
-  "generated_at": "2026-06-23T08:22:57Z",
+  "generated_at": "2026-06-25T00:58:59Z",
   "source_repo": "test_app_services",
   "source_commit": "local",
   "pipeline_run": "local",
@@ -39,28 +39,6 @@
     }
   ],
   "application_map": {
-    "groups": [
-      {
-        "id": "frontend",
-        "label": "Frontend",
-        "order": 1
-      },
-      {
-        "id": "backend",
-        "label": "Backend",
-        "order": 2
-      },
-      {
-        "id": "platform",
-        "label": "Platform & Operations",
-        "order": 3
-      },
-      {
-        "id": "data",
-        "label": "Data",
-        "order": 4
-      }
-    ],
     "nodes": [
       {
         "id": "react-fe",
@@ -98,7 +76,7 @@
       {
         "id": "keyvault",
         "label": "Key Vault",
-        "group": "platform",
+        "group": "security",
         "kind": "secret_store",
         "infra_ref": "keyvault",
         "metrics": {
@@ -115,7 +93,7 @@
       {
         "id": "storage",
         "label": "Azure Storage",
-        "group": "data",
+        "group": "storage",
         "kind": "storage",
         "infra_ref": "storage"
       }
@@ -2297,8 +2275,7 @@
       "kind": "container_image",
       "image": null,
       "image_digest": null,
-      "base_image": "nginx:alpine",
-      "build_base_image": "node:20-alpine"
+      "base_image": "nginx:alpine"
     },
     {
       "component": "azure-functions",

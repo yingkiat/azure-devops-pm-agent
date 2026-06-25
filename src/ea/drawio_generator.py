@@ -424,13 +424,16 @@ class DrawIOGenerator:
         layout = {
             'stage_property': 'Stage',
             'stage_order': [group['label'] for group in groups],
+            'stage_columns': self._app_inventory_stage_columns(groups),
             'order_property': 'Sequence',
-            'stage_width': int(app_map.get('stage_width', 270)),
+            'stage_width': int(app_map.get('stage_width', 330)),
             'stage_gap': 45,
             'node_gap': 28,
+            'node_note_gap': 6,
+            'stacked_stage_gap': 26,
             'start_x': 60,
             'start_y': 90,
-            'edge_label_mode': 'near_source',
+            'edge_label_mode': 'near_target',
             'include_narrative': False,
             'text_boxes': [{
                 'x': 60,
@@ -478,6 +481,36 @@ class DrawIOGenerator:
 
         return sorted(groups, key=lambda g: (self._safe_int(g.get('order'), 9999), g['label'].lower()))
 
+    @staticmethod
+    def _app_inventory_stage_columns(groups: List[Dict[str, Any]]) -> List[List[str]]:
+        """Map explicit app groups to the app-architecture column layout."""
+        explicit_slots = ['integration', 'frontend', 'backend']
+        normalized_by_group = {}
+        for group in groups:
+            for value in (group.get('id'), group.get('label'), group.get('name')):
+                normalized = re.sub(r'[^a-z0-9]+', '', str(value or '').lower())
+                if normalized and normalized not in normalized_by_group:
+                    normalized_by_group[normalized] = group
+
+        columns: List[List[str]] = []
+        assigned_labels = set()
+        for slot in explicit_slots:
+            group = normalized_by_group.get(slot)
+            if group:
+                label = str(group['label'])
+                columns.append([label])
+                assigned_labels.add(label)
+
+        remaining_labels = [
+            str(group['label'])
+            for group in groups
+            if str(group['label']) not in assigned_labels
+        ]
+        if remaining_labels:
+            columns.append(remaining_labels)
+
+        return columns
+
     def _build_app_inventory_elements(
         self,
         nodes: List[Dict[str, Any]],
@@ -505,7 +538,7 @@ class DrawIOGenerator:
             group_id = self._app_inventory_node_group_id(node) or 'ungrouped'
             stage = group_label_by_id.get(group_id, group_id)
             label = self._app_inventory_node_label(node)
-            has_detail = bool(node.get('summary') or node.get('metrics'))
+            note_text = self._app_inventory_node_detail_line(node)
             component_id = str(node.get('component') or '')
             component = component_by_id.get(component_id, {})
             metadata = self._app_inventory_node_metadata(
@@ -525,8 +558,10 @@ class DrawIOGenerator:
                 'documentation': node.get('summary', ''),
                 'layer': 'Application',
                 'color': self.APP_INVENTORY_KIND_COLOR.get(kind, self.APP_INVENTORY_KIND_COLOR['other']),
-                'width': 220,
-                'height': 76 if has_detail else 60,
+                'width': 240,
+                'height': 60,
+                'note_text': note_text,
+                'note_height': 24,
                 'properties': {
                     'Stage': stage,
                     'Sequence': str(index + 1),
@@ -588,7 +623,6 @@ class DrawIOGenerator:
             self._copy_metadata_value(properties, f'{prefix} Package', output.get('package'))
             self._copy_metadata_value(properties, f'{prefix} Runtime', output.get('runtime'))
             self._copy_metadata_value(properties, f'{prefix} Base Image', output.get('base_image'))
-            self._copy_metadata_value(properties, f'{prefix} Build Base Image', output.get('build_base_image'))
 
         for key, value in (node.get('metadata') or {}).items():
             self._copy_metadata_value(properties, key, value)
@@ -670,20 +704,23 @@ class DrawIOGenerator:
 
     @classmethod
     def _app_inventory_node_label(cls, node: Dict[str, Any]) -> str:
-        title = html.escape(str(node.get('label') or node.get('id') or 'Component'))
-        detail_lines = []
+        return html.escape(str(node.get('label') or node.get('id') or 'Component'))
+
+    @classmethod
+    def _app_inventory_node_detail_line(cls, node: Dict[str, Any]) -> str:
+        explicit = node.get('display_line') or node.get('displayLine')
+        if explicit not in (None, ''):
+            return str(explicit).strip()
+
+        detail_parts = []
         summary = str(node.get('summary') or '').strip()
         metrics = cls._app_inventory_metrics_line(node.get('metrics'))
         if summary:
-            detail_lines.append(html.escape(summary))
+            detail_parts.append(summary)
         if metrics:
-            detail_lines.append(html.escape(metrics))
+            detail_parts.append(metrics)
 
-        if not detail_lines:
-            return title
-
-        detail = '<br/>'.join(detail_lines)
-        return f'<b>{title}</b><br/><font style="font-size:10px">{detail}</font>'
+        return ' | '.join(detail_parts)
 
     @staticmethod
     def _app_inventory_metrics_line(metrics: Optional[Dict[str, Any]]) -> str:
@@ -1887,10 +1924,20 @@ class DrawIOGenerator:
         order_prop = layout.get('order_property')
         include_narrative = layout.get('include_narrative', False)
         edge_label_mode = layout.get('edge_label_mode', 'on_edge')
+        stage_columns = layout.get('stage_columns') or []
+        node_note_gap = int(layout.get('node_note_gap', 6))
+        stacked_stage_gap = int(layout.get('stacked_stage_gap', 26))
         containers = []
         drawio_elements = []
         elem_positions = {}
+        node_note_boxes = []
         max_container_bottom = start_y
+
+        stage_column_index: Dict[str, int] = {}
+        if stage_columns:
+            for column_index, column_stages in enumerate(stage_columns):
+                for stage_name in column_stages:
+                    stage_column_index[str(stage_name)] = column_index
 
         def sort_key(elem: Dict[str, Any]) -> Tuple[int, str]:
             raw = elem.get('properties', {}).get(order_prop, '')
@@ -1932,6 +1979,17 @@ class DrawIOGenerator:
                 stages.setdefault(stage, []).append(elem)
 
             ordered_stages = [s for s in stage_order if s in stages] + [s for s in stages.keys() if s not in stage_order]
+            if stage_columns:
+                fallback_column_index = len(stage_columns)
+                ordered_stages = sorted(
+                    ordered_stages,
+                    key=lambda stage: (
+                        stage_column_index.get(stage, fallback_column_index),
+                        stage_order.index(stage) if stage in stage_order else 9999,
+                        stage.lower(),
+                    )
+                )
+            column_y_offsets: Dict[int, int] = {}
 
             for idx, stage in enumerate(ordered_stages):
                 stage_elems = stages[stage]
@@ -1940,11 +1998,15 @@ class DrawIOGenerator:
                 node_heights = []
                 for elem in stage_elems:
                     try:
-                        node_heights.append(int(elem.get('height', 60)))
+                        node_height = int(elem.get('height', 60))
                     except (TypeError, ValueError):
-                        node_heights.append(60)
-                container_x = start_x + idx * (stage_width + stage_gap)
-                container_y = section_y
+                        node_height = 60
+                    note_text = str(elem.get('note_text') or '').strip()
+                    note_height = int(elem.get('note_height', 24)) if note_text else 0
+                    node_heights.append(node_height + (node_note_gap + note_height if note_text else 0))
+                column_index = stage_column_index.get(stage, idx) if stage_columns else idx
+                container_x = start_x + column_index * (stage_width + stage_gap)
+                container_y = column_y_offsets.get(column_index, section_y) if stage_columns else section_y
                 container_height = (
                     70
                     + sum(height + 20 for height in node_heights)
@@ -1970,6 +2032,8 @@ class DrawIOGenerator:
                     except (TypeError, ValueError):
                         node_height = 60
                     node_x = int((stage_width - node_width) / 2)
+                    note_text = str(elem.get('note_text') or '').strip()
+                    note_height = int(elem.get('note_height', 24)) if note_text else 0
                     drawio_elements.append(DrawIOElement(
                         id=elem['id'],
                         name=elem.get('display_name', elem['name']),
@@ -1989,9 +2053,21 @@ class DrawIOGenerator:
                         'width': node_width,
                         'height': node_height,
                     }
-                    inner_y += node_height + node_gap
+                    if note_text:
+                        note_width = int(elem.get('note_width', stage_width - 20))
+                        node_note_boxes.append({
+                            'x': container_x + int((stage_width - note_width) / 2),
+                            'y': container_y + inner_y + node_height + node_note_gap,
+                            'width': note_width,
+                            'height': note_height,
+                            'text': note_text,
+                            'style_kind': 'app_node_note',
+                        })
+                    inner_y += node_height + (node_note_gap + note_height if note_text else 0) + node_gap
 
                 max_container_bottom = max(max_container_bottom, container_y + container_height)
+                if stage_columns:
+                    column_y_offsets[column_index] = container_y + container_height + stacked_stage_gap
 
             for rel in section_relations:
                 rel['_section_name'] = section_name
@@ -2009,6 +2085,7 @@ class DrawIOGenerator:
             outgoing_relations.setdefault(rel.get('source'), []).append(rel)
             incoming_relations.setdefault(rel.get('target'), []).append(rel)
         source_label_counts: Dict[str, int] = {}
+        target_label_counts: Dict[str, int] = {}
 
         def edge_anchor_fraction(rel_list: List[Dict[str, Any]], rel: Dict[str, Any]) -> float:
             try:
@@ -2035,15 +2112,28 @@ class DrawIOGenerator:
                 label = self._edge_label(rel, elements_by_id)
                 if edge_label_mode == 'none':
                     label = ''
-                elif label and edge_label_mode == 'near_source':
+                elif label and edge_label_mode in ('near_source', 'near_target'):
+                    label_width = max(70, len(label) * 7)
                     source_pos = elem_positions.get(source_id)
-                    if source_pos:
+                    target_pos = elem_positions.get(target_id)
+                    if edge_label_mode == 'near_source' and source_pos:
                         label_index = source_label_counts.get(source_id, 0)
                         source_label_counts[source_id] = label_index + 1
                         edge_label_boxes.append({
                             'x': source_pos['x'] + source_pos['width'] + 8,
                             'y': source_pos['y'] + 10 + (label_index * 22),
-                            'width': max(70, len(label) * 7),
+                            'width': label_width,
+                            'height': 20,
+                            'text': label,
+                            'style_kind': 'edge_label'
+                        })
+                    elif edge_label_mode == 'near_target' and target_pos:
+                        label_index = target_label_counts.get(target_id, 0)
+                        target_label_counts[target_id] = label_index + 1
+                        edge_label_boxes.append({
+                            'x': max(20, target_pos['x'] - label_width - 8),
+                            'y': target_pos['y'] + 10 + (label_index * 22),
+                            'width': label_width,
                             'height': 20,
                             'text': label,
                             'style_kind': 'edge_label'
@@ -2075,6 +2165,8 @@ class DrawIOGenerator:
         text_boxes = layout.get('text_boxes', [])
         if text_boxes:
             xml_output = self._embed_text_boxes_in_drawio(xml_output, text_boxes)
+        if node_note_boxes:
+            xml_output = self._embed_text_boxes_in_drawio(xml_output, node_note_boxes)
         if edge_label_boxes:
             xml_output = self._embed_text_boxes_in_drawio(xml_output, edge_label_boxes)
 
@@ -2188,6 +2280,7 @@ class DrawIOGenerator:
             default_box_dimensions = {
                 'default': {'width': 150, 'height': 28},
                 'edge_label': {'width': 70, 'height': 20},
+                'app_node_note': {'width': 300, 'height': 24},
                 'note_header': {'width': 150, 'height': 28},
                 'note_line': {'width': 320, 'height': 24},
                 'title': {'width': 320, 'height': 48},
@@ -2230,6 +2323,9 @@ class DrawIOGenerator:
                 if style_kind == 'edge_label':
                     cell.set('style', 'text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
                                       'fontSize=10;fontStyle=1;fillColor=none;strokeColor=none;spacing=2;')
+                elif style_kind == 'app_node_note':
+                    cell.set('style', 'text;html=0;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;'
+                                      'fontSize=10;fontColor=#444444;fillColor=none;strokeColor=none;spacing=2;')
                 elif style_kind == 'title':
                     cell.set('style', f'text;html={"1" if render_as_html else "0"};align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;'
                                       'fontSize=24;fontStyle=1;fillColor=none;strokeColor=none;spacing=2;')

@@ -70,7 +70,20 @@ def test_app_inventory_uses_explicit_groups_and_embeds_metadata(tmp_path):
     assert properties["Architecture Group"] == "Frontend"
     assert properties["Component Path"] == "src/web"
     assert properties["Build Output 1 Base Image"] == "nginx:alpine"
+    assert "Build Output 1 Build Base Image" not in properties
     assert properties["Owner"] == "Product Team"
+    assert web_cell.get("value") == "Web UI"
+
+    note_cells = [
+        cell
+        for cell in root.findall(".//mxCell")
+        if "app_node_note" not in (cell.get("id") or "")
+        and "fillColor=none;strokeColor=none" in (cell.get("style") or "")
+    ]
+    assert any(
+        cell.get("value") == "User-facing SPA | routes: 5"
+        for cell in note_cells
+    )
 
     drawio_path = tmp_path / "sample.drawio"
     svg_path = tmp_path / "sample.svg"
@@ -97,3 +110,78 @@ def test_app_inventory_missing_group_is_not_inferred_from_kind():
 
     group_labels = [cell.get("value") for cell in root.findall(".//mxCell") if "swimlane" in (cell.get("style") or "")]
     assert group_labels == ["ungrouped"]
+
+
+def test_app_inventory_stacks_non_primary_groups_in_service_side_column():
+    inventory = {
+        "application_map": {
+            "nodes": [
+                {"id": "web", "label": "Web", "group": "frontend"},
+                {"id": "api", "label": "API", "group": "backend"},
+                {"id": "kv", "label": "Key Vault", "group": "security"},
+                {"id": "db", "label": "Database", "group": "data"},
+                {"id": "storage", "label": "Storage", "group": "storage"},
+            ],
+            "edges": [],
+        }
+    }
+
+    xml = DrawIOGenerator().generate_app_inventory_drawio(inventory)
+    root = ET.fromstring(xml)
+    containers = {
+        cell.get("value"): cell.find("mxGeometry")
+        for cell in root.findall(".//mxCell")
+        if "swimlane" in (cell.get("style") or "")
+    }
+
+    assert containers["frontend"].get("x") == "60"
+    assert containers["backend"].get("x") == "435"
+
+    service_x = containers["security"].get("x")
+    assert service_x == "810"
+    assert containers["data"].get("x") == service_x
+    assert containers["storage"].get("x") == service_x
+    assert int(containers["security"].get("y")) < int(containers["data"].get("y")) < int(containers["storage"].get("y"))
+
+
+def test_app_inventory_edge_labels_are_placed_near_targets():
+    inventory = {
+        "application_map": {
+            "nodes": [
+                {"id": "api", "label": "API", "group": "backend"},
+                {"id": "kv", "label": "Key Vault", "group": "security"},
+                {"id": "db", "label": "Database", "group": "data"},
+            ],
+            "edges": [
+                {"from": "api", "to": "kv", "label": "Reads secrets"},
+                {"from": "api", "to": "db", "label": "SQL data access"},
+            ],
+        }
+    }
+
+    xml = DrawIOGenerator().generate_app_inventory_drawio(inventory)
+    root = ET.fromstring(xml)
+    cells = root.findall(".//mxCell")
+    cell_by_id = {cell.get("id"): cell for cell in cells}
+    api_cell = root.find(".//mxCell[@id='diagram-api']")
+    kv_cell = root.find(".//mxCell[@id='diagram-kv']")
+    assert api_cell is not None
+    assert kv_cell is not None
+
+    def absolute_x(cell):
+        geometry = cell.find("mxGeometry")
+        parent = cell_by_id.get(cell.get("parent"))
+        parent_geometry = parent.find("mxGeometry") if parent is not None else None
+        parent_x = int(parent_geometry.get("x")) if parent_geometry is not None else 0
+        return parent_x + int(geometry.get("x"))
+
+    api_right = absolute_x(api_cell) + int(api_cell.find("mxGeometry").get("width"))
+    kv_left = absolute_x(kv_cell)
+    labels = {
+        cell.get("value"): cell.find("mxGeometry")
+        for cell in cells
+        if "fontStyle=1;fillColor=none;strokeColor=none" in (cell.get("style") or "")
+    }
+
+    reads_label_x = int(labels["Reads secrets"].get("x"))
+    assert api_right < reads_label_x < kv_left
