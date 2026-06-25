@@ -223,7 +223,7 @@ class PortalIndexGenerator:
                 "iframe_src": diag.get("iframe_src", ""),
                 "elements": diag.get("elements", []),
                 "metadata": {
-                    "element_count": len(diag.get("elements", [])),
+                    "element_count": diag.get("element_count", len(diag.get("elements", []))),
                     "created": diag.get("created", ""),
                     "updated_at": diag.get("updated_at", ""),
                     "domain": diag.get("domain", ""),

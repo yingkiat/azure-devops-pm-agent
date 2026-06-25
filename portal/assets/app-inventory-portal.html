@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Application Inventory Explorer</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f3;
+      --surface: #ffffff;
+      --surface-2: #eef2ee;
+      --ink: #1f2421;
+      --muted: #626a66;
+      --line: #d7ddd8;
+      --green: #256f53;
+      --green-soft: #dcebe3;
+      --blue: #2f5f98;
+      --blue-soft: #dbe8f5;
+      --amber: #946a21;
+      --amber-soft: #f0e3c4;
+      --red: #9c3d35;
+      --red-soft: #f1dedb;
+      --violet: #66539b;
+      --violet-soft: #e5e0f2;
+      --shadow: 0 1px 2px rgba(25, 31, 28, 0.08), 0 12px 28px rgba(25, 31, 28, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .panel-subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) 170px;
+      gap: 10px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    .control label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .control input,
+    .control select {
+      width: 100%;
+      min-height: 36px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      color: var(--ink);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px 14px 0;
+      background: var(--surface);
+    }
+
+    .tab {
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfa;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .tab.active {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .content {
+      padding: 14px;
+    }
+
+    .list {
+      display: grid;
+      gap: 9px;
+      max-height: 640px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-align: left;
+      color: var(--ink);
+    }
+
+    .item:hover,
+    .item.active {
+      border-color: #9db5a5;
+      background: #fbfdfb;
+    }
+
+    .item-main strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .item-main span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 5px;
+      max-width: 260px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .method-get {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .method-post {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .method-put,
+    .method-patch {
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .method-delete {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .confidence {
+      color: var(--violet);
+      background: var(--violet-soft);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 9px;
+    }
+
+    .capability {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .capability strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .bars {
+      display: grid;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 70px 1fr 34px;
+      gap: 7px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .track {
+      height: 7px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .detail-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .detail-type {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .detail-section {
+      margin-top: 15px;
+    }
+
+    .detail-section h3 {
+      margin: 0 0 7px;
+      color: #38403b;
+      font-size: 12px;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .kv {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .kv tr {
+      border-top: 1px solid var(--line);
+    }
+
+    .kv td {
+      padding: 7px 0;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    .kv td:first-child {
+      width: 120px;
+      padding-right: 12px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mini {
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfa;
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .empty {
+      padding: 30px;
+      border: 1px dashed #cbd2cd;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      background: #fbfcfa;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(31, 36, 33, 0.42);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(760px, 100%);
+      max-height: min(760px, calc(100vh - 36px));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      border-color: #aeb8b0;
+      color: var(--ink);
+    }
+
+    .modal-body {
+      max-height: calc(min(760px, 100vh - 36px) - 62px);
+      overflow: auto;
+      padding: 14px;
+    }
+
+    body.embed-diagram .shell {
+      max-width: none;
+      padding: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .board {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        padding: 10px;
+      }
+
+      .panel-head {
+        display: block;
+      }
+
+      .controls,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+      }
+
+      .item-tags {
+        justify-content: flex-start;
+      }
+
+      .modal-backdrop {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="board">
+      <div class="main-column">
+        <section class="panel">
+          <div class="controls">
+            <div class="control">
+              <label for="searchInput">Search</label>
+              <input id="searchInput" type="search" placeholder="Component, page path, API route, function, source">
+            </div>
+            <div class="control">
+              <label for="methodFilter">Method</label>
+              <select id="methodFilter"></select>
+            </div>
+          </div>
+          <div class="tabs" id="tabs"></div>
+          <div class="content" id="content"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="detailModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <div class="modal-head">
+        <div>
+          <h2 class="panel-title" id="detailModalTitle">Details</h2>
+          <p class="panel-subtitle" id="detailSubtitle">Source details</p>
+        </div>
+        <button class="modal-close" id="detailCloseButton" type="button" aria-label="Close details">&times;</button>
+      </div>
+      <div class="modal-body" id="detailBody"></div>
+    </div>
+  </div>
+
+  <script>
+    let inventory = null;
+    const state = {
+      tab: "components",
+      selectedKey: "",
+      query: "",
+      method: ""
+    };
+
+    const tabs = [
+      { id: "components", label: "Components" },
+      { id: "frontend", label: "Frontend Paths" },
+      { id: "apis", label: "API Surface" }
+    ];
+
+    const field = (value, fallback = "") => value === undefined || value === null || value === "" ? fallback : value;
+    const asArray = value => Array.isArray(value) ? value : [];
+    const text = value => field(value, "").toString();
+    const lower = value => text(value).toLowerCase();
+    const uniq = values => [...new Set(values.filter(value => value !== undefined && value !== null && value !== ""))].sort();
+
+    function escapeHtml(value) {
+      return text(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function methodClass(method) {
+      return `method-${lower(method)}`;
+    }
+
+    function tag(value, className = "") {
+      if (!value) return "";
+      return `<span class="tag ${className}">${escapeHtml(value)}</span>`;
+    }
+
+    function sourceName(path) {
+      const parts = text(path).split(/[\\/]/);
+      return parts[parts.length - 1] || path;
+    }
+
+    function allApis() {
+      return asArray(inventory.api_surface);
+    }
+
+    function allCalls() {
+      return asArray(inventory.frontend && inventory.frontend.api_call_candidates);
+    }
+
+    function matchesQuery(item, fields) {
+      if (!state.query) return true;
+      const haystack = fields.map(fieldName => text(item[fieldName])).join(" ").toLowerCase();
+      return haystack.includes(state.query);
+    }
+
+    function matchesFilters(item) {
+      if (state.method && item.method !== state.method) return false;
+      return true;
+    }
+
+    function tabForComponent(component) {
+      const id = lower(component.id);
+      const type = lower(component.type);
+      if (id === "react-fe" || type.includes("react") || type.includes("spa")) return "frontend";
+      if (id === "azure-functions" || type.includes("function") || type.includes("api")) return "apis";
+      return "components";
+    }
+
+    function itemButton(key, title, subtitle, tagsHtml, payload) {
+      const active = state.selectedKey === key ? " active" : "";
+      const encoded = encodeURIComponent(JSON.stringify(payload || {}));
+      return `
+        <button class="item${active}" type="button" data-key="${escapeHtml(key)}" data-payload="${encoded}">
+          <span class="item-main">
+            <strong>${escapeHtml(title)}</strong>
+            <span>${escapeHtml(subtitle)}</span>
+          </span>
+          <span class="item-tags">${tagsHtml}</span>
+        </button>
+      `;
+    }
+
+    function buildFilters() {
+      const methods = state.tab === "apis" ? uniq(allApis().map(item => item.method).concat(allCalls().map(item => item.method))) : [];
+      fillSelect("methodFilter", "All methods", methods, state.method);
+      document.getElementById("methodFilter").disabled = state.tab !== "apis";
+    }
+
+    function fillSelect(id, label, values, selected) {
+      const options = [`<option value="">${escapeHtml(label)}</option>`]
+        .concat(values.map(value => `<option value="${escapeHtml(value)}" ${selected === value ? "selected" : ""}>${escapeHtml(value)}</option>`));
+      document.getElementById(id).innerHTML = options.join("");
+    }
+
+    function buildTabs() {
+      document.getElementById("tabs").innerHTML = tabs.map(tab => {
+        const active = state.tab === tab.id ? " active" : "";
+        return `<button class="tab${active}" type="button" data-tab="${tab.id}">${escapeHtml(tab.label)}</button>`;
+      }).join("");
+    }
+
+    function renderApis() {
+      const frontendCalls = allCalls()
+        .filter(item => matchesFilters(item))
+        .filter(item => matchesQuery(item, ["route", "raw_route", "function", "source", "capability", "service_module"]));
+      const backendApis = allApis()
+        .filter(item => matchesFilters(item))
+        .filter(item => matchesQuery(item, ["route", "function", "handler", "source", "capability"]));
+
+      const frontendHtml = renderList(frontendCalls, item => {
+        const title = `${item.method || ""} ${item.route || item.raw_route || item.function || item.id}`.trim();
+        const subtitle = `${item.function || ""} | ${sourceName(item.source)}`.replace(/^\s+\|\s+|\s+\|\s+$/g, "");
+        const tagsHtml = [
+          tag(item.method, methodClass(item.method)),
+          tag(item.service_module),
+          tag(item.confidence, "confidence")
+        ].join("");
+        return itemButton(`call:${item.id || title}`, title, subtitle, tagsHtml, { type: "Frontend Outbound Call", item });
+      });
+
+      const backendHtml = renderList(backendApis, item => {
+        const title = `${item.method || ""} ${item.route || item.function || item.id}`.trim();
+        const subtitle = `${item.function || item.handler || ""} | ${sourceName(item.source)}`.replace(/^\s+\|\s+|\s+\|\s+$/g, "");
+        const tagsHtml = [
+          tag(item.method, methodClass(item.method)),
+          tag(item.capability),
+          ...asArray(item.uses_infra).slice(0, 3).map(ref => tag(ref))
+        ].join("");
+        return itemButton(`api:${item.id || title}`, title, subtitle, tagsHtml, { type: "Backend API", item });
+      });
+
+      return `
+        <div class="split">
+          <div>
+            <div class="panel-subtitle" style="margin-bottom:8px;">Frontend Outbound Paths</div>
+            ${frontendHtml}
+          </div>
+          <div>
+            <div class="panel-subtitle" style="margin-bottom:8px;">Backend Function Endpoints</div>
+            ${backendHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFrontend() {
+      const pages = asArray(inventory.frontend && inventory.frontend.pages);
+      const modules = asArray(inventory.frontend && inventory.frontend.service_modules);
+
+      const pagesHtml = renderList(pages.filter(item => matchesQuery(item, ["path", "component", "source"])), page => {
+        return itemButton(`page:${page.id || page.path}`, page.path || page.id, `${page.component || ""} | ${sourceName(page.source)}`, tag("page"), { type: "Frontend Page", item: page });
+      });
+      const modulesHtml = renderList(modules.filter(item => matchesQuery(item, ["name", "path", "id"])), module => {
+        const tagsHtml = [tag(`${module.call_count || asArray(module.endpoints).length} outbound calls`)].concat(asArray(module.env_keys).map(key => tag(key))).join("");
+        return itemButton(`module:${module.id || module.name}`, module.name || module.id, module.path || "", tagsHtml, { type: "Service Module", item: module });
+      });
+
+      return `
+        <div class="split">
+          <div>
+            <div class="panel-subtitle" style="margin-bottom:8px;">Pages</div>
+            ${pagesHtml}
+          </div>
+          <div>
+            <div class="panel-subtitle" style="margin-bottom:8px;">Service Modules</div>
+            ${modulesHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderComponents() {
+      const components = asArray(inventory.components);
+      const outputs = asArray(inventory.build_outputs);
+      return renderList(components.filter(item => matchesQuery(item, ["name", "type", "path", "summary"])), component => {
+        const componentOutputs = outputs.filter(output => output.component === component.id);
+        const outputTags = componentOutputs.map(output => tag(output.base_image || output.runtime || output.kind)).join("");
+        const tagsHtml = [tag(component.type), outputTags].join("");
+        return itemButton(`component:${component.id}`, component.name || component.id, component.path || component.summary || "", tagsHtml, {
+          type: "Component",
+          openTab: tabForComponent(component),
+          item: Object.assign({}, component, { build_outputs: componentOutputs })
+        });
+      });
+    }
+
+    function renderList(items, renderer) {
+      if (!items.length) return empty("No records match the current filters.");
+      return `<div class="list">${items.map(renderer).join("")}</div>`;
+    }
+
+    function empty(message) {
+      return `<div class="empty">${escapeHtml(message)}</div>`;
+    }
+
+    function renderContent() {
+      const renderers = {
+        apis: renderApis,
+        frontend: renderFrontend,
+        components: renderComponents
+      };
+      document.getElementById("content").innerHTML = (renderers[state.tab] || renderComponents)();
+    }
+
+    function renderDetail(payload) {
+      const modal = document.getElementById("detailModal");
+      const detailBody = document.getElementById("detailBody");
+      if (!payload || !payload.item) {
+        closeDetail();
+        return;
+      }
+      const item = payload.item;
+      document.getElementById("detailModalTitle").textContent = item.route || item.path || item.name || item.function || item.label || item.id || "Details";
+      document.getElementById("detailSubtitle").textContent = payload.type || "Inventory item";
+      const entries = Object.entries(item)
+        .filter(([, value]) => value !== null && value !== undefined && value !== "")
+        .filter(([key]) => !Array.isArray(item[key]) && typeof item[key] !== "object");
+      const arrays = Object.entries(item)
+        .filter(([, value]) => Array.isArray(value) && value.length);
+      const objects = Object.entries(item)
+        .filter(([, value]) => value && !Array.isArray(value) && typeof value === "object");
+      detailBody.innerHTML = `
+        <h2 class="detail-title">${escapeHtml(item.route || item.path || item.name || item.function || item.label || item.id || payload.type)}</h2>
+        <div class="detail-type">${escapeHtml(payload.type || "")}</div>
+        <div class="detail-section">
+          <h3>Fields</h3>
+          <table class="kv">${entries.map(([key, value]) => `<tr><td>${escapeHtml(key)}</td><td>${escapeHtml(value)}</td></tr>`).join("")}</table>
+        </div>
+        ${arrays.map(([key, values]) => `
+          <div class="detail-section">
+            <h3>${escapeHtml(key.replace(/_/g, " "))}</h3>
+            <div class="mini-list">${values.map(value => `<div class="mini">${escapeHtml(typeof value === "object" ? JSON.stringify(value) : value)}</div>`).join("")}</div>
+          </div>
+        `).join("")}
+        ${objects.map(([key, value]) => `
+          <div class="detail-section">
+            <h3>${escapeHtml(key.replace(/_/g, " "))}</h3>
+            <div class="mini">${escapeHtml(JSON.stringify(value, null, 2))}</div>
+          </div>
+        `).join("")}
+      `;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDetail() {
+      const modal = document.getElementById("detailModal");
+      if (!modal) return;
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.getElementById("detailBody").innerHTML = "";
+    }
+
+    function render() {
+      buildFilters();
+      buildTabs();
+      renderContent();
+      closeDetail();
+    }
+
+    function wireEvents() {
+      document.getElementById("searchInput").addEventListener("input", event => {
+        state.query = event.target.value.trim().toLowerCase();
+        renderContent();
+      });
+      document.getElementById("methodFilter").addEventListener("change", event => {
+        state.method = event.target.value;
+        renderContent();
+      });
+      document.addEventListener("click", event => {
+        const tab = event.target.closest("[data-tab]");
+        if (tab) {
+          state.tab = tab.dataset.tab;
+          state.selectedKey = "";
+          if (state.tab !== "apis") state.method = "";
+          buildFilters();
+          buildTabs();
+          renderContent();
+          closeDetail();
+          return;
+        }
+        const item = event.target.closest("[data-key]");
+        if (item) {
+          try {
+            const payload = JSON.parse(decodeURIComponent(item.dataset.payload));
+            if (payload.openTab && payload.openTab !== state.tab) {
+              state.tab = payload.openTab;
+              state.selectedKey = "";
+              buildTabs();
+              renderContent();
+              closeDetail();
+              return;
+            }
+            state.selectedKey = item.dataset.key;
+            renderContent();
+            renderDetail(payload);
+          } catch (error) {
+            renderDetail(null);
+          }
+          return;
+        }
+      });
+      document.getElementById("detailCloseButton").addEventListener("click", () => {
+        state.selectedKey = "";
+        renderContent();
+        closeDetail();
+      });
+      document.getElementById("detailModal").addEventListener("click", event => {
+        if (event.target.id === "detailModal") {
+          state.selectedKey = "";
+          renderContent();
+          closeDetail();
+        }
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          state.selectedKey = "";
+          renderContent();
+          closeDetail();
+        }
+      });
+    }
+
+    async function loadInventory() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("embed") === "diagram") {
+        document.body.classList.add("embed-diagram");
+      }
+      if (window.APP_INVENTORY_DATA) {
+        inventory = window.APP_INVENTORY_DATA;
+        return;
+      }
+      const inventoryUrl = params.get("inventory") || "app-inventory.dev.json";
+      const response = await fetch(inventoryUrl);
+      inventory = await response.json();
+    }
+
+    loadInventory()
+      .then(() => {
+        wireEvents();
+        render();
+      })
+      .catch(error => {
+        document.getElementById("content").innerHTML = empty(`Unable to load inventory: ${error.message}`);
+      });
+  </script>
+</body>
+</html>

@@ -248,6 +248,69 @@ class PortalBuilder:
 
         return views
 
+    def _collect_project_app_inventory_views(self, project_meta: Dict[str, Dict]) -> List[Dict]:
+        """Collect interactive application inventory views from app-inventory JSON files."""
+        views: List[Dict] = []
+        viewer_template = Path("portal/assets/app-inventory-portal.html")
+        if not viewer_template.exists():
+            print("      WARN app-inventory-portal.html template not found at portal/assets/app-inventory-portal.html")
+            return views
+
+        projects_dir = Path("ea_inputs/04_projects")
+        if not projects_dir.exists():
+            return views
+
+        for inv_path in sorted(projects_dir.glob("*/app-inventory*.json")):
+            try:
+                inventory = json.loads(inv_path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                print(f"      WARN {inv_path.name}: cannot parse ({exc})")
+                continue
+
+            project_key = str(inventory.get("project") or inv_path.parent.name).lower()
+            meta = project_meta.get(project_key, {})
+            env = inventory.get("environment", "")
+            app_name = inventory.get("application", "") or meta.get("project", "")
+
+            out_dir = self.output_dir / "projects" / project_key / "app-inventory"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(str(inv_path), str(out_dir / inv_path.name))
+            self._write_app_inventory_viewer(viewer_template, inv_path, out_dir / "index.html")
+
+            frontend = inventory.get("frontend", {}) or {}
+            app_map = inventory.get("application_map", {}) or {}
+            detail_count = (
+                len(frontend.get("pages", []) or [])
+                + len(frontend.get("service_modules", []) or [])
+                + len(frontend.get("api_call_candidates", []) or [])
+                + len(inventory.get("api_surface", []) or [])
+                + len(inventory.get("interaction_edges", []) or [])
+            )
+            view_id = f"project_{project_key}_app_inventory"
+            views.append({
+                "view_id": view_id,
+                "name": f"{app_name} - Application Inventory".strip(" -"),
+                "diagram_file": "",
+                "preview_file": "",
+                "category": meta.get("category") or meta.get("domain") or "operations",
+                "domain": meta.get("domain", ""),
+                "region": meta.get("region", ""),
+                "project": meta.get("project") or app_name,
+                "project_key": project_key,
+                "view_kind": "project",
+                "view_type": "app_inventory",
+                "artifact_label": "Application Inventory",
+                "environment": env,
+                "iframe_src": f"projects/{project_key}/app-inventory/?inventory={inv_path.name}&embed=diagram",
+                "elements": [],
+                "element_count": detail_count or len(app_map.get("nodes", []) or []),
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(inv_path.stat().st_mtime).isoformat(),
+            })
+            print(f"      OK {view_id:45s} ({inv_path.name})")
+
+        return views
+
     def _write_json_inventory_viewer(self, viewer_template: Path, inventory_path: Path, output_path: Path) -> None:
         """Write a project visualizer page with inventory JSON embedded for file:// use."""
         template_html = viewer_template.read_text(encoding="utf-8")
@@ -261,6 +324,26 @@ class PortalBuilder:
             "  </script>\n\n"
         )
         marker = "  <script>\n    let artifacts = [];"
+        if marker not in template_html:
+            print(f"      WARN {viewer_template}: embed marker not found; writing template without embedded data")
+            output_path.write_text(template_html, encoding="utf-8")
+            return
+
+        output_path.write_text(template_html.replace(marker, embedded_script + marker, 1), encoding="utf-8")
+
+    def _write_app_inventory_viewer(self, viewer_template: Path, inventory_path: Path, output_path: Path) -> None:
+        """Write an app inventory explorer page with inventory JSON embedded for file:// use."""
+        template_html = viewer_template.read_text(encoding="utf-8")
+        with open(inventory_path, "r", encoding="utf-8") as f:
+            inventory_data = json.load(f)
+
+        inventory_json = json.dumps(inventory_data, ensure_ascii=True).replace("</", "<\\/")
+        embedded_script = (
+            "  <script>\n"
+            f"    window.APP_INVENTORY_DATA = {inventory_json};\n"
+            "  </script>\n\n"
+        )
+        marker = "  <script>\n    let inventory = null;"
         if marker not in template_html:
             print(f"      WARN {viewer_template}: embed marker not found; writing template without embedded data")
             output_path.write_text(template_html, encoding="utf-8")
@@ -444,6 +527,11 @@ class PortalBuilder:
         diagrams_info.extend(app_diagram_views)
         if app_diagram_views:
             print(f"      OK Generated {len(app_diagram_views)} application architecture diagram(s)\n")
+
+        app_inventory_views = self._collect_project_app_inventory_views(project_meta)
+        diagrams_info.extend(app_inventory_views)
+        if app_inventory_views:
+            print(f"      OK Generated {len(app_inventory_views)} application inventory view(s)\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")
@@ -2815,7 +2903,7 @@ class PortalBuilder:
             </div>
             <div v-else class="diagram-viewer" @click="deselectElement()">
                 <div class="diagram-stage">
-                    <iframe v-if="infraIframeSrc" :src="infraIframeSrc" class="infra-iframe" title="Infrastructure Visualizer" allowfullscreen></iframe>
+                    <iframe v-if="infraIframeSrc" :src="infraIframeSrc" class="infra-iframe" title="Inventory Visualizer" allowfullscreen></iframe>
                     <img v-if="diagramPreviewPath && !diagramHtml && !infraIframeSrc" class="diagram-preview" :src="diagramPreviewPath" alt="Diagram preview" />
                     <div v-if="diagramHtml && !infraIframeSrc" class="diagram-interactive" v-html="diagramHtml"></div>
                     <div v-if="diagramLoading" class="diagram-loading-overlay">
@@ -3931,7 +4019,7 @@ class PortalBuilder:
                         this.infraIframeSrc = '';
                         this.currentSvg = null;
 
-                        if (view.view_type === 'json_inventory') {
+                        if (view.iframe_src) {
                             this.infraIframeSrc = view.iframe_src || '';
                             this.diagramPreviewPath = '';
                             this.diagramLoading = false;
@@ -3941,7 +4029,7 @@ class PortalBuilder:
                                 view_name: view.name || '',
                                 domain: view.domain || '',
                                 region: view.region || '',
-                                view_type: 'json_inventory'
+                                view_type: view.view_type || 'iframe_inventory'
                             });
                             return;
                         }
