@@ -3,85 +3,80 @@
   "application": "PSS 2.0",
   "project": "PSS2",
   "environment": "dev",
-  "generated_at": "2026-06-25T00:58:59Z",
-  "source_repo": "test_app_services",
-  "source_commit": "local",
-  "pipeline_run": "local",
+  "generated_at": "2026-07-08T14:42:26Z",
+  "source_repo": "medline/apac-it/operations/pss-2.0",
+  "source_commit": "409ee13778caa0041330c77efda6295396357b85",
+  "pipeline_run": "2661817852",
   "components": [
     {
-      "id": "react-fe",
-      "name": "PSS Web UI",
-      "type": "vite-react-spa",
-      "path": "src/frontend/PSS-Web-UI",
+      "id": "angular-ui",
+      "name": "PSS2 UI",
+      "type": "angular-spa",
+      "path": "src/pss2-ui",
       "dependsOn": [
-        "azure-functions"
+        "backend-api"
       ],
       "uses_infra": [
         "webapp",
         "acr"
       ],
-      "summary": "5 declared React routes, 7 service modules, 43 frontend API call candidates."
+      "summary": "4 Angular routes and 0 explicit API call candidates."
     },
     {
-      "id": "azure-functions",
-      "name": "Medline.PSS.FunctionApp.Api",
-      "type": "azure-function-app",
-      "path": "src/backend/Medline.PSS.FunctionApp.Api",
+      "id": "backend-api",
+      "name": "PSS2 API",
+      "type": "aspnet-core-web-api",
+      "path": "src/pss2-api",
       "dependsOn": [],
       "uses_infra": [
-        "function",
+        "backend-api",
+        "acr",
+        "appi",
         "keyvault",
         "sql-db",
-        "storage",
-        "appi"
+        "storage"
       ],
-      "summary": "49 HTTP-triggered Azure Function endpoints."
+      "summary": "7 ASP.NET Core controller endpoints."
     }
   ],
   "application_map": {
     "nodes": [
       {
-        "id": "react-fe",
-        "label": "React Frontend",
+        "id": "angular-ui",
+        "label": "Angular UI",
         "group": "frontend",
         "kind": "frontend",
-        "summary": "PSS Web UI",
-        "metrics": {
-          "pages": 5,
-          "service_modules": 7,
-          "api_call_candidates": 43
-        },
-        "component": "react-fe",
+        "component": "angular-ui",
         "infra_refs": [
           "webapp",
           "acr"
-        ]
+        ],
+        "metrics": {
+          "pages": 4,
+          "api_call_candidates": 0
+        }
       },
       {
-        "id": "azure-functions",
-        "label": "Azure Function API",
+        "id": "backend-api",
+        "label": "ASP.NET Core API",
         "group": "backend",
         "kind": "api",
-        "summary": "HTTP-triggered backend functions",
-        "metrics": {
-          "endpoints": 49,
-          "function_files": 3
-        },
-        "component": "azure-functions",
+        "component": "backend-api",
         "infra_refs": [
-          "function",
+          "backend-api",
+          "acr",
           "appi"
-        ]
+        ],
+        "metrics": {
+          "endpoints": 7
+        }
       },
       {
         "id": "keyvault",
         "label": "Key Vault",
         "group": "security",
         "kind": "secret_store",
-        "infra_ref": "keyvault",
-        "metrics": {
-          "secret_names_used": 3
-        }
+        "infra_ref": "keyvault"
       },
       {
         "id": "sql-db",
@@ -100,2188 +95,303 @@
     ],
     "edges": [
       {
-        "from": "react-fe",
-        "to": "azure-functions",
-        "label": "HTTPS API calls",
-        "metrics": {
-          "matched_routes": 42,
-          "call_candidates": 43
-        },
-        "confidence": "mixed-static-and-candidate"
+        "from": "angular-ui",
+        "to": "backend-api",
+        "label": "Same-origin /api proxy",
+        "confidence": "deployment-configuration",
+        "source": "src/pss2-ui/nginx.conf.template"
       },
       {
-        "from": "azure-functions",
+        "from": "backend-api",
         "to": "keyvault",
-        "label": "Reads secret names",
-        "metrics": {
-          "secret_names_used": 3
-        },
-        "confidence": "static-code-reference"
+        "label": "Uses Azure Key Vault",
+        "confidence": "static-code-reference",
+        "source": "src/pss2-api/PSS.Application/Interfaces/IAzureKeyVaultService.cs"
       },
       {
-        "from": "azure-functions",
+        "from": "backend-api",
         "to": "sql-db",
-        "label": "SQL data access",
-        "confidence": "static-code-reference"
+        "label": "Uses Azure SQL Database",
+        "confidence": "static-code-reference",
+        "source": "src/pss2-api/PSS.Infrastructure/Data/ApplicationDbContext.cs"
       },
       {
-        "from": "azure-functions",
+        "from": "backend-api",
         "to": "storage",
-        "label": "Blob/file access",
-        "confidence": "static-code-reference"
+        "label": "Uses Azure Storage",
+        "confidence": "static-code-reference",
+        "source": "src/pss2-api/PSS.Application/Interfaces/IAzureBlobStorageService.cs"
       }
     ]
   },
   "frontend": {
+    "build_mode": "angular-production",
     "package": {
-      "name": "pss-web-ui",
+      "name": "pss-ui",
       "version": "0.0.0",
-      "type": "module",
       "scripts": {
-        "dev": "vite -- --port 3000",
-        "start": "vite --port 3000",
-        "build": "tsc && vite build",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview --port 3000"
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "watch": "ng build --watch --configuration development",
+        "test": "ng test",
+        "e2e": "playwright test",
+        "e2e:headed": "playwright test --headed",
+        "e2e:ui": "playwright test --ui"
       },
       "frameworks": [
-        "@reduxjs/toolkit",
-        "axios",
-        "react",
-        "react-router-dom",
-        "vite"
+        "@angular/core",
+        "@angular/router",
+        "@azure/msal-angular"
       ],
-      "source": "src/frontend/PSS-Web-UI/package.json"
+      "source": "src/pss2-ui/package.json"
     },
     "docker": {
-      "path": "src/frontend/PSS-Web-UI/Dockerfile",
+      "path": "src/pss2-ui/Dockerfile",
       "stages": [
         {
-          "image": "node:20-alpine",
+          "image": "node:22-alpine",
           "stage": "build"
         },
         {
-          "image": "nginx:alpine",
-          "stage": null
+          "image": "nginx:1.27-alpine",
+          "stage": "runtime"
         }
       ],
-      "env_keys": [
-        "VITE_IMAGE_API_URL",
-        "VITE_PSS_API_URL",
-        "VITE_REPORT_API_URL"
-      ]
+      "env_keys": []
     },
     "pages": [
       {
-        "id": "home",
-        "path": "/",
-        "component": "LookFor",
-        "source": "src/frontend/PSS-Web-UI/src/App.tsx"
+        "id": "login",
+        "path": "/login",
+        "component": "LoginComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
       },
       {
-        "id": "pack-specification",
-        "path": "/pack-specification",
-        "component": "LookFor",
-        "source": "src/frontend/PSS-Web-UI/src/App.tsx"
+        "id": "home",
+        "path": "/",
+        "component": "PackSpecificationComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
       },
       {
         "id": "pack-maintenance",
         "path": "/pack-maintenance",
-        "component": "PackMaintenance",
-        "source": "src/frontend/PSS-Web-UI/src/App.tsx"
+        "component": "PackMaintenanceComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
       },
       {
-        "id": "global-change",
-        "path": "/global-change",
-        "component": "GlobalChange",
-        "source": "src/frontend/PSS-Web-UI/src/App.tsx"
-      },
-      {
-        "id": "about",
-        "path": "/about",
-        "component": "About",
-        "source": "src/frontend/PSS-Web-UI/src/App.tsx"
-      }
-    ],
-    "environment_keys": [
-      {
-        "key": "VITE_IMAGE_API_URL",
-        "source": "src/frontend/PSS-Web-UI/Dockerfile"
-      },
-      {
-        "key": "VITE_MSAL_REDIRECT_URL",
-        "source": "src/frontend/PSS-Web-UI/src/msalConfig.tsx"
-      },
-      {
-        "key": "VITE_PSS_API_URL",
-        "source": "src/frontend/PSS-Web-UI/Dockerfile"
-      },
-      {
-        "key": "VITE_REPORT_API_URL",
-        "source": "src/frontend/PSS-Web-UI/Dockerfile"
+        "id": "globalchange",
+        "path": "/globalchange",
+        "component": "GlobalChangeComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
       }
     ],
     "service_modules": [
       {
-        "id": "image-service",
-        "name": "imageService",
-        "path": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-        "env_keys": [
-          "VITE_IMAGE_API_URL"
-        ],
-        "call_count": 4,
-        "endpoints": [
-          {
-            "method": "GET",
-            "route": "/images",
-            "function": "fetchInstructionImageDetails"
-          },
-          {
-            "method": "POST",
-            "route": "/image/reorder",
-            "function": "ReorderImage"
-          },
-          {
-            "method": "POST",
-            "route": "/image/upload/${KisId}/${ProductCode}/${StructureId}/${SortOrder}/${CreatedBy}",
-            "function": "uploadImage"
-          },
-          {
-            "method": "POST",
-            "route": "/image/delete",
-            "function": "DeleteImage"
-          }
-        ]
-      },
-      {
-        "id": "instructionservices",
-        "name": "instructionservices",
-        "path": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "env_keys": [],
-        "call_count": 8,
-        "endpoints": [
-          {
-            "method": "GET",
-            "route": "/headerinstruction",
-            "function": "fetchHeaderInstruction"
-          },
-          {
-            "method": "GET",
-            "route": "/instructiondetail",
-            "function": "fetchInstructionDetail"
-          },
-          {
-            "method": "POST",
-            "route": "/instructiondetail/reorder",
-            "function": "ReorderInstructionDetail"
-          },
-          {
-            "method": "POST",
-            "route": "/instructiontext/extract",
-            "function": "fetchInstructionTextExtract"
-          },
-          {
-            "method": "GET",
-            "route": "/instructiontext/validate",
-            "function": "ValidateInstructionText"
-          },
-          {
-            "method": "POST",
-            "route": "/instructiontext/save",
-            "function": "SaveInstructionText"
-          },
-          {
-            "method": "POST",
-            "route": "/instructionstructure/create",
-            "function": "CreateInstructionStructure"
-          },
-          {
-            "method": "POST",
-            "route": "/instructiondetail/create",
-            "function": "CreateInstructionDetail"
-          }
-        ]
-      },
-      {
-        "id": "packservices",
-        "name": "packservices",
-        "path": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "env_keys": [],
-        "call_count": 30,
-        "endpoints": [
-          {
-            "method": "GET",
-            "route": "/packs",
-            "function": "fetchAllPacks"
-          },
-          {
-            "method": "GET",
-            "route": "/packs",
-            "function": "fetchPack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/syncbom",
-            "function": "SyncBOM"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/header",
-            "function": "fetchPackHeaderInfo"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/changehistory",
-            "function": "fetchChangeHistory"
-          },
-          {
-            "method": "POST",
-            "route": "/changehistory/delete",
-            "function": "deleteChangeHistory"
-          },
-          {
-            "method": "POST",
-            "route": "/changehistory/update",
-            "function": "updateChangeHistory"
-          },
-          {
-            "method": "POST",
-            "route": "/changehistory/add",
-            "function": "addChangeHistory"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/instructions",
-            "function": "fetchPackInstructionDetail"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/components/packaging",
-            "function": "fetchPackagingComponents"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/components/count",
-            "function": "fetchComponentsCount"
-          },
-          {
-            "method": "POST",
-            "route": "/component/movetounallocated",
-            "function": "MoveToUnallocated"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/components/invalid",
-            "function": "fetchInvalidComponents"
-          },
-          {
-            "method": "GET",
-            "route": "/pack/components/unallocated",
-            "function": "fetchUnallocatedComponents"
-          },
-          {
-            "method": "POST",
-            "route": "/component/movetopackaging",
-            "function": "MoveToPackaging"
-          },
-          {
-            "method": "GET",
-            "route": "/globalchange/packs",
-            "function": "fetchPackForGlobalChange"
-          },
-          {
-            "method": "GET",
-            "route": "/globalchange/components",
-            "function": "fetchComponentForGlobalChange"
-          },
-          {
-            "method": "POST",
-            "route": "/globalchange/save",
-            "function": "PerformGlobalChange"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/instructions/reorder",
-            "function": "ReorderPackInstruction"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/save",
-            "function": "SavePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/update",
-            "function": "UpdatePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/validate",
-            "function": "ValidatePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/approve",
-            "function": "ApprovePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/approve/undo",
-            "function": "UndoApprovedPack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/delete",
-            "function": "DeletePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/copy",
-            "function": "CopyPack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/create/draft",
-            "function": "CreateDraftCopy"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/discontinue",
-            "function": "DiscontinuePack"
-          },
-          {
-            "method": "POST",
-            "route": "/pack/approve/undo",
-            "function": "UndoDiscontinuePack"
-          },
-          {
-            "method": "GET",
-            "route": "/currentversion",
-            "function": "fetchCurrentVersion"
-          }
-        ]
-      },
-      {
-        "id": "apiservices",
-        "name": "apiservices",
-        "path": "src/frontend/PSS-Web-UI/src/services/shared/apiservices.tsx",
-        "env_keys": [
-          "VITE_PSS_API_URL"
-        ],
+        "id": "auth-service",
+        "name": "auth.service",
+        "path": "src/pss2-ui/src/app/core/auth/auth.service.ts",
         "call_count": 0,
         "endpoints": []
-      },
-      {
-        "id": "dialog-service",
-        "name": "dialogService",
-        "path": "src/frontend/PSS-Web-UI/src/services/shared/dialogService.tsx",
-        "env_keys": [],
-        "call_count": 0,
-        "endpoints": []
-      },
-      {
-        "id": "loader-service",
-        "name": "loaderService",
-        "path": "src/frontend/PSS-Web-UI/src/services/shared/loaderService.tsx",
-        "env_keys": [],
-        "call_count": 0,
-        "endpoints": []
-      },
-      {
-        "id": "reporting-service",
-        "name": "reportingService",
-        "path": "src/frontend/PSS-Web-UI/src/services/shared/reportingService.tsx",
-        "env_keys": [
-          "VITE_REPORT_API_URL"
-        ],
-        "call_count": 1,
-        "endpoints": [
-          {
-            "method": "POST",
-            "route": "/report/packspecification",
-            "function": "getReportData"
-          }
-        ]
       }
     ],
-    "api_call_candidates": [
-      {
-        "id": "fetch-instruction-image-details-get-images",
-        "service_module": "image-service",
-        "function": "fetchInstructionImageDetails",
-        "method": "GET",
-        "route": "/images",
-        "raw_route": "${API_BASE_URL}/images?KisId=${KisId}&StructureId=${StructureId}",
-        "capability": "Instruction Images",
-        "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "reorder-image-post-image-reorder",
-        "service_module": "image-service",
-        "function": "ReorderImage",
-        "method": "POST",
-        "route": "/image/reorder",
-        "raw_route": "${API_BASE_URL}/image/reorder",
-        "capability": "Instruction Images",
-        "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "upload-image-post-image-upload-kis-id-product-code-structure-id-sort-order-created-by",
-        "service_module": "image-service",
-        "function": "uploadImage",
-        "method": "POST",
-        "route": "/image/upload/${KisId}/${ProductCode}/${StructureId}/${SortOrder}/${CreatedBy}",
-        "raw_route": "${API_BASE_URL}/image/upload/${KisId}/${ProductCode}/${StructureId}/${SortOrder}/${CreatedBy}",
-        "capability": "Instruction Images",
-        "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "delete-image-post-image-delete",
-        "service_module": "image-service",
-        "function": "DeleteImage",
-        "method": "POST",
-        "route": "/image/delete",
-        "raw_route": "${API_BASE_URL}/image/delete",
-        "capability": "Instruction Images",
-        "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-header-instruction-get-headerinstruction",
-        "service_module": "instructionservices",
-        "function": "fetchHeaderInstruction",
-        "method": "GET",
-        "route": "/headerinstruction",
-        "raw_route": "/headerinstruction?KisId=${KisId}&StructureId=${StructureId}",
-        "capability": "Instruction Header",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-instruction-detail-get-instructiondetail",
-        "service_module": "instructionservices",
-        "function": "fetchInstructionDetail",
-        "method": "GET",
-        "route": "/instructiondetail",
-        "raw_route": "/instructiondetail?KisId=${KisId}&StructureId=${StructureId}",
-        "capability": "Instruction Detail",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "reorder-instruction-detail-post-instructiondetail-reorder",
-        "service_module": "instructionservices",
-        "function": "ReorderInstructionDetail",
-        "method": "POST",
-        "route": "/instructiondetail/reorder",
-        "raw_route": "instructiondetail/reorder",
-        "capability": "Instruction Detail",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-instruction-text-extract-post-instructiontext-extract",
-        "service_module": "instructionservices",
-        "function": "fetchInstructionTextExtract",
-        "method": "POST",
-        "route": "/instructiontext/extract",
-        "raw_route": "instructiontext/extract",
-        "capability": "Instruction Text",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "validate-instruction-text-get-instructiontext-validate",
-        "service_module": "instructionservices",
-        "function": "ValidateInstructionText",
-        "method": "GET",
-        "route": "/instructiontext/validate",
-        "raw_route": "instructiontext/validate?KisId=${KisId}&StructureId=${StructureId}&DetailID=${DetailID}&InstructionText=${InstructionText}",
-        "capability": "Instruction Text",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "save-instruction-text-post-instructiontext-save",
-        "service_module": "instructionservices",
-        "function": "SaveInstructionText",
-        "method": "POST",
-        "route": "/instructiontext/save",
-        "raw_route": "instructiontext/save",
-        "capability": "Instruction Text",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "create-instruction-structure-post-instructionstructure-create",
-        "service_module": "instructionservices",
-        "function": "CreateInstructionStructure",
-        "method": "POST",
-        "route": "/instructionstructure/create",
-        "raw_route": "instructionstructure/create",
-        "capability": "Instruction Structure",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "create-instruction-detail-post-instructiondetail-create",
-        "service_module": "instructionservices",
-        "function": "CreateInstructionDetail",
-        "method": "POST",
-        "route": "/instructiondetail/create",
-        "raw_route": "instructiondetail/create",
-        "capability": "Instruction Detail",
-        "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-all-packs-get-packs",
-        "service_module": "packservices",
-        "function": "fetchAllPacks",
-        "method": "GET",
-        "route": "/packs",
-        "raw_route": "/packs",
-        "capability": "Pack Search",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-pack-get-packs",
-        "service_module": "packservices",
-        "function": "fetchPack",
-        "method": "GET",
-        "route": "/packs",
-        "raw_route": "/packs?packcode=${packCode}",
-        "capability": "Pack Search",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "sync-bom-post-pack-syncbom",
-        "service_module": "packservices",
-        "function": "SyncBOM",
-        "method": "POST",
-        "route": "/pack/syncbom",
-        "raw_route": "pack/syncbom",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-pack-header-info-get-pack-header",
-        "service_module": "packservices",
-        "function": "fetchPackHeaderInfo",
-        "method": "GET",
-        "route": "/pack/header",
-        "raw_route": "pack/header?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-change-history-get-pack-changehistory",
-        "service_module": "packservices",
-        "function": "fetchChangeHistory",
-        "method": "GET",
-        "route": "/pack/changehistory",
-        "raw_route": "pack/changehistory?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "delete-change-history-post-changehistory-delete",
-        "service_module": "packservices",
-        "function": "deleteChangeHistory",
-        "method": "POST",
-        "route": "/changehistory/delete",
-        "raw_route": "changehistory/delete",
-        "capability": "Change History",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "update-change-history-post-changehistory-update",
-        "service_module": "packservices",
-        "function": "updateChangeHistory",
-        "method": "POST",
-        "route": "/changehistory/update",
-        "raw_route": "changehistory/update",
-        "capability": "Change History",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "add-change-history-post-changehistory-add",
-        "service_module": "packservices",
-        "function": "addChangeHistory",
-        "method": "POST",
-        "route": "/changehistory/add",
-        "raw_route": "changehistory/add",
-        "capability": "Change History",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-pack-instruction-detail-get-pack-instructions",
-        "service_module": "packservices",
-        "function": "fetchPackInstructionDetail",
-        "method": "GET",
-        "route": "/pack/instructions",
-        "raw_route": "pack/instructions?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-packaging-components-get-pack-components-packaging",
-        "service_module": "packservices",
-        "function": "fetchPackagingComponents",
-        "method": "GET",
-        "route": "/pack/components/packaging",
-        "raw_route": "pack/components/packaging?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-components-count-get-pack-components-count",
-        "service_module": "packservices",
-        "function": "fetchComponentsCount",
-        "method": "GET",
-        "route": "/pack/components/count",
-        "raw_route": "pack/components/count?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "move-to-unallocated-post-component-movetounallocated",
-        "service_module": "packservices",
-        "function": "MoveToUnallocated",
-        "method": "POST",
-        "route": "/component/movetounallocated",
-        "raw_route": "component/movetounallocated",
-        "capability": "Component Movement",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-invalid-components-get-pack-components-invalid",
-        "service_module": "packservices",
-        "function": "fetchInvalidComponents",
-        "method": "GET",
-        "route": "/pack/components/invalid",
-        "raw_route": "pack/components/invalid?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-unallocated-components-get-pack-components-unallocated",
-        "service_module": "packservices",
-        "function": "fetchUnallocatedComponents",
-        "method": "GET",
-        "route": "/pack/components/unallocated",
-        "raw_route": "pack/components/unallocated?KisId=${KisId}",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "move-to-packaging-post-component-movetopackaging",
-        "service_module": "packservices",
-        "function": "MoveToPackaging",
-        "method": "POST",
-        "route": "/component/movetopackaging",
-        "raw_route": "component/movetopackaging",
-        "capability": "Component Movement",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-pack-for-global-change-get-globalchange-packs",
-        "service_module": "packservices",
-        "function": "fetchPackForGlobalChange",
-        "method": "GET",
-        "route": "/globalchange/packs",
-        "raw_route": "globalchange/packs?Mode=${Mode}&ComponentNumber=${ComponentNumber}",
-        "capability": "Global Change",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "fetch-component-for-global-change-get-globalchange-components",
-        "service_module": "packservices",
-        "function": "fetchComponentForGlobalChange",
-        "method": "GET",
-        "route": "/globalchange/components",
-        "raw_route": "globalchange/components?Mode=${Mode}&ComponentNumber=${ComponentNumber}",
-        "capability": "Global Change",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "template-url"
-      },
-      {
-        "id": "perform-global-change-post-globalchange-save",
-        "service_module": "packservices",
-        "function": "PerformGlobalChange",
-        "method": "POST",
-        "route": "/globalchange/save",
-        "raw_route": "globalchange/save",
-        "capability": "Global Change",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "reorder-pack-instruction-post-pack-instructions-reorder",
-        "service_module": "packservices",
-        "function": "ReorderPackInstruction",
-        "method": "POST",
-        "route": "/pack/instructions/reorder",
-        "raw_route": "pack/instructions/reorder",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "save-pack-post-pack-save",
-        "service_module": "packservices",
-        "function": "SavePack",
-        "method": "POST",
-        "route": "/pack/save",
-        "raw_route": "pack/save",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "update-pack-post-pack-update",
-        "service_module": "packservices",
-        "function": "UpdatePack",
-        "method": "POST",
-        "route": "/pack/update",
-        "raw_route": "pack/update",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "validate-pack-post-pack-validate",
-        "service_module": "packservices",
-        "function": "ValidatePack",
-        "method": "POST",
-        "route": "/pack/validate",
-        "raw_route": "pack/validate",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "approve-pack-post-pack-approve",
-        "service_module": "packservices",
-        "function": "ApprovePack",
-        "method": "POST",
-        "route": "/pack/approve",
-        "raw_route": "pack/approve",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "undo-approved-pack-post-pack-approve-undo",
-        "service_module": "packservices",
-        "function": "UndoApprovedPack",
-        "method": "POST",
-        "route": "/pack/approve/undo",
-        "raw_route": "pack/approve/undo",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "delete-pack-post-pack-delete",
-        "service_module": "packservices",
-        "function": "DeletePack",
-        "method": "POST",
-        "route": "/pack/delete",
-        "raw_route": "pack/delete",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "copy-pack-post-pack-copy",
-        "service_module": "packservices",
-        "function": "CopyPack",
-        "method": "POST",
-        "route": "/pack/copy",
-        "raw_route": "pack/copy",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "create-draft-copy-post-pack-create-draft",
-        "service_module": "packservices",
-        "function": "CreateDraftCopy",
-        "method": "POST",
-        "route": "/pack/create/draft",
-        "raw_route": "pack/create/draft",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "discontinue-pack-post-pack-discontinue",
-        "service_module": "packservices",
-        "function": "DiscontinuePack",
-        "method": "POST",
-        "route": "/pack/discontinue",
-        "raw_route": "pack/discontinue",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "undo-discontinue-pack-post-pack-approve-undo",
-        "service_module": "packservices",
-        "function": "UndoDiscontinuePack",
-        "method": "POST",
-        "route": "/pack/approve/undo",
-        "raw_route": "pack/approve/undo",
-        "capability": "Pack Management",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "fetch-current-version-get-currentversion",
-        "service_module": "packservices",
-        "function": "fetchCurrentVersion",
-        "method": "GET",
-        "route": "/currentversion",
-        "raw_route": "currentversion",
-        "capability": "Version",
-        "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-        "confidence": "literal-url"
-      },
-      {
-        "id": "get-report-data-post-report-packspecification",
-        "service_module": "reporting-service",
-        "function": "getReportData",
-        "method": "POST",
-        "route": "/report/packspecification",
-        "raw_route": "/report/packspecification",
-        "capability": "Reporting",
-        "source": "src/frontend/PSS-Web-UI/src/services/shared/reportingService.tsx",
-        "confidence": "literal-url"
-      }
-    ]
+    "api_call_candidates": []
   },
   "api_surface": [
     {
-      "id": "get-images",
-      "function": "GetImages",
-      "handler": "GetImages",
+      "id": "get-weather-forecast",
+      "handler": "Get",
       "method": "GET",
-      "route": "/images",
-      "capability": "Instruction Images",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/ImageFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
+      "route": "/WeatherForecast",
+      "capability": "Weatherforecast",
+      "source": "src/pss2-api/Controllers/WeatherForecastController.cs"
     },
     {
-      "id": "post-image-upload-kis-id-product-code-structure-id-sort-order-created-by",
-      "function": "UploadImage",
-      "handler": "UploadImagesAsync",
-      "method": "POST",
-      "route": "/image/upload/{KisId}/{ProductCode}/{StructureId}/{SortOrder}/{CreatedBy}",
-      "capability": "Instruction Images",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/ImageFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-image-reorder",
-      "function": "ReorderImage",
-      "handler": "ReorderImage",
-      "method": "POST",
-      "route": "/image/reorder",
-      "capability": "Instruction Images",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/ImageFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-image-delete",
-      "function": "DeleteImage",
-      "handler": "DeleteImages",
-      "method": "POST",
-      "route": "/image/delete",
-      "capability": "Instruction Images",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/ImageFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiondetail-create",
-      "function": "CreateInstructionDetail",
-      "handler": "CreateInstructionDetail",
-      "method": "POST",
-      "route": "/instructiondetail/create",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructionstructure-create",
-      "function": "CreateInstructionStructure",
-      "handler": "CreateInstructionStructure",
-      "method": "POST",
-      "route": "/instructionstructure/create",
-      "capability": "Instruction Structure",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiondetail-delete",
-      "function": "DeleteInstructionDetail",
-      "handler": "DeleteInstructionDetail",
-      "method": "POST",
-      "route": "/instructiondetail/delete",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiondetail-setapplicability",
-      "function": "SetInstructionApplicability",
-      "handler": "SetApplicability",
-      "method": "POST",
-      "route": "/instructiondetail/setapplicability",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiondetail-picture-delete",
-      "function": "DeleteInstructionPicture",
-      "handler": "DeleteInstructionPicture",
-      "method": "POST",
-      "route": "/instructiondetail/picture/delete",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-instruction-images",
-      "function": "GetInstructionPicture",
-      "handler": "GetInstructionPicture",
+      "id": "get-api-pack",
+      "handler": "GetAll",
       "method": "GET",
-      "route": "/instruction/images",
-      "capability": "Instruction Images",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
+      "route": "/api/Pack",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/PackController.cs"
     },
     {
-      "id": "get-instructiondetail",
-      "function": "GetInstructionDetailsForMaintenance",
-      "handler": "GetInstructionDetailsForMaintenance",
+      "id": "get-api-pack-id",
+      "handler": "GetById",
       "method": "GET",
-      "route": "/instructiondetail",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
+      "route": "/api/Pack/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/PackController.cs"
     },
     {
-      "id": "post-instructiondetail-reorder",
-      "function": "ReorderDetail",
-      "handler": "ReorderStructure",
+      "id": "post-api-pack",
+      "handler": "Create",
       "method": "POST",
-      "route": "/instructiondetail/reorder",
-      "capability": "Instruction Detail",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
+      "route": "/api/Pack",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/PackController.cs"
     },
     {
-      "id": "get-headerinstruction",
-      "function": "GetHeaderInstruction",
-      "handler": "sp_GetHeaderInstruction",
+      "id": "put-api-pack-id",
+      "handler": "Update",
+      "method": "PUT",
+      "route": "/api/Pack/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/PackController.cs"
+    },
+    {
+      "id": "delete-api-pack-id",
+      "handler": "Delete",
+      "method": "DELETE",
+      "route": "/api/Pack/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/PackController.cs"
+    },
+    {
+      "id": "get-api-sample-health",
+      "handler": "Health",
       "method": "GET",
-      "route": "/headerinstruction",
-      "capability": "Instruction Header",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiontext-extract",
-      "function": "GetInstructionTextExtract",
-      "handler": "GetInstructionTextExtract",
-      "method": "POST",
-      "route": "/instructiontext/extract",
-      "capability": "Instruction Text",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-instructiontext-save",
-      "function": "SaveInstructionText",
-      "handler": "SaveInstructionText",
-      "method": "POST",
-      "route": "/instructiontext/save",
-      "capability": "Instruction Text",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-instructiontext-validate",
-      "function": "ValidateInstructionText",
-      "handler": "ValidateInstructionText",
-      "method": "GET",
-      "route": "/instructiontext/validate",
-      "capability": "Instruction Text",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-packs",
-      "function": "GetPacks",
-      "handler": "GetPackDetails",
-      "method": "GET",
-      "route": "/packs",
-      "capability": "Pack Search",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-header",
-      "function": "GetPackHeaderInfo",
-      "handler": "GetPackHeaderInfo",
-      "method": "GET",
-      "route": "/pack/header",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-instructions",
-      "function": "GetPackInstructionDetail",
-      "handler": "GetInstructionDetails",
-      "method": "GET",
-      "route": "/pack/instructions",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-instructions-reorder",
-      "function": "ReorderStructure",
-      "handler": "ReorderStructure",
-      "method": "POST",
-      "route": "/pack/instructions/reorder",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-changehistory",
-      "function": "GetPackChangeHistory",
-      "handler": "GetPackChangeHistory",
-      "method": "GET",
-      "route": "/pack/changehistory",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-changehistory-add",
-      "function": "AddChangeHistory",
-      "handler": "AddChangeHistory",
-      "method": "POST",
-      "route": "/changehistory/add",
-      "capability": "Change History",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-changehistory-delete",
-      "function": "DeleteChangeHistory",
-      "handler": "DeleteChangeHistory",
-      "method": "POST",
-      "route": "/changehistory/delete",
-      "capability": "Change History",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-changehistory-update",
-      "function": "UpdateChangeHistory",
-      "handler": "UpdateChangeHistory",
-      "method": "POST",
-      "route": "/changehistory/update",
-      "capability": "Change History",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-components-unallocated",
-      "function": "GetUnallocatedComponents",
-      "handler": "GetUnallocatedComponentsList",
-      "method": "GET",
-      "route": "/pack/components/unallocated",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-syncbom",
-      "function": "SyncBOM",
-      "handler": "SyncBOM",
-      "method": "POST",
-      "route": "/pack/syncbom",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-component-movetopackaging",
-      "function": "MoveToPackaging",
-      "handler": "MoveToPackaging",
-      "method": "POST",
-      "route": "/component/movetopackaging",
-      "capability": "Component Movement",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-components-packaging",
-      "function": "GetPackagingComponents",
-      "handler": "GetPackagingComponentsList",
-      "method": "GET",
-      "route": "/pack/components/packaging",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-components-count",
-      "function": "GetComponentsCount",
-      "handler": "GetComponentsCount",
-      "method": "GET",
-      "route": "/pack/components/count",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-component-movetounallocated",
-      "function": "MoveToUnallocated",
-      "handler": "MoveToUnallocated",
-      "method": "POST",
-      "route": "/component/movetounallocated",
-      "capability": "Component Movement",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-pack-components-invalid",
-      "function": "GetInvalidComponents",
-      "handler": "GetInvalidComponentsList",
-      "method": "GET",
-      "route": "/pack/components/invalid",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-save",
-      "function": "CreatePack",
-      "handler": "SavePackHeaderInfo",
-      "method": "POST",
-      "route": "/pack/save",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-update",
-      "function": "UpdatePack",
-      "handler": "UpdatePackHeaderInfo",
-      "method": "POST",
-      "route": "/pack/update",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-validate",
-      "function": "ValidatePack",
-      "handler": "SaveInstructionText",
-      "method": "POST",
-      "route": "/pack/validate",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-approve",
-      "function": "ApprovePack",
-      "handler": "ApproveKIS",
-      "method": "POST",
-      "route": "/pack/approve",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-approve-undo",
-      "function": "UndoApprovedPack",
-      "handler": "ApproveKISUndo",
-      "method": "POST",
-      "route": "/pack/approve/undo",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-copy",
-      "function": "CopyPack",
-      "handler": "CopyKIS",
-      "method": "POST",
-      "route": "/pack/copy",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-delete",
-      "function": "DeletePack",
-      "handler": "DeleteKIS",
-      "method": "POST",
-      "route": "/pack/delete",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-create-draft",
-      "function": "CheckForDraftKIS",
-      "handler": "CheckForDraftKIS",
-      "method": "POST",
-      "route": "/pack/create/draft",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-lock-unlock",
-      "function": "Lock-UnlockPack",
-      "handler": "LockUnlockPack",
-      "method": "POST",
-      "route": "/pack/lock-unlock",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-discontinue",
-      "function": "DiscontinuePack",
-      "handler": "DiscontinueKIS",
-      "method": "POST",
-      "route": "/pack/discontinue",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-pack-discontinue-undo",
-      "function": "UndoDiscontinuePack",
-      "handler": "DiscontinueKISUndo",
-      "method": "POST",
-      "route": "/pack/discontinue/undo",
-      "capability": "Pack Management",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-globalchange-packs",
-      "function": "GetGlobalChangeList",
-      "handler": "GetGlobalChangeList",
-      "method": "GET",
-      "route": "/globalchange/packs",
-      "capability": "Global Change",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-globalchange-components",
-      "function": "GetComponentsforGlobalChange",
-      "handler": "GetComponentsforGlobalChange",
-      "method": "GET",
-      "route": "/globalchange/components",
-      "capability": "Global Change",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-globalchange-save",
-      "function": "PerformGlobalChange",
-      "handler": "PerformGlobalChange",
-      "method": "POST",
-      "route": "/globalchange/save",
-      "capability": "Global Change",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "get-currentversion",
-      "function": "GetCurrentVersion",
-      "handler": "GetCurrentVersion",
-      "method": "GET",
-      "route": "/currentversion",
-      "capability": "Version",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-report-packspecification",
-      "function": "GenerateReport",
-      "handler": "GeneratePackSpecificationReportAsync",
-      "method": "POST",
-      "route": "/report/packspecification",
-      "capability": "Reporting",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-report-store-approve",
-      "function": "StoreApprovedReport",
-      "handler": "StoreApprovedReport",
-      "method": "POST",
-      "route": "/report/store/approve",
-      "capability": "Reporting",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
-    },
-    {
-      "id": "post-report-store-archive",
-      "function": "StoreArchivedReport",
-      "handler": "StoreArchivedReport",
-      "method": "POST",
-      "route": "/report/store/archive",
-      "capability": "Reporting",
-      "source": "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs",
-      "uses_infra": [
-        "keyvault",
-        "sql-db",
-        "storage"
-      ]
+      "route": "/api/Sample/health",
+      "capability": "Api",
+      "source": "src/pss2-api/PSS.Api/Controllers/SampleController.cs"
     }
   ],
   "backend": {
+    "build_mode": "aspnet-core-production",
     "projects": [
       {
-        "path": "src/backend/Medline.PSS.FunctionApp.Api/Medline.PSS.FunctionApp.Api.csproj",
-        "target_framework": "net6.0",
+        "path": "src/pss2-api/pss-2-api.csproj",
+        "target_framework": "net8.0",
         "packages": [
-          {
-            "name": "Microsoft.AspNetCore.AzureKeyVault.HostingStartup",
-            "version": "2.0.4"
-          },
-          {
-            "name": "Microsoft.Azure.Functions.Worker",
-            "version": "1.19.0"
-          },
-          {
-            "name": "Microsoft.Azure.Functions.Worker.Extensions.Http",
-            "version": "3.0.13"
-          },
-          {
-            "name": "Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs",
-            "version": "6.0.0"
-          },
-          {
-            "name": "Microsoft.Azure.Functions.Worker.Sdk",
-            "version": "1.14.0"
-          },
-          {
-            "name": "Microsoft.Extensions.Configuration.UserSecrets",
-            "version": "6.0.1"
-          },
-          {
-            "name": "Newtonsoft.Json",
-            "version": "13.0.3"
-          }
-        ]
-      },
-      {
-        "path": "src/backend/Medline.PSS.FunctionApp.BAL/Medline.PSS.FunctionApp.BAL.csproj",
-        "target_framework": "net6.0",
-        "packages": []
-      },
-      {
-        "path": "src/backend/Medline.PSS.FunctionApp.DAL/Medline.PSS.FunctionApp.DAL.csproj",
-        "target_framework": "net6.0",
-        "packages": [
-          {
-            "name": "Azure.Core",
-            "version": "1.37.0"
-          },
-          {
-            "name": "Azure.Identity",
-            "version": "1.10.4"
-          },
-          {
-            "name": "Azure.Security.KeyVault.Secrets",
-            "version": "4.5.0"
-          },
-          {
-            "name": "Azure.Storage.Blobs",
-            "version": "12.13.1"
-          },
-          {
-            "name": "Azure.Storage.Files.Shares",
-            "version": "12.17.1"
-          },
           {
             "name": "Microsoft.Data.SqlClient",
-            "version": "5.1.5"
+            "version": "7.0.1"
+          },
+          {
+            "name": "Microsoft.EntityFrameworkCore",
+            "version": "8.0.1"
+          },
+          {
+            "name": "Swashbuckle.AspNetCore",
+            "version": "6.6.2"
+          },
+          {
+            "name": "xunit.abstractions",
+            "version": "2.0.3"
+          },
+          {
+            "name": "xunit.assert",
+            "version": "2.9.3"
+          },
+          {
+            "name": "xunit.extensibility.core",
+            "version": "2.9.3"
           }
         ]
       }
     ],
-    "function_files": [
-      "src/backend/Medline.PSS.FunctionApp.Api/Functions/ImageFunctions.cs",
-      "src/backend/Medline.PSS.FunctionApp.Api/Functions/InstructionDetailFunctions.cs",
-      "src/backend/Medline.PSS.FunctionApp.Api/Functions/PackFunctions.cs"
-    ],
-    "key_vault_secret_names": [
-      {
-        "name": "AzureStorageAccount",
-        "source": "src/backend/Medline.PSS.FunctionApp.DAL/Shared/KeyVaultService/KeyVaultService.cs"
-      },
-      {
-        "name": "PSSConnectionString",
-        "source": "src/backend/Medline.PSS.FunctionApp.DAL/Shared/KeyVaultService/KeyVaultService.cs"
-      },
-      {
-        "name": "PSSFileShareConnectionsString",
-        "source": "src/backend/Medline.PSS.FunctionApp.DAL/Shared/KeyVaultService/KeyVaultService.cs"
-      }
+    "docker": {
+      "path": "src/pss2-api/Dockerfile",
+      "stages": [
+        {
+          "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+          "stage": "build"
+        },
+        {
+          "image": "mcr.microsoft.com/dotnet/aspnet:8.0",
+          "stage": "runtime"
+        }
+      ],
+      "env_keys": [
+        "ASPNETCORE_URLS"
+      ]
+    },
+    "compiled_sources": [
+      "src/pss2-api/Controllers/WeatherForecastController.cs",
+      "src/pss2-api/PSS.Api/Controllers/PackController.cs",
+      "src/pss2-api/PSS.Api/Controllers/SampleController.cs",
+      "src/pss2-api/PSS.Api/Middleware/AuthenticationMiddleware.cs",
+      "src/pss2-api/PSS.Api/Program.cs",
+      "src/pss2-api/PSS.Api/Startup.cs",
+      "src/pss2-api/PSS.Application/DTOs/InstructionDetailDto.cs",
+      "src/pss2-api/PSS.Application/DTOs/PackChangeHistoryDto.cs",
+      "src/pss2-api/PSS.Application/DTOs/PackComponentsDto.cs",
+      "src/pss2-api/PSS.Application/DTOs/PackDto.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IAzureAppInsightsService.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IAzureAuthService.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IAzureBlobStorageService.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IAzureKeyVaultService.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IFactory.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IRepository.cs",
+      "src/pss2-api/PSS.Application/Interfaces/IUnitOfWork.cs",
+      "src/pss2-api/PSS.Application/Services/PackService.cs",
+      "src/pss2-api/PSS.Application/Services/ServiceFactory.cs",
+      "src/pss2-api/PSS.Domain/Entities/Pack.cs",
+      "src/pss2-api/PSS.Domain/Entities/PackInstructionDetail.cs",
+      "src/pss2-api/PSS.Domain/Enums/StatusEnum.cs",
+      "src/pss2-api/PSS.Domain/Models/CoreModel.cs",
+      "src/pss2-api/PSS.Infrastructure/Data/ApplicationDbContext.cs",
+      "src/pss2-api/PSS.Infrastructure/Data/DbContext.cs",
+      "src/pss2-api/PSS.Infrastructure/Repositories/GenericRepository.cs",
+      "src/pss2-api/PSS.Infrastructure/Repositories/PackRepository.cs",
+      "src/pss2-api/PSS.Infrastructure/Repositories/UnitOfWork.cs",
+      "src/pss2-api/PSS.Infrastructure/Services/AzureAppInsightsService.cs",
+      "src/pss2-api/PSS.Infrastructure/Services/AzureAuthService.cs",
+      "src/pss2-api/PSS.Infrastructure/Services/AzureBlobStorageService.cs",
+      "src/pss2-api/PSS.Infrastructure/Services/AzureKeyVaultService.cs",
+      "src/pss2-api/PSS.Tests/SampleTests.cs",
+      "src/pss2-api/Program.cs",
+      "src/pss2-api/WeatherForecast.cs"
     ]
   },
-  "interaction_edges": [
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /images",
-      "call": "fetch-instruction-image-details-get-images",
-      "capability": "Instruction Images",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-      "api": "get-images"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /image/reorder",
-      "call": "reorder-image-post-image-reorder",
-      "capability": "Instruction Images",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-      "api": "post-image-reorder"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /image/upload/${KisId}/${ProductCode}/${StructureId}/${SortOrder}/${CreatedBy}",
-      "call": "upload-image-post-image-upload-kis-id-product-code-structure-id-sort-order-created-by",
-      "capability": "Instruction Images",
-      "confidence": "frontend-call-candidate",
-      "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /image/delete",
-      "call": "delete-image-post-image-delete",
-      "capability": "Instruction Images",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/imageService.tsx",
-      "api": "post-image-delete"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /headerinstruction",
-      "call": "fetch-header-instruction-get-headerinstruction",
-      "capability": "Instruction Header",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "get-headerinstruction"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /instructiondetail",
-      "call": "fetch-instruction-detail-get-instructiondetail",
-      "capability": "Instruction Detail",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "get-instructiondetail"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /instructiondetail/reorder",
-      "call": "reorder-instruction-detail-post-instructiondetail-reorder",
-      "capability": "Instruction Detail",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "post-instructiondetail-reorder"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /instructiontext/extract",
-      "call": "fetch-instruction-text-extract-post-instructiontext-extract",
-      "capability": "Instruction Text",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "post-instructiontext-extract"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /instructiontext/validate",
-      "call": "validate-instruction-text-get-instructiontext-validate",
-      "capability": "Instruction Text",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "get-instructiontext-validate"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /instructiontext/save",
-      "call": "save-instruction-text-post-instructiontext-save",
-      "capability": "Instruction Text",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "post-instructiontext-save"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /instructionstructure/create",
-      "call": "create-instruction-structure-post-instructionstructure-create",
-      "capability": "Instruction Structure",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "post-instructionstructure-create"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /instructiondetail/create",
-      "call": "create-instruction-detail-post-instructiondetail-create",
-      "capability": "Instruction Detail",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/instructionservices.tsx",
-      "api": "post-instructiondetail-create"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /packs",
-      "call": "fetch-all-packs-get-packs",
-      "capability": "Pack Search",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-packs"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /packs",
-      "call": "fetch-pack-get-packs",
-      "capability": "Pack Search",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-packs"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/syncbom",
-      "call": "sync-bom-post-pack-syncbom",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-syncbom"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/header",
-      "call": "fetch-pack-header-info-get-pack-header",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-header"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/changehistory",
-      "call": "fetch-change-history-get-pack-changehistory",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-changehistory"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /changehistory/delete",
-      "call": "delete-change-history-post-changehistory-delete",
-      "capability": "Change History",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-changehistory-delete"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /changehistory/update",
-      "call": "update-change-history-post-changehistory-update",
-      "capability": "Change History",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-changehistory-update"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /changehistory/add",
-      "call": "add-change-history-post-changehistory-add",
-      "capability": "Change History",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-changehistory-add"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/instructions",
-      "call": "fetch-pack-instruction-detail-get-pack-instructions",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-instructions"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/components/packaging",
-      "call": "fetch-packaging-components-get-pack-components-packaging",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-components-packaging"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/components/count",
-      "call": "fetch-components-count-get-pack-components-count",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-components-count"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /component/movetounallocated",
-      "call": "move-to-unallocated-post-component-movetounallocated",
-      "capability": "Component Movement",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-component-movetounallocated"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/components/invalid",
-      "call": "fetch-invalid-components-get-pack-components-invalid",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-components-invalid"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /pack/components/unallocated",
-      "call": "fetch-unallocated-components-get-pack-components-unallocated",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-pack-components-unallocated"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /component/movetopackaging",
-      "call": "move-to-packaging-post-component-movetopackaging",
-      "capability": "Component Movement",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-component-movetopackaging"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /globalchange/packs",
-      "call": "fetch-pack-for-global-change-get-globalchange-packs",
-      "capability": "Global Change",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-globalchange-packs"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /globalchange/components",
-      "call": "fetch-component-for-global-change-get-globalchange-components",
-      "capability": "Global Change",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-globalchange-components"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /globalchange/save",
-      "call": "perform-global-change-post-globalchange-save",
-      "capability": "Global Change",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-globalchange-save"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/instructions/reorder",
-      "call": "reorder-pack-instruction-post-pack-instructions-reorder",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-instructions-reorder"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/save",
-      "call": "save-pack-post-pack-save",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-save"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/update",
-      "call": "update-pack-post-pack-update",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-update"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/validate",
-      "call": "validate-pack-post-pack-validate",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-validate"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/approve",
-      "call": "approve-pack-post-pack-approve",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-approve"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/approve/undo",
-      "call": "undo-approved-pack-post-pack-approve-undo",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-approve-undo"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/delete",
-      "call": "delete-pack-post-pack-delete",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-delete"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/copy",
-      "call": "copy-pack-post-pack-copy",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-copy"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/create/draft",
-      "call": "create-draft-copy-post-pack-create-draft",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-create-draft"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/discontinue",
-      "call": "discontinue-pack-post-pack-discontinue",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-discontinue"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /pack/approve/undo",
-      "call": "undo-discontinue-pack-post-pack-approve-undo",
-      "capability": "Pack Management",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "post-pack-approve-undo"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "GET /currentversion",
-      "call": "fetch-current-version-get-currentversion",
-      "capability": "Version",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/packservices.tsx",
-      "api": "get-currentversion"
-    },
-    {
-      "from": "react-fe",
-      "to": "azure-functions",
-      "label": "POST /report/packspecification",
-      "call": "get-report-data-post-report-packspecification",
-      "capability": "Reporting",
-      "confidence": "static-route-match",
-      "source": "src/frontend/PSS-Web-UI/src/services/shared/reportingService.tsx",
-      "api": "post-report-packspecification"
-    }
-  ],
+  "interaction_edges": [],
   "capability_groups": [
     {
-      "name": "Change History",
-      "frontend_calls": 3,
-      "api_endpoints": 3
-    },
-    {
-      "name": "Component Movement",
-      "frontend_calls": 2,
-      "api_endpoints": 2
-    },
-    {
-      "name": "Global Change",
-      "frontend_calls": 3,
-      "api_endpoints": 3
-    },
-    {
-      "name": "Instruction Detail",
-      "frontend_calls": 3,
+      "name": "Api",
       "api_endpoints": 6
     },
     {
-      "name": "Instruction Header",
-      "frontend_calls": 1,
-      "api_endpoints": 1
-    },
-    {
-      "name": "Instruction Images",
-      "frontend_calls": 4,
-      "api_endpoints": 5
-    },
-    {
-      "name": "Instruction Structure",
-      "frontend_calls": 1,
-      "api_endpoints": 1
-    },
-    {
-      "name": "Instruction Text",
-      "frontend_calls": 3,
-      "api_endpoints": 3
-    },
-    {
-      "name": "Pack Management",
-      "frontend_calls": 19,
-      "api_endpoints": 20
-    },
-    {
-      "name": "Pack Search",
-      "frontend_calls": 2,
-      "api_endpoints": 1
-    },
-    {
-      "name": "Reporting",
-      "frontend_calls": 1,
-      "api_endpoints": 3
-    },
-    {
-      "name": "Version",
-      "frontend_calls": 1,
+      "name": "Weatherforecast",
       "api_endpoints": 1
     }
   ],
   "external_dependencies": [
     {
+      "name": "Azure Key Vault",
+      "infra_ref": "keyvault",
+      "evidence_count": 2,
+      "sample_source": "src/pss2-api/PSS.Application/Interfaces/IAzureKeyVaultService.cs"
+    },
+    {
       "name": "Azure SQL Database",
-      "via": "Key Vault secret PSSConnectionString",
       "infra_ref": "sql-db",
-      "evidence_count": 13,
-      "sample_source": "src/backend/Medline.PSS.FunctionApp.DAL/GlobalChange/GlobalChangeRepository.cs"
+      "evidence_count": 3,
+      "sample_source": "src/pss2-api/PSS.Infrastructure/Data/ApplicationDbContext.cs"
     },
     {
       "name": "Azure Storage",
-      "via": "Key Vault secret AzureStorageAccount",
       "infra_ref": "storage",
       "evidence_count": 2,
-      "sample_source": "src/backend/Medline.PSS.FunctionApp.DAL/Shared/KeyVaultService/IKeyVaultService.cs"
+      "sample_source": "src/pss2-api/PSS.Application/Interfaces/IAzureBlobStorageService.cs"
     }
   ],
   "build_outputs": [
     {
-      "component": "react-fe",
+      "component": "angular-ui",
       "kind": "container_image",
-      "image": null,
-      "image_digest": null,
-      "base_image": "nginx:alpine"
+      "image": "m3acropsd1.azurecr.io/pss2-fe:2661817852",
+      "image_digest": "sha256:b539d608dce8fd5dbe89e82cdc37b5ef5bd9db8e0c584c4a49038f2a7c7f0b60",
+      "base_image": "nginx:1.27-alpine"
     },
     {
-      "component": "azure-functions",
-      "kind": "zip_package",
-      "package": null,
-      "runtime": ".NET isolated 6.0"
+      "component": "backend-api",
+      "kind": "container_image",
+      "image": "m3acropsd1.azurecr.io/pss2-api:2661817852",
+      "image_digest": "sha256:d4e7cc4cc2a8621e28352627c7b9d4423a9264b5e47a0c6572f5b96d83acab6b",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
     }
   ]
 }

@@ -55,6 +55,10 @@ elements:
     - name: "PSS 1.0"
       type: "ApplicationComponent"
       synthetic: true
+      related_views:
+        - operations_pss2_azure_reference_architecture
+        - project_pss2_app_architecture
+        - project_pss2_app_inventory
       override:
         Internal Group: "Production/QA"
         Role: "Pack Specification"

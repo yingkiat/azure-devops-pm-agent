@@ -71,6 +71,57 @@ class PortalBuilder:
         except Exception:
             return {}
 
+    def _apply_related_view_links(self, element_index: Dict, view_registry: Dict) -> int:
+        """Append spec-declared related views to matching element navigation entries."""
+        links_added = 0
+
+        for spec_path in sorted(self.specs_dir.glob("**/*.yaml")):
+            try:
+                with open(spec_path, "r", encoding="utf-8") as f:
+                    spec = yaml.safe_load(f) or {}
+            except Exception:
+                continue
+
+            for elem_spec in (spec.get("elements", {}) or {}).get("include", []) or []:
+                related_views = elem_spec.get("related_views") or []
+                if not related_views:
+                    continue
+                if isinstance(related_views, str):
+                    related_views = [related_views]
+
+                name = elem_spec.get("name")
+                elem_type = elem_spec.get("type")
+                matches = [
+                    elem
+                    for elem in element_index.values()
+                    if elem.get("name") == name
+                    and (not elem_type or elem.get("type") == elem_type)
+                ]
+                if not matches:
+                    print(f"      WARN {spec_path.name}: related_views target element not found: {name}")
+                    continue
+
+                for elem in matches:
+                    appears_in = elem.setdefault("appears_in", [])
+                    existing = {view.get("view_id") for view in appears_in}
+
+                    for view_id in related_views:
+                        view = view_registry.get(view_id)
+                        if not view:
+                            print(f"      WARN {spec_path.name}: related view not registered: {view_id}")
+                            continue
+                        if view_id in existing:
+                            continue
+                        appears_in.append({
+                            "view_id": view_id,
+                            "view_name": view.get("name", view_id),
+                            "context": f"Related from {spec_path.stem}",
+                        })
+                        existing.add(view_id)
+                        links_added += 1
+
+        return links_added
+
     def _is_azure_diagram(self, relative_path: Path) -> bool:
         """Return whether the matching YAML spec is an azure_diagram."""
         spec_path = self.specs_dir / relative_path.with_suffix(".yaml")
@@ -550,9 +601,12 @@ class PortalBuilder:
         )
         relationship_graph = index_gen.generate_relationship_graph(element_index)
         view_registry = index_gen.generate_view_registry(diagrams_info)
+        related_links = self._apply_related_view_links(element_index, view_registry)
 
         print(f"      OK Indexed {len(element_index)} elements")
         print(f"      OK Mapped {sum(len(v['outbound']) + len(v['inbound']) for v in relationship_graph.values())} relationships")
+        if related_links:
+            print(f"      OK Added {related_links} related view link(s)")
         print(f"      OK Registered {len(view_registry)} views\n")
 
         # Step 5: Save indexes
