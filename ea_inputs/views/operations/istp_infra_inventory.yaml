@@ -1,0 +1,26 @@
+# === MODE ===
+type: "json_inventory"
+inventory: "04_projects/ISTP/infra-inventory.dev.json"
+
+# === METADATA ===
+metadata:
+  domain: "operations"
+  workload: "ISTP"
+  project_key: "istp"
+  project: "ISTP"
+  view_kind: "project"
+  artifact_label: "Infrastructure DEV"
+
+# === VIEW DEFINITION ===
+view:
+  name: "ISTP - Infrastructure Inventory"
+  documentation: |
+    Dev-environment infrastructure inventory for ISTP, sourced from
+    infra/scripts/generate_infra_inventory.py in the ISTP repo (Terraform-driven
+    App Service baseline: App Service Plan, frontend/backend Linux Web Apps,
+    Storage Account, Key Vault, Azure SQL, plus externally-owned VNet/subnets).
+    Azure Front Door and a WAF policy are planned for the external portal
+    requirement but are not yet deployed. They will be provisioned manually by
+    the network team (same as the VNet/subnets), and the ISTP repo's generator
+    now auto-picks them up from infra/common/network.json once named — re-copy
+    the inventory from the ISTP repo after the next real pipeline run.

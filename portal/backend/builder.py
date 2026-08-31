@@ -3262,8 +3262,9 @@ class PortalBuilder:
                         Object.values(cats[k].projects).forEach(p => {
                             const artifacts = p.artifacts.slice().sort((a, b) =>
                                 String(a.artifact_label || a.name).localeCompare(String(b.artifact_label || b.name)));
-                            // Only collapse into a folder when a project has multiple artifacts.
-                            if (artifacts.length >= 2) {
+                            // Collapse any project-kind view(s) into a named project folder,
+                            // even a lone artifact, so a project always reads as its own item.
+                            if (artifacts.length >= 1) {
                                 projects.push({ ...p, artifacts });
                             } else {
                                 flatViews.push(...artifacts);
