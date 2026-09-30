@@ -1,6 +1,6 @@
 # === MODE ===
 type: "json_inventory"
-inventory: "04_projects/ISTP/infra-inventory.dev.json"
+inventory: "04_projects/operations/ISTP"
 
 # === METADATA ===
 metadata:
@@ -9,13 +9,12 @@ metadata:
   project_key: "istp"
   project: "ISTP"
   view_kind: "project"
-  artifact_label: "Infrastructure DEV"
 
 # === VIEW DEFINITION ===
 view:
   name: "ISTP - Infrastructure Inventory"
   documentation: |
-    Dev-environment infrastructure inventory for ISTP, sourced from
+    Per-environment infrastructure inventory for ISTP, sourced from
     infra/scripts/generate_infra_inventory.py in the ISTP repo (Terraform-driven
     App Service baseline: App Service Plan, frontend/backend Linux Web Apps,
     Storage Account, Key Vault, Azure SQL, plus externally-owned VNet/subnets).

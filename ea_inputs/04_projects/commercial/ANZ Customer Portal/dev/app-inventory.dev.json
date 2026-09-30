@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0",
+  "application": "CUSTPORTAL",
+  "project": "CUSTPORTAL",
+  "environment": "dev",
+  "generated_at": "2026-09-29T09:15:16Z",
+  "source_repo": "medline/apac-it/commercial/anz-customer-portal",
+  "source_commit": "c4754a3193b840859387b620b93ce2872b7c2639",
+  "pipeline_run": "2892582832",
+  "components": [
+    {
+      "id": "angular-ui",
+      "name": "SPT Pack Review Tool UI",
+      "type": "angular-spa",
+      "path": "src/custportal-ui",
+      "dependsOn": [
+        "backend-api"
+      ],
+      "uses_infra": [
+        "webapp",
+        "acr"
+      ],
+      "summary": "1 Angular routes and 0 explicit API call candidates."
+    },
+    {
+      "id": "backend-api",
+      "name": "SPT Pack Review Tool API",
+      "type": "aspnet-core-web-api",
+      "path": "src/custportal-api",
+      "dependsOn": [],
+      "uses_infra": [
+        "backend-api",
+        "acr",
+        "appi"
+      ],
+      "summary": "1 ASP.NET Core endpoints."
+    }
+  ],
+  "application_map": {
+    "nodes": [
+      {
+        "id": "angular-ui",
+        "label": "Angular UI",
+        "group": "frontend",
+        "kind": "frontend",
+        "component": "angular-ui",
+        "infra_refs": [
+          "webapp",
+          "acr"
+        ],
+        "metrics": {
+          "pages": 1,
+          "api_call_candidates": 0
+        }
+      },
+      {
+        "id": "backend-api",
+        "label": "ASP.NET Core API",
+        "group": "backend",
+        "kind": "api",
+        "component": "backend-api",
+        "infra_refs": [
+          "backend-api",
+          "acr",
+          "appi"
+        ],
+        "metrics": {
+          "endpoints": 1
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "angular-ui",
+        "to": "backend-api",
+        "label": "Same-origin /api proxy",
+        "confidence": "deployment-configuration",
+        "source": "src/custportal-ui/nginx.conf.template"
+      }
+    ]
+  },
+  "frontend": {
+    "build_mode": "angular-production",
+    "package": {
+      "name": "custportal-ui",
+      "version": "0.1.0",
+      "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build"
+      },
+      "frameworks": [
+        "@angular/core",
+        "@angular/router"
+      ],
+      "source": "src/custportal-ui/package.json"
+    },
+    "docker": {
+      "path": "src/custportal-ui/Dockerfile",
+      "stages": [
+        {
+          "image": "node:20-alpine",
+          "stage": "build"
+        },
+        {
+          "image": "nginx:1.27-alpine",
+          "stage": "final"
+        }
+      ],
+      "env_keys": []
+    },
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "component": "HomeComponent",
+        "protected": false,
+        "source": "src/custportal-ui/src/app/app.routes.ts"
+      }
+    ],
+    "service_modules": [],
+    "api_call_candidates": []
+  },
+  "api_surface": [
+    {
+      "id": "get-api-sample-health",
+      "handler": "Health",
+      "method": "GET",
+      "route": "/api/Sample/health",
+      "capability": "Api",
+      "source": "src/custportal-api/Controllers/SampleController.cs"
+    }
+  ],
+  "backend": {
+    "build_mode": "aspnet-core-production",
+    "projects": [
+      {
+        "path": "src/custportal-api/CustPortal.Api.csproj",
+        "target_framework": "net8.0",
+        "packages": []
+      }
+    ],
+    "docker": {
+      "path": "src/custportal-api/Dockerfile",
+      "stages": [
+        {
+          "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+          "stage": "build"
+        },
+        {
+          "image": "mcr.microsoft.com/dotnet/aspnet:8.0",
+          "stage": "final"
+        }
+      ],
+      "env_keys": [
+        "ASPNETCORE_URLS"
+      ]
+    },
+    "compiled_sources": [
+      "src/custportal-api/Controllers/SampleController.cs",
+      "src/custportal-api/Program.cs"
+    ]
+  },
+  "interaction_edges": [],
+  "capability_groups": [
+    {
+      "name": "Api",
+      "api_endpoints": 1
+    }
+  ],
+  "external_dependencies": [],
+  "build_outputs": [
+    {
+      "component": "angular-ui",
+      "kind": "container_image",
+      "image": "m3acrcommd1.azurecr.io/custportal-fe:2892582832",
+      "image_digest": "sha256:202f3ac273b1c5fd5f1f013b0718bacf2459856f6e20895233b2b670fc936147",
+      "base_image": "nginx:1.27-alpine"
+    },
+    {
+      "component": "backend-api",
+      "kind": "container_image",
+      "image": "m3acrcommd1.azurecr.io/custportal-api:2892582832",
+      "image_digest": "sha256:350ef432de195b1c047b2e7de70d1c6bdea4b1b2987d49d226a931906f218a6e",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  ]
+}

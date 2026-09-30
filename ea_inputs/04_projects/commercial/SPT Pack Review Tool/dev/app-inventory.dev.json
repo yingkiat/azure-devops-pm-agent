@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0",
+  "application": "SPTPR",
+  "project": "SPTPR",
+  "environment": "dev",
+  "generated_at": "2026-09-29T07:49:18Z",
+  "source_repo": "medline/apac-it/commercial/spt-pack-review-tool",
+  "source_commit": "dd575cb49679232b2958da5acde99565bc9ac132",
+  "pipeline_run": "2892299886",
+  "components": [
+    {
+      "id": "angular-ui",
+      "name": "SPTPR Infrastructure Test UI",
+      "type": "static-test-ui",
+      "path": "src/sptpr-ui",
+      "dependsOn": [
+        "backend-api"
+      ],
+      "uses_infra": [
+        "webapp",
+        "acr"
+      ],
+      "summary": "1 Angular routes and 1 explicit API call candidates."
+    },
+    {
+      "id": "backend-api",
+      "name": "SPT Pack Review Tool API",
+      "type": "aspnet-core-web-api",
+      "path": "src/sptpr-api",
+      "dependsOn": [],
+      "uses_infra": [
+        "backend-api",
+        "acr",
+        "appi"
+      ],
+      "summary": "2 ASP.NET Core endpoints."
+    }
+  ],
+  "application_map": {
+    "nodes": [
+      {
+        "id": "angular-ui",
+        "label": "Infrastructure Test UI",
+        "group": "frontend",
+        "kind": "frontend",
+        "component": "angular-ui",
+        "infra_refs": [
+          "webapp",
+          "acr"
+        ],
+        "metrics": {
+          "pages": 1,
+          "api_call_candidates": 1
+        }
+      },
+      {
+        "id": "backend-api",
+        "label": "ASP.NET Core API",
+        "group": "backend",
+        "kind": "api",
+        "component": "backend-api",
+        "infra_refs": [
+          "backend-api",
+          "acr",
+          "appi"
+        ],
+        "metrics": {
+          "endpoints": 2
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "angular-ui",
+        "to": "backend-api",
+        "label": "Same-origin /api proxy",
+        "confidence": "deployment-configuration",
+        "source": "src/sptpr-ui/nginx.conf.template"
+      }
+    ]
+  },
+  "frontend": {
+    "build_mode": "infrastructure-test",
+    "package": {
+      "name": "sptpr-ui",
+      "version": "0.1.0",
+      "scripts": {
+        "build": "echo \"dummy frontend build\""
+      },
+      "frameworks": [],
+      "source": "src/sptpr-ui/package.json"
+    },
+    "docker": {
+      "path": "src/sptpr-ui/Dockerfile",
+      "stages": [
+        {
+          "image": "nginx:1.27-alpine",
+          "stage": null
+        }
+      ],
+      "env_keys": []
+    },
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "component": "InfrastructureTestPage",
+        "protected": false,
+        "source": "src/sptpr-ui/infrastructure-test/index.html"
+      }
+    ],
+    "service_modules": [],
+    "api_call_candidates": [
+      {
+        "id": "infrastructure-test-get-api-health",
+        "service_module": "infrastructure-test-page",
+        "method": "GET",
+        "route": "/api/health",
+        "source": "src/sptpr-ui/infrastructure-test/index.html",
+        "confidence": "literal-url"
+      }
+    ]
+  },
+  "api_surface": [
+    {
+      "id": "get-health",
+      "handler": "health",
+      "method": "GET",
+      "route": "/health",
+      "capability": "Health",
+      "source": "src/sptpr-api/main.py"
+    },
+    {
+      "id": "get-api-health",
+      "handler": "api_health",
+      "method": "GET",
+      "route": "/api/health",
+      "capability": "Api",
+      "source": "src/sptpr-api/main.py"
+    }
+  ],
+  "backend": {
+    "build_mode": "aspnet-core-production",
+    "projects": [],
+    "docker": {
+      "path": "src/sptpr-api/Dockerfile",
+      "stages": [
+        {
+          "image": "mcr.microsoft.com/mirror/docker/library/python:3.11-slim",
+          "stage": null
+        }
+      ],
+      "env_keys": [
+        "PORT"
+      ]
+    },
+    "compiled_sources": [
+      "src/sptpr-api/main.py"
+    ]
+  },
+  "interaction_edges": [],
+  "capability_groups": [
+    {
+      "name": "Api",
+      "api_endpoints": 1
+    },
+    {
+      "name": "Health",
+      "api_endpoints": 1
+    }
+  ],
+  "external_dependencies": [],
+  "build_outputs": [
+    {
+      "component": "angular-ui",
+      "kind": "container_image",
+      "image": "m3acrcommd1.azurecr.io/sptpr-fe:2892299886",
+      "image_digest": "sha256:baafdf392036cfbf46df4f3a9b732a53f5cb8a2ebd92b65ea1ab43d0d06e8864",
+      "base_image": "nginx:1.27-alpine"
+    },
+    {
+      "component": "backend-api",
+      "kind": "container_image",
+      "image": "m3acrcommd1.azurecr.io/sptpr-api:2892299886",
+      "image_digest": "sha256:f7eef2b84645bf5ad28113a9712ac8704aca5cd5c73c1790809cd0c2e354121f",
+      "base_image": "mcr.microsoft.com/mirror/docker/library/python:3.11-slim"
+    }
+  ]
+}

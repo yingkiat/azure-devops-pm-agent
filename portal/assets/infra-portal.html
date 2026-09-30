@@ -1126,7 +1126,7 @@
         </div>
         <dl class="kv">
           <div><dt>Resource group</dt><dd>${escapeHtml(item.group)}</dd></div>
-          <div><dt>Ownership</dt><dd>${escapeHtml(item.ownership === "repo" ? "Managed by this repo" : "External dependency")}</dd></div>
+          <div><dt>Ownership</dt><dd>${escapeHtml(item.ownership === "repo" ? "Managed by this repo" : item.ownership === "shared-platform" ? "Shared platform" : "External dependency")}</dd></div>
           <div><dt>Details</dt><dd>${item.details.map(escapeHtml).join("<br>")}</dd></div>
         </dl>
         ${deploymentHtml}

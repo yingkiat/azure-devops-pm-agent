@@ -56,7 +56,7 @@
           "layer": { "type": "string" },
           "pillar": { "type": "string" },
           "group": { "type": "string" },
-          "ownership": { "enum": ["repo", "external"] },
+          "ownership": { "enum": ["repo", "shared-platform", "external"] },
           "details": {
             "type": "array",
             "items": { "type": "string" }

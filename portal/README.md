@@ -37,7 +37,7 @@ You should see the full EA Portal UI with the purple sidebar, diagram viewer, an
 To review the PSS2 application inventory detail view directly:
 
 ```text
-http://localhost:8080/projects/pss2/app-inventory/?inventory=app-inventory.dev.json&embed=diagram
+http://localhost:8080/projects/pss2/dev/app-inventory/?inventory=app-inventory.dev.json&embed=diagram
 ```
 
 ### Deploy to Azure Container Apps
@@ -93,8 +93,8 @@ portal/
 2. **Converter** builds SVG with `data-element-id` attributes on each element
 3. **Index Generator** reads ArchiMate CSV model
 4. **Builder** collects supported inventory JSON views:
-   - `json_inventory` YAML specs embed infrastructure inventories using `portal/assets/infra-portal.html`
-   - `app-inventory*.json` files generate two project-scoped application views:
+   - `infra-inventory.<env>.json` files are embedded as infrastructure inventories using `portal/assets/infra-portal.html`
+   - `app-inventory.<env>.json` files generate two project-scoped application views:
      - Application Architecture draw.io/SVG overview
      - Application Inventory iframe detail view using `portal/assets/app-inventory-portal.html`
 5. **Index Generator** creates 3 JSON files:
@@ -114,31 +114,60 @@ Inventory iframe pages embed their JSON at build time, so they work in static ho
 
 ## Project Inventory Views
 
+Project inventories are discovered automatically from this layout:
+
+```text
+ea_inputs/04_projects/<domain>/<project>/<env>/
+├── infra-inventory.<env>.json
+├── app-inventory.<env>.json
+└── runtime-inventory/          (raw az CLI snapshots, not rendered)
+```
+
+- `<domain>` becomes the portal category/domain (e.g. `commercial`, `operations`)
+- `<project>` folder name becomes the display name; `project_key` is its lowercase slug (e.g. `anz-customer-portal`)
+- Each `<env>` produces its own set of views, ordered dev, test, uat, prod
+
+An optional `type: json_inventory` YAML spec overrides project metadata (display name, `project_key`, region). Its `inventory` field points at the project folder:
+
+```yaml
+type: "json_inventory"
+inventory: "04_projects/operations/PSS2"
+metadata:
+  project_key: "pss2"
+  project: "PSS 2.0"
+  region: "ANZ"
+```
+
 ### Infrastructure Inventory
 
-`type: json_inventory` YAML specs point at project `infra-inventory.<env>.json` files. During `python portal/build.py`, the builder:
+For each `infra-inventory.<env>.json`, `python portal/build.py`:
 
-- validates the inventory contract
-- writes a generated project iframe page under `portal/dist/projects/<project>/`
-- registers the view with `view_type: json_inventory`
-- sets `iframe_src` to the generated project page
+- validates the inventory contract (`ea_inputs/04_projects/_schema/infra-inventory.schema.json`)
+- writes a generated iframe page under `portal/dist/projects/<project_key>/<env>/`
+- registers `project_<project_key>_infra_<env>` with `view_type: json_inventory`
 
 ### Application Inventory
 
-Project `app-inventory*.json` files under `ea_inputs/04_projects/<project>/` are handled automatically. During `python portal/build.py`, the builder:
+For each `app-inventory.<env>.json`, `python portal/build.py`:
 
-- generates the existing application architecture overview draw.io/SVG
-- writes an interactive application inventory iframe page under `portal/dist/projects/<project>/app-inventory/`
+- generates the application architecture overview draw.io/SVG at `portal/dist/diagrams/projects/<project_key>/app-architecture.<env>.svg`
+- writes an interactive application inventory iframe page under `portal/dist/projects/<project_key>/<env>/app-inventory/`
 - embeds `window.APP_INVENTORY_DATA` into that page
-- registers the project view with `view_type: app_inventory`
+- registers `project_<project_key>_app_architecture_<env>` and `project_<project_key>_app_inventory_<env>`
 
-For PSS2, the generated registry entry is:
+For PSS2 prod, the generated app inventory registry entry is:
 
 ```text
-view_id: project_pss2_app_inventory
-name: PSS 2.0 - Application Inventory
+view_id: project_pss2_app_inventory_prod
+name: PSS 2.0 - Application Inventory (PROD)
 project_key: pss2
-iframe_src: projects/pss2/app-inventory/?inventory=app-inventory.dev.json&embed=diagram
+iframe_src: projects/pss2/prod/app-inventory/?inventory=app-inventory.prod.json&embed=diagram
+```
+
+Standalone copies of the architecture diagrams live in `ea_diagrams/projects/<project_key>/app-architecture.<env>.drawio` and can be regenerated with:
+
+```bash
+python -m portal.backend.app_diagram "ea_inputs/04_projects/<domain>/<project>/<env>/app-inventory.<env>.json" "ea_diagrams/projects/<project_key>/app-architecture.<env>.drawio"
 ```
 
 The app inventory iframe intentionally starts at the detail drilldown, not another architecture overview. It provides:
