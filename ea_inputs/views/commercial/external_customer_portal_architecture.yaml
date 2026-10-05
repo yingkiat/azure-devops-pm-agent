@@ -15,8 +15,8 @@ story:
 metadata:
   domain: "commercial"
   region: "ANZ"
-  project_key: "external_customer_portal"
-  project: "External Customer Portal"
+  project_key: "anz-customer-portal"
+  project: "ANZ Customer Portal"
   view_kind: "project"
 
 # === DIAGRAM TYPE ===

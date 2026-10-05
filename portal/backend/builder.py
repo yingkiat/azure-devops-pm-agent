@@ -1503,7 +1503,7 @@ class PortalBuilder:
             border-left: 1px solid rgba(255,255,255,0.12);
             margin-top: 0.25rem;
         }
-        .project-artifact-item .view-item-count {
+        .project-env-name {
             text-transform: uppercase;
             letter-spacing: 0.04em;
         }
@@ -2603,9 +2603,20 @@ class PortalBuilder:
                                     <span class="project-folder-count">{{ proj.artifacts.length }}</span>
                                 </div>
                                 <div class="project-folder-children" v-show="expandedProjects[proj.key]">
-                                    <div v-for="art in proj.artifacts" :key="art.id" class="view-item project-artifact-item" :class="{ active: currentView === art.id }" @click="loadView(art.id)">
+                                    <div v-for="art in proj.general" :key="art.id" class="view-item project-artifact-item" :class="{ active: currentView === art.id }" @click="loadView(art.id)">
                                         <div class="view-item-name">{{ art.artifact_label || art.name }}</div>
-                                        <div class="view-item-count" v-if="art.environment">{{ art.environment }}</div>
+                                    </div>
+                                    <div v-for="envGroup in proj.envs" :key="envGroup.key" class="project-folder">
+                                        <div class="project-folder-title" @click="toggleProject(envGroup.key)">
+                                            <span class="project-folder-chevron">{{ expandedProjects[envGroup.key] ? '▾' : '▸' }}</span>
+                                            <span class="project-folder-name project-env-name">{{ envGroup.env }}</span>
+                                            <span class="project-folder-count">{{ envGroup.artifacts.length }}</span>
+                                        </div>
+                                        <div class="project-folder-children" v-show="expandedProjects[envGroup.key]">
+                                            <div v-for="art in envGroup.artifacts" :key="art.id" class="view-item project-artifact-item" :class="{ active: currentView === art.id }" @click="loadView(art.id)">
+                                                <div class="view-item-name">{{ art.artifact_label || art.name }}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -3272,16 +3283,23 @@ class PortalBuilder:
                     return keys.map(k => {
                         const flatViews = cats[k].views.slice();
                         const projects = [];
+                        const envOrder = ['dev', 'test', 'uat', 'prod'];
+                        const envRank = env => (envOrder.indexOf(env) + 1) || envOrder.length + 1;
                         Object.values(cats[k].projects).forEach(p => {
                             const artifacts = p.artifacts.slice().sort((a, b) =>
                                 String(a.artifact_label || a.name).localeCompare(String(b.artifact_label || b.name)));
-                            // Collapse any project-kind view(s) into a named project folder,
-                            // even a lone artifact, so a project always reads as its own item.
-                            if (artifacts.length >= 1) {
-                                projects.push({ ...p, artifacts });
-                            } else {
-                                flatViews.push(...artifacts);
-                            }
+                            // Project-level views sit directly in the project folder;
+                            // environment-specific views nest into dev/test/prod subfolders.
+                            const envMap = {};
+                            const general = [];
+                            artifacts.forEach(a => {
+                                if (!a.environment) { general.push(a); return; }
+                                (envMap[a.environment] = envMap[a.environment] || []).push(a);
+                            });
+                            const envs = Object.keys(envMap)
+                                .sort((a, b) => envRank(a) - envRank(b) || a.localeCompare(b))
+                                .map(env => ({ env, key: `${p.key}:${env}`, artifacts: envMap[env] }));
+                            projects.push({ ...p, artifacts, general, envs });
                         });
                         return {
                             category: cats[k].category,
@@ -3480,7 +3498,10 @@ class PortalBuilder:
                         if (new URLSearchParams(window.location.search).has('expandProjects')) {
                             const keys = {};
                             Object.values(this.views).forEach(v => {
-                                if (v.view_kind === 'project' && v.project_key) keys[v.project_key] = true;
+                                if (v.view_kind === 'project' && v.project_key) {
+                                    keys[v.project_key] = true;
+                                    if (v.environment) keys[`${v.project_key}:${v.environment}`] = true;
+                                }
                             });
                             this.expandedProjects = keys;
                         }
