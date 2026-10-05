@@ -1,0 +1,182 @@
+[
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3-as-pss2-be-p-1.azurewebsites.net",
+        "ipAddresses": [
+          "10.246.246.169"
+        ]
+      },
+      {
+        "fqdn": "m3-as-pss2-be-p-1.scm.azurewebsites.net",
+        "ipAddresses": [
+          "10.246.246.169"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-BE-P-1-pe",
+    "location": "southeastasia",
+    "name": "M3-AS-PSS2-BE-P-1-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-BE-P-1-pe.nic.b6da1dfe-0c78-463c-b042-b59867efefac"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "sites"
+        ],
+        "name": "M3-AS-PSS2-BE-P-1-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Web/sites/M3-AS-PSS2-BE-P-1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  },
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3-as-pss2-p-1.azurewebsites.net",
+        "ipAddresses": [
+          "10.246.246.168"
+        ]
+      },
+      {
+        "fqdn": "m3-as-pss2-p-1.scm.azurewebsites.net",
+        "ipAddresses": [
+          "10.246.246.168"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-P-1-pe",
+    "location": "southeastasia",
+    "name": "M3-AS-PSS2-P-1-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-P-1-pe.nic.8fdc789c-55d8-4d28-905a-197803965d07"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "sites"
+        ],
+        "name": "M3-AS-PSS2-P-1-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Web/sites/M3-AS-PSS2-P-1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  },
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3-kv-ops-p-1.vault.azure.net",
+        "ipAddresses": [
+          "10.246.246.167"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/M3-KV-OPS-P-1-pe",
+    "location": "southeastasia",
+    "name": "M3-KV-OPS-P-1-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/M3-KV-OPS-P-1-pe.nic.b0a8825c-b887-421c-b947-ec4f6810703e"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "vault"
+        ],
+        "name": "M3-KV-OPS-P-1-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.KeyVault/vaults/M3-KV-OPS-P-1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  },
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3-sqls-pss2-p-1.database.windows.net",
+        "ipAddresses": [
+          "10.246.246.166"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/m3-sqls-pss2-p-1-pe",
+    "location": "southeastasia",
+    "name": "m3-sqls-pss2-p-1-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/m3-sqls-pss2-p-1-pe.nic.490d1d6d-830f-46df-8483-96f6441d0045"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "sqlServer"
+        ],
+        "name": "m3-sqls-pss2-p-1-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Sql/servers/m3-sqls-pss2-p-1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  },
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3sapss2p1.blob.core.windows.net",
+        "ipAddresses": [
+          "10.246.246.164"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/m3sapss2p1-blob-pe",
+    "location": "southeastasia",
+    "name": "m3sapss2p1-blob-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/m3sapss2p1-blob-pe.nic.3fa2df06-ced4-4d42-9852-be5f2c37d7f8"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "blob"
+        ],
+        "name": "m3sapss2p1-blob-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Storage/storageAccounts/m3sapss2p1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  },
+  {
+    "customDnsConfigs": [
+      {
+        "fqdn": "m3sapss2p1.file.core.windows.net",
+        "ipAddresses": [
+          "10.246.246.165"
+        ]
+      }
+    ],
+    "id": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/privateEndpoints/m3sapss2p1-file-pe",
+    "location": "southeastasia",
+    "name": "m3sapss2p1-file-pe",
+    "networkInterfaceIds": [
+      "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Network/networkInterfaces/m3sapss2p1-file-pe.nic.490f3880-5b58-438f-bb46-90ccb135bfbb"
+    ],
+    "privateLinkServiceConnections": [
+      {
+        "groupIds": [
+          "file"
+        ],
+        "name": "m3sapss2p1-file-psc",
+        "privateLinkServiceConnectionState": "Approved",
+        "privateLinkServiceId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-PSS2-P-1/providers/Microsoft.Storage/storageAccounts/m3sapss2p1"
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/0fad7d73-ea79-403b-9bfd-1e641ee895af/resourceGroups/M3-RG-ALZ-OPS-P-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-P-1/subnets/ALZ-OPS-APP-PEP"
+  }
+]

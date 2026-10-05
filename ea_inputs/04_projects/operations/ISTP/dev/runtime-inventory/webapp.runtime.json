@@ -1,0 +1,19 @@
+{
+  "availabilityState": "Normal",
+  "defaultHostName": "m3-as-istp-d-1.azurewebsites.net",
+  "enabled": true,
+  "hostNames": [
+    "m3-as-istp-d-1.azurewebsites.net"
+  ],
+  "httpsOnly": true,
+  "id": "/subscriptions/65e068d2-1cd5-40b5-9c26-234fbddddde4/resourceGroups/M3-RG-ALZ-OPS-ISTP-D-1/providers/Microsoft.Web/sites/M3-AS-ISTP-D-1",
+  "kind": "app,linux,container",
+  "location": "Southeast Asia",
+  "name": "M3-AS-ISTP-D-1",
+  "outboundIpAddresses": "20.205.241.35,20.205.241.53,20.205.241.58,20.205.241.81,20.205.241.114,20.198.191.118,20.44.210.190,20.198.128.32,20.198.184.108,20.198.186.124,20.198.189.158,20.198.190.32,20.212.64.16",
+  "possibleOutboundIpAddresses": "20.198.128.32,20.198.184.108,20.198.186.124,20.198.189.158,20.198.190.127,20.198.190.155,20.198.190.178,20.198.190.32,20.198.191.118,20.198.191.224,20.198.191.23,20.198.191.30,20.198.191.7,20.198.191.9,20.205.240.253,20.205.240.50,20.205.240.61,20.205.241.1,20.205.241.114,20.205.241.129,20.205.241.153,20.205.241.155,20.205.241.166,20.205.241.173,20.205.241.178,20.205.241.35,20.205.241.53,20.205.241.58,20.205.241.81,20.212.64.16,20.44.210.190",
+  "publicNetworkAccess": "Disabled",
+  "resourceGroup": "M3-RG-ALZ-OPS-ISTP-D-1",
+  "state": "Running",
+  "virtualNetworkSubnetId": "/subscriptions/65e068d2-1cd5-40b5-9c26-234fbddddde4/resourceGroups/M3-RG-ALZ-OPSDEV-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPSDEV-D-1/subnets/ALZ-OPSDEV-APP-OPSDEV"
+}

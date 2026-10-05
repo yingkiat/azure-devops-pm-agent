@@ -1,0 +1,19 @@
+{
+  "availabilityState": "Normal",
+  "defaultHostName": "m3-as-sptpr-be-d-1.azurewebsites.net",
+  "enabled": true,
+  "hostNames": [
+    "m3-as-sptpr-be-d-1.azurewebsites.net"
+  ],
+  "httpsOnly": true,
+  "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-SPTPR-D-1/providers/Microsoft.Web/sites/M3-AS-SPTPR-BE-D-1",
+  "kind": "app,linux,container",
+  "location": "Southeast Asia",
+  "name": "M3-AS-SPTPR-BE-D-1",
+  "outboundIpAddresses": "52.187.129.179,52.187.23.154,52.163.123.89,52.230.18.200,",
+  "possibleOutboundIpAddresses": "20.184.9.149,20.191.136.243,20.198.149.164,20.198.150.197,20.198.150.247,20.198.151.0,20.198.151.20,20.198.151.3,20.198.207.165,20.247.250.201,20.247.250.206,20.247.251.4,20.247.251.8,20.247.251.86,52.163.123.89,52.187.129.179,52.187.23.154,52.230.18.200",
+  "publicNetworkAccess": "Disabled",
+  "resourceGroup": "M3-RG-ALZ-COMM-SPTPR-D-1",
+  "state": "Running",
+  "virtualNetworkSubnetId": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-COMM"
+}

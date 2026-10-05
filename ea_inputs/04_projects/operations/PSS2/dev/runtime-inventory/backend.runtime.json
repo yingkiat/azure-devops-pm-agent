@@ -1,0 +1,19 @@
+{
+  "availabilityState": "Normal",
+  "defaultHostName": "m3-as-pss2-be-d-1.azurewebsites.net",
+  "enabled": true,
+  "hostNames": [
+    "m3-as-pss2-be-d-1.azurewebsites.net"
+  ],
+  "httpsOnly": true,
+  "id": "/subscriptions/65e068d2-1cd5-40b5-9c26-234fbddddde4/resourceGroups/M3-RG-ALZ-OPS-PSS2-D-1/providers/Microsoft.Web/sites/M3-AS-PSS2-BE-D-1",
+  "kind": "app,linux,container",
+  "location": "Southeast Asia",
+  "name": "M3-AS-PSS2-BE-D-1",
+  "outboundIpAddresses": "20.43.145.81,20.43.147.13,20.43.149.47,20.43.149.197,20.43.149.214,20.43.149.230,20.43.132.130",
+  "possibleOutboundIpAddresses": "20.43.132.130,20.43.145.81,20.43.147.13,20.43.147.49,20.43.149.197,20.43.149.214,20.43.149.230,20.43.149.47,20.43.150.121,20.43.150.255,20.43.150.35,20.43.150.89,20.43.151.118,20.43.151.156,20.43.151.243,20.43.165.24,20.43.166.112,20.43.166.148,20.43.166.158,20.43.166.172,20.43.166.176,20.44.216.107,20.44.216.134,20.44.216.176,20.44.216.95",
+  "publicNetworkAccess": "Disabled",
+  "resourceGroup": "M3-RG-ALZ-OPS-PSS2-D-1",
+  "state": "Running",
+  "virtualNetworkSubnetId": "/subscriptions/65e068d2-1cd5-40b5-9c26-234fbddddde4/resourceGroups/M3-RG-ALZ-OPSDEV-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPSDEV-D-1/subnets/ALZ-OPSDEV-APP-OPSDEV"
+}

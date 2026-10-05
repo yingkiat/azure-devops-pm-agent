@@ -1,6 +1,7 @@
 """Build interactive EA portal from diagrams and model data."""
 
 import json
+import re
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
@@ -23,6 +24,7 @@ class PortalBuilder:
     """Build static portal files from diagrams and ArchiMate model."""
 
     REGION_ORDER = ["JPN", "ANZ", "AEM", "APAC"]
+    ENV_ORDER = ["dev", "test", "uat", "prod"]
     CATALOGUE_SHEET_TERRITORIES = {
         "Catalogue": "APAC",
         "EMEA Catalogue": "EMEA",
@@ -140,87 +142,115 @@ class PortalBuilder:
             self._catalogue_names_cache = load_catalogue_names()
         return self._catalogue_names_cache
 
-    def _collect_json_inventory_views(self) -> List[Dict]:
-        """Collect interactive JSON inventory views from specs with type: json_inventory.
-
-        These views use an iframe-based visualizer instead of a static diagram.
-        The YAML spec provides all metadata; the inventory field points to the JSON data.
-        """
-        views = []
-        viewer_template = Path("portal/assets/infra-portal.html")
-        if not viewer_template.exists():
-            print("      WARN infra-portal.html template not found at portal/assets/infra-portal.html")
-            return views
-
+    def _load_project_specs(self) -> Dict[str, Dict]:
+        """Map project folder (posix, relative to ea_inputs) -> metadata from its json_inventory spec."""
+        specs: Dict[str, Dict] = {}
         for spec_path in sorted(self.specs_dir.glob("**/*.yaml")):
             try:
                 with open(spec_path, "r", encoding="utf-8") as f:
                     spec = yaml.safe_load(f) or {}
             except Exception:
                 continue
-
             if spec.get("type") != "json_inventory":
                 continue
-
-            inventory_rel = spec.get("inventory", "")
+            inventory_rel = (spec.get("inventory") or "").strip("/")
             if not inventory_rel:
                 print(f"      WARN {spec_path.name}: json_inventory spec missing 'inventory' field")
                 continue
+            if not (Path("ea_inputs") / inventory_rel).is_dir():
+                print(f"      WARN {spec_path.name}: inventory must point at a project folder: {inventory_rel}")
+                continue
 
-            inventory_path = Path("ea_inputs") / inventory_rel
-            if not inventory_path.exists():
-                print(f"      WARN {spec_path.name}: inventory file not found: {inventory_path}")
+            metadata = spec.get("metadata", {}) or {}
+            view_meta = spec.get("view", {}) or {}
+            specs[inventory_rel] = {
+                "name": view_meta.get("name") or "",
+                "domain": metadata.get("domain") or view_meta.get("domain") or "",
+                "region": metadata.get("region") or view_meta.get("region") or "",
+                "project": metadata.get("project") or view_meta.get("project") or "",
+                "project_key": metadata.get("project_key") or view_meta.get("project_key") or "",
+                "view_kind": metadata.get("view_kind") or view_meta.get("view_kind") or "project",
+            }
+        return specs
+
+    def _discover_project_environments(self) -> List[Dict]:
+        """Discover ea_inputs/04_projects/<domain>/<project>/<env>/ inventory folders."""
+        projects_dir = Path("ea_inputs/04_projects")
+        if not projects_dir.exists():
+            return []
+
+        specs = self._load_project_specs()
+        entries: List[Dict] = []
+        for domain_dir in sorted(p for p in projects_dir.iterdir() if p.is_dir() and not p.name.startswith("_")):
+            for project_dir in sorted(p for p in domain_dir.iterdir() if p.is_dir()):
+                spec = specs.get(project_dir.relative_to("ea_inputs").as_posix(), {})
+                project_key = spec.get("project_key") or re.sub(r"[^a-z0-9]+", "-", project_dir.name.lower()).strip("-")
+                env_dirs = sorted(
+                    (p for p in project_dir.iterdir() if p.is_dir()),
+                    key=lambda p: (self.ENV_ORDER.index(p.name) if p.name in self.ENV_ORDER else len(self.ENV_ORDER), p.name),
+                )
+                for env_dir in env_dirs:
+                    env = env_dir.name
+                    entries.append({
+                        "project_key": project_key,
+                        "project": spec.get("project") or project_dir.name,
+                        "name": spec.get("name") or "",
+                        "domain": spec.get("domain") or domain_dir.name,
+                        "category": domain_dir.name,
+                        "region": spec.get("region", ""),
+                        "view_kind": spec.get("view_kind") or "project",
+                        "environment": env,
+                        "infra_path": next(iter(sorted(env_dir.glob("infra-inventory*.json"))), None),
+                        "app_path": next(iter(sorted(env_dir.glob("app-inventory*.json"))), None),
+                    })
+        return entries
+
+    def _collect_json_inventory_views(self, project_envs: List[Dict]) -> List[Dict]:
+        """Collect interactive infrastructure inventory views, one per project environment.
+
+        These views use an iframe-based visualizer instead of a static diagram.
+        """
+        views: List[Dict] = []
+        viewer_template = Path("portal/assets/infra-portal.html")
+        if not viewer_template.exists():
+            print("      WARN infra-portal.html template not found at portal/assets/infra-portal.html")
+            return views
+
+        for entry in project_envs:
+            inventory_path = entry["infra_path"]
+            if not inventory_path:
                 continue
 
             validation = validate_file(inventory_path, catalogue_names=self._inventory_catalogue_names())
             print(validation.report())
             if not validation.ok:
-                print(f"      SKIP {spec_path.name}: inventory failed validation; view not rendered")
+                print(f"      SKIP {inventory_path}: inventory failed validation; view not rendered")
                 continue
 
-            metadata = spec.get("metadata", {}) or {}
-            view_meta = spec.get("view", {}) or {}
-            project_key = metadata.get("project_key") or view_meta.get("project_key") or spec_path.stem
-            domain = metadata.get("domain") or view_meta.get("domain") or ""
-            region = metadata.get("region") or view_meta.get("region") or ""
-            project = metadata.get("project") or view_meta.get("project") or ""
-            view_kind = metadata.get("view_kind") or view_meta.get("view_kind") or "project"
-            display_name = view_meta.get("name") or spec_path.stem.replace("_", " ").title()
-
-            try:
-                relative_path = spec_path.relative_to(self.specs_dir)
-            except ValueError:
-                relative_path = Path(spec_path.name)
-            view_id = relative_path.with_suffix("").as_posix().replace("/", "_")
-
-            out_dir = self.output_dir / "projects" / project_key
+            project_key = entry["project_key"]
+            env = entry["environment"]
+            out_dir = self.output_dir / "projects" / project_key / env
             out_dir.mkdir(parents=True, exist_ok=True)
 
             shutil.copy2(str(inventory_path), str(out_dir / inventory_path.name))
             self._write_json_inventory_viewer(viewer_template, inventory_path, out_dir / "index.html")
 
-            iframe_src = f"projects/{project_key}/?inventory={inventory_path.name}&embed=diagram"
-
-            try:
-                inv_env = json.loads(inventory_path.read_text(encoding="utf-8")).get("environment", "")
-            except Exception:
-                inv_env = ""
-
+            view_id = f"project_{project_key}_infra_{env}"
             views.append({
                 "view_id": view_id,
-                "name": display_name,
+                "name": f"{entry['name'] or entry['project'] + ' - Infrastructure Inventory'} ({env.upper()})",
                 "diagram_file": "",
                 "preview_file": "",
-                "category": relative_path.parent.as_posix() if relative_path.parent != Path(".") else "",
-                "domain": domain,
-                "region": region,
-                "project": project,
+                "category": entry["category"],
+                "domain": entry["domain"],
+                "region": entry["region"],
+                "project": entry["project"],
                 "project_key": project_key,
-                "view_kind": view_kind,
+                "view_kind": entry["view_kind"],
                 "view_type": "json_inventory",
-                "artifact_label": metadata.get("artifact_label") or "Infrastructure",
-                "environment": inv_env,
-                "iframe_src": iframe_src,
+                "artifact_label": "Infrastructure",
+                "environment": env,
+                "iframe_src": f"projects/{project_key}/{env}/?inventory={inventory_path.name}&embed=diagram",
                 "elements": [],
                 "element_count": 0,
                 "created": datetime.now().isoformat(),
@@ -230,60 +260,56 @@ class PortalBuilder:
 
         return views
 
-    def _collect_project_app_diagrams(self, project_meta: Dict[str, Dict]) -> List[Dict]:
+    def _collect_project_app_diagrams(self, project_envs: List[Dict]) -> List[Dict]:
         """Generate standalone application-architecture diagrams from app-inventory files.
 
         Technical-plane artifacts (not ArchiMate): each app-inventory's application_map
-        graph is rendered drawio -> SVG and registered as a project view. Domain/category/
-        project are inherited from the matching infra view via project_meta (by project_key).
+        graph is rendered drawio -> SVG and registered as a project view.
         """
         from .app_diagram import build_drawio
 
         views: List[Dict] = []
-        projects_dir = Path("ea_inputs/04_projects")
-        if not projects_dir.exists():
-            return views
-
         converter = DrawioToSvg()
-        for inv_path in sorted(projects_dir.glob("*/app-inventory*.json")):
+        for entry in project_envs:
+            inv_path = entry["app_path"]
+            if not inv_path:
+                continue
             try:
                 inventory = json.loads(inv_path.read_text(encoding="utf-8"))
             except Exception as exc:
-                print(f"      WARN {inv_path.name}: cannot parse ({exc})")
+                print(f"      WARN {inv_path}: cannot parse ({exc})")
                 continue
 
             if not (inventory.get("application_map") or {}).get("nodes"):
-                print(f"      SKIP {inv_path.name}: no application_map nodes")
+                print(f"      SKIP {inv_path}: no application_map nodes")
                 continue
 
-            project_key = str(inventory.get("project") or inv_path.parent.name).lower()
-            meta = project_meta.get(project_key, {})
-            env = inventory.get("environment", "")
-
+            project_key = entry["project_key"]
+            env = entry["environment"]
             out_dir = self.diagrams_output_dir / "projects" / project_key
             out_dir.mkdir(parents=True, exist_ok=True)
-            stem = f"app-architecture{('.' + env) if env else ''}"
+            stem = f"app-architecture.{env}"
             drawio_path = out_dir / f"{stem}.drawio"
             svg_path = out_dir / f"{stem}.svg"
             drawio_path.write_text(build_drawio(inventory), encoding="utf-8")
 
             result = converter.convert(str(drawio_path), str(svg_path))
             if not result.get("success"):
-                print(f"      WARN {inv_path.name}: drawio -> svg conversion failed")
+                print(f"      WARN {inv_path}: drawio -> svg conversion failed")
                 continue
             element_records = result.get("elements", [])
             element_ids = [e["id"] for e in element_records]
 
-            app_name = inventory.get("application", "") or meta.get("project", "")
+            view_id = f"project_{project_key}_app_architecture_{env}"
             views.append({
-                "view_id": f"project_{project_key}_app_architecture",
-                "name": f"{app_name} - Application Architecture".strip(" -"),
+                "view_id": view_id,
+                "name": f"{entry['project']} - Application Architecture ({env.upper()})",
                 "diagram_file": f"diagrams/projects/{project_key}/{stem}.svg",
                 "preview_file": f"diagrams/projects/{project_key}/{stem}.svg",
-                "category": meta.get("category") or meta.get("domain") or "operations",
-                "domain": meta.get("domain", ""),
-                "region": meta.get("region", ""),
-                "project": meta.get("project") or app_name,
+                "category": entry["category"],
+                "domain": entry["domain"],
+                "region": entry["region"],
+                "project": entry["project"],
                 "project_key": project_key,
                 "view_kind": "project",
                 "view_type": "diagram",
@@ -295,11 +321,11 @@ class PortalBuilder:
                 "created": datetime.now().isoformat(),
                 "updated_at": datetime.fromtimestamp(inv_path.stat().st_mtime).isoformat(),
             })
-            print(f"      OK project_{project_key}_app_architecture ({inv_path.name})")
+            print(f"      OK {view_id:45s} ({inv_path.name})")
 
         return views
 
-    def _collect_project_app_inventory_views(self, project_meta: Dict[str, Dict]) -> List[Dict]:
+    def _collect_project_app_inventory_views(self, project_envs: List[Dict]) -> List[Dict]:
         """Collect interactive application inventory views from app-inventory JSON files."""
         views: List[Dict] = []
         viewer_template = Path("portal/assets/app-inventory-portal.html")
@@ -307,23 +333,19 @@ class PortalBuilder:
             print("      WARN app-inventory-portal.html template not found at portal/assets/app-inventory-portal.html")
             return views
 
-        projects_dir = Path("ea_inputs/04_projects")
-        if not projects_dir.exists():
-            return views
-
-        for inv_path in sorted(projects_dir.glob("*/app-inventory*.json")):
+        for entry in project_envs:
+            inv_path = entry["app_path"]
+            if not inv_path:
+                continue
             try:
                 inventory = json.loads(inv_path.read_text(encoding="utf-8"))
             except Exception as exc:
-                print(f"      WARN {inv_path.name}: cannot parse ({exc})")
+                print(f"      WARN {inv_path}: cannot parse ({exc})")
                 continue
 
-            project_key = str(inventory.get("project") or inv_path.parent.name).lower()
-            meta = project_meta.get(project_key, {})
-            env = inventory.get("environment", "")
-            app_name = inventory.get("application", "") or meta.get("project", "")
-
-            out_dir = self.output_dir / "projects" / project_key / "app-inventory"
+            project_key = entry["project_key"]
+            env = entry["environment"]
+            out_dir = self.output_dir / "projects" / project_key / env / "app-inventory"
             out_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy2(str(inv_path), str(out_dir / inv_path.name))
             self._write_app_inventory_viewer(viewer_template, inv_path, out_dir / "index.html")
@@ -337,22 +359,22 @@ class PortalBuilder:
                 + len(inventory.get("api_surface", []) or [])
                 + len(inventory.get("interaction_edges", []) or [])
             )
-            view_id = f"project_{project_key}_app_inventory"
+            view_id = f"project_{project_key}_app_inventory_{env}"
             views.append({
                 "view_id": view_id,
-                "name": f"{app_name} - Application Inventory".strip(" -"),
+                "name": f"{entry['project']} - Application Inventory ({env.upper()})",
                 "diagram_file": "",
                 "preview_file": "",
-                "category": meta.get("category") or meta.get("domain") or "operations",
-                "domain": meta.get("domain", ""),
-                "region": meta.get("region", ""),
-                "project": meta.get("project") or app_name,
+                "category": entry["category"],
+                "domain": entry["domain"],
+                "region": entry["region"],
+                "project": entry["project"],
                 "project_key": project_key,
                 "view_kind": "project",
                 "view_type": "app_inventory",
                 "artifact_label": "Application Inventory",
                 "environment": env,
-                "iframe_src": f"projects/{project_key}/app-inventory/?inventory={inv_path.name}&embed=diagram",
+                "iframe_src": f"projects/{project_key}/{env}/app-inventory/?inventory={inv_path.name}&embed=diagram",
                 "elements": [],
                 "element_count": detail_count or len(app_map.get("nodes", []) or []),
                 "created": datetime.now().isoformat(),
@@ -556,30 +578,21 @@ class PortalBuilder:
 
         # Step 3.5: Collect JSON inventory views (interactive project portals)
         print("[3.5/6] Collecting JSON inventory views...")
-        json_inventory_views = self._collect_json_inventory_views()
+        project_envs = self._discover_project_environments()
+        json_inventory_views = self._collect_json_inventory_views(project_envs)
         diagrams_info.extend(json_inventory_views)
         if json_inventory_views:
             print(f"      OK Found {len(json_inventory_views)} JSON inventory view(s)\n")
         else:
-            print(f"      -- No json_inventory specs found\n")
+            print(f"      -- No infra-inventory files found\n")
 
         # Project-scoped application architecture diagrams (technical plane, not ArchiMate).
-        project_meta = {}
-        for v in json_inventory_views:
-            pk = v.get("project_key")
-            if pk and pk not in project_meta:
-                project_meta[pk] = {
-                    "domain": v.get("domain", ""),
-                    "category": v.get("category", ""),
-                    "region": v.get("region", ""),
-                    "project": v.get("project", ""),
-                }
-        app_diagram_views = self._collect_project_app_diagrams(project_meta)
+        app_diagram_views = self._collect_project_app_diagrams(project_envs)
         diagrams_info.extend(app_diagram_views)
         if app_diagram_views:
             print(f"      OK Generated {len(app_diagram_views)} application architecture diagram(s)\n")
 
-        app_inventory_views = self._collect_project_app_inventory_views(project_meta)
+        app_inventory_views = self._collect_project_app_inventory_views(project_envs)
         diagrams_info.extend(app_inventory_views)
         if app_inventory_views:
             print(f"      OK Generated {len(app_inventory_views)} application inventory view(s)\n")

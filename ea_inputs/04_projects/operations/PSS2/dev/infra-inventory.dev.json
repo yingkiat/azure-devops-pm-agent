@@ -3,10 +3,10 @@
   "application": "PSS 2.0",
   "project": "PSS2",
   "environment": "dev",
-  "generated_at": "2026-07-08T14:42:26Z",
+  "generated_at": "2026-09-30T05:32:21Z",
   "source_repo": "medline/apac-it/operations/pss-2.0",
-  "source_commit": "409ee13778caa0041330c77efda6295396357b85",
-  "pipeline_run": "2661817852",
+  "source_commit": "a8ee7f8c49ce6a07e68c17b91d68289e03aca68d",
+  "pipeline_run": "2895925333",
   "subscription": {
     "name": "M3-ALZ-OPS-D-1",
     "id": "65e068d2-1cd5-40b5-9c26-234fbddddde4",
@@ -720,24 +720,24 @@
     {
       "target": "webapp",
       "component": "angular-ui",
-      "image": "m3acropsd1.azurecr.io/pss2-fe:2661817852",
-      "image_digest": "sha256:b539d608dce8fd5dbe89e82cdc37b5ef5bd9db8e0c584c4a49038f2a7c7f0b60",
+      "image": "m3acropsd1.azurecr.io/pss2-fe:2895925333",
+      "image_digest": "sha256:e6b22bb3e6ace3bc325fb408efd3e04a0d0eaa9f8e7556862f1f073b036a4254",
       "base_image": "nginx:1.27-alpine",
       "runtime": "nginx/static frontend",
       "app_repo": "medline/apac-it/operations/pss-2.0",
-      "app_commit": "409ee13778caa0041330c77efda6295396357b85",
-      "built_at": "2026-07-08T14:38:50Z"
+      "app_commit": "a8ee7f8c49ce6a07e68c17b91d68289e03aca68d",
+      "built_at": "2026-09-30T05:28:16Z"
     },
     {
       "target": "backend-api",
       "component": "backend-api",
-      "image": "m3acropsd1.azurecr.io/pss2-api:2661817852",
-      "image_digest": "sha256:d4e7cc4cc2a8621e28352627c7b9d4423a9264b5e47a0c6572f5b96d83acab6b",
+      "image": "m3acropsd1.azurecr.io/pss2-api:2895925333",
+      "image_digest": "sha256:6679dc871dd5babc9ffc6e41ea8ede6a0a1e1aba1bba6e93883908888e49e540",
       "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0",
       "runtime": "ASP.NET Core 8 API",
       "app_repo": "medline/apac-it/operations/pss-2.0",
-      "app_commit": "409ee13778caa0041330c77efda6295396357b85",
-      "built_at": "2026-07-08T14:38:50Z"
+      "app_commit": "a8ee7f8c49ce6a07e68c17b91d68289e03aca68d",
+      "built_at": "2026-09-30T05:28:16Z"
     }
   ],
   "stages": [
@@ -846,8 +846,8 @@
       "text": "The VNet, subnets, NSGs, and route tables in M3-RG-ALZ-OPSDEV-D-1 are owned by the infrastructure team. This repo only consumes subnet IDs via data sources."
     },
     {
-      "title": "Private DNS zones must be linked by the infra team",
-      "text": "Private endpoints are deployed by this repo but name resolution requires privatelink DNS zones linked to M3-ALZ-VNET-OPSDEV-D-1. Coordinate with the infrastructure team."
+      "title": "Private DNS is centrally managed",
+      "text": "Private endpoints are deployed by this repo, but privatelink DNS zones, records, forwarding, and VNet links are owned by the central network DNS path. Key Vault remains public for Terraform secret seeding unless the runner has private vault reachability."
     },
     {
       "title": "APIM subnet is reserved",

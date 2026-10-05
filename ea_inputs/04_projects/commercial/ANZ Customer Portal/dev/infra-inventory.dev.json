@@ -1,0 +1,734 @@
+{
+  "schema_version": "1.0",
+  "application": "CUSTPORTAL",
+  "project": "CUSTPORTAL",
+  "environment": "dev",
+  "generated_at": "2026-09-29T09:15:16Z",
+  "source_repo": "medline/apac-it/commercial/anz-customer-portal",
+  "source_commit": "c4754a3193b840859387b620b93ce2872b7c2639",
+  "pipeline_run": "2892582832",
+  "subscription": {
+    "name": "M3-ALZ-OPS-D-1",
+    "id": "445a29d7-5829-4ed3-bd56-250990ff12ed",
+    "tenant_id": "d6b0474e-14ab-41bb-adbd-8c39f8f21582",
+    "location": "southeastasia"
+  },
+  "pipeline": {
+    "environment": "dev",
+    "layer": "workload-custportal-app",
+    "network_mode": "external",
+    "service_connection": "SP-Dev-IT-APAC-Commercial"
+  },
+  "artifacts": [
+    {
+      "id": "rg-platform",
+      "name": "M3-RG-ALZ-COMM-PLATFORM-D-1",
+      "type": "Resource Group",
+      "layer": "Shared Platform",
+      "pillar": "platform",
+      "group": "-",
+      "ownership": "shared-platform",
+      "details": [
+        "Contains shared platform resources consumed by this workload."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "rg-app",
+      "name": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "type": "Resource Group",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "-",
+      "ownership": "repo",
+      "details": [
+        "Created by the ISTP workload state; contains the ISTP workload resources."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "vnet",
+      "name": "M3-ALZ-VNET-COMM-D-1",
+      "type": "Virtual Network",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-COMM-D-1",
+      "ownership": "external",
+      "details": [
+        "Owned by the infrastructure team in M3-RG-ALZ-COMM-D-1.",
+        "This repo consumes subnets from this VNet; it does not create or manage it."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "subnet-appservice",
+      "name": "ALZ-COMM-APP-COMM",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-COMM-D-1",
+      "ownership": "external",
+      "details": [
+        "App Service VNet integration subnet.",
+        "Consumed by the frontend and backend web apps."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
+    },
+    {
+      "id": "subnet-apim",
+      "name": "ALZ-COMM-APP-APPS",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-COMM-D-1",
+      "ownership": "external",
+      "details": [
+        "Reserved for APIM gateway.",
+        "Not yet in use by this workload."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
+    },
+    {
+      "id": "subnet-private-endpoints",
+      "name": "ALZ-COMM-APP-PEP",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-COMM-D-1",
+      "ownership": "external",
+      "details": [
+        "Private endpoint subnet.",
+        "Hosts private endpoints for the frontend and backend web apps, Key Vault, and Storage.",
+        "Live private endpoints captured: 5."
+      ],
+      "dependsOn": [
+        "vnet"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-AS-CUSTPORTAL-BE-D-1-pe",
+            "name": "M3-AS-CUSTPORTAL-BE-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-BE-D-1",
+            "target_artifact": "backend-api",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.77"
+            ],
+            "fqdns": [
+              "m3-as-custportal-be-d-1.azurewebsites.net",
+              "m3-as-custportal-be-d-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-AS-CUSTPORTAL-BE-D-1-pe.nic.edbbf164-98f2-4c2f-95ec-b6541fdb542d"
+            ]
+          },
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-AS-CUSTPORTAL-D-1-pe",
+            "name": "M3-AS-CUSTPORTAL-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-D-1",
+            "target_artifact": "webapp",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.75"
+            ],
+            "fqdns": [
+              "m3-as-custportal-d-1.azurewebsites.net",
+              "m3-as-custportal-d-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-AS-CUSTPORTAL-D-1-pe.nic.e888231e-c6b9-4318-9967-1d166243af93"
+            ]
+          },
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-KV-CUSTPORTAL-D-1-pe",
+            "name": "M3-KV-CUSTPORTAL-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.KeyVault/vaults/M3-KV-CUSTPORTAL-D-1",
+            "target_artifact": "keyvault",
+            "group_ids": [
+              "vault"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.76"
+            ],
+            "fqdns": [
+              "m3-kv-custportal-d-1.vault.azure.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-KV-CUSTPORTAL-D-1-pe.nic.113b914e-2eb5-4c15-94a6-f7338ffe95ec"
+            ]
+          },
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/m3sacustportald1-blob-pe",
+            "name": "m3sacustportald1-blob-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Storage/storageAccounts/m3sacustportald1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "blob"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.74"
+            ],
+            "fqdns": [
+              "m3sacustportald1.blob.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/m3sacustportald1-blob-pe.nic.d403dea1-5d9b-47f4-8803-0795f0fc2ca5"
+            ]
+          },
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/m3sacustportald1-file-pe",
+            "name": "m3sacustportald1-file-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Storage/storageAccounts/m3sacustportald1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "file"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.73"
+            ],
+            "fqdns": [
+              "m3sacustportald1.file.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/m3sacustportald1-file-pe.nic.13a8a54c-56e8-4967-b480-0e2c8ec89f6a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "acr",
+      "name": "m3acrcommd1",
+      "type": "Container Registry",
+      "layer": "Shared Platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-COMM-PLATFORM-D-1",
+      "ownership": "shared-platform",
+      "details": [
+        "Existing shared ACR. AppBuild pushes BuildId image tags."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
+    },
+    {
+      "id": "law",
+      "name": "M3-LAW-COMM-D-1",
+      "type": "Log Analytics Workspace",
+      "layer": "Shared Platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-COMM-PLATFORM-D-1",
+      "ownership": "shared-platform",
+      "details": [
+        "Existing shared Log Analytics workspace, if enabled for this workload."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
+    },
+    {
+      "id": "appi",
+      "name": "M3-APPI-CUSTPORTAL-D-1",
+      "type": "Application Insights",
+      "layer": "Shared Platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-COMM-PLATFORM-D-1",
+      "ownership": "shared-platform",
+      "details": [
+        "Existing or separately provisioned Application Insights instance, if enabled for this workload."
+      ],
+      "dependsOn": [
+        "law"
+      ]
+    },
+    {
+      "id": "plan",
+      "name": "M3-ASP-CUSTPORTAL-D-1",
+      "type": "Linux App Service Plan",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "ownership": "repo",
+      "details": [
+        "SKU from tfvars: not configured",
+        "Shared by the frontend and backend web apps."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ]
+    },
+    {
+      "id": "webapp",
+      "name": "M3-AS-CUSTPORTAL-D-1",
+      "type": "Linux Web App",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "ownership": "repo",
+      "details": [
+        "Frontend \u2014 Angular production bundle served by nginx.",
+        "ACR URL: https://m3acrcommd1.azurecr.io",
+        "System-assigned managed identity enabled.",
+        "VNet integrated to subnet ALZ-COMM-APP-COMM.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Live default hostname: m3-as-custportal-d-1.azurewebsites.net.",
+        "Live hostnames: m3-as-custportal-d-1.azurewebsites.net.",
+        "Live site state: Running; enabled: True.",
+        "Live public network access: Disabled.",
+        "Live outbound IPs: 13.76.156.231, 52.187.106.144, 13.76.186.7, 104.215.156.243.",
+        "Live possible outbound IPs: 104.215.156.243, 13.76.102.155, 13.76.156.231, 13.76.186.7, 13.76.188.138, 13.76.191.15, 13.76.224.59, 20.197.110.192, 20.197.111.214, 20.198.184.247, 20.198.184.59, 20.198.184.87, 20.198.185.224, 40.119.243.239, 40.119.244.139, 40.119.244.166, 40.119.244.171, 40.119.244.172, 40.119.244.64, 52.187.106.144, 52.187.106.221.",
+        "Live VNet integration subnet ID: /subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-COMM.",
+        "Live private endpoint: M3-AS-CUSTPORTAL-D-1-pe (sites) IPs: 10.246.251.75."
+      ],
+      "dependsOn": [
+        "plan",
+        "acr",
+        "appi",
+        "subnet-appservice",
+        "subnet-private-endpoints"
+      ],
+      "runtime": {
+        "webapp": {
+          "resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-D-1",
+          "name": "M3-AS-CUSTPORTAL-D-1",
+          "resource_group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+          "location": "Southeast Asia",
+          "kind": "app,linux,container",
+          "default_hostname": "m3-as-custportal-d-1.azurewebsites.net",
+          "hostnames": [
+            "m3-as-custportal-d-1.azurewebsites.net"
+          ],
+          "state": "Running",
+          "enabled": true,
+          "availability_state": "Normal",
+          "https_only": true,
+          "public_network_access": "Disabled",
+          "outbound_ip_addresses": [
+            "13.76.156.231",
+            "52.187.106.144",
+            "13.76.186.7",
+            "104.215.156.243"
+          ],
+          "possible_outbound_ip_addresses": [
+            "104.215.156.243",
+            "13.76.102.155",
+            "13.76.156.231",
+            "13.76.186.7",
+            "13.76.188.138",
+            "13.76.191.15",
+            "13.76.224.59",
+            "20.197.110.192",
+            "20.197.111.214",
+            "20.198.184.247",
+            "20.198.184.59",
+            "20.198.184.87",
+            "20.198.185.224",
+            "40.119.243.239",
+            "40.119.244.139",
+            "40.119.244.166",
+            "40.119.244.171",
+            "40.119.244.172",
+            "40.119.244.64",
+            "52.187.106.144",
+            "52.187.106.221"
+          ],
+          "vnet_integration_subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-COMM"
+        },
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-AS-CUSTPORTAL-D-1-pe",
+            "name": "M3-AS-CUSTPORTAL-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-D-1",
+            "target_artifact": "webapp",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.75"
+            ],
+            "fqdns": [
+              "m3-as-custportal-d-1.azurewebsites.net",
+              "m3-as-custportal-d-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-AS-CUSTPORTAL-D-1-pe.nic.e888231e-c6b9-4318-9967-1d166243af93"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "backend-api",
+      "name": "M3-AS-CUSTPORTAL-BE-D-1",
+      "type": "Linux Web App",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "ownership": "repo",
+      "details": [
+        "Backend API container image.",
+        "ACR URL: https://m3acrcommd1.azurecr.io",
+        "System-assigned managed identity enabled.",
+        "VNet integrated to subnet ALZ-COMM-APP-COMM.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Reads Key Vault URI through app settings.",
+        "Live default hostname: m3-as-custportal-be-d-1.azurewebsites.net.",
+        "Live hostnames: m3-as-custportal-be-d-1.azurewebsites.net.",
+        "Live site state: Running; enabled: True.",
+        "Live public network access: Disabled.",
+        "Live outbound IPs: 13.76.156.231, 52.187.106.144, 13.76.186.7, 104.215.156.243.",
+        "Live possible outbound IPs: 104.215.156.243, 13.76.102.155, 13.76.156.231, 13.76.186.7, 13.76.188.138, 13.76.191.15, 13.76.224.59, 20.197.110.192, 20.197.111.214, 20.198.184.247, 20.198.184.59, 20.198.184.87, 20.198.185.224, 40.119.243.239, 40.119.244.139, 40.119.244.166, 40.119.244.171, 40.119.244.172, 40.119.244.64, 52.187.106.144, 52.187.106.221.",
+        "Live VNet integration subnet ID: /subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-COMM.",
+        "Live private endpoint: M3-AS-CUSTPORTAL-BE-D-1-pe (sites) IPs: 10.246.251.77."
+      ],
+      "dependsOn": [
+        "plan",
+        "acr",
+        "appi",
+        "keyvault",
+        "subnet-appservice",
+        "subnet-private-endpoints"
+      ],
+      "runtime": {
+        "webapp": {
+          "resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-BE-D-1",
+          "name": "M3-AS-CUSTPORTAL-BE-D-1",
+          "resource_group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+          "location": "Southeast Asia",
+          "kind": "app,linux,container",
+          "default_hostname": "m3-as-custportal-be-d-1.azurewebsites.net",
+          "hostnames": [
+            "m3-as-custportal-be-d-1.azurewebsites.net"
+          ],
+          "state": "Running",
+          "enabled": true,
+          "availability_state": "Normal",
+          "https_only": true,
+          "public_network_access": "Disabled",
+          "outbound_ip_addresses": [
+            "13.76.156.231",
+            "52.187.106.144",
+            "13.76.186.7",
+            "104.215.156.243"
+          ],
+          "possible_outbound_ip_addresses": [
+            "104.215.156.243",
+            "13.76.102.155",
+            "13.76.156.231",
+            "13.76.186.7",
+            "13.76.188.138",
+            "13.76.191.15",
+            "13.76.224.59",
+            "20.197.110.192",
+            "20.197.111.214",
+            "20.198.184.247",
+            "20.198.184.59",
+            "20.198.184.87",
+            "20.198.185.224",
+            "40.119.243.239",
+            "40.119.244.139",
+            "40.119.244.166",
+            "40.119.244.171",
+            "40.119.244.172",
+            "40.119.244.64",
+            "52.187.106.144",
+            "52.187.106.221"
+          ],
+          "vnet_integration_subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-COMM"
+        },
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-AS-CUSTPORTAL-BE-D-1-pe",
+            "name": "M3-AS-CUSTPORTAL-BE-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Web/sites/M3-AS-CUSTPORTAL-BE-D-1",
+            "target_artifact": "backend-api",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.77"
+            ],
+            "fqdns": [
+              "m3-as-custportal-be-d-1.azurewebsites.net",
+              "m3-as-custportal-be-d-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-AS-CUSTPORTAL-BE-D-1-pe.nic.edbbf164-98f2-4c2f-95ec-b6541fdb542d"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "storage",
+      "name": "m3sacustportald1",
+      "type": "Storage Account",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "ownership": "repo",
+      "details": [
+        "StorageV2, Standard LRS.",
+        "HTTPS only, minimum TLS 1.2.",
+        "Creates blob container istpimages and file share istpreports.",
+        "Private endpoints: blob and file in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Live private endpoint: m3sacustportald1-blob-pe (blob) IPs: 10.246.251.74.",
+        "Live private endpoint: m3sacustportald1-file-pe (file) IPs: 10.246.251.73."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/m3sacustportald1-blob-pe",
+            "name": "m3sacustportald1-blob-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Storage/storageAccounts/m3sacustportald1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "blob"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.74"
+            ],
+            "fqdns": [
+              "m3sacustportald1.blob.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/m3sacustportald1-blob-pe.nic.d403dea1-5d9b-47f4-8803-0795f0fc2ca5"
+            ]
+          },
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/m3sacustportald1-file-pe",
+            "name": "m3sacustportald1-file-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Storage/storageAccounts/m3sacustportald1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "file"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.73"
+            ],
+            "fqdns": [
+              "m3sacustportald1.file.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/m3sacustportald1-file-pe.nic.13a8a54c-56e8-4967-b480-0e2c8ec89f6a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "keyvault",
+      "name": "M3-KV-CUSTPORTAL-D-1",
+      "type": "Key Vault",
+      "layer": "04-workloads/istp-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-COMM-CUSTPORTAL-D-1",
+      "ownership": "repo",
+      "details": [
+        "Standard SKU.",
+        "Stores workload storage connection secrets. The application database connection string is supplied directly as an app setting (TF_VAR_external_db_connection_string), not stored here.",
+        "Backend app service receives Get/List secret permissions.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled for Terraform secret operations.",
+        "Live private endpoint: M3-KV-CUSTPORTAL-D-1-pe (vault) IPs: 10.246.251.76."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/privateEndpoints/M3-KV-CUSTPORTAL-D-1-pe",
+            "name": "M3-KV-CUSTPORTAL-D-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-D-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-COMM-D-1/subnets/ALZ-COMM-APP-PEP",
+            "target_resource_id": "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.KeyVault/vaults/M3-KV-CUSTPORTAL-D-1",
+            "target_artifact": "keyvault",
+            "group_ids": [
+              "vault"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.251.76"
+            ],
+            "fqdns": [
+              "m3-kv-custportal-d-1.vault.azure.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/445a29d7-5829-4ed3-bd56-250990ff12ed/resourceGroups/M3-RG-ALZ-COMM-CUSTPORTAL-D-1/providers/Microsoft.Network/networkInterfaces/M3-KV-CUSTPORTAL-D-1-pe.nic.113b914e-2eb5-4c15-94a6-f7338ffe95ec"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "deployments": [
+    {
+      "target": "webapp",
+      "component": "angular-ui",
+      "image": "m3acrcommd1.azurecr.io/custportal-fe:2892582832",
+      "image_digest": "sha256:202f3ac273b1c5fd5f1f013b0718bacf2459856f6e20895233b2b670fc936147",
+      "base_image": "nginx:1.27-alpine",
+      "runtime": "nginx/static frontend",
+      "app_repo": "medline/apac-it/commercial/anz-customer-portal",
+      "app_commit": "c4754a3193b840859387b620b93ce2872b7c2639",
+      "built_at": "2026-09-29T09:08:51Z"
+    },
+    {
+      "target": "backend-api",
+      "component": "backend-api",
+      "image": "m3acrcommd1.azurecr.io/custportal-api:2892582832",
+      "image_digest": "sha256:350ef432de195b1c047b2e7de70d1c6bdea4b1b2987d49d226a931906f218a6e",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0",
+      "runtime": "ASP.NET Core 8 API",
+      "app_repo": "medline/apac-it/commercial/anz-customer-portal",
+      "app_commit": "c4754a3193b840859387b620b93ce2872b7c2639",
+      "built_at": "2026-09-29T09:08:51Z"
+    }
+  ],
+  "stages": [
+    {
+      "name": "Generate",
+      "text": "Runs generate_tf_config.py for dev and publishes generated backend/tfvars artifacts."
+    },
+    {
+      "name": "Plan / Apply",
+      "text": "Plans and applies only the ISTP workload layer."
+    },
+    {
+      "name": "AppBuild",
+      "text": "Builds/pushes frontend and backend container images, restarts both web apps."
+    }
+  ],
+  "layerHierarchy": [
+    {
+      "title": "Shared Platform",
+      "children": [
+        {
+          "id": "rg-platform"
+        },
+        {
+          "id": "acr"
+        },
+        {
+          "id": "law",
+          "children": [
+            {
+              "id": "appi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "02 Network (External)",
+      "children": [
+        {
+          "id": "vnet",
+          "children": [
+            {
+              "id": "subnet-appservice"
+            },
+            {
+              "id": "subnet-apim"
+            },
+            {
+              "id": "subnet-private-endpoints"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "04 Workload",
+      "children": [
+        {
+          "id": "rg-app"
+        },
+        {
+          "id": "plan",
+          "children": [
+            {
+              "id": "webapp"
+            },
+            {
+              "id": "backend-api"
+            }
+          ]
+        },
+        {
+          "id": "storage"
+        },
+        {
+          "id": "keyvault"
+        }
+      ]
+    }
+  ],
+  "boundaryNotes": [
+    {
+      "title": "Network is externally owned",
+      "text": "The VNet, subnets, NSGs, and route tables in M3-RG-ALZ-OPSDEV-D-1 are owned by the infrastructure team. This repo only consumes subnet IDs via data sources."
+    },
+    {
+      "title": "Private DNS zones must be linked by the infra team",
+      "text": "Private endpoints are deployed by this repo but name resolution requires privatelink DNS zones linked to M3-ALZ-VNET-OPSDEV-D-1. Coordinate with the infrastructure team."
+    },
+    {
+      "title": "APIM subnet is reserved",
+      "text": "ALZ-OPSDEV-APP-APPS is reserved for a future APIM gateway. It is not consumed by this workload."
+    }
+  ]
+}

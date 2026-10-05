@@ -1,0 +1,1483 @@
+{
+  "schema_version": "1.0",
+  "application": "PSS 2.0",
+  "project": "PSS2",
+  "environment": "dev",
+  "generated_at": "2026-09-30T05:32:21Z",
+  "source_repo": "medline/apac-it/operations/pss-2.0",
+  "source_commit": "a8ee7f8c49ce6a07e68c17b91d68289e03aca68d",
+  "pipeline_run": "2895925333",
+  "components": [
+    {
+      "id": "angular-ui",
+      "name": "PSS2 UI",
+      "type": "angular-spa",
+      "path": "src/pss2-ui",
+      "dependsOn": [
+        "backend-api"
+      ],
+      "uses_infra": [
+        "webapp",
+        "acr"
+      ],
+      "summary": "19 Angular routes and 0 explicit API call candidates."
+    },
+    {
+      "id": "backend-api",
+      "name": "PSS2 API",
+      "type": "aspnet-core-web-api",
+      "path": "src/pss2-api",
+      "dependsOn": [],
+      "uses_infra": [
+        "backend-api",
+        "acr",
+        "appi",
+        "sql-db",
+        "storage"
+      ],
+      "summary": "93 ASP.NET Core controller endpoints."
+    }
+  ],
+  "application_map": {
+    "nodes": [
+      {
+        "id": "angular-ui",
+        "label": "Angular UI",
+        "group": "frontend",
+        "kind": "frontend",
+        "component": "angular-ui",
+        "infra_refs": [
+          "webapp",
+          "acr"
+        ],
+        "metrics": {
+          "pages": 19,
+          "api_call_candidates": 0
+        }
+      },
+      {
+        "id": "backend-api",
+        "label": "ASP.NET Core API",
+        "group": "backend",
+        "kind": "api",
+        "component": "backend-api",
+        "infra_refs": [
+          "backend-api",
+          "acr",
+          "appi"
+        ],
+        "metrics": {
+          "endpoints": 93
+        }
+      },
+      {
+        "id": "sql-db",
+        "label": "Azure SQL Database",
+        "group": "data",
+        "kind": "data_store",
+        "infra_ref": "sql-db"
+      },
+      {
+        "id": "storage",
+        "label": "Azure Storage",
+        "group": "storage",
+        "kind": "storage",
+        "infra_ref": "storage"
+      }
+    ],
+    "edges": [
+      {
+        "from": "angular-ui",
+        "to": "backend-api",
+        "label": "Same-origin /api proxy",
+        "confidence": "deployment-configuration",
+        "source": "src/pss2-ui/nginx.conf.template"
+      },
+      {
+        "from": "backend-api",
+        "to": "sql-db",
+        "label": "Uses Azure SQL Database",
+        "confidence": "static-code-reference",
+        "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TestingDNSIssueController.cs"
+      },
+      {
+        "from": "backend-api",
+        "to": "storage",
+        "label": "Uses Azure Storage",
+        "confidence": "static-code-reference",
+        "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobImageTestController.cs"
+      }
+    ]
+  },
+  "frontend": {
+    "build_mode": "angular-production",
+    "package": {
+      "name": "pss-ui",
+      "version": "0.0.0",
+      "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "watch": "ng build --watch --configuration development",
+        "test": "ng test",
+        "e2e": "playwright test",
+        "e2e:headed": "playwright test --headed",
+        "e2e:ui": "playwright test --ui"
+      },
+      "frameworks": [
+        "@angular/core",
+        "@angular/router",
+        "@azure/msal-angular"
+      ],
+      "source": "src/pss2-ui/package.json"
+    },
+    "docker": {
+      "path": "src/pss2-ui/Dockerfile",
+      "stages": [
+        {
+          "image": "node:22-alpine",
+          "stage": "build"
+        },
+        {
+          "image": "nginx:1.27-alpine",
+          "stage": "runtime"
+        }
+      ],
+      "env_keys": []
+    },
+    "pages": [
+      {
+        "id": "login",
+        "path": "/login",
+        "component": "LoginComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "home",
+        "path": "/",
+        "component": "PackSpecificationComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "search-pack",
+        "path": "/search-pack",
+        "component": "SearchPackComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "pack-maintenance",
+        "path": "/pack-maintenance",
+        "component": "PackMaintenanceComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "globalchange",
+        "path": "/globalchange",
+        "component": "GlobalChangeComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "audit-report",
+        "path": "/audit-report",
+        "component": "AuditReportComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "admin",
+        "path": "/admin",
+        "component": "AdminPageComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "user-information",
+        "path": "/user-information",
+        "component": "UserInformationComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "security-list",
+        "path": "/security-list",
+        "component": "SecurityListComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "job-scheduler",
+        "path": "/job-scheduler",
+        "component": "AdminSchedulerComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "settings",
+        "path": "/settings",
+        "component": "AdminSettingsComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "header",
+        "path": "/header",
+        "component": "HeaderComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "detail",
+        "path": "/detail",
+        "component": "DetailComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "change-history",
+        "path": "/change-history",
+        "component": "ChangeHistoryComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "unallocated-components",
+        "path": "/unallocated-components",
+        "component": "UnallocatedComponentsComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "packaging-component",
+        "path": "/packaging-component",
+        "component": "PackagingComponentsComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "invalid-component",
+        "path": "/invalid-component",
+        "component": "InvalidComponentsComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "testing",
+        "path": "/testing",
+        "component": "TestingComponent",
+        "protected": false,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      },
+      {
+        "id": "token",
+        "path": "/token",
+        "component": "TokenViewComponent",
+        "protected": true,
+        "source": "src/pss2-ui/src/app/app.routes.ts"
+      }
+    ],
+    "service_modules": [
+      {
+        "id": "auth-service",
+        "name": "auth.service",
+        "path": "src/pss2-ui/src/app/core/auth/auth.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "notification-service",
+        "name": "notification.service",
+        "path": "src/pss2-ui/src/app/core/services/notification.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "packmaintenance-service",
+        "name": "packmaintenance.service",
+        "path": "src/pss2-ui/src/app/core/services/packmaintenance.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "admin-access-service",
+        "name": "admin-access.service",
+        "path": "src/pss2-ui/src/app/services/admin-access.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "admin-scheduler-service",
+        "name": "admin-scheduler.service",
+        "path": "src/pss2-ui/src/app/services/admin-scheduler.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "admin-security-service",
+        "name": "admin-security.service",
+        "path": "src/pss2-ui/src/app/services/admin-security.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "audit-report-service",
+        "name": "audit-report.service",
+        "path": "src/pss2-ui/src/app/services/audit-report.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "global-change-service",
+        "name": "global-change.service",
+        "path": "src/pss2-ui/src/app/services/global-change.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "kis-report-service",
+        "name": "kis-report.service",
+        "path": "src/pss2-ui/src/app/services/kis-report.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "pack-detail-service",
+        "name": "pack-detail.service",
+        "path": "src/pss2-ui/src/app/services/pack-detail.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "pack-image-service",
+        "name": "pack-image.service",
+        "path": "src/pss2-ui/src/app/services/pack-image.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "pack-maintenance-service",
+        "name": "pack-maintenance.service",
+        "path": "src/pss2-ui/src/app/services/pack-maintenance.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "pack-service",
+        "name": "pack.service",
+        "path": "src/pss2-ui/src/app/services/pack.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "testing-service",
+        "name": "testing.service",
+        "path": "src/pss2-ui/src/app/services/testing.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      },
+      {
+        "id": "notification-service",
+        "name": "notification.service",
+        "path": "src/pss2-ui/src/app/shared/notifications/notification.service.ts",
+        "call_count": 0,
+        "endpoints": []
+      }
+    ],
+    "api_call_candidates": []
+  },
+  "api_surface": [
+    {
+      "id": "get-api-admin-job-schedules",
+      "handler": "GetJobSchedules",
+      "method": "GET",
+      "route": "/api/Admin/job-schedules",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-security-list",
+      "handler": "GetSecurityList",
+      "method": "GET",
+      "route": "/api/Admin/security-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-security-level-options",
+      "handler": "GetSecurityLevelOptions",
+      "method": "GET",
+      "route": "/api/Admin/security-level-options",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "post-api-admin-security-list",
+      "handler": "AddSecurityList",
+      "method": "POST",
+      "route": "/api/Admin/security-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "delete-api-admin-security-list",
+      "handler": "DeleteSecurityList",
+      "method": "DELETE",
+      "route": "/api/Admin/security-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-security-list",
+      "handler": "UpdateSecurityList",
+      "method": "PUT",
+      "route": "/api/Admin/security-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-job-schedules-id",
+      "handler": "UpdateJobSchedule",
+      "method": "PUT",
+      "route": "/api/Admin/job-schedules/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-access-users",
+      "handler": "GetAccessUsers",
+      "method": "GET",
+      "route": "/api/Admin/access/users",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "post-api-admin-access-users",
+      "handler": "CreateAccessUser",
+      "method": "POST",
+      "route": "/api/Admin/access/users",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-access-users-id",
+      "handler": "UpdateAccessUser",
+      "method": "PUT",
+      "route": "/api/Admin/access/users/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "delete-api-admin-access-users-id",
+      "handler": "DeleteAccessUser",
+      "method": "DELETE",
+      "route": "/api/Admin/access/users/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-access-groups",
+      "handler": "GetAccessGroups",
+      "method": "GET",
+      "route": "/api/Admin/access/groups",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "post-api-admin-access-groups",
+      "handler": "CreateAccessGroup",
+      "method": "POST",
+      "route": "/api/Admin/access/groups",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-access-groups-id",
+      "handler": "UpdateAccessGroup",
+      "method": "PUT",
+      "route": "/api/Admin/access/groups/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "delete-api-admin-access-groups-id",
+      "handler": "DeleteAccessGroup",
+      "method": "DELETE",
+      "route": "/api/Admin/access/groups/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-access-roles",
+      "handler": "GetAccessRoles",
+      "method": "GET",
+      "route": "/api/Admin/access/roles",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "post-api-admin-access-roles",
+      "handler": "CreateAccessRole",
+      "method": "POST",
+      "route": "/api/Admin/access/roles",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-access-roles-id",
+      "handler": "UpdateAccessRole",
+      "method": "PUT",
+      "route": "/api/Admin/access/roles/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "delete-api-admin-access-roles-id",
+      "handler": "DeleteAccessRole",
+      "method": "DELETE",
+      "route": "/api/Admin/access/roles/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-admin-access-menus",
+      "handler": "GetAccessMenus",
+      "method": "GET",
+      "route": "/api/Admin/access/menus",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "post-api-admin-access-menus",
+      "handler": "CreateAccessMenu",
+      "method": "POST",
+      "route": "/api/Admin/access/menus",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "put-api-admin-access-menus-id",
+      "handler": "UpdateAccessMenu",
+      "method": "PUT",
+      "route": "/api/Admin/access/menus/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "delete-api-admin-access-menus-id",
+      "handler": "DeleteAccessMenu",
+      "method": "DELETE",
+      "route": "/api/Admin/access/menus/:id",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs"
+    },
+    {
+      "id": "get-api-audit-report-kis-audit-log",
+      "handler": "GetKisAuditLog",
+      "method": "GET",
+      "route": "/api/AuditReport/kis-audit-log",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AuditReportController.cs"
+    },
+    {
+      "id": "get-api-audit-report-kis-lookup",
+      "handler": "SearchKisLookup",
+      "method": "GET",
+      "route": "/api/AuditReport/kis-lookup",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AuditReportController.cs"
+    },
+    {
+      "id": "get-api-auth-status",
+      "handler": "GetStatus",
+      "method": "GET",
+      "route": "/api/Auth/status",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AuthController.cs"
+    },
+    {
+      "id": "post-api-azure-blob-credential-validate",
+      "handler": "ValidateCredentialsAsync",
+      "method": "POST",
+      "route": "/api/AzureBlobCredential/validate",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobCredentialController.cs"
+    },
+    {
+      "id": "get-api-azure-blob-credential-containers",
+      "handler": "ListContainersAsync",
+      "method": "GET",
+      "route": "/api/AzureBlobCredential/containers",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobCredentialController.cs"
+    },
+    {
+      "id": "post-api-azure-file-share-validate",
+      "handler": "ValidateConnectionAsync",
+      "method": "POST",
+      "route": "/api/AzureFileShare/validate",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "get-api-azure-file-share-files",
+      "handler": "ListFilesAsync",
+      "method": "GET",
+      "route": "/api/AzureFileShare/files",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "post-api-azure-file-share-directories",
+      "handler": "CreateDirectoryAsync",
+      "method": "POST",
+      "route": "/api/AzureFileShare/directories",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "post-api-azure-file-share-files-text",
+      "handler": "UploadTextFileAsync",
+      "method": "POST",
+      "route": "/api/AzureFileShare/files/text",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "get-api-azure-file-share-files-text",
+      "handler": "DownloadTextFileAsync",
+      "method": "GET",
+      "route": "/api/AzureFileShare/files/text",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "delete-api-azure-file-share-files",
+      "handler": "DeleteFileAsync",
+      "method": "DELETE",
+      "route": "/api/AzureFileShare/files",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs"
+    },
+    {
+      "id": "post-api-boomi-cap-code-list",
+      "handler": "ProcessCapCodeListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/cap-code-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-commodity-code-list",
+      "handler": "ProcessCommodityCodeListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/commodity-code-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-product-list",
+      "handler": "ProcessProductListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/product-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-uom-list",
+      "handler": "ProcessUomListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/uom-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-component-list",
+      "handler": "ProcessComponentListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/component-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-component-cap-code-list",
+      "handler": "ProcessComponentCapCodeListAsync",
+      "method": "POST",
+      "route": "/api/Boomi/component-cap-code-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-medops-global-change-list",
+      "handler": "MedOpsGlobalChangeList",
+      "method": "POST",
+      "route": "/api/Boomi/medops-global-change-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-medops-info-list",
+      "handler": "MedOpsInfoList",
+      "method": "POST",
+      "route": "/api/Boomi/medops-info-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-product-components-by-product-code",
+      "handler": "ProductComponentsByProductCode",
+      "method": "POST",
+      "route": "/api/Boomi/product-components-by-product-code",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "post-api-boomi-bom-list",
+      "handler": "BomList",
+      "method": "POST",
+      "route": "/api/Boomi/bom-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs"
+    },
+    {
+      "id": "get-api-db-config-health-connection-source",
+      "handler": "GetConnectionSource",
+      "method": "GET",
+      "route": "/api/DbConfigHealth/connection-source",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/DbConfigHealthController.cs"
+    },
+    {
+      "id": "get-api-global-change-packs",
+      "handler": "GetGlobalChangeList",
+      "method": "GET",
+      "route": "/api/GlobalChange/packs",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "post-api-global-change-change-id-products",
+      "handler": "GetGlobalChangeByChangeId",
+      "method": "POST",
+      "route": "/api/GlobalChange/change-id-products",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "get-api-global-change-by-product-codes",
+      "handler": "GetGlobalChangeListByProductCodes",
+      "method": "GET",
+      "route": "/api/GlobalChange/by-product-codes",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "get-api-global-change-report",
+      "handler": "GetGlobalChangeReport",
+      "method": "GET",
+      "route": "/api/GlobalChange/report",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "get-api-global-change-delete-components",
+      "handler": "GetComponentsForDelete",
+      "method": "GET",
+      "route": "/api/GlobalChange/delete-components",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "get-api-global-change-components",
+      "handler": "GetComponentsForGlobalChange",
+      "method": "GET",
+      "route": "/api/GlobalChange/components",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "post-api-global-change-save-sp",
+      "handler": "PerformGlobalChange",
+      "method": "POST",
+      "route": "/api/GlobalChange/save_sp",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "post-api-global-change-save",
+      "handler": "save",
+      "method": "POST",
+      "route": "/api/GlobalChange/save",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs"
+    },
+    {
+      "id": "post-api-pack-detail-create-pack",
+      "handler": "CreatePack",
+      "method": "POST",
+      "route": "/api/PackDetail/create-pack",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackDetailController.cs"
+    },
+    {
+      "id": "post-api-pack-detail-discontinue-pack",
+      "handler": "DiscontinuePack",
+      "method": "POST",
+      "route": "/api/PackDetail/discontinue-pack",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackDetailController.cs"
+    },
+    {
+      "id": "get-api-pack-detail-instruction-details",
+      "handler": "GetInstructionDetails",
+      "method": "GET",
+      "route": "/api/PackDetail/instruction-details",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackDetailController.cs"
+    },
+    {
+      "id": "delete-api-pack-detail-delete-pack",
+      "handler": "DeletePack",
+      "method": "DELETE",
+      "route": "/api/PackDetail/delete-pack",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackDetailController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-packs",
+      "handler": "GetPackDetails",
+      "method": "GET",
+      "route": "/api/PackSpecification/packs",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-change-history",
+      "handler": "GetChangeHistory",
+      "method": "GET",
+      "route": "/api/PackSpecification/change-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-packaging-components",
+      "handler": "GetPackagingComponents",
+      "method": "GET",
+      "route": "/api/PackSpecification/packaging-components",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-unallocated-components",
+      "handler": "GetUnallocatedComponents",
+      "method": "GET",
+      "route": "/api/PackSpecification/unallocated-components",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-invalid-components",
+      "handler": "GetInvalidComponents",
+      "method": "GET",
+      "route": "/api/PackSpecification/invalid-components",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-change-history",
+      "handler": "AddChangeHistory",
+      "method": "POST",
+      "route": "/api/PackSpecification/change-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "put-api-pack-specification-change-history",
+      "handler": "UpdateChangeHistory",
+      "method": "PUT",
+      "route": "/api/PackSpecification/change-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "delete-api-pack-specification-change-history",
+      "handler": "DeleteChangeHistory",
+      "method": "DELETE",
+      "route": "/api/PackSpecification/change-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-pack-specification-pack-header",
+      "handler": "GetPackHeader",
+      "method": "GET",
+      "route": "/api/PackSpecification/pack-header",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-move-to-packaging",
+      "handler": "MoveToPackaging",
+      "method": "POST",
+      "route": "/api/PackSpecification/move-to-packaging",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-change-id-products-pack-spec",
+      "handler": "GetGlobalChangePackSpec",
+      "method": "POST",
+      "route": "/api/PackSpecification/change-id-products-pack-spec",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-move-to-unallocated",
+      "handler": "MoveToUnallocated",
+      "method": "POST",
+      "route": "/api/PackSpecification/move-to-unallocated",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-validate",
+      "handler": "ValidatePack",
+      "method": "POST",
+      "route": "/api/PackSpecification/validate",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-approve",
+      "handler": "ApprovePack",
+      "method": "POST",
+      "route": "/api/PackSpecification/approve",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "post-api-pack-specification-copy",
+      "handler": "CopyPack",
+      "method": "POST",
+      "route": "/api/PackSpecification/copy",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs"
+    },
+    {
+      "id": "get-api-report-pack-spec-header-kis-id",
+      "handler": "GetPackSpecHeader",
+      "method": "GET",
+      "route": "/api/Report/pack-spec-header/:kisId",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/ReportController.cs"
+    },
+    {
+      "id": "get-api-share-point-images",
+      "handler": "GetImagesAsync",
+      "method": "GET",
+      "route": "/api/SharePoint/images",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/SharePointController.cs"
+    },
+    {
+      "id": "get-api-table-test-app-error-log",
+      "handler": "GetAppErrorLog",
+      "method": "GET",
+      "route": "/api/TableTest/app-error-log",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-test",
+      "handler": "GetTest",
+      "method": "GET",
+      "route": "/api/TableTest/test",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-cartons",
+      "handler": "GetCartons",
+      "method": "GET",
+      "route": "/api/TableTest/cartons",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-change-history",
+      "handler": "GetKisChangeHistory",
+      "method": "GET",
+      "route": "/api/TableTest/kis-change-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-detail",
+      "handler": "GetKisDetail",
+      "method": "GET",
+      "route": "/api/TableTest/kis-detail",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-header",
+      "handler": "GetKisHeader",
+      "method": "GET",
+      "route": "/api/TableTest/kis-header",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-instruction",
+      "handler": "GetKisInstruction",
+      "method": "GET",
+      "route": "/api/TableTest/kis-instruction",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-pdf-export-list",
+      "handler": "GetKisPdfExportList",
+      "method": "GET",
+      "route": "/api/TableTest/kis-pdf-export-list",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-picture",
+      "handler": "GetKisPicture",
+      "method": "GET",
+      "route": "/api/TableTest/kis-picture",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-security",
+      "handler": "GetKisSecurity",
+      "method": "GET",
+      "route": "/api/TableTest/kis-security",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-status",
+      "handler": "GetKisStatus",
+      "method": "GET",
+      "route": "/api/TableTest/kis-status",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-structure",
+      "handler": "GetKisStructure",
+      "method": "GET",
+      "route": "/api/TableTest/kis-structure",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-structure-type",
+      "handler": "GetKisStructureType",
+      "method": "GET",
+      "route": "/api/TableTest/kis-structure-type",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-system-code",
+      "handler": "GetKisSystemCode",
+      "method": "GET",
+      "route": "/api/TableTest/kis-system-code",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-system-code-set",
+      "handler": "GetKisSystemCodeSet",
+      "method": "GET",
+      "route": "/api/TableTest/kis-system-code-set",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-system-table",
+      "handler": "GetKisSystemTable",
+      "method": "GET",
+      "route": "/api/TableTest/kis-system-table",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-table-test-kis-system-update-history",
+      "handler": "GetKisSystemUpdateHistory",
+      "method": "GET",
+      "route": "/api/TableTest/kis-system-update-history",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs"
+    },
+    {
+      "id": "get-api-testing-dnsissue-from-keyvault",
+      "handler": "GetEmployeesViaKeyVault",
+      "method": "GET",
+      "route": "/api/TestingDNSIssue/from-keyvault",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TestingDNSIssueController.cs"
+    },
+    {
+      "id": "get-api-testing-dnsissue-from-pss-connectionstring",
+      "handler": "GetEmployeesViaPSSConnectionString",
+      "method": "GET",
+      "route": "/api/TestingDNSIssue/from-pss-connectionstring",
+      "capability": "Api",
+      "source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TestingDNSIssueController.cs"
+    }
+  ],
+  "backend": {
+    "build_mode": "aspnet-core-production",
+    "projects": [
+      {
+        "path": "src/pss2-api/MedlineANZ.PSS.API/MedlineANZ.PSS.API.csproj",
+        "target_framework": "net8.0",
+        "packages": [
+          {
+            "name": "Microsoft.ApplicationInsights.AspNetCore",
+            "version": "2.23.0"
+          },
+          {
+            "name": "Microsoft.AspNetCore.Authentication.Negotiate",
+            "version": "8.0.28"
+          },
+          {
+            "name": "Microsoft.EntityFrameworkCore.Design",
+            "version": "8.0.28"
+          },
+          {
+            "name": "Microsoft.Identity.Web",
+            "version": "4.14.2"
+          },
+          {
+            "name": "Swashbuckle.AspNetCore",
+            "version": "6.4.0"
+          }
+        ]
+      },
+      {
+        "path": "src/pss2-api/MedlineANZ.PSS.Core/MedlineANZ.PSS.Core.csproj",
+        "target_framework": "net8.0",
+        "packages": [
+          {
+            "name": "AutoMapper.Extensions.Microsoft.DependencyInjection",
+            "version": "8.1.1"
+          },
+          {
+            "name": "Azure.Security.KeyVault.Secrets",
+            "version": "4.5.0"
+          },
+          {
+            "name": "Azure.Storage.Blobs",
+            "version": "12.25.1"
+          },
+          {
+            "name": "Azure.Storage.Files.Shares",
+            "version": "12.20.1"
+          },
+          {
+            "name": "Microsoft.Extensions.Diagnostics.HealthChecks",
+            "version": "8.0.11"
+          },
+          {
+            "name": "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions",
+            "version": "8.0.11"
+          },
+          {
+            "name": "Microsoft.Extensions.DependencyInjection.Abstractions",
+            "version": "8.0.2"
+          },
+          {
+            "name": "Microsoft.Extensions.Http",
+            "version": "8.0.1"
+          },
+          {
+            "name": "Microsoft.Extensions.Hosting.Abstractions",
+            "version": "8.0.1"
+          },
+          {
+            "name": "Microsoft.Extensions.Logging.Abstractions",
+            "version": "8.0.2"
+          },
+          {
+            "name": "Microsoft.Extensions.Options",
+            "version": "8.0.2"
+          },
+          {
+            "name": "Microsoft.Graph",
+            "version": "5.0.0"
+          }
+        ]
+      },
+      {
+        "path": "src/pss2-api/MedlineANZ.PSS.Data/MedlineANZ.PSS.Data.csproj",
+        "target_framework": "net8.0",
+        "packages": [
+          {
+            "name": "Microsoft.EntityFrameworkCore.SqlServer",
+            "version": "8.0.28"
+          },
+          {
+            "name": "Microsoft.EntityFrameworkCore.Tools",
+            "version": "8.0.28"
+          }
+        ]
+      },
+      {
+        "path": "src/pss2-api/MedlineANZ.PSS.Infra/MedlineANZ.PSS.Infra.csproj",
+        "target_framework": "net8.0",
+        "packages": [
+          {
+            "name": "Microsoft.EntityFrameworkCore.Analyzers",
+            "version": "10.0.9"
+          },
+          {
+            "name": "Microsoft.EntityFrameworkCore.AutoHistory",
+            "version": "6.0.0"
+          }
+        ]
+      }
+    ],
+    "docker": {
+      "path": "src/pss2-api/Dockerfile",
+      "stages": [
+        {
+          "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+          "stage": "build"
+        },
+        {
+          "image": "mcr.microsoft.com/dotnet/aspnet:8.0",
+          "stage": "runtime"
+        }
+      ],
+      "env_keys": [
+        "ASPNETCORE_URLS"
+      ]
+    },
+    "compiled_sources": [
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AdminController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AuditReportController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AuthController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobCredentialController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobImageTestController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureFileShareTestController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/BoomiController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/DbConfigHealthController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/GlobalChangeController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackDetailController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/PackSpecificationController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/ReportController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/SharePointController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/TableTestController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Controllers/TestingDNSIssueController.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Program.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Security/ClaimsTransformer.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Security/LocalUserAccessMiddleware.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Security/NoOpAuthenticationHandler.cs",
+      "src/pss2-api/MedlineANZ.PSS.API/Security/UserAccessClaimsReader.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Configuration/ConnectionString.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Admin/AccessAdminCrudDtos.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Admin/AccessControlDtos.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Admin/JobScheduleAdminDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Admin/UpdateJobScheduleRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AuditReport/KisAuditReportLogDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AzureBlobCredential/AzureBlobContainerDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AzureBlobImageTest/UploadImageRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AzureFileShare/AzureFileShareCreateDirectoryRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AzureFileShare/AzureFileShareUploadTextRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/AzureFileShareTest/UploadFileRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeExecuteRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeListDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeListItemDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeReportItemDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeSaveRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeSaveRequestDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/GlobalChange/GlobalChangeValidateRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/MedOps/MedOpsGlobalChangeRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/MedOps/MedOpsGlobalChangeResponse.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/MedOps/MedOpsInfoListRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/MedOps/MedOpsInfoListResponse.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ApprovePackRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/CQMasterDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/CapCodeGroupItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/CapCodeItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ChangeHistoryItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ChangeHistoryRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ComponentDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ComponentItemDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/CopyPackRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/DiscontinuePackRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/DrawingItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/InstructionDetailItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ItemMasterDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/KisInstructionItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/KisListDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/KisLookupOptionDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/Pack.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/PackCreateRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/PackSpecHeaderDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/PackSpecHeaderResponseDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/PictureItem.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/PackSpecification/ValidatePackRequest.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Shared/ApiMessageDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Shared/FilteredProduct.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/DTO/Shared/PagedResult.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/HealthChecks/AzureBlobHealthCheck.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/HealthChecks/AzureFileShareHealthCheck.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/HealthChecks/DatabaseHealthCheck.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/HealthChecks/KeyVaultHealthCheck.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/HealthChecks/MedOpsHealthCheck.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AccessControl/AccessControlSeedService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AccessControl/AccessControlService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AccessControl/IAccessControlSeedService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AccessControl/IAccessControlService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AdminSecurity/AdminSecurityService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AdminSecurity/IAdminSecurityService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AuditReport/AuditReportService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AuditReport/IAuditReportService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureBlobCredential/AzureBlobCredentialService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureBlobCredential/AzureBlobStorageOptions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureBlobCredential/IAzureBlobCredentialService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureFileShare/AzureFileShareOptions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureFileShare/AzureFileShareService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/AzureFileShare/IAzureFileShareService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Boomi/BoomiOptions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Boomi/BoomiService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Boomi/BoomiWorker.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Boomi/IBoomiService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/CapCodeHtmlBuilder.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/CommonServices/CommonService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/CommonServices/ICommonService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/GlobalChange/GlobalChangeSaveService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/GlobalChange/GlobalChangeService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/GlobalChange/IGlobalChangeService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/PackDetail/IPackDetailService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/PackDetail/PackDetailService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/PackSpecification/IPackSpecificationService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/PackSpecification/PackSpecificationService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Report/IReportService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/Report/ReportService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/SharePoint/ISharePointService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/SharePoint/SharePointImageDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/SharePoint/SharePointImagesResponseDto.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/SharePoint/SharePointOptions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/SharePoint/SharePointService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/UsersRepository/IUsersRepository.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Services/UsersRepository/UsersRepository.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/CommandExtensions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/CommonFormatUtility.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/DomainType.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/KeyVaultService/IKeyVaultService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/KeyVaultService/KeyVaultService.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/Repository.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/SqlHelper.cs",
+      "src/pss2-api/MedlineANZ.PSS.Core/Shared/StructureType.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/DbContexts/PSSDbContext.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/DbContexts/PSSDbContextFactory.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/20260722140702_InitialEmployee.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/20260722140702_InitialEmployee.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722153503_InitialCodeFirstBaseline.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722153503_InitialCodeFirstBaseline.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722160536_CreateEmployeeCodeFirst.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722160536_CreateEmployeeCodeFirst.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722160759_CleanupLegacyDbFirstHistory.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260722160759_CleanupLegacyDbFirstHistory.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260723110458_InitialKisSchemaFromScript.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260723110458_InitialKisSchemaFromScript.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260723150000_CreateKisListView.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260723150000_CreateKisListView.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260731171427_AddKisHeaderProdLine.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260731171427_AddKisHeaderProdLine.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260929100029_AddAccessControlSecuritySchema.Designer.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/20260929100029_AddAccessControlSecuritySchema.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Migrations/CodeFirst/PSSDbContextModelSnapshot.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/AccessControlModels.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/AppErrorLog.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/Carton.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/Cc2Mstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/Cc4Mstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/JobExecutionImpactLog.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/JobSchedule.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisAuditLog.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisChangeHistory.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisDetail.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisHeader.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisInstruction.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisPdfExportList.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisPicture.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisSecurity.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisStatus.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisStructure.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisStructureType.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisSystemCode.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisSystemCodeSet.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisSystemTable.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/KisSystemUpdateHistory.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/ProductCriteria.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/PsMstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/Pt1Mstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/Pt2Mstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/PtMstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/UmMstr.cs",
+      "src/pss2-api/MedlineANZ.PSS.Data/Models/UserDTO.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/Collections/IEnumerablePagedListExtensions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/Collections/IPagedList.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/Collections/IQueryablePageListExtensions.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/Collections/PagedList.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/IRepository.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/IRepositoryFactory.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/IUnitOfWork.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/IUnitOfWorkOfT.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/Repository.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/UnitOfWork.cs",
+      "src/pss2-api/MedlineANZ.PSS.Infra/UnitOfWorkServiceCollectionExtensions.cs"
+    ]
+  },
+  "interaction_edges": [],
+  "capability_groups": [
+    {
+      "name": "Api",
+      "api_endpoints": 93
+    }
+  ],
+  "external_dependencies": [
+    {
+      "name": "Azure SQL Database",
+      "infra_ref": "sql-db",
+      "evidence_count": 5,
+      "sample_source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/TestingDNSIssueController.cs"
+    },
+    {
+      "name": "Azure Storage",
+      "infra_ref": "storage",
+      "evidence_count": 10,
+      "sample_source": "src/pss2-api/MedlineANZ.PSS.API/Controllers/AzureBlobImageTestController.cs"
+    }
+  ],
+  "build_outputs": [
+    {
+      "component": "angular-ui",
+      "kind": "container_image",
+      "image": "m3acropsd1.azurecr.io/pss2-fe:2895925333",
+      "image_digest": "sha256:e6b22bb3e6ace3bc325fb408efd3e04a0d0eaa9f8e7556862f1f073b036a4254",
+      "base_image": "nginx:1.27-alpine"
+    },
+    {
+      "component": "backend-api",
+      "kind": "container_image",
+      "image": "m3acropsd1.azurecr.io/pss2-api:2895925333",
+      "image_digest": "sha256:6679dc871dd5babc9ffc6e41ea8ede6a0a1e1aba1bba6e93883908888e49e540",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  ]
+}

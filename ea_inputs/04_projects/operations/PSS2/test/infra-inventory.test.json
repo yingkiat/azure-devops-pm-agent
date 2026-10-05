@@ -1,0 +1,841 @@
+{
+  "schema_version": "1.0",
+  "application": "PSS 2.0",
+  "project": "PSS2",
+  "environment": "test",
+  "generated_at": "2026-09-16T08:32:26Z",
+  "source_repo": "medline/apac-it/operations/pss-2.0",
+  "source_commit": "4d6baac834c1247a15ddd25e55e01ba56d382ea4",
+  "pipeline_run": "2853587102",
+  "subscription": {
+    "name": "test",
+    "id": "a8971b91-fede-48fa-9af8-c34c15cf850c",
+    "tenant_id": "d6b0474e-14ab-41bb-adbd-8c39f8f21582",
+    "location": "southeastasia"
+  },
+  "pipeline": {
+    "environment": "test",
+    "layer": "workload-pss2-app",
+    "network_mode": "external",
+    "service_connection": "SP-Test-IT-APAC-Operations"
+  },
+  "artifacts": [
+    {
+      "id": "rg-platform",
+      "name": "M3-RG-ALZ-OPS-PLATFORM-T-1",
+      "type": "Resource Group",
+      "layer": "01-foundation",
+      "pillar": "platform",
+      "group": "-",
+      "ownership": "repo",
+      "details": [
+        "Contains shared platform resources for the workload."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "rg-app",
+      "name": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "type": "Resource Group",
+      "layer": "01-foundation",
+      "pillar": "workload",
+      "group": "-",
+      "ownership": "repo",
+      "details": [
+        "Contains the PSS2 workload resources."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "vnet",
+      "name": "M3-ALZ-VNET-OPS-T-1",
+      "type": "Virtual Network",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-OPS-T-1",
+      "ownership": "external",
+      "details": [
+        "Owned by the infrastructure team in M3-RG-ALZ-OPS-T-1.",
+        "This repo consumes subnets from this VNet; it does not create or manage it."
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "subnet-appservice",
+      "name": "ALZ-OPS-APP-OPS",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-OPS-T-1",
+      "ownership": "external",
+      "details": [
+        "App Service VNet integration subnet.",
+        "Consumed by the frontend and backend web apps."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
+    },
+    {
+      "id": "subnet-apim",
+      "name": "ALZ-OPS-APP-APPS",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-OPS-T-1",
+      "ownership": "external",
+      "details": [
+        "Reserved for APIM gateway.",
+        "Not yet in use by this workload."
+      ],
+      "dependsOn": [
+        "vnet"
+      ]
+    },
+    {
+      "id": "subnet-private-endpoints",
+      "name": "ALZ-OPS-APP-PEP",
+      "type": "Subnet",
+      "layer": "External",
+      "pillar": "external",
+      "group": "M3-RG-ALZ-OPS-T-1",
+      "ownership": "external",
+      "details": [
+        "Private endpoint subnet.",
+        "Hosts private endpoints for the frontend and backend web apps, Key Vault, SQL Server, and Storage.",
+        "Live private endpoints captured: 6."
+      ],
+      "dependsOn": [
+        "vnet"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-BE-T-1-pe",
+            "name": "M3-AS-PSS2-BE-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-BE-T-1",
+            "target_artifact": "backend-api",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.169"
+            ],
+            "fqdns": [
+              "m3-as-pss2-be-t-1.azurewebsites.net",
+              "m3-as-pss2-be-t-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-BE-T-1-pe.nic.17c3f82b-953b-413b-8dca-54fa2fbf9b56"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-T-1-pe",
+            "name": "M3-AS-PSS2-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-T-1",
+            "target_artifact": "webapp",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.168"
+            ],
+            "fqdns": [
+              "m3-as-pss2-t-1.azurewebsites.net",
+              "m3-as-pss2-t-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-T-1-pe.nic.3bb61a8b-25ab-4d94-a60d-fa206dfcdc6f"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-KV-OPS-T-1-pe",
+            "name": "M3-KV-OPS-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.KeyVault/vaults/M3-KV-OPS-T-1",
+            "target_artifact": "keyvault",
+            "group_ids": [
+              "vault"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.167"
+            ],
+            "fqdns": [
+              "m3-kv-ops-t-1.vault.azure.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-KV-OPS-T-1-pe.nic.e01a8b73-c979-4076-ba41-8fde7c97dc21"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3-sqls-pss2-t-1-pe",
+            "name": "m3-sqls-pss2-t-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Sql/servers/m3-sqls-pss2-t-1",
+            "target_artifact": "sql-server",
+            "group_ids": [
+              "sqlServer"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.166"
+            ],
+            "fqdns": [
+              "m3-sqls-pss2-t-1.database.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3-sqls-pss2-t-1-pe.nic.a56647aa-710d-4481-9efb-2fa4b834d11e"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3sapss2t1-blob-pe",
+            "name": "m3sapss2t1-blob-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Storage/storageAccounts/m3sapss2t1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "blob"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.164"
+            ],
+            "fqdns": [
+              "m3sapss2t1.blob.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3sapss2t1-blob-pe.nic.0458082c-2cb4-4faf-a5a9-176c7b4e41aa"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3sapss2t1-file-pe",
+            "name": "m3sapss2t1-file-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Storage/storageAccounts/m3sapss2t1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "file"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.165"
+            ],
+            "fqdns": [
+              "m3sapss2t1.file.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3sapss2t1-file-pe.nic.6fe71f67-3871-430f-b26b-25521c75f14d"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "acr",
+      "name": "m3acropst1",
+      "type": "Container Registry",
+      "layer": "03-platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-OPS-PLATFORM-T-1",
+      "ownership": "repo",
+      "details": [
+        "SKU: Basic",
+        "Admin user disabled.",
+        "AppBuild pushes BuildId image tags."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
+    },
+    {
+      "id": "law",
+      "name": "M3-LAW-OPS-T-1",
+      "type": "Log Analytics Workspace",
+      "layer": "03-platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-OPS-PLATFORM-T-1",
+      "ownership": "repo",
+      "details": [
+        "SKU: PerGB2018",
+        "Default retention from platform variable."
+      ],
+      "dependsOn": [
+        "rg-platform"
+      ]
+    },
+    {
+      "id": "appi",
+      "name": "M3-APPI-PSS2-T-1",
+      "type": "Application Insights",
+      "layer": "03-platform",
+      "pillar": "platform",
+      "group": "M3-RG-ALZ-OPS-PLATFORM-T-1",
+      "ownership": "repo",
+      "details": [
+        "Application type: web",
+        "Workspace-based Application Insights connected to Log Analytics."
+      ],
+      "dependsOn": [
+        "law"
+      ]
+    },
+    {
+      "id": "plan",
+      "name": "M3-ASP-PSS2-T-1",
+      "type": "Linux App Service Plan",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "SKU from tfvars: B2",
+        "Shared by the frontend and backend web apps."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ]
+    },
+    {
+      "id": "webapp",
+      "name": "M3-AS-PSS2-T-1",
+      "type": "Linux Web App",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "Frontend \u2014 Angular production bundle served by nginx.",
+        "ACR URL: https://m3acropst1.azurecr.io",
+        "System-assigned managed identity enabled.",
+        "VNet integrated to subnet ALZ-OPS-APP-OPS.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Live default hostname: m3-as-pss2-t-1.azurewebsites.net.",
+        "Live hostnames: m3-as-pss2-t-1.azurewebsites.net.",
+        "Live site state: Running; enabled: True.",
+        "Live public network access: Enabled.",
+        "Live outbound IPs: 52.187.129.179, 52.187.23.154, 52.163.123.89, 52.230.18.200, 52.187.36.104.",
+        "Live possible outbound IPs: 20.184.9.149, 20.191.136.243, 20.198.149.164, 20.198.150.197, 20.198.150.247, 20.198.151.0, 20.198.151.20, 20.198.151.3, 20.198.207.165, 20.247.250.201, 20.247.250.206, 20.247.251.4, 20.247.251.8, 20.247.251.86, 52.163.123.89, 52.187.129.179, 52.187.23.154, 52.187.36.104, 52.230.18.200.",
+        "Live VNet integration subnet ID: /subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-OPS.",
+        "Live private endpoint: M3-AS-PSS2-T-1-pe (sites) IPs: 10.246.250.168."
+      ],
+      "dependsOn": [
+        "plan",
+        "acr",
+        "appi",
+        "subnet-appservice",
+        "subnet-private-endpoints"
+      ],
+      "runtime": {
+        "webapp": {
+          "resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-T-1",
+          "name": "M3-AS-PSS2-T-1",
+          "resource_group": "M3-RG-ALZ-OPS-PSS2-T-1",
+          "location": "Southeast Asia",
+          "kind": "app,linux,container",
+          "default_hostname": "m3-as-pss2-t-1.azurewebsites.net",
+          "hostnames": [
+            "m3-as-pss2-t-1.azurewebsites.net"
+          ],
+          "state": "Running",
+          "enabled": true,
+          "availability_state": "Normal",
+          "https_only": true,
+          "public_network_access": "Enabled",
+          "outbound_ip_addresses": [
+            "52.187.129.179",
+            "52.187.23.154",
+            "52.163.123.89",
+            "52.230.18.200",
+            "52.187.36.104"
+          ],
+          "possible_outbound_ip_addresses": [
+            "20.184.9.149",
+            "20.191.136.243",
+            "20.198.149.164",
+            "20.198.150.197",
+            "20.198.150.247",
+            "20.198.151.0",
+            "20.198.151.20",
+            "20.198.151.3",
+            "20.198.207.165",
+            "20.247.250.201",
+            "20.247.250.206",
+            "20.247.251.4",
+            "20.247.251.8",
+            "20.247.251.86",
+            "52.163.123.89",
+            "52.187.129.179",
+            "52.187.23.154",
+            "52.187.36.104",
+            "52.230.18.200"
+          ],
+          "vnet_integration_subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-OPS"
+        },
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-T-1-pe",
+            "name": "M3-AS-PSS2-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-T-1",
+            "target_artifact": "webapp",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.168"
+            ],
+            "fqdns": [
+              "m3-as-pss2-t-1.azurewebsites.net",
+              "m3-as-pss2-t-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-T-1-pe.nic.3bb61a8b-25ab-4d94-a60d-fa206dfcdc6f"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "backend-api",
+      "name": "M3-AS-PSS2-BE-T-1",
+      "type": "Linux Web App",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "Backend API container image.",
+        "ACR URL: https://m3acropst1.azurecr.io",
+        "System-assigned managed identity enabled.",
+        "VNet integrated to subnet ALZ-OPS-APP-OPS.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Reads Key Vault URI through app settings.",
+        "Live default hostname: m3-as-pss2-be-t-1.azurewebsites.net.",
+        "Live hostnames: m3-as-pss2-be-t-1.azurewebsites.net.",
+        "Live site state: Running; enabled: True.",
+        "Live public network access: Enabled.",
+        "Live outbound IPs: 52.187.129.179, 52.187.23.154, 52.163.123.89, 52.230.18.200, 52.187.36.104.",
+        "Live possible outbound IPs: 20.184.9.149, 20.191.136.243, 20.198.149.164, 20.198.150.197, 20.198.150.247, 20.198.151.0, 20.198.151.20, 20.198.151.3, 20.198.207.165, 20.247.250.201, 20.247.250.206, 20.247.251.4, 20.247.251.8, 20.247.251.86, 52.163.123.89, 52.187.129.179, 52.187.23.154, 52.187.36.104, 52.230.18.200.",
+        "Live VNet integration subnet ID: /subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-OPS.",
+        "Live private endpoint: M3-AS-PSS2-BE-T-1-pe (sites) IPs: 10.246.250.169."
+      ],
+      "dependsOn": [
+        "plan",
+        "acr",
+        "appi",
+        "keyvault",
+        "subnet-appservice",
+        "subnet-private-endpoints"
+      ],
+      "runtime": {
+        "webapp": {
+          "resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-BE-T-1",
+          "name": "M3-AS-PSS2-BE-T-1",
+          "resource_group": "M3-RG-ALZ-OPS-PSS2-T-1",
+          "location": "Southeast Asia",
+          "kind": "app,linux,container",
+          "default_hostname": "m3-as-pss2-be-t-1.azurewebsites.net",
+          "hostnames": [
+            "m3-as-pss2-be-t-1.azurewebsites.net"
+          ],
+          "state": "Running",
+          "enabled": true,
+          "availability_state": "Normal",
+          "https_only": true,
+          "public_network_access": "Enabled",
+          "outbound_ip_addresses": [
+            "52.187.129.179",
+            "52.187.23.154",
+            "52.163.123.89",
+            "52.230.18.200",
+            "52.187.36.104"
+          ],
+          "possible_outbound_ip_addresses": [
+            "20.184.9.149",
+            "20.191.136.243",
+            "20.198.149.164",
+            "20.198.150.197",
+            "20.198.150.247",
+            "20.198.151.0",
+            "20.198.151.20",
+            "20.198.151.3",
+            "20.198.207.165",
+            "20.247.250.201",
+            "20.247.250.206",
+            "20.247.251.4",
+            "20.247.251.8",
+            "20.247.251.86",
+            "52.163.123.89",
+            "52.187.129.179",
+            "52.187.23.154",
+            "52.187.36.104",
+            "52.230.18.200"
+          ],
+          "vnet_integration_subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-OPS"
+        },
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-AS-PSS2-BE-T-1-pe",
+            "name": "M3-AS-PSS2-BE-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Web/sites/M3-AS-PSS2-BE-T-1",
+            "target_artifact": "backend-api",
+            "group_ids": [
+              "sites"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.169"
+            ],
+            "fqdns": [
+              "m3-as-pss2-be-t-1.azurewebsites.net",
+              "m3-as-pss2-be-t-1.scm.azurewebsites.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-AS-PSS2-BE-T-1-pe.nic.17c3f82b-953b-413b-8dca-54fa2fbf9b56"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "storage",
+      "name": "m3sapss2t1",
+      "type": "Storage Account",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "StorageV2, Standard LRS.",
+        "HTTPS only, minimum TLS 1.2.",
+        "Creates blob container pssimages and file share pssreports.",
+        "Private endpoints: blob and file in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Live private endpoint: m3sapss2t1-blob-pe (blob) IPs: 10.246.250.164.",
+        "Live private endpoint: m3sapss2t1-file-pe (file) IPs: 10.246.250.165."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3sapss2t1-blob-pe",
+            "name": "m3sapss2t1-blob-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Storage/storageAccounts/m3sapss2t1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "blob"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.164"
+            ],
+            "fqdns": [
+              "m3sapss2t1.blob.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3sapss2t1-blob-pe.nic.0458082c-2cb4-4faf-a5a9-176c7b4e41aa"
+            ]
+          },
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3sapss2t1-file-pe",
+            "name": "m3sapss2t1-file-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Storage/storageAccounts/m3sapss2t1",
+            "target_artifact": "storage",
+            "group_ids": [
+              "file"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.165"
+            ],
+            "fqdns": [
+              "m3sapss2t1.file.core.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3sapss2t1-file-pe.nic.6fe71f67-3871-430f-b26b-25521c75f14d"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "keyvault",
+      "name": "M3-KV-OPS-T-1",
+      "type": "Key Vault",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "Standard SKU.",
+        "Stores SQL and storage connection secrets.",
+        "Backend app service receives Get/List secret permissions.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled for Terraform secret operations.",
+        "Live private endpoint: M3-KV-OPS-T-1-pe (vault) IPs: 10.246.250.167."
+      ],
+      "dependsOn": [
+        "rg-app"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/M3-KV-OPS-T-1-pe",
+            "name": "M3-KV-OPS-T-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.KeyVault/vaults/M3-KV-OPS-T-1",
+            "target_artifact": "keyvault",
+            "group_ids": [
+              "vault"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.167"
+            ],
+            "fqdns": [
+              "m3-kv-ops-t-1.vault.azure.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/M3-KV-OPS-T-1-pe.nic.e01a8b73-c979-4076-ba41-8fde7c97dc21"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sql-server",
+      "name": "m3-sqls-pss2-t-1",
+      "type": "Azure SQL Server",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "TLS 1.2 minimum.",
+        "Private endpoint in subnet-private-endpoints.",
+        "Public network access: enabled.",
+        "Live private endpoint: m3-sqls-pss2-t-1-pe (sqlServer) IPs: 10.246.250.166."
+      ],
+      "dependsOn": [
+        "rg-app",
+        "keyvault"
+      ],
+      "runtime": {
+        "private_endpoints": [
+          {
+            "id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/privateEndpoints/m3-sqls-pss2-t-1-pe",
+            "name": "m3-sqls-pss2-t-1-pe",
+            "location": "southeastasia",
+            "provisioning_state": "Succeeded",
+            "subnet_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-T-1/providers/Microsoft.Network/virtualNetworks/M3-ALZ-VNET-OPS-T-1/subnets/ALZ-OPS-APP-PEP",
+            "target_resource_id": "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Sql/servers/m3-sqls-pss2-t-1",
+            "target_artifact": "sql-server",
+            "group_ids": [
+              "sqlServer"
+            ],
+            "connection_state": "Approved",
+            "private_ip_addresses": [
+              "10.246.250.166"
+            ],
+            "fqdns": [
+              "m3-sqls-pss2-t-1.database.windows.net"
+            ],
+            "network_interface_ids": [
+              "/subscriptions/a8971b91-fede-48fa-9af8-c34c15cf850c/resourceGroups/M3-RG-ALZ-OPS-PSS2-T-1/providers/Microsoft.Network/networkInterfaces/m3-sqls-pss2-t-1-pe.nic.a56647aa-710d-4481-9efb-2fa4b834d11e"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sql-db",
+      "name": "M3-SQLDB-PSS2-APP-T-1",
+      "type": "Azure SQL Database",
+      "layer": "04-workloads/pss2-app",
+      "pillar": "workload",
+      "group": "M3-RG-ALZ-OPS-PSS2-T-1",
+      "ownership": "repo",
+      "details": [
+        "SKU from tfvars: S1",
+        "SQL connection string is stored in Key Vault."
+      ],
+      "dependsOn": [
+        "sql-server",
+        "keyvault"
+      ]
+    }
+  ],
+  "deployments": [
+    {
+      "target": "webapp",
+      "component": "angular-ui",
+      "image": "m3acropst1.azurecr.io/pss2-fe:2853587102",
+      "image_digest": "sha256:dd4d9861573e0589ef984db4dc88251ed0ae93d35263c1840acb75203bcda10d",
+      "base_image": "nginx:1.27-alpine",
+      "runtime": "nginx/static frontend",
+      "app_repo": "medline/apac-it/operations/pss-2.0",
+      "app_commit": "4d6baac834c1247a15ddd25e55e01ba56d382ea4",
+      "built_at": "2026-09-16T08:28:14Z"
+    },
+    {
+      "target": "backend-api",
+      "component": "backend-api",
+      "image": "m3acropst1.azurecr.io/pss2-api:2853587102",
+      "image_digest": "sha256:78313f34e91674ae4a67345a7547524c8d9e59661d5aadd1eb9c1ca4ce63ac4e",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0",
+      "runtime": "ASP.NET Core 8 API",
+      "app_repo": "medline/apac-it/operations/pss-2.0",
+      "app_commit": "4d6baac834c1247a15ddd25e55e01ba56d382ea4",
+      "built_at": "2026-09-16T08:28:14Z"
+    }
+  ],
+  "stages": [
+    {
+      "name": "Generate",
+      "text": "Runs generate_tf_config.py for test and publishes generated backend/tfvars artifacts."
+    },
+    {
+      "name": "FoundationDeploy",
+      "text": "Applies 01-foundation and creates platform and app resource groups."
+    },
+    {
+      "name": "PlatformDeploy",
+      "text": "Applies ACR, Log Analytics, and Application Insights."
+    },
+    {
+      "name": "Plan / Apply",
+      "text": "Plans and applies the selected workload layer using the reviewed plan artifact."
+    },
+    {
+      "name": "AppBuild",
+      "text": "Builds/pushes frontend and backend container images, restarts both web apps."
+    }
+  ],
+  "layerHierarchy": [
+    {
+      "title": "01 Foundation",
+      "children": [
+        {
+          "id": "rg-platform"
+        },
+        {
+          "id": "rg-app"
+        }
+      ]
+    },
+    {
+      "title": "02 Network (External)",
+      "children": [
+        {
+          "id": "vnet",
+          "children": [
+            {
+              "id": "subnet-appservice"
+            },
+            {
+              "id": "subnet-apim"
+            },
+            {
+              "id": "subnet-private-endpoints"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "03 Platform",
+      "children": [
+        {
+          "id": "acr"
+        },
+        {
+          "id": "law",
+          "children": [
+            {
+              "id": "appi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "04 Workload",
+      "children": [
+        {
+          "id": "plan",
+          "children": [
+            {
+              "id": "webapp"
+            },
+            {
+              "id": "backend-api"
+            }
+          ]
+        },
+        {
+          "id": "storage"
+        },
+        {
+          "id": "keyvault"
+        },
+        {
+          "id": "sql-server",
+          "children": [
+            {
+              "id": "sql-db"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "boundaryNotes": [
+    {
+      "title": "Network is externally owned",
+      "text": "The VNet, subnets, NSGs, and route tables in M3-RG-ALZ-OPSDEV-D-1 are owned by the infrastructure team. This repo only consumes subnet IDs via data sources."
+    },
+    {
+      "title": "Private DNS is centrally managed",
+      "text": "Private endpoints are deployed by this repo, but privatelink DNS zones, records, forwarding, and VNet links are owned by the central network DNS path. Key Vault remains public for Terraform secret seeding unless the runner has private vault reachability."
+    },
+    {
+      "title": "APIM subnet is reserved",
+      "text": "ALZ-OPSDEV-APP-APPS is reserved for a future APIM gateway. It is not consumed by this workload."
+    }
+  ]
+}

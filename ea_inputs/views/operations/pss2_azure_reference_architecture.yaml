@@ -1,6 +1,6 @@
 # === MODE ===
 type: "json_inventory"
-inventory: "04_projects/PSS2/infra-inventory.dev.json"
+inventory: "04_projects/operations/PSS2"
 
 # === INTENT ===
 intent:
