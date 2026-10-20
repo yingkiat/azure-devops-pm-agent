@@ -202,6 +202,7 @@ class PortalBuilder:
                         "environment": env,
                         "infra_path": next(iter(sorted(env_dir.glob("infra-inventory*.json"))), None),
                         "app_path": next(iter(sorted(env_dir.glob("app-inventory*.json"))), None),
+                        "hiw_path": (env_dir / "how-it-works.html") if (env_dir / "how-it-works.html").is_file() else None,
                     })
         return entries
 
@@ -381,6 +382,56 @@ class PortalBuilder:
                 "updated_at": datetime.fromtimestamp(inv_path.stat().st_mtime).isoformat(),
             })
             print(f"      OK {view_id:45s} ({inv_path.name})")
+
+        return views
+
+    def _collect_how_it_works_views(self, project_envs: List[Dict]) -> List[Dict]:
+        """Collect imported how-it-works explainers, inlining the story script into the engine page."""
+        views: List[Dict] = []
+        story_tag = '<script src="how-it-works.story.js"></script>'
+        for entry in project_envs:
+            hiw_path = entry["hiw_path"]
+            if not hiw_path:
+                continue
+            story_path = hiw_path.with_name("how-it-works.story.js")
+            if not story_path.is_file():
+                print(f"      WARN {hiw_path}: sibling how-it-works.story.js not found; view not rendered")
+                continue
+
+            engine_html = hiw_path.read_text(encoding="utf-8")
+            if story_tag not in engine_html:
+                print(f"      WARN {hiw_path}: story script tag not found; view not rendered")
+                continue
+            story_js = re.sub(r"</script", lambda m: "<\\/" + m.group(0)[2:], story_path.read_text(encoding="utf-8"), flags=re.IGNORECASE)
+
+            project_key = entry["project_key"]
+            env = entry["environment"]
+            out_dir = self.output_dir / "projects" / project_key / env / "how-it-works"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            (out_dir / "index.html").write_text(engine_html.replace(story_tag, f"<script>{story_js}</script>", 1), encoding="utf-8")
+
+            view_id = f"project_{project_key}_how_it_works_{env}"
+            views.append({
+                "view_id": view_id,
+                "name": f"{entry['project']} - How It Works ({env.upper()})",
+                "diagram_file": "",
+                "preview_file": "",
+                "category": entry["category"],
+                "domain": entry["domain"],
+                "region": entry["region"],
+                "project": entry["project"],
+                "project_key": project_key,
+                "view_kind": entry["view_kind"],
+                "view_type": "how_it_works",
+                "artifact_label": "How it works",
+                "environment": env,
+                "iframe_src": f"projects/{project_key}/{env}/how-it-works/",
+                "elements": [],
+                "element_count": 0,
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(max(hiw_path.stat().st_mtime, story_path.stat().st_mtime)).isoformat(),
+            })
+            print(f"      OK {view_id:45s} ({hiw_path.name})")
 
         return views
 
@@ -596,6 +647,11 @@ class PortalBuilder:
         diagrams_info.extend(app_inventory_views)
         if app_inventory_views:
             print(f"      OK Generated {len(app_inventory_views)} application inventory view(s)\n")
+
+        how_it_works_views = self._collect_how_it_works_views(project_envs)
+        diagrams_info.extend(how_it_works_views)
+        if how_it_works_views:
+            print(f"      OK Generated {len(how_it_works_views)} how-it-works view(s)\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")

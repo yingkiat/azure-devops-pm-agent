@@ -87,7 +87,7 @@ server {
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none';" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none';" always;
 
     location / {
         try_files $uri $uri/ /index.html;
@@ -102,7 +102,7 @@ server {
         add_header Referrer-Policy "strict-origin-when-cross-origin" always;
         add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-        add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none';" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none';" always;
     }
 }
 ```
@@ -141,7 +141,8 @@ server {
 |-----------|-------|--------|
 | `default-src 'self'` | Catch-all fallback | Anything not explicitly listed is restricted to same-origin. |
 | `script-src` | `'self' unpkg.com cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'` | Vue 3 and Chart.js load from CDN. `'unsafe-eval'` required because Vue compiles templates at runtime in CDN mode. `'unsafe-inline'` required because the app bootstrap is an inline `<script>` block. |
-| `style-src` | `'self' 'unsafe-inline'` | Portal injects inline styles for dynamic theming and colour injection. |
+| `style-src` | `'self' 'unsafe-inline' fonts.googleapis.com` | Portal injects inline styles for dynamic theming and colour injection. Imported how-it-works pages load their font stylesheet from Google Fonts. |
+| `font-src` | `'self' fonts.gstatic.com` | Font files referenced by the Google Fonts stylesheet. |
 | `img-src` | `'self' data:` | Allows base64-encoded images (`data:` URIs) used for embedded chart exports. |
 | `connect-src` | `'self' cdn.jsdelivr.net` | Chart.js fetches its sourcemap from jsdelivr at runtime. |
 | `frame-ancestors 'none'` | — | Supersedes `X-Frame-Options` in modern browsers — no site may embed this portal in a frame. |

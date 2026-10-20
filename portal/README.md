@@ -120,6 +120,8 @@ Project inventories are discovered automatically from this layout:
 ea_inputs/04_projects/<domain>/<project>/<env>/
 ├── infra-inventory.<env>.json
 ├── app-inventory.<env>.json
+├── how-it-works.html           (imported explainer engine)
+├── how-it-works.story.js       (imported explainer story data)
 └── runtime-inventory/          (raw az CLI snapshots, not rendered)
 ```
 
@@ -177,6 +179,19 @@ The app inventory iframe intentionally starts at the detail drilldown, not anoth
 - `API Surface` - side-by-side frontend outbound paths and backend function endpoints
 
 Clicking a row opens a closeable details modal. The modal replaces the earlier always-visible details pane to keep the iframe short and avoid nested scrolling.
+
+### How It Works
+
+For each `how-it-works.html` with a sibling `how-it-works.story.js`, `python portal/build.py`:
+
+- inlines the story into the engine (replacing `<script src="how-it-works.story.js"></script>`) and writes `portal/dist/projects/<project_key>/<env>/how-it-works/index.html`
+- registers `project_<project_key>_how_it_works_<env>` with `view_type: how_it_works`
+
+Both files are imported from the project's own repo, which is their source of truth; never edit them here. APAC Buddy's come from `apac-buddy/studio/`. To re-import:
+
+1. Copy `how-it-works.html` and `how-it-works.story.js` from the source repo over the existing files in `ea_inputs/04_projects/<domain>/<project>/<env>/`
+2. Run `python portal/build.py`
+3. Commit with the source revision in the message, e.g. `Import APAC Buddy how-it-works from apac-buddy@<short sha>`
 
 ## Elements & Navigation
 
