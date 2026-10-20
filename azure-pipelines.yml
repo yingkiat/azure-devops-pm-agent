@@ -120,7 +120,7 @@ stages:
 
                 echo "🚀 Starting Production Azure Container Apps deployment..."
 
-                FULL_IMAGE_NAME="$(prodACRRegistry).azurecr.io/$(imageRepository):latest"
+                FULL_IMAGE_NAME="$(prodACRRegistry).azurecr.io/$(imageRepository):$(tag)"
                 LOCATION="$(prodLocation)"
                 RESOURCE_GROUP="$(prodResourceGroup)"
                 CONTAINER_APP_NAME="$(prodContainerAppName)"
@@ -211,15 +211,27 @@ stages:
                 CONTAINER_APP_NAME="$(prodContainerAppName)"
 
                 APP_URL=$(az containerapp show --name "${CONTAINER_APP_NAME}" --resource-group "${RESOURCE_GROUP}" --query "properties.configuration.ingress.fqdn" -o tsv)
-                echo "⏳ Waiting for application to be ready..."
-                sleep 30
+                LATEST_REVISION=$(az containerapp show --name "${CONTAINER_APP_NAME}" --resource-group "${RESOURCE_GROUP}" --query "properties.latestRevisionName" -o tsv)
+                echo "⏳ Waiting for revision ${LATEST_REVISION} to be healthy..."
 
-                if curl -f "https://$APP_URL/" > /dev/null 2>&1; then
-                  echo "✅ Health check passed"
-                  echo "🌐 Production App URL: https://$APP_URL"
-                  echo "📌 PM/EA Agent available at https://$APP_URL"
-                  echo "📌 Verify connectivity: curl -f https://$APP_URL/"
-                else
-                  echo "⚠️  Health check failed - Check Container App logs for details"
+                HEALTH_STATE=""
+                for attempt in $(seq 1 20); do
+                  HEALTH_STATE=$(az containerapp revision show --name "${CONTAINER_APP_NAME}" --resource-group "${RESOURCE_GROUP}" --revision "${LATEST_REVISION}" --query "properties.healthState" -o tsv)
+                  [ "${HEALTH_STATE}" = "Healthy" ] && break
+                  sleep 15
+                done
+
+                if [ "${HEALTH_STATE}" != "Healthy" ]; then
+                  echo "⚠️  Health check failed - revision ${LATEST_REVISION} is '${HEALTH_STATE}'. Check Container App logs for details"
                   exit 1
                 fi
+                echo "✅ Revision ${LATEST_REVISION} is healthy"
+
+                # EasyAuth fronts the portal, so an anonymous request must be challenged, never served.
+                ANON_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://$APP_URL/")
+                if [ "${ANON_STATUS}" != "401" ] && [ "${ANON_STATUS}" != "302" ]; then
+                  echo "⚠️  Anonymous request returned ${ANON_STATUS}; expected 401/302 from EasyAuth"
+                  exit 1
+                fi
+                echo "✅ EasyAuth enforced (anonymous request returned ${ANON_STATUS})"
+                echo "🌐 Production App URL: https://$APP_URL"
