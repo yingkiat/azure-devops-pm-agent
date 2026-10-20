@@ -1934,12 +1934,9 @@ class PortalBuilder:
             color: __PRIMARY__;
             border-color: #ddd;
         }
-        .fit-toggle {
-            padding: 0 0.75rem;
-            width: auto;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+        .diagram-viewer:fullscreen .infra-iframe {
+            height: calc(100vh - 2rem);
+            min-height: 0;
         }
         /* Ensure zoom works properly */
         html {
@@ -3035,7 +3032,7 @@ class PortalBuilder:
                     </div>
                 </div>
             </div>
-            <div v-else class="diagram-viewer" @click="deselectElement()">
+            <div v-else ref="diagramViewer" class="diagram-viewer" @click="deselectElement()">
                 <div class="diagram-stage">
                     <iframe v-if="infraIframeSrc" :src="infraIframeSrc" class="infra-iframe" title="Inventory Visualizer" allowfullscreen></iframe>
                     <img v-if="diagramPreviewPath && !diagramHtml && !infraIframeSrc" class="diagram-preview" :src="diagramPreviewPath" alt="Diagram preview" />
@@ -3048,8 +3045,8 @@ class PortalBuilder:
                     <button class="zoom-btn" @click="zoomOut" :disabled="zoomLevel <= 0.25" title="Zoom Out">−</button>
                     <button class="zoom-btn" @click="zoomReset" title="Reset Zoom">⊙</button>
                     <button class="zoom-btn" @click="zoomIn" :disabled="zoomLevel >= 3" title="Zoom In">+</button>
-                    <button class="zoom-btn fit-toggle" @click="toggleFitToWidth" :title="fitToWidth ? 'Actual Size' : 'Fit to Width'">
-                        {{ fitToWidth ? '⇲' : '⇱' }}
+                    <button class="zoom-btn" @click="toggleFullscreen" :title="isFullscreen ? 'Exit Full Screen' : 'Full Screen'">
+                        {{ isFullscreen ? '⇲' : '⇱' }}
                     </button>
                 </div>
             </div>
@@ -3180,7 +3177,7 @@ class PortalBuilder:
                     shareStatusTimer: null,
                     sidebarRightOpen: false,
                     zoomLevel: 1,
-                    fitToWidth: false,
+                    isFullscreen: false,
                     analyticsData: null,
                     selectedTerritory: 'APAC',
                     selectedAnalyticsDomain: 'ALL',
@@ -4135,7 +4132,6 @@ class PortalBuilder:
                     }
 
                     this.zoomLevel = 1;
-                    this.fitToWidth = false;
                     this.applyZoom();
 
                     if (this.selectedElement && this.diagramHtml) {
@@ -4349,38 +4345,27 @@ class PortalBuilder:
                     return icons[type] || '📋';
                 },
                 zoomIn() {
-                    this.fitToWidth = false;
                     this.zoomLevel = Math.min(3, this.zoomLevel + 0.25);
                     this.applyZoom();
                 },
                 zoomOut() {
-                    this.fitToWidth = false;
                     this.zoomLevel = Math.max(0.25, this.zoomLevel - 0.25);
                     this.applyZoom();
                 },
                 zoomReset() {
-                    this.fitToWidth = false;
                     this.zoomLevel = 1;
                     this.applyZoom();
                 },
-                toggleFitToWidth() {
-                    this.fitToWidth = !this.fitToWidth;
-                    this.applyZoom();
+                toggleFullscreen() {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    } else {
+                        this.$refs.diagramViewer.requestFullscreen();
+                    }
                 },
                 applyZoom() {
                     if (!this.currentSvg) return;
-
-                    if (this.fitToWidth) {
-                        // Fit to width mode: remove transform, set width to 100%
-                        this.currentSvg.style.transform = '';
-                        this.currentSvg.style.width = '100%';
-                        this.currentSvg.style.height = 'auto';
-                    } else {
-                        // Manual zoom mode: apply scale transform
-                        this.currentSvg.style.transform = `scale(${this.zoomLevel})`;
-                        this.currentSvg.style.width = 'auto';
-                        this.currentSvg.style.height = 'auto';
-                    }
+                    this.currentSvg.style.transform = `scale(${this.zoomLevel})`;
                 }
             },
             mounted() {
@@ -4400,9 +4385,14 @@ class PortalBuilder:
                 this._unhandledRejectionHandler = (event) => this.handleUnhandledRejection(event);
                 window.addEventListener('error', this._windowErrorHandler);
                 window.addEventListener('unhandledrejection', this._unhandledRejectionHandler);
+                this._fullscreenChangeHandler = () => {
+                    this.isFullscreen = document.fullscreenElement === this.$refs.diagramViewer;
+                };
+                document.addEventListener('fullscreenchange', this._fullscreenChangeHandler);
                 this.initialize();
             },
             beforeUnmount() {
+                document.removeEventListener('fullscreenchange', this._fullscreenChangeHandler);
                 if (this.shareStatusTimer) {
                     window.clearTimeout(this.shareStatusTimer);
                 }
