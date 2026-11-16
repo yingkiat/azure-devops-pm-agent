@@ -179,4 +179,4 @@ Core Infrastructure Test: PASSED
 
 - [File Structure](./file-structure.md) - Detailed file-by-file documentation
 - [Architecture Overview](./architecture-overview.md) - High-level architecture explanation
-- [CLAUDE.md](../CLAUDE.md) - Original project documentation and instructions
+- [AGENTS.md](../AGENTS.md) - Current project operating instructions for Copilot

@@ -302,7 +302,7 @@ After testing, you should see:
 - `docs/CLEANUP_GUIDE.md` - Cleanup automation
 - `docs/current_status.md` - System status
 - `docs/ARCHITECTURE.md` - Architecture overview
-- `CLAUDE.md` - Claude Code integration guide (root)
+- `AGENTS.md` - Current Copilot ingestion and portal operating guide (root)
 
 ---
 

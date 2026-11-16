@@ -14,7 +14,14 @@ COPY ea_inputs/02_IT_systems/ ea_inputs/02_IT_systems/
 COPY ea_inputs/04_projects/ ea_inputs/04_projects/
 
 # Install dependencies for portal build
-RUN pip install pandas openpyxl PyYAML jsonschema lxml --quiet
+COPY pyproject.toml ./
+RUN python -c "import re, subprocess, sys, tomllib; \
+    dependencies = tomllib.load(open('pyproject.toml', 'rb'))['project']['dependencies']; \
+    required = {'pandas', 'openpyxl', 'pyyaml', 'jsonschema', 'lxml'}; \
+    declared = {re.match(r'[\w.-]+', dependency).group().lower(): dependency for dependency in dependencies}; \
+    missing = required - declared.keys(); \
+    missing and sys.exit('Missing portal dependencies in pyproject.toml: ' + ', '.join(sorted(missing))); \
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', *[declared[name] for name in sorted(required)]])"
 
 # Build the portal (generates static HTML)
 RUN python portal/build.py

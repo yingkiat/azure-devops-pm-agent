@@ -4,6 +4,26 @@
 
 This directory contains tests for the Azure DevOps PM Agent system. The system uses a two-layer architecture with PM and EA modules, real MCP integration, and AI-powered orchestration for project management workflows.
 
+## Current Suite
+
+Tests currently live under `tests\ea`; pytest discovers them through `pyproject.toml`.
+Activate the virtual environment before running:
+
+```powershell
+. .\.venv\Scripts\Activate.ps1
+$env:PYTHONIOENCODING = 'utf-8'
+python -m pytest
+python -m pytest -m "not integration"
+python -m pytest -m integration
+```
+
+The integration marker currently identifies legacy CLI tests that already skip
+themselves; it does not demonstrate live MCP or Azure DevOps coverage. HTML reports
+at `reports\test_results.html` are generated locally and ignored by Git.
+
+The coverage roadmap below is historical. Named root-level test files that are
+absent from this checkout are not part of the current suite.
+
 ## Test Coverage Requirements
 
 ### Core System Components

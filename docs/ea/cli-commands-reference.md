@@ -466,7 +466,7 @@ GEMINI_DISABLE_SSL_VERIFY=true  # For corporate environments
 - **MVP3 Documentation**: `docs/ea/MVP3_gemini-diagram-generation.md`
 - **Features Overview**: `docs/ea/current-features-overview.md`
 - **Architecture Guide**: `docs/ARCHITECTURE.md`
-- **Configuration**: `CLAUDE.md`
+- **Current configuration**: [Root README](../../README.md#setup)
 
 ---
 

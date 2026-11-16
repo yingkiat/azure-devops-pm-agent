@@ -121,7 +121,7 @@ azure-devops-pm-agent/
 │   └── ea/                            # EA implementation docs
 ├── tests/                             # Test suites
 ├── .claude_mcp.json                   # MCP server configuration
-├── CLAUDE.md                          # Claude Code integration guide
+├── AGENTS.md                          # Canonical Copilot operating guide
 └── README.md                          # Project overview
 ```
 
@@ -856,7 +856,7 @@ Developer Machine
 ## References
 
 - **[MVP5 Implementation Complete](ea/MVP5_Implementation_Complete.md)** - Detailed implementation notes
-- **[CLAUDE.md](../CLAUDE.md)** - Claude Code integration guide
+- **[AGENTS.md](../AGENTS.md)** - Canonical Copilot ingestion and portal guide
 - **[README.md](../README.md)** - Project overview and quick start
 - **[ArchiMate 3.0 Specification](https://pubs.opengroup.org/architecture/archimate3-doc/)** - EA modeling standard
 - **[MCP Protocol](https://modelcontextprotocol.io/)** - Tool communication protocol

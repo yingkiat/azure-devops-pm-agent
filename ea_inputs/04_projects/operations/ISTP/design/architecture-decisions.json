@@ -1,0 +1,162 @@
+{
+  "source": {
+    "document": "ISTP_TO-BE_Solution_Architecture_v0.7.docx",
+    "version": "0.7",
+    "date": "2026-11-05",
+    "approval_status": "review_candidate",
+    "sha256": "35ffdfce32bf29e2bf3d7a4d228e8e6a7a904f5f82da2bb12525ccbb67ccb5ff",
+    "processed_at": "2026-11-12"
+  },
+  "entries": [
+    {
+      "id": "ISTP-AD-001",
+      "title": "Griffin bypasses Boomi through direct outbound SFTP",
+      "kind": "decision",
+      "status": "proposed",
+      "position": "Keep the existing Griffin downloader unchanged. A separate WMS02 transfer job sends completed Excel files directly to Azure Blob over outbound SFTP for ISTP processing. Do not introduce a Boomi relay or an inbound SFTP server on WMS02.",
+      "systems": ["Griffin", "WMS02", "Azure Blob", "ISTP", "Boomi"],
+      "rationale": null,
+      "source_sections": ["Review purpose", "1.1 Key architecture decisions", "3 Integration Overview", "4.1 Security baseline", "Figure 1"]
+    },
+    {
+      "id": "ISTP-AD-002",
+      "title": "ISTP owns QAD staging and database writes",
+      "kind": "decision",
+      "status": "stated",
+      "position": "The ISTP backend/background processor retrieves QAD / Pro2SQL data through Boomi's API/interface and persists it in ISTP-owned Azure SQL staging. Boomi must not write directly to ISTP SQL.",
+      "systems": ["QAD", "Pro2SQL", "Boomi", "ISTP", "Azure SQL"],
+      "rationale": null,
+      "source_sections": ["1.1 Key architecture decisions", "2 TO-BE Solution Architecture", "3 Integration Overview", "Figure 1"]
+    },
+    {
+      "id": "ISTP-AD-003",
+      "title": "ASN transport remains with Boomi",
+      "kind": "decision",
+      "status": "stated",
+      "position": "Boomi delivers the original ASN *.JP1 file to Azure Blob; ISTP parses and processes it. Existing Boomi delivery or approved file-share pickup belongs to the Boomi integration design, not the Griffin direct-SFTP path.",
+      "systems": ["ASN", "Boomi", "Azure Blob", "ISTP"],
+      "rationale": null,
+      "source_sections": ["1 Executive Summary", "3 Integration Overview", "Figure 1"]
+    },
+    {
+      "id": "ISTP-AD-004",
+      "title": "Business rules belong to ISTP, not transport integrations",
+      "kind": "decision",
+      "status": "stated",
+      "position": "ISTP owns matching, validation, workflow and calculations. The ASP.NET Core API/Core handles business logic and application data access; background processing handles retrieval, inbound files and reconciliation.",
+      "systems": ["ISTP", "ASP.NET Core", "Boomi"],
+      "rationale": null,
+      "source_sections": ["1.1 Key architecture decisions", "2 TO-BE Solution Architecture"]
+    },
+    {
+      "id": "ISTP-AD-005",
+      "title": "Generated exports are downloaded, not retained",
+      "kind": "decision",
+      "status": "stated",
+      "position": "Generate ADC, TDC and Emergency Release files on demand for HTTPS browser download to the user's PC. Retain one current Emergency Release template in Azure Blob, but do not retain generated outputs in ISTP.",
+      "systems": ["ISTP", "ADC", "TDC", "Emergency Release", "Azure Blob"],
+      "rationale": null,
+      "source_sections": ["1.1 Key architecture decisions", "3 Integration Overview", "5.1 Complete data-loss recovery"]
+    },
+    {
+      "id": "ISTP-AD-006",
+      "title": "Internal identity and authorization remain distinct",
+      "kind": "decision",
+      "status": "stated",
+      "position": "Authenticate internal users with Microsoft Entra ID. Enforce role, permission and data-scope authorization in the API. Do not assume an external Entra/B2B pattern is approved for TDC.",
+      "systems": ["ISTP", "Microsoft Entra ID", "TDC"],
+      "rationale": null,
+      "source_sections": ["4.1 Security baseline"]
+    },
+    {
+      "id": "ISTP-AC-001",
+      "title": "Application ingress must not bypass the approved WAF",
+      "kind": "constraint",
+      "status": "stated",
+      "position": "Protect application ingress with the approved HTTPS/WAF pattern and prevent direct application-origin bypass.",
+      "systems": ["ISTP", "WAF"],
+      "rationale": null,
+      "source_sections": ["4.1 Security baseline"]
+    },
+    {
+      "id": "ISTP-AC-002",
+      "title": "Separate environments and service identities",
+      "kind": "constraint",
+      "status": "stated",
+      "position": "Keep DEV, TEST and PROD endpoints, identities, data and schedules isolated, with GitLab/Terraform promotion. Use managed identity for Azure access where supported and an approved service-to-service pattern for Boomi. Griffin SFTP requires least-privilege authentication, SSH host-key validation and controlled outbound connectivity.",
+      "systems": ["ISTP", "GitLab", "Terraform", "Boomi", "WMS02", "Azure Blob"],
+      "rationale": null,
+      "source_sections": ["4.1 Security baseline", "4.2 Environment model"]
+    },
+    {
+      "id": "ISTP-AC-003",
+      "title": "Recovery covers complete application data-platform loss",
+      "kind": "constraint",
+      "status": "stated",
+      "position": "Recover application/staging SQL data and retained raw files/templates through approved platform controls. Rebuild through controlled application artifacts and Terraform/GitLab; re-pull available QAD source data through Boomi. Generated exports are excluded from recovery.",
+      "systems": ["ISTP", "Azure SQL", "Azure Blob", "QAD", "Boomi", "Terraform", "GitLab"],
+      "rationale": "Generated outbound files are outside recovery because ISTP does not retain them.",
+      "source_sections": ["5.1 Complete data-loss recovery"]
+    },
+    {
+      "id": "ISTP-AC-004",
+      "title": "Legacy coexistence does not imply bidirectional synchronization",
+      "kind": "constraint",
+      "status": "stated",
+      "position": "GSCM/OCTS may operate alongside ISTP during transition. Do not assume automatic bidirectional synchronization between the legacy system and ISTP.",
+      "systems": ["ISTP", "GSCM/OCTS"],
+      "rationale": null,
+      "source_sections": ["5.2 Legacy coexistence"]
+    },
+    {
+      "id": "ISTP-AC-005",
+      "title": "Inbound interfaces expose operational health and retry",
+      "kind": "constraint",
+      "status": "stated",
+      "position": "Expose last success/failure, basic counts, freshness, errors and controlled retry/reprocessing for each inbound interface. Detailed retry policies and runbooks belong to interface operations documentation.",
+      "systems": ["ISTP", "QAD", "Griffin", "ASN"],
+      "rationale": null,
+      "source_sections": ["5.3 Monitoring at architecture level"]
+    },
+    {
+      "id": "ISTP-AQ-001",
+      "title": "External TDC identity and ingress remain a separate workstream",
+      "kind": "open_question",
+      "status": "open",
+      "position": "An approved external TDC access architecture is still required. It may complete after Core ISTP; retain manual TDC export as the operational fallback until that solution is available.",
+      "systems": ["ISTP", "TDC"],
+      "rationale": null,
+      "source_sections": ["1 Executive Summary", "4.3 External TDC access"]
+    },
+    {
+      "id": "ISTP-AQ-002",
+      "title": "Business must assign coexistence data ownership",
+      "kind": "open_question",
+      "status": "open",
+      "position": "Before go-live, Business must decide which system owns overlapping user-maintained records and fields while GSCM/OCTS and ISTP coexist. This document does not assign that ownership.",
+      "systems": ["ISTP", "GSCM/OCTS"],
+      "rationale": null,
+      "source_sections": ["5.2 Legacy coexistence"]
+    },
+    {
+      "id": "ISTP-AQ-003",
+      "title": "Detailed QAD retrieval behavior is specified separately",
+      "kind": "open_question",
+      "status": "deferred",
+      "position": "Avoid unnecessary recurring full loads. Endpoints, schedules and detailed retrieval behavior are delegated to interface specifications; their values and completion status are not established by this document.",
+      "systems": ["ISTP", "QAD", "Pro2SQL", "Boomi"],
+      "rationale": null,
+      "source_sections": ["1 Executive Summary", "3 Integration Overview"]
+    },
+    {
+      "id": "ISTP-AQ-004",
+      "title": "Retention durations and recovery targets belong to the recovery plan",
+      "kind": "open_question",
+      "status": "deferred",
+      "position": "Retention durations and RPO/RTO targets are maintained in the operational recovery plan. This document does not provide their values or establish whether they have been approved elsewhere.",
+      "systems": ["ISTP", "Azure SQL", "Azure Blob"],
+      "rationale": null,
+      "source_sections": ["5.1 Complete data-loss recovery"]
+    }
+  ]
+}

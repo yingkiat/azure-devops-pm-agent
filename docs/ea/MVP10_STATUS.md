@@ -29,7 +29,7 @@ cd portal/dist && python -m http.server 8080
 **Key Files:**
 - Template source: `portal/backend/builder.py` (lines 290-930)
 - Generated output: `portal/dist/index.html` (never edit directly)
-- Build docs: See CLAUDE.md "Portal HTML is Generated, NOT Editable" section
+- Current build docs: See [AGENTS.md](../../AGENTS.md#portal-sources-and-build) and the [portal README](../../portal/README.md)
 
 ---
 

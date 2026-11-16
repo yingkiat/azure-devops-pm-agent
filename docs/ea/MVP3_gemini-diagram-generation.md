@@ -182,7 +182,7 @@ python test_gemini_diagrams.py
 ## 📚 Additional Resources
 
 - **EA Discovery System**: See `docs/ARCHITECTURE.md` for EA discovery workflow
-- **Configuration Guide**: See `CLAUDE.md` for environment setup
+- **Configuration Guide**: See the [root README](../../README.md#setup) for current environment setup
 - **Troubleshooting**: See SSL bypass guide in `src/utils/gemini_client.py`
 
 ---

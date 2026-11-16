@@ -236,4 +236,4 @@ AZDO_PROJECTS=Project1,Project2  # Multiple projects for repository intelligence
 ---
 
 *For detailed technical documentation, see `INTERACTIVE_WORKFLOW.md`*
-*For architecture details, see updated `CLAUDE.md` and `README.md`*
+*For current operating guidance, see [AGENTS.md](../AGENTS.md) and [README.md](../README.md). Historical entries retain the guide names used at the time.*

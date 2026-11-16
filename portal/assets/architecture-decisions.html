@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$project - Architecture Decisions</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f3;
+      --surface: #fff;
+      --ink: #1f2421;
+      --muted: #626a66;
+      --line: #d7ddd8;
+      --blue: #2f5f98;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font: 14px/1.5 "Segoe UI", Arial, sans-serif; }
+    main { max-width: 1250px; margin: auto; padding: 24px; }
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    h2 { margin: 10px 0 8px; font-size: 18px; }
+    .eyebrow { color: var(--blue); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .muted, dt { color: var(--muted); }
+    .notice { margin: 18px 0; padding: 12px 16px; border: 1px solid #e4d7ae; border-radius: 8px; background: #fff8e6; }
+    .notice strong { display: block; margin-bottom: 4px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+    .stat { flex: 1; min-width: 130px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .stat strong { display: block; font-size: 24px; }
+    .filters { display: grid; grid-template-columns: minmax(200px, 1fr) 180px 220px; gap: 12px; margin: 20px 0 8px; }
+    label { display: block; font-weight: 600; }
+    input, select { width: 100%; margin-top: 5px; padding: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font: inherit; }
+    input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .entry { margin: 14px 0; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); scroll-margin-top: 16px; }
+    .entry:target { border-color: var(--blue); }
+    .entry-meta, .systems { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .entry-id { margin-right: 4px; color: var(--blue); font-weight: 700; text-decoration: none; }
+    .pill, .system { padding: 3px 9px; border-radius: 999px; font-size: 12px; background: #eef2ee; }
+    .status-proposed { background: #f5e8c9; color: #735017; }
+    .status-open { background: #f1dedb; color: #87362e; }
+    .status-deferred { background: #e5e0f2; color: #594687; }
+    .status-stated { background: #dbe8f5; color: #2f5f98; }
+    .position { margin: 0 0 14px; }
+    .system { border: 1px solid var(--line); background: var(--surface); }
+    dl { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    details { margin: 16px 0; overflow-wrap: anywhere; }
+    summary { cursor: pointer; color: var(--blue); }
+    #empty { padding: 30px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 700px) {
+      main { padding: 16px; }
+      .filters { grid-template-columns: 1fr; }
+      dl { grid-template-columns: 1fr; gap: 3px; }
+      dd { margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">$project / Design</div>
+    <h1>Architecture Decisions</h1>
+    <div class="muted">Architectural choices, constraints and questions extracted from the selected design baseline.</div>
+    <div class="notice">
+      <strong>$approval</strong>
+      Entry status describes the source's wording, not approval or implementation.
+      "Stated in design" does not mean approved. Rationale is included only when documented.
+      "Defined elsewhere" does not establish whether an item remains unresolved in another source.
+    </div>
+    <details>
+      <summary>Source: $document / v$version / $source_date</summary>
+      <dl>
+        <dt>Processed</dt><dd>$processed_at</dd>
+        <dt>Source SHA-256</dt><dd>$sha256</dd>
+        <dt>Evidence scope</dt><dd>Selected document text and displayed architecture figure. No older versions or runtime inventories were used.</dd>
+      </dl>
+    </details>
+    <div class="stats">
+      <div class="stat"><strong>$total</strong>Architectural points</div>
+      <div class="stat"><strong>$decisions</strong>Decisions</div>
+      <div class="stat"><strong>$constraints</strong>Constraints</div>
+      <div class="stat"><strong>$questions</strong>Questions / delegated details</div>
+    </div>
+    <div class="filters">
+      <label for="search">Search
+        <input id="search" type="search" placeholder="System, topic, decision or source section">
+      </label>
+      <label for="kind">Type
+        <select id="kind">
+          <option value="">All types</option>
+          <option value="decision">Decisions</option>
+          <option value="constraint">Constraints</option>
+          <option value="open_question">Open questions</option>
+        </select>
+      </label>
+      <label for="status">Source position
+        <select id="status">
+          <option value="">All positions</option>
+          <option value="stated">Stated in design</option>
+          <option value="proposed">Proposed for endorsement</option>
+          <option value="open">Open</option>
+          <option value="deferred">Defined elsewhere</option>
+        </select>
+      </label>
+    </div>
+    <p id="result-count" class="muted" role="status" aria-live="polite">Showing $total of $total architectural points</p>
+    <section aria-label="Architectural points">
+      $entries
+    </section>
+    <p id="empty" hidden>No architectural points match these filters.</p>
+  </main>
+  <script>
+    const search = document.getElementById('search');
+    const kind = document.getElementById('kind');
+    const status = document.getElementById('status');
+    const entries = Array.from(document.querySelectorAll('.entry'));
+    function filterEntries() {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      entries.forEach(entry => {
+        const matches = (!query || entry.dataset.search.includes(query))
+          && (!kind.value || entry.dataset.kind === kind.value)
+          && (!status.value || entry.dataset.status === status.value);
+        entry.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      document.getElementById('result-count').textContent =
+        'Showing ' + visible + ' of ' + entries.length + ' architectural points';
+      document.getElementById('empty').hidden = visible !== 0;
+    }
+    search.addEventListener('input', filterEntries);
+    kind.addEventListener('change', filterEntries);
+    status.addEventListener('change', filterEntries);
+  </script>
+</body>
+</html>

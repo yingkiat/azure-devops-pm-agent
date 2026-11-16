@@ -1,0 +1,452 @@
+schema_version: "1.0"
+intent:
+  question: "Who does what, and where do we wait, to make a project production-ready?"
+  audience: "Management understanding the process and future project owners repeating it"
+  decision: "Understand the handoffs, prepare complete requests, and confirm the process with its owners"
+  key_message: "Prepare inputs early, run independent requests in parallel, and verify readiness before release."
+view:
+  name: "Infrastructure Onboarding"
+  subtitle: "Project process and request history"
+  status: draft
+  notice: "Draft walkthrough based on the supplied process specification. Confirm the actual operating process with its owners. Timings are illustrative assumptions, not measured waits, SLAs or promised dates."
+
+roles:
+  - id: ea
+    name: "EA"
+    description: "EA reviews the project design and records architecture approval."
+  - id: network
+    name: "Network"
+    description: "Network allocation, APAC DNS/firewall and India/Zscaler teams reserve addresses and enable the required paths."
+  - id: cloudops
+    name: "CloudOps"
+    description: "Global CloudOps provisions the landing zone and its approved shared connectivity."
+  - id: iam
+    name: "IAM"
+    description: "Global IAM/Entra and resource owners configure application identity, consent and permission grants."
+  - id: change
+    name: "CAB"
+    description: "CAB approves provisioning, configuration and production change scope and windows."
+  - id: delivery
+    name: "Project Team"
+    description: "The Project Team prepares the repository, provisions resources, applies settings and demonstrates readiness. It includes database migration, rollback, application ownership, acceptance and support responsibilities."
+services:
+  - id: emails-meetings
+    name: "Emails/Meetings"
+    description: "Review the design with EA through email exchanges and meetings, retaining the approval reference and any conditions."
+    provider: "Enterprise email and meeting channels; actual review threads and meeting records are to be supplied."
+    usage: setup
+  - id: requests
+    name: "Service Catalog"
+    description: "Initiate the required enterprise service requests and record their scope and approvals."
+    provider: "Enterprise Service Catalog; the specific platform and request links are to be confirmed."
+    usage: setup
+  - id: infrastructure-tickets
+    name: "Infrastructure tickets"
+    description: "Coordinate ALZ, DNS, network access and IAM requests, including their returned configuration and completion evidence."
+    provider: "Enterprise infrastructure ticketing; actual records and platform links are to be supplied."
+    usage: setup
+  - id: deployment
+    name: "Gitlab CICD"
+    description: "Provision resources, build environment-specific images and deploy reviewed application configuration and releases."
+    provider: "GitLab CI/CD, Terraform, Azure provisioning APIs and ACR Tasks."
+    usage: setup
+  - id: identity
+    name: "Entra grants"
+    description: "Establish application registrations, user access, permission grants and applicable consent through IAM."
+    provider: "Microsoft Entra ID / enterprise IAM. Resource-specific Azure and Graph/SharePoint permissions remain distinct in the activity details."
+    usage: setup
+phases:
+  - id: prepare
+    name: "EA Review"
+    summary: "Review the design with EA and prepare the address and repository inputs needed by later stages."
+    timing: {basis: assumption, min_days: 2, max_days: 5, note: "Illustrative group range, assuming input preparation overlaps EA review. Not the sum of the three activities."}
+  - id: foundation
+    name: "ALZ Creation"
+    summary: "CloudOps supplies the project's Azure landing zone."
+    timing: {basis: assumption, min_days: 5, max_days: 10, note: "Illustrative ALZ request queue plus execution, after approved inputs are available."}
+  - id: provision
+    name: "Resource Creation"
+    summary: "Obtain CAB approval for the change, then create the project resources."
+    timing: {basis: assumption, min_days: 3, max_days: 7, note: "Illustrative group range covering CAB authorization and resource creation once external inputs are ready."}
+  - id: connect
+    name: "Enable Access"
+    summary: "Run network, sign-in and permission requests in parallel."
+    timing: {basis: assumption, min_days: 3, max_days: 10, note: "Illustrative coordination range, assuming parallel requests where inputs permit. Registration/consent prerequisites can still cause additional waiting."}
+  - id: configure
+    name: "DEV/UAT/PROD"
+    summary: "Apply and validate environment-specific settings, complete DEV/UAT testing and prepare the PROD release. Actual PROD execution remains subject to CAB approval in the next stage."
+    timing: {basis: assumption, min_days: 60, max_days: 60, note: "Indicative 60-business-day stage allowance for development and testing, including environment configuration. Not measured elapsed time or a promised delivery date."}
+  - id: release
+    name: "PROD Approval"
+    summary: "Obtain CAB approval for the production window, then the Project Team executes the approved release and migration."
+    timing: {basis: assumption, min_days: 3, max_days: 7, note: "Illustrative approval and authorized execution range. A specific production window may add calendar waiting."}
+
+activities:
+  - id: approve-architecture
+    name: "Approve the project design"
+    phase: prepare
+    owner: ea
+    contributors: [delivery]
+    depends_on: []
+    services: [emails-meetings]
+    purpose: "Establish an agreed architecture before shared infrastructure is requested."
+    inputs: ["Project scope, intended architecture and the required environments, shared with EA through emails/meetings."]
+    outputs: ["An approved architecture reference and recorded conditions in the email thread or meeting record."]
+    completion: ["EA approval of the actual project scope is retained in an email or meeting record; this is not a Service Catalog request."]
+    record: {label: "EA review email / meeting record", url: null, state: "Review record not supplied"}
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 1, note: "Illustrative business-day range; replace with EA review evidence."}
+    subprocesses: []
+  - id: allocate-addresses
+    name: "Reserve network addresses"
+    phase: prepare
+    owner: network
+    contributors: [delivery, cloudops]
+    depends_on: []
+    services: [infrastructure-tickets]
+    purpose: "Reserve non-overlapping address space for the project's connectivity."
+    inputs: ["Environment, region and subnet sizing requirements."]
+    outputs: ["Reserved CIDRs and the allocation owner's confirmation."]
+    completion: ["Allocation is checked for overlap and accepted by the infrastructure owner."]
+    record:
+      label: "7172078 - Subnet allocation"
+      url: null
+      state: "Ticket reference supplied; dates and status not supplied"
+      ticket_numbers: ["7172078"]
+    timing: {basis: assumption, min_days: 1, max_days: 4, queue_days: 2, work_days: 0.5, note: "May proceed in parallel with architecture approval."}
+    subprocesses: []
+  - id: prepare-repository
+    name: "Prepare the project repository"
+    phase: prepare
+    owner: delivery
+    contributors: []
+    depends_on: []
+    services: [deployment]
+    purpose: "Prepare reviewed, environment-specific deployment inputs while approvals progress."
+    inputs: ["Repository, environment conventions and deployment access requirements."]
+    outputs: ["Reviewed repository configuration and a ready deployment pipeline."]
+    completion: ["Required configuration is reviewed and the execution identity/access is established."]
+    record: {label: "Repository readiness", url: null, state: "Evidence not supplied"}
+    timing: {basis: assumption, min_days: 1, max_days: 2, queue_days: 0, work_days: 1, note: "Early parallel preparation; not a demonstrated PSS completion state."}
+    subprocesses: []
+  - id: provision-foundation
+    name: "Provision the landing zone"
+    phase: foundation
+    owner: cloudops
+    contributors: [network, delivery]
+    depends_on: [approve-architecture, allocate-addresses]
+    services: [requests, infrastructure-tickets]
+    purpose: "Provide the shared Azure foundation that the project consumes."
+    inputs: ["Approved design, reserved address space and the required connectivity scope."]
+    outputs: ["Subscription, VNet/subnets, DNS and approved connectivity references."]
+    completion: ["CloudOps supplies the agreed foundation and verifies the requested connectivity scope."]
+    record:
+      label: "7230940 - Create ALZ"
+      url: null
+      state: "Ticket reference supplied; dates and status not supplied"
+      ticket_numbers: ["7230940"]
+    timing: {basis: assumption, min_days: 5, max_days: 10, queue_days: 5, work_days: 2, note: "Placeholder for CloudOps queue and execution; not an SLA."}
+    subprocesses: []
+  - id: authorize-infrastructure
+    name: "Approve the infrastructure change"
+    phase: provision
+    owner: change
+    contributors: [delivery]
+    depends_on: [provision-foundation]
+    services: [requests]
+    purpose: "Authorize the reviewed provisioning scope and execution window."
+    inputs: ["Available foundation, reviewed resource plan and change scope."]
+    outputs: ["An approved provisioning change and authorized window."]
+    completion: ["CAB records approval for the intended provisioning operation."]
+    record: {label: "CR1 - Infrastructure provisioning", url: null, state: "Change details pending"}
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 0.5, note: "Approval-calendar assumption; replace with actual change timestamps."}
+    subprocesses: []
+  - id: provision-workload
+    name: "Create the project resources"
+    phase: provision
+    owner: delivery
+    contributors: [cloudops]
+    depends_on: [authorize-infrastructure, prepare-repository]
+    services: [deployment]
+    purpose: "Create workload resources and return the concrete inputs downstream teams need."
+    inputs: ["Approved CR1, shared network references and reviewed repository inputs."]
+    outputs: ["Resources, agreed hostnames, private endpoint addresses and workload identity IDs."]
+    completion: ["Provisioning results and exported resource references are verified; resource existence alone is not end-user readiness."]
+    record: {label: "CR1 execution / pipeline", url: null, state: "Execution evidence pending"}
+    timing: {basis: assumption, min_days: 1, max_days: 2, queue_days: 0, work_days: 1, note: "Pipeline execution and verification placeholder, excluding predecessor waiting."}
+    subprocesses: []
+  - id: configure-dns
+    name: "Configured Private DNS"
+    phase: connect
+    owner: network
+    contributors: [delivery]
+    depends_on: [provision-workload]
+    services: [infrastructure-tickets]
+    purpose: "Allow the required callers to resolve the project's private service names correctly."
+    inputs: ["Hostname-to-private-IP matrix, environment and required caller locations."]
+    outputs: ["Accepted private DNS configuration and resolution evidence."]
+    completion: ["Required hostnames resolve to the intended private addresses from representative caller locations."]
+    record:
+      label: "7117087 - Private DNS"
+      url: null
+      state: "Ticket reference supplied; dates and status not supplied"
+      ticket_numbers: ["7117087"]
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 0.5, note: "Parallel request after its hostname and endpoint inputs are available."}
+    subprocesses: []
+  - id: enable-network
+    name: "Open firewall for each region"
+    phase: connect
+    owner: network
+    contributors: [delivery]
+    depends_on: [provision-workload]
+    services: [infrastructure-tickets]
+    purpose: "Permit and verify the required application and representative user network paths."
+    inputs: ["Source/destination/port matrix, environment and user locations."]
+    outputs: ["Approved network access and verified representative paths."]
+    completion: ["Representative users and workloads can reach the required services; ticket closure alone is not sufficient."]
+    record:
+      label: "7388699 - Test firewall and Zscaler access"
+      url: null
+      state: "Ticket reference supplied; dates and status not supplied"
+      ticket_numbers: ["7388699"]
+    timing: {basis: assumption, min_days: 3, max_days: 10, queue_days: 5, work_days: 1, note: "Illustrative coordination wait across APAC and India/Zscaler, not measured."}
+    subprocesses:
+      - id: apac-flows
+        name: "Configure APAC access"
+        purpose: "Approve and configure the required APAC network/firewall flows."
+        outputs: ["Approved APAC source/destination/port rules."]
+        completion: ["Required application flows are verified from APAC caller paths."]
+      - id: india-access
+        name: "Configure India / Zscaler access"
+        purpose: "Enable the representative India/Zscaler user access paths."
+        outputs: ["Approved user access configuration."]
+        completion: ["Representative users can reach the intended endpoints through their actual access path."]
+      - id: verify-paths
+        name: "Verify real access"
+        purpose: "Test the representative user and application paths, rather than relying on Azure status."
+        outputs: ["Reachability test results and recorded exceptions."]
+        completion: ["Agreed caller locations pass the required path checks."]
+  - id: configure-app-identity
+    name: "Application registration"
+    phase: connect
+    owner: iam
+    contributors: [delivery]
+    depends_on: [provision-workload]
+    services: [infrastructure-tickets, identity]
+    purpose: "Configure the application's user sign-in, token contracts and required consent."
+    inputs: ["Agreed hostnames, redirect URIs, SPA/API requirements and required user access."]
+    outputs: ["Application registration IDs, SSO settings, API scopes and required consent."]
+    completion: ["Registration settings match the agreed application contract and sign-in/token behavior is tested."]
+    record:
+      label: "7408177 / 7408178 - API and UI application registrations"
+      url: null
+      state: "Ticket references supplied; dates and status not supplied"
+      ticket_numbers: ["7408177", "7408178"]
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 1, note: "Needs agreed hostnames; not inherently dependent on DNS or firewall completion."}
+    subprocesses:
+      - id: register-spa
+        name: "Configure the frontend registration"
+        purpose: "Configure the SPA registration and environment-specific redirect URIs."
+        outputs: ["Frontend app registration and agreed redirect URIs."]
+        completion: ["The SPA identity contract is reviewed against its environment hostnames."]
+      - id: register-api
+        name: "Configure the API registration"
+        purpose: "Configure the API/confidential application and its token contract."
+        outputs: ["API/confidential app registration and agreed scopes."]
+        completion: ["The API expects the agreed audience, scopes and application configuration."]
+      - id: configure-user-access
+        name: "Confirm user access and consent"
+        purpose: "Establish required user access and the applicable approval/consent."
+        outputs: ["Recorded user access and consent configuration."]
+        completion: ["Representative authorized users can authenticate with the required token contract."]
+  - id: authorize-workloads
+    name: "Grant service permissions"
+    phase: connect
+    owner: iam
+    contributors: [delivery, cloudops]
+    depends_on: [provision-workload]
+    services: [infrastructure-tickets, identity]
+    purpose: "Grant the correct permissions to workload identities and the document-access application."
+    inputs: ["Provisioned workload identity IDs, resource scope and agreed Graph/SharePoint access requirements."]
+    outputs: ["Required Azure resource permissions, consent and selected-resource grants."]
+    completion: ["Permissions are verified using the intended identity and delegated user context where applicable."]
+    record:
+      label: "7396567 / 7396446 - Service permissions"
+      url: null
+      state: "Ticket references supplied; dates and status not supplied"
+      ticket_numbers: ["7396567", "7396446"]
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 0.5, note: "Consent can have additional registration prerequisites; confirm these with IAM before treating every subrequest as parallel."}
+    subprocesses:
+      - id: azure-grants
+        name: "Grant Azure resource access"
+        purpose: "Grant the required permissions to the identities created during workload provisioning."
+        outputs: ["Scoped Azure resource grants."]
+        completion: ["Workload identities can perform only the required resource operations."]
+      - id: graph-consent
+        name: "Obtain Graph consent"
+        purpose: "Obtain applicable Graph consent for the confidential application's delegated on-behalf-of flow."
+        inputs: ["The confidential app registration and agreed Graph permission scope. Coordinate with application identity onboarding; workload provisioning alone is not enough."]
+        outputs: ["Approved Graph permission consent for the agreed application."]
+        completion: ["Graph access is verified with the intended application and authorized user context."]
+      - id: sharepoint-grant
+        name: "Obtain SharePoint access"
+        purpose: "Obtain the selected-resource SharePoint grant where required."
+        inputs: ["The agreed confidential application, selected SharePoint resource and applicable Graph consent."]
+        outputs: ["Approved access to the selected SharePoint resource."]
+        completion: ["The intended application/user context can access the authorized resource, without treating this as ordinary managed-identity Azure RBAC."]
+  - id: apply-settings
+    name: "Apply the returned settings"
+    phase: configure
+    owner: delivery
+    contributors: [change, network, iam]
+    depends_on: [configure-dns, enable-network, configure-app-identity, authorize-workloads]
+    services: [requests, deployment]
+    purpose: "Join the completed network and identity handoffs into reviewed application configuration."
+    inputs: ["Accepted DNS/access settings, registration details, permission evidence and configuration change approval."]
+    outputs: ["Reviewed configuration deployed to the intended environment."]
+    completion: ["Returned values are reviewed, approved and applied to the correct environment."]
+    record: {label: "CR2 - Integration configuration", url: null, state: "Change details pending"}
+    timing: {basis: assumption, min_days: 1, max_days: 3, queue_days: 1, work_days: 0.5, note: "Starts after applicable handoffs complete; predecessor blocking is not counted as this team's queue."}
+    subprocesses: []
+  - id: validate-service
+    name: "Development and testing"
+    phase: configure
+    owner: delivery
+    contributors: []
+    depends_on: [apply-settings]
+    services: [deployment]
+    purpose: "Demonstrate service acceptance and a rehearsed migration/rollback before requesting production approval."
+    inputs: ["Configured service, acceptance scenarios and migration/rollback plan."]
+    outputs: ["Acceptance results and migration/rollback rehearsal evidence."]
+    completion: ["Representative access, sign-in, application behavior and migration checks pass; exceptions are explicitly accepted."]
+    record: {label: "Acceptance and rehearsal evidence", url: null, state: "Evidence not supplied"}
+    timing: {basis: assumption, min_days: 60, max_days: 60, note: "Indicative 60-business-day development and testing allowance requested for planning; not confirmed PSS elapsed time."}
+    subprocesses: []
+  - id: approve-production
+    name: "Approve the production window"
+    phase: release
+    owner: change
+    contributors: [delivery]
+    depends_on: [validate-service]
+    services: [requests]
+    purpose: "Authorize production release after readiness and rehearsal evidence is available."
+    inputs: ["Acceptance results, migration/rollback evidence and proposed production window."]
+    outputs: ["Approved production change scope and release window."]
+    completion: ["CAB records approval of the release and its execution window."]
+    record: {label: "Production change approval", url: null, state: "Change details pending"}
+    timing: {basis: assumption, min_days: 2, max_days: 5, queue_days: 3, work_days: 0.5, note: "Change-calendar placeholder; actual release-window waiting may differ."}
+    subprocesses: []
+  - id: release-service
+    name: "Release and migrate the data"
+    phase: release
+    owner: delivery
+    contributors: []
+    depends_on: [approve-production]
+    services: [deployment]
+    purpose: "Deploy the authorized release and migrate the database using the rehearsed method."
+    inputs: ["Approved release window, environment-specific image/configuration and authorized migration executor."]
+    outputs: ["Deployed application release and verified database migration."]
+    completion: ["Release verification and data checks pass within the approved window; rollback is available if required."]
+    record: {label: "Production release execution", url: null, state: "Execution evidence pending"}
+    timing: {basis: assumption, min_days: 1, max_days: 2, queue_days: 0, work_days: 1, note: "Illustrative execution window; no production completion is asserted."}
+    subprocesses: []
+project:
+  ticket_history_file: "04_projects/operations/PSS2/design/ticket-history.csv"
+  identity_note: "The CMDB export and catalogue contain legacy PSS/PSSA/PSSJ records. PSS2 inventories are a separate project evidence source; no automatic CMDB identity match or transfer of historical ownership is asserted."
+  sources:
+    - id: ticket-history
+      label: "PSS2 ticket history"
+      reference: "ea_inputs/04_projects/operations/PSS2/design/ticket-history.csv; eight user-supplied ticket references received on 16 November 2026. No ticket dates or statuses were supplied."
+    - id: supplied-process
+      label: "Supplied onboarding specification"
+      reference: "User-supplied Project Infrastructure Onboarding Process Map specification, reviewed in conversation on 16 November 2026. Describes a target mature-repository process, not verified historical completion."
+    - id: test-inventory
+      label: "PSS2 Test infrastructure inventory"
+      reference: "ea_inputs/04_projects/operations/PSS2/test/infra-inventory.test.json; use its own snapshot timestamp, not the reported observation date."
+    - id: cmdb
+      label: "CMDB export / application catalogue"
+      reference: "ea_inputs/02_IT_systems/CMDB.csv and Application Catalogue.xlsx; contextual legacy asset records, not ticket or process evidence."
+  observations:
+    - id: foundation-reference
+      activities: [provision-foundation, provision-workload]
+      source: test-inventory
+      classification: inventory_reference
+      date: null
+      text: "The Test inventory distinguishes infrastructure-team-owned VNet/subnets from repository-managed workload resources. This establishes a resource boundary, not completion of every landing-zone request."
+      inventory:
+        file: "04_projects/operations/PSS2/test/infra-inventory.test.json"
+        artifact_ids: [vnet, subnet-appservice, subnet-private-endpoints, plan]
+    - id: reported-network-observations
+      activities: [provision-foundation, configure-dns, enable-network]
+      source: supplied-process
+      classification: reported_observation
+      date: "2026-11-13"
+      text: "The supplied Test observations report subscription M3-ALZ-OPS-T-1, VNet M3-ALZ-VNET-OPS-T-1, APAC DNS 10.246.240.11 / 10.246.240.12, and DISTP01 direct peering. These are reported observations, not independently verified by this process view. DNS configuration and Azure Running status do not prove end-user reachability."
+    - id: workload-reference
+      activities: [provision-workload, configure-dns, authorize-workloads]
+      source: test-inventory
+      classification: inventory_reference
+      date: null
+      text: "Inspect the concrete Test resource names, hostnames, private endpoint addresses and permission descriptions below. Inventory contents are not proof that all request, user-access or production acceptance gates have passed."
+      inventory:
+        file: "04_projects/operations/PSS2/test/infra-inventory.test.json"
+        artifact_ids: [webapp, backend-api, keyvault, storage, sql-server, sql-db]
+    - id: central-us-unverified
+      activities: [provision-foundation, enable-network]
+      source: supplied-process
+      classification: unverified
+      date: "2026-11-13"
+      text: "The requested Central US connection was not verified in the supplied observations. Do not display it as an established access path."
+    - id: identity-distinction
+      activities: [configure-app-identity, authorize-workloads]
+      source: supplied-process
+      classification: reported_observation
+      date: "2026-11-13"
+      text: "The supplied specification distinguishes Web App system-assigned identities from SPA/API registrations. It reports SharePoint delegated on-behalf-of access through a confidential app; Graph consent and SharePoint grants are not ordinary managed-identity Azure RBAC."
+    - id: release-observations
+      activities: [validate-service, release-service]
+      source: supplied-process
+      classification: reported_observation
+      date: "2026-11-13"
+      text: "The supplied specification calls for an environment-specific frontend build, a private SQL migration executor and acceptance evidence. The process view has no supplied production release or migration completion record."
+
+layout:
+  phase_order: [prepare, foundation, provision, connect, configure, release]
+  role_order: [ea, network, cloudops, iam, change, delivery]
+  service_order: [emails-meetings, requests, infrastructure-tickets, deployment, identity]
+iterations:
+  - version: 1
+    date: "2026-11-16"
+    feedback: "Management must see the process immediately and click around for detail; future owners need a repeatable walkthrough."
+    change: "Draft an eight-stage overview with expandable activities, separate role/service bands, plain-language details and explicitly assumed wait times. Preserve source uncertainty and do not infer process completion from inventories."
+  - version: 2
+    date: "2026-11-16"
+    feedback: "Local visual review: the overview must show the final handover stage inside the portal shell, and smaller-step links must reveal the correct prerequisites."
+    change: "Keep all eight stages readable without clipping at the reviewed desktop size. Remove redundant overview connectors while preserving activity dependencies, retain specific Graph/SharePoint prerequisites, and verify expansion, role/service selection, timing labels and stable links in Chrome."
+  - version: 3
+    date: "2026-11-16"
+    feedback: "Localize the roles to EA, IAM, CAB and Project Team; absorb database and owner/support roles. Use six enterprise stages and streamline supporting services."
+    change: "Rename the stages to EA Review, ALZ Creation, Resource Creation, Enable Access, DEV/UAT/PROD and PROD Approval. Combine configuration and validation, remove the separate handover activity, and retain CAB approval before production execution. Show Service Catalog, Infrastructure tickets, Gitlab CICD and Entra grants; keep Graph/SharePoint permission detail under IAM."
+  - version: 4
+    date: "2026-11-16"
+    feedback: "EA approval uses Emails/Meetings. Localize task names further and show duration ranges directly below What happens rather than in the right-side Timing section."
+    change: "Bind EA review to Emails/Meetings, update DNS/firewall/application-registration/development labels, and author explicit assumed business-day ranges for each stage and activity. Group ranges are separately maintained planning assumptions, not sums of parallel work."
+  - version: 5
+    date: "2026-11-16"
+    feedback: "Allow an indicative 60 days for development and testing, and distinguish the timeline from the role band using grey."
+    change: "Set the DEV/UAT/PROD stage and Development and testing activity to a 60-business-day planning assumption. Use neutral grey duration styling and keep fixed-duration markers visible at the end of the shared scale."
+  - version: 6
+    date: "2026-11-16"
+    feedback: "Add eight supplied ticket references with their purpose, system, request type and assigned team."
+    change: "Associate subnet, ALZ, DNS, firewall, API/UI registration and permission tickets with their process activities. Display user-supplied ticket history without inferring completion, measured durations or changes to accountable process roles."
+  - version: 7
+    date: "2026-11-16"
+    feedback: "Expansion should bring the activities into view. Retain the stage name and group duration as parent headers, with smaller, slimmer children nested below in both lanes."
+    change: "Keep selectable parent cards when expanded, indent compact activity and duration cards under matching stage headers, and scroll to the expanded stage while preserving keyboard focus. Keep ticket detail in the selection panel rather than enlarging activity cards. Remove the introductory draft walkthrough banner and Source, confidence & identity section from the page; retain provenance in the YAML source."
+  - version: 8
+    date: "2026-11-16"
+    feedback: "Remove promotional wording and the visible draft label."
+    change: "Remove the subtitle and draft badge from the page. Use Process overview and Process details as neutral headings, without changing the source review status."
+  - version: 9
+    date: "2026-11-16"
+    feedback: "Keep the pasted ticket table as an input CSV under PSS2."
+    change: "Move ticket details into design/ticket-history.csv and reference its ticket numbers from activities. Resolve and validate these references during the deterministic portal build, without model ingestion or duplicate ticket details in YAML."

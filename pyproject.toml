@@ -22,6 +22,8 @@ dependencies = [
   "openpyxl>=3.0.0",
   "jsonschema>=4.0.0",
   "python-docx>=0.8.11",
+  "python-pptx>=1.0.0",
+  "lxml>=4.9.0",
   "google-genai>=1.39.1",
   "certifi>=2023.0.0",
   "requests>=2.31.0",
@@ -52,10 +54,7 @@ addopts = [
     "--self-contained-html", # Embed CSS/JS in HTML file
 ]
 testpaths = [
-    "tests/test_ai_orchestrator.py",
-    "tests/test_context_persistence.py",
-    "tests/test_insights_engine.py",
-    "tests/test_mcp_integration.py"
+    "tests"
 ]
 python_functions = ["test_*"]
 asyncio_mode = "auto"

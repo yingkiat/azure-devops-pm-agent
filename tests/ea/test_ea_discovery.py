@@ -41,7 +41,7 @@ matrix_schema:
       range: [1, 5]
 """
 
-        schema_file = self.schema_dir / "ea_schema.yaml"
+        schema_file = self.schema_dir / "entities_schema.yaml"
         schema_file.write_text(schema_content)
 
         # Create discovery instance and manually set paths for testing
@@ -209,8 +209,8 @@ matrix_schema:
         formatted = self.discovery.format_matrix_results(results)
 
         assert "CHANGES APPLIED:" in formatted
-        assert " Added: New App → New Feature" in formatted
-        assert "  Updated: Existing App → Updated Feature" in formatted
+        assert " Added: New App -> New Feature" in formatted
+        assert "  Updated: Existing App -> Updated Feature" in formatted
         assert " Deleted:" in formatted
         assert "DATA EXPLORATION:" in formatted
         assert "RECOMMENDATIONS:" in formatted

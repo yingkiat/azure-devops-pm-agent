@@ -314,4 +314,6 @@ print([p for p in gen.properties if p['key'] == 'Domain'])
 
 ---
 
-For project-level documentation, see `CLAUDE.md` in the project root.
+For current project operating rules, see [AGENTS.md](../../AGENTS.md).
+For setup and portal authoring, see the [root README](../../README.md) and
+[portal README](../../portal/README.md).

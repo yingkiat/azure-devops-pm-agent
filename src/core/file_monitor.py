@@ -98,6 +98,15 @@ class FileChangeMonitor:
         # Get current files in directory
         current_files = {}
         for file_path in directory_path.rglob("*"):
+            # Design intent is curated separately, never discovered as deployed/model truth.
+            parts = [part.lower() for part in file_path.resolve().parts]
+            if any(
+                part == "04_projects"
+                and len(parts) > index + 3
+                and parts[index + 3] == "design"
+                for index, part in enumerate(parts)
+            ):
+                continue
             if file_path.is_file() and any(file_path.suffix.lower() == ext for ext in file_patterns):
                 try:
                     # Try to get relative path from current working directory

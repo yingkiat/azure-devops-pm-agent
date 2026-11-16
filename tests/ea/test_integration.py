@@ -18,6 +18,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from src.cli.main import app
 
 
+pytestmark = pytest.mark.integration
+
+
 class TestEADiscoveryIntegration:
     """Integration tests for EA Discovery MVP."""
 

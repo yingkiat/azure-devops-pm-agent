@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project process walkthrough",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "intent", "view", "roles", "services", "phases", "activities", "project", "layout", "iterations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "audience", "decision", "key_message"],
+      "properties": {
+        "question": {"$ref": "#/$defs/text"},
+        "audience": {"$ref": "#/$defs/text"},
+        "decision": {"$ref": "#/$defs/text"},
+        "key_message": {"$ref": "#/$defs/text"}
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "subtitle", "status", "notice"],
+      "properties": {
+        "name": {"$ref": "#/$defs/text"},
+        "subtitle": {"$ref": "#/$defs/text"},
+        "status": {"enum": ["draft", "reviewed"]},
+        "notice": {"$ref": "#/$defs/text"}
+      }
+    },
+    "roles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/participant"}},
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "description", "provider", "usage"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "name": {"$ref": "#/$defs/text"},
+          "description": {"$ref": "#/$defs/text"},
+          "provider": {"$ref": "#/$defs/text"},
+          "usage": {"enum": ["setup", "runtime", "setup_and_runtime"]}
+        }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "summary", "timing"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "name": {"$ref": "#/$defs/text"},
+          "summary": {"$ref": "#/$defs/text"},
+          "timing": {"$ref": "#/$defs/timing"}
+        }
+      }
+    },
+    "activities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "phase", "owner", "contributors", "depends_on", "services", "purpose", "inputs", "outputs", "completion", "record", "timing", "subprocesses"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "name": {"$ref": "#/$defs/text"},
+          "phase": {"$ref": "#/$defs/id"},
+          "owner": {"$ref": "#/$defs/id"},
+          "contributors": {"$ref": "#/$defs/refs"},
+          "depends_on": {"$ref": "#/$defs/refs"},
+          "services": {"$ref": "#/$defs/refs"},
+          "purpose": {"$ref": "#/$defs/text"},
+          "inputs": {"$ref": "#/$defs/texts"},
+          "outputs": {"$ref": "#/$defs/texts"},
+          "completion": {"$ref": "#/$defs/texts"},
+          "record": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "url", "state"],
+            "not": {"required": ["tickets", "ticket_numbers"]},
+            "properties": {
+              "label": {"$ref": "#/$defs/text"},
+              "url": {"type": ["string", "null"], "pattern": "^https?://"},
+              "state": {"$ref": "#/$defs/text"},
+              "ticket_numbers": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {"type": "string", "pattern": "^[0-9]+$"}
+              },
+              "tickets": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["number", "purpose", "system", "request_type", "assigned_to"],
+                  "properties": {
+                    "number": {"type": "string", "pattern": "^[0-9]+$"},
+                    "purpose": {"$ref": "#/$defs/text"},
+                    "system": {"$ref": "#/$defs/text"},
+                    "request_type": {"$ref": "#/$defs/text"},
+                    "assigned_to": {"$ref": "#/$defs/text"}
+                  }
+                }
+              }
+            }
+          },
+          "timing": {"$ref": "#/$defs/timing"},
+          "subprocesses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "name", "purpose", "outputs", "completion"],
+              "properties": {
+                "id": {"$ref": "#/$defs/id"},
+                "name": {"$ref": "#/$defs/text"},
+                "purpose": {"$ref": "#/$defs/text"},
+                "inputs": {"$ref": "#/$defs/texts"},
+                "outputs": {"$ref": "#/$defs/texts"},
+                "completion": {"$ref": "#/$defs/texts"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "observations", "identity_note"],
+      "properties": {
+        "identity_note": {"$ref": "#/$defs/text"},
+        "ticket_history_file": {
+          "type": "string",
+          "pattern": "^04_projects/[^/]+/[^/]+/design/[^/]+\\.csv$"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label", "reference"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "label": {"$ref": "#/$defs/text"},
+              "reference": {"$ref": "#/$defs/text"}
+            }
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "activities", "source", "classification", "date", "text"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "activities": {"$ref": "#/$defs/refs"},
+              "source": {"$ref": "#/$defs/id"},
+              "classification": {"enum": ["reported_observation", "inventory_reference", "unverified"]},
+              "date": {"type": ["string", "null"], "format": "date"},
+              "text": {"$ref": "#/$defs/text"},
+              "inventory": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["file", "artifact_ids"],
+                "properties": {
+                  "file": {"type": "string", "pattern": "^04_projects/[^/]+/[^/]+/(dev|test|uat|prod)/infra-inventory\\.(dev|test|uat|prod)\\.json$"},
+                  "artifact_ids": {"$ref": "#/$defs/refs"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase_order", "role_order", "service_order"],
+      "properties": {
+        "phase_order": {"$ref": "#/$defs/refs"},
+        "role_order": {"$ref": "#/$defs/refs"},
+        "service_order": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "iterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "feedback", "change"],
+        "properties": {
+          "version": {"type": "integer", "minimum": 1},
+          "date": {"type": "string", "format": "date"},
+          "feedback": {"$ref": "#/$defs/text"},
+          "change": {"$ref": "#/$defs/text"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "min_days", "max_days", "note"],
+      "properties": {
+        "basis": {"enum": ["assumption", "ticket_measurement"]},
+        "min_days": {"type": "number", "minimum": 0},
+        "max_days": {"type": "number", "minimum": 0},
+        "queue_days": {"type": ["number", "null"], "minimum": 0},
+        "work_days": {"type": ["number", "null"], "minimum": 0},
+        "note": {"$ref": "#/$defs/text"}
+      }
+    },
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "text": {"type": "string", "minLength": 1},
+    "texts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}},
+    "refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"$ref": "#/$defs/text"},
+        "description": {"$ref": "#/$defs/text"}
+      }
+    }
+  }
+}

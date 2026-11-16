@@ -23,7 +23,7 @@ This directory contains comprehensive documentation for the Azure DevOps PM Agen
 
 ### 🔗 Quick Reference
 - See the main [README.md](../README.md) for project overview and quick start
-- Check [CLAUDE.md](../CLAUDE.md) for Claude Code specific instructions
+- Check [AGENTS.md](../AGENTS.md) for current Copilot ingestion and portal instructions
 
 ## 🚀 Recent Major Achievements
 
@@ -125,7 +125,7 @@ python -m src.cli.main sync outputs/PLAN-*.json --approve
 - **[📁 Source Code](../src/)**
 - **[🧪 Tests](../tests/)**
 - **[🤖 Prompts](../prompts/)**
-- **[⚙️ Configuration](../CLAUDE.md)**
+- **[⚙️ Configuration](../README.md#setup)**
 
 ## 🤝 Development Status
 

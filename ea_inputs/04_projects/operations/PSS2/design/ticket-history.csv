@@ -1,0 +1,9 @@
+Ticket No,Purpose,System,Request Type,Assigned To
+7172078,Allocate subnets for new ALZ,Ticket,helpdesk-apac,Network
+7230940,create ALZ,Service Catalog,New Subscription/Application Landing Zone Request,IT-Cloud Operations
+7408177,create a Microsoft Entra ID application registration for the API using OpenID Connect (OIDC).,Service Catalog,App Registration,IT-Cloud Operations
+7408178,create a Microsoft Entra ID application registration for the UI using OpenID Connect (OIDC).,Service Catalog,App Registration,IT-Cloud Operations
+7388699,enable the firewall and Zscaler access for test env,Service Catalog,Firewall Request Forms,IT-Network Security
+7117087,Adding PSS2 ip addresses to DNS,Ticket,helpdesk-apac,Infosec
+7396567,Add read/write permission in azure service for SharePoint for Test environment,Service Catalog,Changes To Existing Resources Request,IT-Cloud Operations
+7396446,add write permission under OIDC-PackSpecificationSystem-API-Test app,Service Catalog,Changes To Existing Resources Request,IT-Cloud Operations

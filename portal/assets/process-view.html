@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$project - Infrastructure Onboarding</title>
+  <style>
+    :root { color-scheme: light; --ink: #213047; --muted: #62738a; --blue: #2458a6; --line: #dce4ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7fb; color: var(--ink); font: 14px/1.5 "Segoe UI", Arial, sans-serif; }
+    main { max-width: 1960px; margin: auto; padding: 22px; }
+    h1 { font-size: 28px; margin: 3px 0; letter-spacing: -.5px; }
+    h2 { font-size: 20px; margin: 4px 0 12px; line-height: 1.3; }
+    h3 { font-size: 13px; margin: 21px 0 7px; }
+    p { margin: 6px 0 12px; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; cursor: pointer; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #75a9ed; outline-offset: 3px; }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; color: var(--blue); }
+    .muted { color: var(--muted); }
+    .heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 18px 0 13px; }
+    .control { border: 1px solid var(--line); background: white; color: var(--ink); border-radius: 7px; padding: 7px 12px; font-size: 12px; }
+    .toolbar .hint { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 18px; align-items: start; }
+    .map-card, .panel { background: white; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .map-title { padding: 16px 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 14px; }
+    .map-title strong { font-size: 14px; }
+    .map-title span { font-size: 11px; color: var(--muted); }
+    .viewport { overflow-x: auto; padding: 16px; }
+    .map { min-width: 940px; position: relative; }
+    .band { position: relative; padding: 16px 12px; border-radius: 9px; }
+    .band-label { margin-bottom: 12px; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+    .role-band { background: #fffaf0; border: 1px solid #f0e5ca; }
+    .service-band { background: #f6f3fc; border: 1px solid #e8e0f4; }
+    .chip-row { display: flex; justify-content: space-between; gap: 9px; }
+    .node { position: relative; z-index: 2; transition: opacity .15s, box-shadow .15s; }
+    .chip { border: 1px solid #e2d5b6; border-radius: 7px; background: white; padding: 10px 12px; color: #655124; font-size: 12px; font-weight: 600; flex: 1; }
+    .service-band .chip { border-color: #ded4ed; color: #604482; }
+    .process-band { margin: 26px 0; padding: 0 3px 10px; }
+    .stages { display: grid; gap: 12px; align-items: start; }
+    .stage, .activity-group { scroll-margin-top: 16px; }
+    .nested-list { margin: 8px 0 0 7px; padding-left: 8px; border-left: 2px solid #d6dfec; }
+    .duration-column .nested-list { border-left-color: #d6d6d6; }
+    .duration-band { position: relative; z-index: 2; margin: 0 0 16px; padding: 11px; background: #f5f5f5; border: 1px solid #d6d6d6; border-radius: 8px; }
+    .duration-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; font-size: 10px; color: #555; }
+    .duration-grid { display: grid; gap: 12px; align-items: start; }
+    .duration-card { display: block; width: 100%; text-align: left; padding: 8px; border: 1px solid #d6d6d6; border-radius: 6px; background: white; color: #444; }
+    .duration-name { display: block; font-size: 10px; line-height: 1.3; margin-bottom: 5px; }
+    .duration-value { display: block; font-size: 16px; font-weight: 700; }
+    .duration-basis { display: block; font-size: 9px; color: #666; margin-top: 3px; }
+    .duration-track { display: block; position: relative; height: 5px; margin-top: 7px; border-radius: 4px; background: #e8e8e8; overflow: hidden; }
+    .duration-range { display: block; position: absolute; height: 100%; min-width: 2px; background: #737373; border-radius: 4px; }
+    .duration-card.compact { margin-top: 6px; padding: 6px; }
+    .duration-card.compact .duration-name { font-size: 10px; margin-bottom: 2px; }
+    .duration-card.compact .duration-value { font-size: 11px; }
+    .duration-card.compact .duration-track { height: 3px; margin-top: 4px; }
+    .duration-card.compact .duration-basis { display: none; }
+    .duration-note { margin: 8px 0 0; font-size: 10px; color: #666; }
+    .stage-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; gap: 5px; min-height: 28px; }
+    .stage-number { width: 23px; height: 23px; display: grid; place-items: center; background: #eaf0f9; color: var(--blue); border-radius: 50%; font-size: 11px; font-weight: 700; }
+    .expand { border: 0; background: #edf2f8; border-radius: 5px; padding: 4px 7px; font-size: 10px; color: #4a617f; }
+    .stage-card, .activity { display: block; width: 100%; min-height: 139px; text-align: left; border: 1px solid #cddbef; border-top: 3px solid #4478be; border-radius: 8px; background: #f5f8fd; padding: 13px 11px; color: var(--ink); }
+    .stage-card strong, .activity strong { display: block; font-size: 13px; line-height: 1.35; margin-bottom: 9px; }
+    .stage-card .owner, .activity .owner { display: block; font-size: 10px; color: #506789; line-height: 1.5; }
+    .count { display: block; margin-top: 14px; color: var(--muted); font-size: 10px; }
+    .stage.expanded .stage-card { min-height: 0; padding: 9px; }
+    .stage.expanded .stage-card strong { font-size: 12px; margin-bottom: 5px; }
+    .stage.expanded .stage-card .count { margin-top: 6px; }
+    .activity { min-height: 0; margin-bottom: 5px; background: white; padding: 8px; border-top-width: 1px; border-radius: 6px; }
+    .activity strong { font-size: 11px; margin-bottom: 4px; }
+    .activity-group { margin-bottom: 8px; }
+    .activity-group:last-child { margin-bottom: 0; }
+    .sub-toggle { display: block; margin: 0 0 6px auto; }
+    .subprocess { display: block; width: calc(100% - 8px); margin: 6px 0 6px 8px; text-align: left; background: #f1f5fc; border: 1px solid #d7e1ef; border-radius: 6px; padding: 9px; font-size: 11px; color: var(--ink); }
+    .node.dim { opacity: .32; }
+    .node.selected { box-shadow: 0 0 0 3px #427fc7; opacity: 1; }
+    .node.related { opacity: 1; }
+    #connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+    .legend { padding: 13px 18px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 18px; }
+    .legend span::before { content: ""; display: inline-block; width: 19px; height: 2px; background: #a5b5c9; margin-right: 6px; vertical-align: middle; }
+    .legend .role-key::before { background: #b8994d; }
+    .legend .service-key::before { background: #9573bc; }
+    .panel { position: sticky; top: 14px; padding: 21px; max-height: calc(100vh - 28px); overflow-y: auto; }
+    .panel .section-list { margin: 0; padding-left: 18px; }
+    .panel li { margin: 6px 0; }
+    .panel .detail-link { display: block; width: 100%; border: 1px solid var(--line); border-radius: 6px; background: #f7f9fc; margin: 7px 0; padding: 9px 11px; text-align: left; color: var(--blue); font-size: 12px; }
+    .panel details { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 12px; }
+    .panel summary { font-size: 12px; font-weight: 600; color: #526787; cursor: pointer; }
+    .panel details p, .panel details li { font-size: 12px; overflow-wrap: anywhere; }
+    .source-label { display: inline-block; padding: 2px 7px; border-radius: 5px; background: #edf1f6; color: #4d617a; font-size: 10px; }
+    .footnote { margin: 14px 0 0; font-size: 11px; color: var(--muted); }
+    #message { font-size: 12px; color: #775919; }
+    [hidden] { display: none !important; }
+    @media (max-width: 1300px) { .workspace { grid-template-columns: minmax(0, 1fr); } .panel { position: static; max-height: none; } }
+    @media (max-width: 700px) { main { padding: 12px; } h1 { font-size: 23px; } .heading { align-items: start; } .toolbar .hint { margin-left: 0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="heading">
+      <div>
+        <div class="eyebrow">$project / Project walkthrough</div>
+        <h1 id="title"></h1>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button id="overview" class="control" type="button">Back to overview</button>
+      <button id="expand-all" class="control" type="button">Show all activities</button>
+      <label class="control"><input id="show-waits" type="checkbox" checked> Show duration ranges</label>
+      <button id="copy-link" class="control" type="button">Copy selection link</button>
+      <span id="message" role="status" aria-live="polite"></span>
+      <span class="hint">Click a stage, owner or service. Use + to open its activities.</span>
+    </div>
+    <div class="workspace">
+      <section class="map-card" aria-label="Interactive infrastructure onboarding process">
+        <div class="map-title"><strong>Process overview</strong><span>Left to right; requests within a stage may run in parallel.</span></div>
+        <div class="viewport">
+          <div id="map" class="map">
+            <svg id="connections" aria-hidden="true"></svg>
+            <div class="band role-band"><div class="band-label">Who is involved</div><div id="roles" class="chip-row"></div></div>
+            <div class="process-band">
+              <div class="band-label">What happens</div>
+              <div id="timing-band" class="duration-band" aria-label="Indicative business-day duration ranges">
+                <div class="duration-heading"><strong>Indicative duration</strong><span>Business days / select a range for the related step</span></div>
+                <div id="durations" class="duration-grid"></div>
+                <p class="duration-note">Queue + work after required inputs are ready. Group ranges are separate planning assumptions, not sums of parallel tasks.</p>
+              </div>
+              <div id="stages" class="stages"></div>
+            </div>
+            <div class="band service-band"><div class="band-label">What supports the work</div><div id="services" class="chip-row"></div></div>
+          </div>
+        </div>
+        <div class="legend"><span>Process dependency</span><span class="role-key">Ownership / contribution on selection</span><span class="service-key">Supporting service on selection</span></div>
+      </section>
+      <aside id="panel" class="panel" aria-label="Selected process details" aria-live="polite"></aside>
+    </div>
+    <p class="footnote">A source-defined process walkthrough, not live ticket tracking. Resource existence and ticket closure do not establish service readiness.</p>
+  </main>
+  <script id="process-data" type="application/json">$process_data</script>
+  <script>
+    const model = JSON.parse(document.getElementById('process-data').textContent);
+    const byId = items => Object.fromEntries(items.map(item => [item.id, item]));
+    const roles = byId(model.roles), services = byId(model.services), phases = byId(model.phases), activities = byId(model.activities);
+    const sources = byId(model.project.sources);
+    const openPhases = new Set(), openActivities = new Set();
+    let current = null;
+    const nodeElements = new Map(), activityElements = new Map();
+    const map = document.getElementById('map'), panel = document.getElementById('panel');
+    const el = (tag, cls, text) => {
+      const item = document.createElement(tag);
+      if (cls) item.className = cls;
+      if (text !== undefined) item.textContent = text;
+      return item;
+    };
+    const phaseActivities = id => model.activities.filter(activity => activity.phase === id);
+    const roleNames = ids => [...new Set(ids)].map(id => roles[id].name).join(' / ');
+    const button = (type, id, label, cls) => {
+      const item = el('button', 'node ' + cls, label);
+      item.type = 'button'; item.dataset.type = type; item.dataset.id = id;
+      nodeElements.set(type + ':' + id, item);
+      return item;
+    };
+    const number = value => value === null ? 'Unknown' : String(value);
+    const durationScale = Math.max(1, ...model.phases.concat(model.activities).map(item => item.timing.max_days));
+    const rangeLabel = timing => number(timing.min_days) + (timing.min_days === timing.max_days ? '' : '\u2013' + number(timing.max_days)) + ' days';
+    function durationCard(type, item, compact = false) {
+      const timing = item.timing, card = el('button', 'node duration-card' + (compact ? ' compact' : ''));
+      card.type = 'button'; card.dataset.type = type; card.dataset.id = item.id;
+      card.title = item.name + ': ' + rangeLabel(timing) + ' (business days). ' + timing.note;
+      card.append(el('span', 'duration-name', item.name), el('span', 'duration-value', rangeLabel(timing)));
+      const track = el('span', 'duration-track'), range = el('span', 'duration-range');
+      track.setAttribute('aria-hidden', 'true');
+      range.style.left = (timing.min_days / durationScale * 100) + '%';
+      range.style.width = ((timing.max_days - timing.min_days) / durationScale * 100) + '%';
+      if (timing.min_days === timing.max_days && timing.min_days > 0) range.style.transform = 'translateX(-100%)';
+      track.append(range); card.append(track);
+      card.append(el('span', 'duration-basis', timing.basis === 'assumption' ? 'Indicative' : 'Ticket measurement'));
+      return card;
+    }
+    const activityContext = () => {
+      if (!current) return [];
+      if (current.type === 'phase') return phaseActivities(current.id);
+      if (current.type === 'activity') return [activities[current.id]];
+      if (current.type === 'subprocess') return [activities[current.id.split('/')[0]]];
+      if (current.type === 'role') return model.activities.filter(activity => [activity.owner, ...activity.contributors].includes(current.id));
+      return model.activities.filter(activity => activity.services.includes(current.id));
+    };
+
+    function renderMap() {
+      nodeElements.clear(); activityElements.clear();
+      const roleRow = document.getElementById('roles'), serviceRow = document.getElementById('services'), stageRow = document.getElementById('stages');
+      const durationRow = document.getElementById('durations');
+      const columns = 'repeat(' + model.layout.phase_order.length + ', minmax(0, 1fr))';
+      stageRow.style.gridTemplateColumns = columns; durationRow.style.gridTemplateColumns = columns;
+      document.getElementById('timing-band').hidden = !document.getElementById('show-waits').checked;
+      roleRow.replaceChildren(); serviceRow.replaceChildren(); stageRow.replaceChildren(); durationRow.replaceChildren();
+      model.layout.role_order.forEach(id => roleRow.append(button('role', id, roles[id].name, 'chip')));
+      model.layout.service_order.forEach(id => serviceRow.append(button('service', id, services[id].name, 'chip')));
+      model.layout.phase_order.forEach((id, index) => {
+        const expanded = openPhases.has(id);
+        const group = phaseActivities(id), stage = el('div', 'stage' + (expanded ? ' expanded' : '')), head = el('div', 'stage-head');
+        stage.dataset.phase = id;
+        const durations = el('div', 'duration-column');
+        durations.append(durationCard('phase', phases[id]));
+        if (expanded) {
+          const children = el('div', 'nested-list');
+          children.setAttribute('role', 'group'); children.setAttribute('aria-label', phases[id].name + ' activity durations');
+          group.forEach(activity => children.append(durationCard('activity', activity, true)));
+          durations.append(children);
+        }
+        durationRow.append(durations);
+        head.append(el('span', 'stage-number', String(index + 1)));
+        const toggle = el('button', 'expand', (openPhases.has(id) ? '- ' : '+ ') + group.length + (group.length === 1 ? ' activity' : ' activities'));
+        toggle.type = 'button'; toggle.dataset.expandPhase = id;
+        toggle.setAttribute('aria-expanded', String(openPhases.has(id)));
+        toggle.setAttribute('aria-label', (openPhases.has(id) ? 'Collapse ' : 'Expand ') + phases[id].name);
+        head.append(toggle); stage.append(head);
+        const summary = button('phase', id, undefined, 'stage-card');
+        summary.append(el('strong', '', phases[id].name), el('span', 'owner', roleNames(group.map(activity => activity.owner))), el('span', 'count', group.length + (group.length === 1 ? ' activity' : ' activities') + (expanded ? '' : ' - click for detail')));
+        stage.append(summary);
+        if (!expanded) {
+          group.forEach(activity => activityElements.set(activity.id, summary));
+        } else {
+          const children = el('div', 'nested-list');
+          children.setAttribute('role', 'group'); children.setAttribute('aria-label', phases[id].name + ' activities');
+          group.forEach(activity => {
+            const wrapper = el('div', 'activity-group'), item = button('activity', activity.id, undefined, 'activity');
+            wrapper.dataset.activity = activity.id;
+            item.title = activity.record.label;
+            item.append(el('strong', '', activity.name), el('span', 'owner', roles[activity.owner].name));
+            wrapper.append(item); activityElements.set(activity.id, item);
+            if (activity.subprocesses.length) {
+              const subToggle = el('button', 'expand sub-toggle', (openActivities.has(activity.id) ? '- ' : '+ ') + activity.subprocesses.length + ' smaller steps');
+              subToggle.type = 'button'; subToggle.dataset.expandActivity = activity.id;
+              subToggle.setAttribute('aria-expanded', String(openActivities.has(activity.id)));
+              subToggle.setAttribute('aria-label', 'Toggle smaller steps for ' + activity.name);
+              wrapper.append(subToggle);
+              if (openActivities.has(activity.id)) activity.subprocesses.forEach(child => wrapper.append(button('subprocess', activity.id + '/' + child.id, child.name, 'subprocess')));
+            }
+            children.append(wrapper);
+          });
+          stage.append(children);
+        }
+        stageRow.append(stage);
+      });
+      applyHighlight();
+      requestAnimationFrame(drawConnections);
+    }
+
+    function applyHighlight() {
+      const focus = activityContext(), ids = new Set(focus.map(activity => activity.id));
+      const nearby = new Set(ids);
+      focus.forEach(activity => activity.depends_on.forEach(id => nearby.add(id)));
+      model.activities.filter(activity => activity.depends_on.some(id => ids.has(id))).forEach(activity => nearby.add(activity.id));
+      const roleIds = new Set(focus.flatMap(activity => [activity.owner, ...activity.contributors]));
+      const serviceIds = new Set(focus.flatMap(activity => activity.services));
+      [...nodeElements.values(), ...document.querySelectorAll('.duration-card')].forEach(item => {
+        const key = item.dataset.type + ':' + item.dataset.id;
+        const selected = current && (key === current.type + ':' + current.id || (item.classList.contains('duration-card') && current.type === 'subprocess' && key === 'activity:' + current.id.split('/')[0]));
+        let related = true;
+        if (current) {
+          const type = item.dataset.type, id = item.dataset.id;
+          related = type === 'role' ? roleIds.has(id) : type === 'service' ? serviceIds.has(id) : type === 'phase' ? phaseActivities(id).some(activity => nearby.has(activity.id)) : nearby.has(id.split('/')[0]);
+        }
+        item.classList.toggle('dim', !related);
+        item.classList.toggle('related', !!current && related);
+        item.classList.toggle('selected', !!selected);
+        item.setAttribute('aria-pressed', String(!!selected));
+      });
+    }
+
+    function drawConnections() {
+      const svg = document.getElementById('connections'), ns = 'http://www.w3.org/2000/svg';
+      svg.replaceChildren(); svg.setAttribute('viewBox', '0 0 ' + map.offsetWidth + ' ' + map.offsetHeight);
+      const defs = document.createElementNS(ns, 'defs');
+      [['order', '#a5b5c9'], ['focus', '#4478be']].forEach(pair => {
+        const marker = document.createElementNS(ns, 'marker');
+        marker.setAttribute('id', pair[0]); marker.setAttribute('viewBox', '0 0 8 8'); marker.setAttribute('refX', '7'); marker.setAttribute('refY', '4'); marker.setAttribute('markerWidth', '6'); marker.setAttribute('markerHeight', '6'); marker.setAttribute('orient', 'auto');
+        const path = document.createElementNS(ns, 'path'); path.setAttribute('d', 'M0,0 L8,4 L0,8 Z'); path.setAttribute('fill', pair[1]); marker.append(path); defs.append(marker);
+      });
+      svg.append(defs);
+      const base = map.getBoundingClientRect(), seen = new Set(), focusIds = new Set(activityContext().map(activity => activity.id));
+      const phaseEdges = new Map(model.phases.map(phase => [phase.id, new Set()]));
+      model.activities.forEach(activity => activity.depends_on.forEach(id => {
+        if (activities[id].phase !== activity.phase) phaseEdges.get(activities[id].phase).add(activity.phase);
+      }));
+      function alternatePhasePath(source, target) {
+        const pending = [...phaseEdges.get(source)].filter(id => id !== target), visited = new Set();
+        while (pending.length) {
+          const id = pending.pop();
+          if (id === target) return true;
+          if (!visited.has(id)) { visited.add(id); pending.push(...phaseEdges.get(id)); }
+        }
+        return false;
+      }
+      const bounds = item => {
+        const rect = item.getBoundingClientRect();
+        return {x: rect.left - base.left, y: rect.top - base.top, w: rect.width, h: rect.height};
+      };
+      function pathBetween(source, target, color, vertical, highlighted, dashed) {
+        if (!source || !target || source === target) return;
+        const key = source.dataset.type + source.dataset.id + '>' + target.dataset.type + target.dataset.id + color;
+        if (seen.has(key)) return;
+        seen.add(key);
+        const a = bounds(source), b = bounds(target), path = document.createElementNS(ns, 'path');
+        let d;
+        if (vertical) {
+          const x1 = a.x + a.w / 2, y1 = a.y + a.h, x2 = b.x + b.w / 2, y2 = b.y, mid = (y1 + y2) / 2;
+          d = 'M ' + x1 + ' ' + y1 + ' V ' + mid + ' H ' + x2 + ' V ' + y2;
+        } else {
+          const x1 = a.x + a.w, y1 = a.y + a.h / 2, x2 = b.x, y2 = b.y + b.h / 2, mid = (x1 + x2) / 2;
+          d = 'M ' + x1 + ' ' + y1 + ' H ' + mid + ' V ' + y2 + ' H ' + x2;
+        }
+        path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', color);
+        path.setAttribute('stroke-width', highlighted ? '2' : '1.4');
+        if (dashed) { path.setAttribute('stroke-dasharray', '4 4'); path.setAttribute('opacity', '.7'); }
+        else { path.setAttribute('marker-end', 'url(#' + (highlighted ? 'focus' : 'order') + ')'); path.setAttribute('data-process-edge', 'true'); }
+        svg.append(path);
+      }
+      model.activities.forEach(activity => activity.depends_on.forEach(id => {
+        if (!openPhases.has(activities[id].phase) && !openPhases.has(activity.phase) && alternatePhasePath(activities[id].phase, activity.phase)) return;
+        const source = activityElements.get(id), target = activityElements.get(activity.id);
+        const selected = focusIds.has(activity.id) || focusIds.has(id);
+        pathBetween(source, target, selected ? '#4478be' : '#a5b5c9', activities[id].phase === activity.phase, selected, false);
+      }));
+      if (current) activityContext().forEach(activity => {
+        const target = activityElements.get(activity.id);
+        [activity.owner, ...activity.contributors].forEach(id => pathBetween(nodeElements.get('role:' + id), target, '#b8994d', true, false, true));
+        activity.services.forEach(id => pathBetween(target, nodeElements.get('service:' + id), '#9573bc', true, false, true));
+      });
+    }
+
+    function section(title, values, parent = panel) {
+      parent.append(el('h3', '', title));
+      const list = el('ul', 'section-list');
+      values.forEach(value => list.append(el('li', '', value)));
+      parent.append(list);
+    }
+    function details(title) {
+      const box = el('details'); box.append(el('summary', '', title)); panel.append(box); return box;
+    }
+    function links(title, values, type) {
+      panel.append(el('h3', '', title));
+      values.forEach(value => {
+        const link = el('button', 'detail-link', value.name); link.type = 'button';
+        link.addEventListener('click', () => select(type, value.id)); panel.append(link);
+      });
+    }
+    function ticketHistory(ids) {
+      const entries = model.activities.filter(activity => ids.includes(activity.id)).flatMap(activity =>
+        (activity.record.tickets || []).map(ticket => ({activity, ticket})));
+      if (!entries.length) return;
+      const box = details('Ticket history (' + entries.length + ')');
+      box.append(el('p', 'muted', 'User-supplied references. Dates and statuses were not supplied; these records do not establish completion or measured waiting times. Assigned teams are ticket assignments, not changes to accountable process roles.'));
+      entries.forEach(({activity, ticket}) => {
+        box.append(el('h3', '', '#' + ticket.number + ' - ' + activity.name), el('p', '', ticket.purpose));
+        section('Request details', ['System: ' + ticket.system, 'Request type: ' + ticket.request_type, 'Assigned to: ' + ticket.assigned_to], box);
+      });
+    }
+    function evidence(ids) {
+      ticketHistory(ids);
+      const relevant = model.project.observations.filter(item => item.activities.some(id => ids.includes(id)));
+      const box = details('PSS2 technical references');
+      if (!relevant.length) box.append(el('p', 'muted', 'No project-specific completion evidence has been supplied for this selection.'));
+      relevant.forEach(item => {
+        box.append(el('h3', '', sources[item.source].label), el('span', 'source-label', item.classification.replaceAll('_', ' ') + (item.date ? ' / ' + item.date : ' / see source timestamp')), el('p', '', item.text));
+        const inventory = model.inventory_evidence[item.id];
+        if (inventory) {
+          box.append(el('p', 'muted', inventory.environment.toUpperCase() + ' inventory generated_at: ' + (inventory.generated_at || 'not supplied')));
+          inventory.artifacts.forEach(artifact => {
+            box.append(el('h3', '', artifact.name + ' (' + artifact.type + ')'));
+            const list = el('ul', 'section-list'); artifact.details.forEach(value => list.append(el('li', '', value))); box.append(list);
+          });
+          box.append(el('p', 'muted', inventory.file));
+        }
+      });
+    }
+    function renderPanel() {
+      panel.replaceChildren(); panel.scrollTop = 0;
+      if (!current) {
+        panel.append(el('h2', '', 'Process details'), el('p', '', model.intent.key_message));
+        section('How to use this map', ['Click any stage to see its owner and activities.', 'Open + activities to inspect individual requests and approval steps.', 'Click a team or service to see where it participates.', 'The timing band shows assumed business-day ranges. Open stages for task-level ranges and add ticket evidence later.']);
+        section('Read this correctly', ['A request can start only when its required inputs are ready.', 'Separate requests can run in parallel where inputs permit.', 'Completion needs evidence, not just a closed ticket or an Azure resource.']);
+        ticketHistory(model.activities.map(activity => activity.id));
+        return;
+      }
+      const context = activityContext();
+      panel.append(el('div', 'eyebrow', ({phase: 'Stage', role: 'Team', service: 'Supporting service', subprocess: 'Smaller step', activity: 'Activity'})[current.type]));
+      if (current.type === 'role' || current.type === 'service') {
+        const item = current.type === 'role' ? roles[current.id] : services[current.id];
+        panel.append(el('h2', '', item.name), el('p', '', item.description));
+        if (current.type === 'service') {
+          section('Providing application / tool', [item.provider]);
+          section('When it is used', [item.usage === 'setup' ? 'Setup and delivery tooling, not a runtime dependency.' : item.usage === 'runtime' ? 'Runtime dependency; setup approvals may enable its use.' : 'Used during setup and at runtime.']);
+        }
+        links('Activities supported', context, 'activity'); evidence(context.map(activity => activity.id)); return;
+      }
+      if (current.type === 'phase') {
+        const phase = phases[current.id];
+        panel.append(el('h2', '', phase.name), el('p', '', phase.summary));
+        section('Who owns the work', [...new Set(context.map(activity => roles[activity.owner].name))]);
+        links('Explore this stage', context, 'activity');
+        const predecessors = [...new Set(context.flatMap(activity => activity.depends_on))].filter(id => activities[id].phase !== phase.id);
+        if (predecessors.length) links('Required earlier handoffs', predecessors.map(id => activities[id]), 'activity');
+        section('What leaves this stage', context.flatMap(activity => activity.outputs));
+        evidence(context.map(activity => activity.id)); return;
+      }
+      const activity = context[0], child = current.type === 'subprocess' ? activity.subprocesses.find(item => item.id === current.id.split('/')[1]) : null;
+      panel.append(el('h2', '', child ? child.name : activity.name), el('p', '', child ? child.purpose : activity.purpose));
+      section('Who to involve', ['Accountable: ' + roles[activity.owner].name, 'Contributors: ' + (activity.contributors.length ? roleNames(activity.contributors) : 'No additional role specified')]);
+      if (activity.depends_on.length) links('Earlier handoffs needed', activity.depends_on.map(id => activities[id]), 'activity');
+      section('Before you start', child && child.inputs ? child.inputs : activity.inputs);
+      section('What this produces', child ? child.outputs : activity.outputs);
+      section('Done when', child ? child.completion : activity.completion);
+      if (activity.services.length) links('Supporting services', activity.services.map(id => services[id]), 'service');
+      panel.append(el('h3', '', 'Request / change record'), el('p', '', activity.record.label + ' - ' + activity.record.state));
+      if (activity.record.url) {
+        const link = el('a', '', 'Open request record'); link.href = activity.record.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; panel.append(link);
+      }
+      if (!child && activity.subprocesses.length) links('Smaller steps', activity.subprocesses.map(item => ({id: activity.id + '/' + item.id, name: item.name})), 'subprocess');
+      if (child) panel.append(el('p', 'muted', 'The range in the timing band belongs to the parent activity, not this smaller step alone.'));
+      evidence([activity.id]);
+    }
+
+    function select(type, id, updateUrl = true) {
+      let valid = type === 'phase' ? !!phases[id] : type === 'role' ? !!roles[id] : type === 'service' ? !!services[id] : type === 'activity' ? !!activities[id] : false;
+      if (type === 'subprocess') {
+        const parts = id.split('/');
+        valid = parts.length === 2 && !!activities[parts[0]] && activities[parts[0]].subprocesses.some(item => item.id === parts[1]);
+      }
+      if (!valid) { document.getElementById('message').textContent = 'This selection link is not in the process source.'; return false; }
+      document.getElementById('message').textContent = '';
+      current = {type, id};
+      if (type === 'activity' || type === 'subprocess') {
+        const parent = activities[id.split('/')[0]]; openPhases.add(parent.phase);
+        if (type === 'subprocess') openActivities.add(parent.id);
+      }
+      if (updateUrl) history.pushState(null, '', '#' + type + '=' + encodeURIComponent(id));
+      renderMap(); renderPanel();
+      return true;
+    }
+    function restoreSelection() {
+      const values = [...new URLSearchParams(location.hash.slice(1))];
+      if (values.length && select(values[0][0], values[0][1], false)) return;
+      current = null; renderMap(); renderPanel();
+    }
+    function revealExpansion(container, control, expanded) {
+      control.focus({preventScroll: true});
+      container.scrollIntoView({
+        block: expanded ? 'start' : 'nearest',
+        inline: 'nearest',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+      });
+    }
+    map.addEventListener('click', event => {
+      const phaseToggle = event.target.closest('[data-expand-phase]'), childToggle = event.target.closest('[data-expand-activity]');
+      if (phaseToggle) {
+        const id = phaseToggle.dataset.expandPhase;
+        openPhases.has(id) ? openPhases.delete(id) : openPhases.add(id);
+        if (current && ['activity', 'subprocess'].includes(current.type) && activities[current.id.split('/')[0]].phase === id && !openPhases.has(id)) select('phase', id);
+        else renderMap();
+        revealExpansion(document.querySelector('.stage[data-phase="' + id + '"]'), document.querySelector('[data-expand-phase="' + id + '"]'), openPhases.has(id));
+      } else if (childToggle) {
+        const id = childToggle.dataset.expandActivity;
+        openActivities.has(id) ? openActivities.delete(id) : openActivities.add(id);
+        if (current && current.type === 'subprocess' && current.id.startsWith(id + '/') && !openActivities.has(id)) select('activity', id);
+        else renderMap();
+        revealExpansion(document.querySelector('.activity-group[data-activity="' + id + '"]'), document.querySelector('[data-expand-activity="' + id + '"]'), openActivities.has(id));
+      } else {
+        const item = event.target.closest('[data-type]');
+        if (item) select(item.dataset.type, item.dataset.id);
+      }
+    });
+    document.getElementById('overview').addEventListener('click', () => {
+      current = null; openPhases.clear(); openActivities.clear();
+      history.pushState(null, '', location.pathname + location.search);
+      document.getElementById('message').textContent = '';
+      renderMap(); renderPanel();
+    });
+    document.getElementById('expand-all').addEventListener('click', () => {
+      model.layout.phase_order.forEach(id => openPhases.add(id)); renderMap();
+    });
+    document.getElementById('show-waits').addEventListener('change', renderMap);
+    document.getElementById('copy-link').addEventListener('click', async () => {
+      const message = document.getElementById('message');
+      try {
+        await navigator.clipboard.writeText(location.href);
+        message.textContent = 'Selection link copied.';
+      } catch (error) {
+        message.textContent = 'Could not copy the link. Copy the browser address instead.';
+      }
+    });
+    window.addEventListener('hashchange', restoreSelection);
+    window.addEventListener('resize', () => requestAnimationFrame(drawConnections));
+    document.getElementById('title').textContent = model.view.name;
+    restoreSelection();
+  </script>
+</body>
+</html>

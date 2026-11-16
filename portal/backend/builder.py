@@ -435,6 +435,94 @@ class PortalBuilder:
 
         return views
 
+    def _collect_architecture_decision_views(self) -> List[Dict]:
+        """Publish design registers at project level, outside environment folders."""
+        from .architecture_decisions import load_register, render_register
+
+        views: List[Dict] = []
+        projects_dir = Path("ea_inputs/04_projects")
+        specs = self._load_project_specs()
+        template = Path("portal/assets/architecture-decisions.html")
+        for register_path in sorted(projects_dir.glob("*/*/design/architecture-decisions.json")):
+            project_dir = register_path.parent.parent
+            domain = project_dir.parent.name
+            if domain.startswith("_"):
+                continue
+            spec = specs.get(project_dir.relative_to("ea_inputs").as_posix(), {})
+            project = spec.get("project") or project_dir.name
+            project_key = spec.get("project_key") or re.sub(r"[^a-z0-9]+", "-", project_dir.name.lower()).strip("-")
+            data = load_register(register_path)
+            page = render_register(data, project, template)
+            out_dir = self.output_dir / "projects" / project_key / "architecture-decisions"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            (out_dir / "index.html").write_text(page, encoding="utf-8")
+            view_id = f"project_{project_key}_architecture_decisions"
+            views.append({
+                "view_id": view_id,
+                "name": f"{project} - Architecture Decisions",
+                "diagram_file": "",
+                "preview_file": "",
+                "category": domain,
+                "domain": spec.get("domain") or domain,
+                "region": spec.get("region", ""),
+                "project": project,
+                "project_key": project_key,
+                "view_kind": "project",
+                "view_type": "architecture_decisions",
+                "artifact_label": "Architecture Decisions",
+                "environment": "",
+                "iframe_src": f"projects/{project_key}/architecture-decisions/",
+                "elements": [],
+                "element_count": len(data["entries"]),
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(register_path.stat().st_mtime).isoformat(),
+            })
+            print(f"      OK {view_id:45s} ({len(data['entries'])} architectural points)")
+        return views
+
+    def _collect_process_views(self) -> List[Dict]:
+        """Render project-level process walkthroughs from their maintained sources."""
+        from .process_views import load_process, render_process
+
+        views: List[Dict] = []
+        projects_dir = Path("ea_inputs/04_projects")
+        specs = self._load_project_specs()
+        template = Path("portal/assets/process-view.html")
+        for source_path in sorted(projects_dir.glob("*/*/design/infrastructure-onboarding.yaml")):
+            project_dir = source_path.parent.parent
+            domain = project_dir.parent.name
+            if domain.startswith("_"):
+                continue
+            spec = specs.get(project_dir.relative_to("ea_inputs").as_posix(), {})
+            project = spec.get("project") or project_dir.name
+            project_key = spec.get("project_key") or re.sub(r"[^a-z0-9]+", "-", project_dir.name.lower()).strip("-")
+            data = load_process(source_path)
+            out_dir = self.output_dir / "projects" / project_key / "infrastructure-onboarding"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            (out_dir / "index.html").write_text(render_process(data, project, template), encoding="utf-8")
+            views.append({
+                "view_id": f"project_{project_key}_infrastructure_onboarding",
+                "name": f"{project} - {data['view']['name']}",
+                "diagram_file": "",
+                "preview_file": "",
+                "category": domain,
+                "domain": spec.get("domain") or domain,
+                "region": spec.get("region", ""),
+                "project": project,
+                "project_key": project_key,
+                "view_kind": "project",
+                "view_type": "process",
+                "artifact_label": data["view"]["name"],
+                "environment": "",
+                "iframe_src": f"projects/{project_key}/infrastructure-onboarding/",
+                "elements": [],
+                "element_count": len(data["activities"]),
+                "created": datetime.now().isoformat(),
+                "updated_at": datetime.fromtimestamp(source_path.stat().st_mtime).isoformat(),
+            })
+            print(f"      OK {views[-1]['view_id']:45s} ({len(data['activities'])} process activities)")
+        return views
+
     def _write_json_inventory_viewer(self, viewer_template: Path, inventory_path: Path, output_path: Path) -> None:
         """Write a project visualizer page with inventory JSON embedded for file:// use."""
         template_html = viewer_template.read_text(encoding="utf-8")
@@ -652,6 +740,16 @@ class PortalBuilder:
         diagrams_info.extend(how_it_works_views)
         if how_it_works_views:
             print(f"      OK Generated {len(how_it_works_views)} how-it-works view(s)\n")
+
+        decision_views = self._collect_architecture_decision_views()
+        diagrams_info.extend(decision_views)
+        if decision_views:
+            print(f"      OK Generated {len(decision_views)} architecture decision view(s)\n")
+
+        process_views = self._collect_process_views()
+        diagrams_info.extend(process_views)
+        if process_views:
+            print(f"      OK Generated {len(process_views)} process walkthrough(s)\n")
 
         # Step 4: Generate indexes
         print("[4/6] Generating indexes...")

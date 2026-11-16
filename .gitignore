@@ -46,6 +46,9 @@ outputs/
 *.log
 *.bkp
 *.dtmp
+/tmp_data_landscape.svg
+/tmp_operations_anz_landscape.svg
+/ai_journal/context/file_tracking.json
 
 # Azure DevOps and Authentication
 *.pat
@@ -67,6 +70,7 @@ $RECYCLE.BIN/
 htmlcov/
 .tox/
 .nox/
+/reports/test_results.html
 
 # Jupyter Notebooks (if any)
 .ipynb_checkpoints
@@ -82,7 +86,7 @@ dmypy.json
 # Local config overrides
 local_settings.py
 local_config.json
+sources.local.yaml
 
 # Personal
-CLAUDE.md
 .claude/
